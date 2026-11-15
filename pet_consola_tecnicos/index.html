@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consola Técnica TSID PET/CT | Galaria · SERGAS</title>
+  <meta name="description"
+    content="Consola Oficial de Técnicos Superiores en Imagen para el Diagnóstico (TSID) y Medicina Nuclear de Galaria y SERGAS. Citación del día, tiempos de paso a máquina, esquemas visuales de posicionamiento, campos de adquisición y gestión de contrastes.">
+
+  <!-- Google Fonts: Open Sans, Outfit y JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=20261114_VASC_02">
+</head>
+
+<body>
+
+  <!-- 1. BARRA SUPERIOR INSTITUCIONAL XUNTA / SERGAS -->
+  <header class="sergas-top-bar">
+    <div class="sergas-top-container">
+      <div class="sergas-gov-text">
+        <span class="xunta-pill">XUNTA DE GALICIA</span>
+        <span class="sergas-sub">CONSELLERÍA DE SANIDADE · SERGAS</span>
+      </div>
+      <div class="sergas-portal-id">
+        <span>Galaria · Empresa Pública de Servizos Sanitarios</span>
+        <a href="../index.html">← Portal Maestro</a>
+        <a href="../pet_consola_medica/index.html">👨‍⚕️ Consola Médica</a>
+        <a href="../pet_prep_page/enfermeria.html">🏥 Enfermería</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. CABECERA PRINCIPAL Y PERFIL DEL TÉCNICO TSID -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="brand-section">
+        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="galaria-logo">
+        <div class="header-titles">
+          <h1>
+            Consola Técnica TSID — Adquisición PET/CT
+            <span class="badge-mod">Módulo 6</span>
+          </h1>
+          <p>Servizo de Medicina Nuclear e Imaxe Molecular · Sala de Escáner PET/CT (Hospital Meixoeiro)</p>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <button type="button" onclick="window.petResetDemo()" style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; border:1px solid #93c5fd; color:#1d4ed8; font-size:0.8rem; font-weight:700; padding:8px 14px; border-radius:10px; cursor:pointer; transition:all 0.2s ease; box-shadow:0 2px 4px rgba(0,0,0,0.04);" title="Reinicio automático cada 24h ou baixo demanda: citas actualizadas a hoxe e mañá, altas limpas e peticións non triables no seu cartafol">
+          🔄 Reiniciar Demo (24h)
+        </button>
+        <div class="tech-profile-card">
+          <div class="tech-avatar">🔬</div>
+          <div class="tech-info">
+            <span class="tech-name">Alejandro Dopazo Souto</span>
+            <span class="tech-role">Técnico Superior TSID · Unidad PET/CT Meixoeiro</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. CONTENEDOR PRINCIPAL -->
+  <main class="app-container">
+
+    <!-- 4. KPIS Y MÉTRICAS DE LA JORNADA -->
+    <section class="stats-banner" aria-label="Resumen de citación técnica del día">
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-content">
+          <span class="stat-label">Total Citados Hoy</span>
+          <span class="stat-value" id="kpiTotalCitados">0</span>
+          <span class="stat-sub">Jornada técnica activa</span>
+        </div>
+      </div>
+
+      <div class="stat-card stat-uptake">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-content">
+          <span class="stat-label">En Reposo / Captación</span>
+          <span class="stat-value" id="kpiEnReposo">0</span>
+          <span class="stat-sub">Cronómetro corriendo</span>
+        </div>
+      </div>
+
+      <div class="stat-card stat-ready">
+        <div class="stat-icon">🟢</div>
+        <div class="stat-content">
+          <span class="stat-label">Listos para Máquina</span>
+          <span class="stat-value" id="kpiListosMaquina">0</span>
+          <span class="stat-sub">Tiempo cumplido ¡Llamar!</span>
+        </div>
+      </div>
+
+      <div class="stat-card stat-scanning">
+        <div class="stat-icon">🟣</div>
+        <div class="stat-content">
+          <span class="stat-label">En Tomógrafo PET/CT</span>
+          <span class="stat-value" id="kpiEnEscanner">0</span>
+          <span class="stat-sub">Adquisición en curso</span>
+        </div>
+      </div>
+
+      <div class="stat-card stat-done">
+        <div class="stat-icon">✅</div>
+        <div class="stat-content">
+          <span class="stat-label">Completados</span>
+          <span class="stat-value" id="kpiCompletados">0</span>
+          <span class="stat-sub">Descargados al PACS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. BARRA DE HERRAMIENTAS, FILTROS Y ACCIONES -->
+    <section class="toolbar-card">
+      <div class="toolbar-row">
+        <!-- Selector de Fechas -->
+        <div class="filter-group">
+          <button class="date-pill-btn active" data-date="today">📅 Citas de Hoy</button>
+          <button class="date-pill-btn" data-date="tomorrow">📅 Mañana</button>
+          <button class="date-pill-btn" data-date="all">🌐 Ver Todos</button>
+          <div
+            style="display:inline-flex; align-items:center; gap:6px; background:#ffffff; padding:2px 8px; border-radius:8px; border:1px solid #cbd5e1;">
+            <label for="inputCustomDate"
+              style="font-size:0.75rem; font-weight:700; color:var(--text-muted); cursor:pointer;">OTRA FECHA:</label>
+            <input type="date" id="inputCustomDate"
+              style="border:none; outline:none; font-family:inherit; font-size:0.82rem; font-weight:600; color:var(--text-main); cursor:pointer;">
+          </div>
+          <button type="button" class="date-step-btn" id="btnPrevDay" title="Día Anterior"
+            style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:0.45rem 0.75rem; font-weight:800; cursor:pointer; color:var(--text-main); font-size:0.9rem;">◀</button>
+          <button type="button" class="date-step-btn" id="btnNextDay" title="Día Siguiente"
+            style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px; padding:0.45rem 0.75rem; font-weight:800; cursor:pointer; color:var(--text-main); font-size:0.9rem;">▶</button>
+        </div>
+
+        <!-- Búsqueda rápida -->
+        <div class="search-box-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchPatientInput" placeholder="Buscar por paciente, NHC o estudio..."
+            autocomplete="off">
+        </div>
+
+        <!-- Filtros select -->
+        <div class="filter-group">
+          <select id="filterStatusSelect" class="custom-select" aria-label="Filtrar por estado">
+            <option value="all">⚡ Todos los Estados (Protocolizados o no)</option>
+            <option value="waiting">🟡 En Espera / Pre-analítica</option>
+            <option value="uptake">⏳ En Reposo Metabólico</option>
+            <option value="ready">🟢 ¡Listos para Máquina!</option>
+            <option value="scanning">🟣 En Escáner PET/CT</option>
+            <option value="done">✅ Completados</option>
+            <option value="proto_pending">⏳ Solo Pendientes de Protocolizar</option>
+            <option value="proto_done">🩺 Solo Protocolizados por Facultativo</option>
+          </select>
+
+          <select id="filterTracerSelect" class="custom-select" aria-label="Filtrar por radiofármaco">
+            <option value="all">☢️ Todos los Radiofármacos</option>
+            <option value="FDG">18F-FDG</option>
+            <option value="Colina">18F-Colina</option>
+            <option value="PSMA">18F-PSMA</option>
+            <option value="DOTATOC">68Ga-DOTATOC</option>
+          </select>
+
+          <button type="button" class="btn-action-primary" id="btnPrintWorksheet">
+            🖨️ Imprimir Hoja de Trabajo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5B. PANEL EN VIVO DE LOS 5 BOXES DE INYECCIÓN Y REPOSO (SINCRONIZADO CON ENFERMERÍA) -->
+    <section id="tsidFiveBoxesSummaryStrip" aria-label="Ocupación en vivo de los 5 Boxes PET/CT"
+      style="margin-bottom: 1rem;"></section>
+
+    <!-- 6. ESTRUCTURA PRINCIPAL DE 2 COLUMNAS -->
+    <div class="worklist-layout">
+
+      <!-- COLUMNA 1: AGENDA DEL DÍA (WORKLIST TSID) -->
+      <section class="worklist-col" aria-labelledby="worklistHeading">
+        <div class="worklist-card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <h2 id="worklistHeading">
+            <span>📋</span> Citación del Día
+          </h2>
+          <button type="button" id="btnReloadTriageTsid" onclick="window.recargarPacientesDesdeTriajeTsid && window.recargarPacientesDesdeTriajeTsid()"
+            style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #ffffff; border: 1.5px solid #0369a1; border-radius: 7px; padding: 5px 11px; font-size: 0.76rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25); transition: all 0.15s;"
+            title="Sincronizar y recargar inmediatamente los pacientes citados en el Programa de Triaje">
+            <span id="reloadTriageTsidIcon">🔄</span>
+            <span>Recargar de Triaje</span>
+          </button>
+        </div>
+
+        <div class="patient-cards-list" id="patientCardsList">
+          <!-- Tarjetas renderizadas dinámicamente con app.js -->
+        </div>
+      </section>
+
+      <!-- COLUMNA 2: DETALLE TÉCNICO COMPLETO (FICHA DE ADQUISICIÓN) -->
+      <section class="tech-detail-card" id="techDetailCard" aria-label="Ficha técnica del paciente">
+
+        <!-- HEADER DEL DETALLE CON DATOS DEL PACIENTE -->
+        <div class="detail-header-banner">
+          <div class="detail-pat-title">
+            <h2 id="detailPatName">Cargando paciente...</h2>
+            <p>
+              <strong id="detailPatNHC">NHC-000000</strong>
+              <span>·</span>
+              <span id="detailPatAge">-- años</span>
+              <span>·</span>
+              <strong id="detailPatTracer"
+                style="color:#ffffff; background:rgba(255,255,255,0.2); padding:2px 8px; border-radius:10px;">--</strong>
+              <span>·</span>
+              <span id="detailPatProtocol">Protocolo PET</span>
+            </p>
+          </div>
+          <div class="detail-header-actions" id="detailHeaderActions">
+            <button type="button" class="btn-advance-status" id="btnAdvanceStatus">
+              ▶️ Iniciar Adquisición
+            </button>
+            <button type="button" class="btn-action-tardia" id="btnTardiaAction" style="display:none;"
+              onclick="solicitarTardiaPaciente()">
+              🕒 Iniciar Tardía
+            </button>
+            <button type="button" class="btn-action-delete" id="btnDeleteAction" style="display:none;"
+              onclick="eliminarPacienteActual()">
+              🗑️ Eliminar Paciente
+            </button>
+          </div>
+        </div>
+
+        <div class="detail-body">
+
+          <!-- BANNER DE ORDEN MÉDICA DE FASE VASCULAR (1ª FASE PRECOZ) + DESCUENTO PARA 2ª FASE -->
+          <div id="vascularMedicalOrderBanner" class="vascular-medical-banner" style="display:none; margin-bottom: 1rem;"></div>
+
+          <!-- BANNER DE ORDEN MÉDICA DE SERIE TARDÍA (PAUTADA POR EL FACULTATIVO) -->
+          <div id="tardiaMedicalOrderBanner" class="tardia-medical-banner" style="display:none;"></div>
+
+          <!-- 1. PANEL DE CRONÓMETRO: TIEMPO EN PASAR A MÁQUINA -->
+
+          <div class="uptake-clock-section">
+            <div class="uptake-clock-main">
+              <div class="clock-icon-circle">⏱️</div>
+              <div class="clock-digits-wrap">
+                <span class="label" id="uptakeCountdownLabel">Tiempo en Pasar a Máquina</span>
+                <span class="clock-display-digits" id="uptakeCountdownDigits">--:--</span>
+              </div>
+            </div>
+
+            <div class="clock-milestones">
+              <div class="milestone-item">
+                <span class="m-label" id="milestoneInjectionLabel">💉 Hora Inyección:</span>
+                <span class="m-val" id="milestoneInjectionTime">--:--</span>
+              </div>
+              <div class="milestone-item">
+                <span class="m-label">⏳ Duración Protocolo:</span>
+                <span class="m-val" id="milestoneProtocolDuration">60 min</span>
+              </div>
+              <div class="milestone-item" style="border-color: #93c5fd; background: #eff6ff;">
+                <span class="m-label" id="milestoneTargetLabel" style="color: #1e40af;">🎯 Hora Exacta Máquina:</span>
+                <span class="m-val" id="milestoneTargetTime" style="color: #1e40af;">--:--</span>
+              </div>
+            </div>
+
+            <div>
+              <button type="button" id="btnInjectNow" class="btn-action-primary"
+                style="background:#0284c7; font-size:0.78rem; padding:0.45rem 0.85rem;"
+                title="Registrar la inyección con la hora actual del reloj">
+                💉 Registrar Inyección Ahora
+              </button>
+            </div>
+          </div>
+
+          <!-- 1B. CAJA SINCRONIZADA CON ENFERMERÍA: ASIGNACIÓN Y VERIFICACIÓN DE BOX (SOLO 5 BOXES) -->
+          <div id="tsidPatientBoxSyncCard" style="margin-bottom: 1rem;"></div>
+
+          <!-- 2. DIAGRAMA ANATÓMICO VERTICAL DE POSICIÓN Y CAJA DE ADQUISICIÓN (FOV) -->
+          <div class="vertical-positioning-section">
+            <div class="drawing-card vertical-drawing-card">
+              <div class="drawing-card-header">
+                <h3>
+                  <span>🧍</span> Posición del Paciente (Vertical) & Caja de Adquisición de Campos
+                </h3>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="position-tag-active" id="activePositionTag">DECÚBITO SUPINO</span>
+                  <span class="position-tag-active" id="scanRangeTextDisplay"
+                    style="background:#e0f2fe; color:#0369a1;">6 CAMAS</span>
+                </div>
+              </div>
+
+              <!-- BARRA DE SELECCIÓN DE LA CAJA DE CAMPOS A COGER -->
+              <div class="scan-presets-bar">
+                <span class="preset-label">📦 Seleccionar Caja de Campos a Tomar:</span>
+                <div class="preset-buttons-group">
+                  <button type="button" class="preset-btn active" id="btnRange_standard"
+                    onclick="cambiarCajaCamposVertical('standard')">
+                    🟢 Cráneo a Muslos (6 Camas)
+                  </button>
+                  <button type="button" class="preset-btn" id="btnRange_whole"
+                    onclick="cambiarCajaCamposVertical('whole')">
+                    🟣 Cuerpo Entero (9 Camas)
+                  </button>
+                  <button type="button" class="preset-btn" id="btnRange_torax_abdomen"
+                    onclick="cambiarCajaCamposVertical('torax_abdomen')">
+                    🟡 Tórax y Abdomen (4 Camas)
+                  </button>
+                  <button type="button" class="preset-btn" id="btnRange_pelvis_tardia"
+                    onclick="cambiarCajaCamposVertical('pelvis_tardia')">
+                    🔵 Pelvis / Tardía (2 Camas)
+                  </button>
+                  <button type="button" class="preset-btn" id="btnRange_brain"
+                    onclick="cambiarCajaCamposVertical('brain')">
+                    🟠 Encéfalo Dedicado (1 Cama)
+                  </button>
+                </div>
+              </div>
+
+              <!-- CONTENEDOR DEL DIBUJO ANATÓMICO VERTICAL CON CAJA DE CAMPOS -->
+              <div class="svg-canvas-wrapper vertical-svg-wrapper" id="svgVerticalBodyContainer">
+                <!-- Generado dinámicamente con silueta vertical, brazos arriba/abajo y caja de campos -->
+              </div>
+
+              <div class="drawing-notes-footer" id="verticalDrawingNotesFooter">
+                Indicaciones de posición y cobertura anatómica...
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. PROTOCOLO DE CONTRASTE Y PARÁMETROS TÉCNICOS -->
+          <div class="technical-specs-grid">
+
+            <!-- TARJETA C: SI LLEVA CONTRASTE O NO -->
+            <div class="spec-box">
+              <div class="drawing-card-header">
+                <h3>
+                  <span>💉</span> Protocolo de Contraste IV y TC
+                </h3>
+              </div>
+
+              <div class="contrast-banner" id="contrastBannerEl">
+                <!-- Banner dinámico con semáforo de contraste -->
+              </div>
+
+              <ul class="contrast-specs-list" id="contrastSpecsList">
+                <!-- Especificaciones detalladas de volumen, flujo y fase -->
+              </ul>
+            </div>
+
+            <!-- TARJETA D: INDICACIONES A MAYORES Y ALERTAS CLÍNICAS -->
+            <div class="spec-box" style="background: #fffdf5; border-color: #fde68a;">
+              <div class="drawing-card-header">
+                <h3 style="color: #92400e;">
+                  <span>⚠️</span> Indicaciones a Mayores & Alertas
+                </h3>
+                <span style="font-size:0.75rem; color:#b45309; font-weight:700;">Seguridad Clínica</span>
+              </div>
+
+              <div class="alert-chips-grid" id="clinicalAlertsChips">
+                <!-- Chips de glucemia, movilidad, ayuno, prótesis metálicas -->
+              </div>
+
+              <div
+                style="margin-top: 0.85rem; font-size: 0.84rem; color: #451a03; line-height: 1.45; background: #ffffff; padding: 0.75rem; border-radius: 6px; border: 1px solid #fef3c7;">
+                <strong style="color: #92400e; display:block; margin-bottom: 2px;">📌 Notas del Médico
+                  Protocolizador:</strong>
+                <span id="doctorNotesDisplay">Sin notas especiales.</span>
+              </div>
+
+              <!-- NOTAS VIVAS DEL TÉCNICO CON MICRÓFONO PARA DICTADO DE VOZ -->
+              <div class="tsid-notes-area">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <label for="tsidPatientNotes" style="font-size:0.78rem; font-weight:800; color:var(--sergas-navy);">📝
+                    Observaciones Técnicas TSID:</label>
+                  <button type="button" id="tsidMicBtn" class="chat-mic-btn"
+                    style="width:30px; height:30px; font-size:0.85rem; margin:0;"
+                    title="Dictar nota por voz">🎙️</button>
+                </div>
+                <textarea id="tsidPatientNotes"
+                  placeholder="Escribe o pulsa el micrófono para dictar incidencias (ej. vía difícil, contraste tolerado, movimiento del paciente)..."></textarea>
+                <div class="tsid-notes-footer">
+                  <span style="font-size:0.72rem; color:var(--text-muted);">Se guardan automáticamente en la ficha del
+                    paciente</span>
+                  <span style="font-size:0.72rem; color:#16a34a; font-weight:700;">💾 Guardado local activo</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- 7. FOOTER INSTITUCIONAL -->
+  <footer
+    style="background-color: #ffffff; border-top: 3px solid var(--sergas-blue); padding: 1.5rem 0; margin-top: auto; color: var(--text-muted); font-size: 0.82rem; text-align: center;">
+    <div
+      style="max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;">
+      <p style="font-weight: 700; color: var(--sergas-navy); margin: 0;">
+        © Galaria - Empresa Pública de Servizos Sanitarios, S.A. | Servizo Galego de Saúde (SERGAS)
+      </p>
+      <p style="margin: 0;">
+        Módulo 6: Consola de Técnicos TSID · Sistema Integrado de Adquisición y Protocolización PET/CT
+      </p>
+    </div>
+  </footer>
+
+  <script src="../pet_demo_reset.js"></script>
+  <script src="../pet_peticion_medica/database/peticiones_data.js"></script>
+  <script src="app.js?v=20261114_VASC_02"></script>
+</body>
+
+</html>

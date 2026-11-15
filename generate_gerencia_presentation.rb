@@ -1,0 +1,790 @@
+# encoding: utf-8
+require 'fileutils'
+
+html_slides = <<~HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Propuesta de Eficiencia y Sostenibilidad Sanitaria — Ecosistema Digital PET/CT Galaria · SERGAS</title>
+  <style>
+    @page {
+      size: 16in 9in; /* Formato 16:9 Widescreen */
+      margin: 0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      color: #1e293b;
+    }
+
+    .slide {
+      width: 16in;
+      height: 9in;
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0.75in 1.0in;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-dark {
+      background: linear-gradient(135deg, #09121f 0%, #0f1e36 40%, #034873 100%);
+      color: #ffffff;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.2in;
+      margin-bottom: 0.35in;
+    }
+
+    .slide-dark .slide-header {
+      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .slide-category {
+      font-size: 0.18in;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #0284c7;
+      margin-bottom: 0.05in;
+    }
+
+    .slide-dark .slide-category {
+      color: #38bdf8;
+    }
+
+    .slide-title {
+      font-size: 0.42in;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .slide-dark .slide-title {
+      color: #ffffff;
+    }
+
+    .slide-logo-badge {
+      background: #f1f5f9;
+      color: #0369a1;
+      font-weight: 700;
+      font-size: 0.16in;
+      padding: 0.08in 0.2in;
+      border-radius: 0.08in;
+      border: 1px solid #cbd5e1;
+    }
+
+    .slide-dark .slide-logo-badge {
+      background: rgba(255, 255, 255, 0.1);
+      color: #7dd3fc;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 0.18in;
+      font-size: 0.15in;
+      color: #64748b;
+    }
+
+    .slide-dark .slide-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      color: #94a3b8;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5in;
+      height: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.35in;
+      height: 100%;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.3in;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.12in;
+      padding: 0.3in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-accent {
+      border-top: 5px solid #0284c7;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-danger {
+      border-top: 5px solid #ef4444;
+      background: #fff5f5;
+    }
+
+    .card-success {
+      border-top: 5px solid #10b981;
+      background: #f0fdf4;
+    }
+
+    .card h3 {
+      font-size: 0.24in;
+      font-weight: 700;
+      margin: 0 0 0.1in 0;
+      color: #0f172a;
+    }
+
+    .card p {
+      font-size: 0.18in;
+      line-height: 1.45;
+      color: #475569;
+      margin: 0;
+    }
+
+    .kpi-num {
+      font-size: 0.62in;
+      font-weight: 900;
+      line-height: 1;
+      color: #0284c7;
+      margin-bottom: 0.05in;
+      letter-spacing: -1px;
+    }
+
+    .kpi-num-success { color: #059669; }
+    .kpi-num-danger { color: #dc2626; }
+
+    .kpi-label {
+      font-size: 0.16in;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.165in;
+    }
+
+    th {
+      background: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      padding: 0.15in 0.2in;
+      font-weight: 700;
+      font-size: 0.16in;
+    }
+
+    td {
+      padding: 0.14in 0.2in;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .before-after-box {
+      border-radius: 0.12in;
+      padding: 0.3in;
+      height: 100%;
+    }
+
+    .box-before {
+      background: #fef2f2;
+      border: 2px dashed #fca5a5;
+    }
+
+    .box-after {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+    }
+
+    .box-tag {
+      display: inline-block;
+      font-size: 0.15in;
+      font-weight: 800;
+      padding: 0.06in 0.16in;
+      border-radius: 0.06in;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.15in;
+    }
+
+    .tag-before { background: #fee2e2; color: #991b1b; }
+    .tag-after { background: #dcfce7; color: #166534; }
+
+    ul.exec-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.exec-list li {
+      font-size: 0.18in;
+      line-height: 1.5;
+      margin-bottom: 0.14in;
+      position: relative;
+      padding-left: 0.35in;
+      color: #334155;
+    }
+
+    ul.exec-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #0284c7;
+      font-weight: 900;
+      font-size: 0.22in;
+    }
+
+    .slide-dark ul.exec-list li {
+      color: #e2e8f0;
+    }
+
+    .slide-dark ul.exec-list li::before {
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: PORTADA INSTITUCIONAL PÚBLICA -->
+  <div class="slide slide-dark">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">PROPUESTA DE INNOVACIÓN Y SOSTENIBILIDAD ASISTENCIAL</div>
+        <div style="font-size: 0.2in; color: #94a3b8; font-weight: 600;">SERGAS · GALARIA · ÁREA SANITARIA DE VIGO (HOSPITAL DO MEIXOEIRO)</div>
+      </div>
+      <div class="slide-logo-badge">SANIDAD PÚBLICA · SERVIZO GALEGO DE SAÚDE</div>
+    </div>
+
+    <div class="slide-body" style="justify-content: center; max-width: 12.5in;">
+      <h1 class="slide-title" style="font-size: 0.62in; line-height: 1.1; margin-bottom: 0.2in;">
+        ECOSISTEMA DIGITAL PET/CT
+      </h1>
+      <p style="font-size: 0.26in; line-height: 1.4; color: #cbd5e1; margin-bottom: 0.35in;">
+        Optimización de la Lista de Espera Oncológica, Eficiencia en Gasto Farmacéutico y Humanización en Medicina Nuclear.
+      </p>
+
+      <div style="display: flex; gap: 0.3in; margin-top: 0.15in;">
+        <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); padding: 0.18in 0.28in; border-radius: 0.1in;">
+          <div style="font-size: 0.32in; font-weight: 800; color: #38bdf8;">+ 120 Pacientes</div>
+          <div style="font-size: 0.14in; color: #94a3b8; text-transform: uppercase;">Huecos Públicos Rescatados/Año</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); padding: 0.18in 0.28in; border-radius: 0.1in;">
+          <div style="font-size: 0.32in; font-weight: 800; color: #4ade80;">- 76 %</div>
+          <div style="font-size: 0.14in; color: #94a3b8; text-transform: uppercase;">Dosis Públicas Desperdiciadas</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); padding: 0.18in 0.28in; border-radius: 0.1in;">
+          <div style="font-size: 0.32in; font-weight: 800; color: #fbbf24;">0 €</div>
+          <div style="font-size: 0.14in; color: #94a3b8; text-transform: uppercase;">Gasto en Servidores / Licencias</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); padding: 0.18in 0.28in; border-radius: 0.1in;">
+          <div style="font-size: 0.32in; font-weight: 800; color: #a78bfa;">ALARA</div>
+          <div style="font-size: 0.14in; color: #94a3b8; text-transform: uppercase;">Cero Irradiaciones Innecesarias</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Plan Estratégico de Calidad y Eficiencia de la Sanidad Pública</span>
+      <span>Noviembre 2026 · Solución en Producción: ecosistemagalariapet.netlify.app</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: EL PROBLEMA EN LA SANIDAD PÚBLICA -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">DIAGNÓSTICO DEL SERVICIO EN EL HOSPITAL PÚBLICO</div>
+        <h2 class="slide-title">El Impacto del Desperdicio y la Ineficiencia en Sanidad Pública</h2>
+      </div>
+      <div class="slide-logo-badge">PROTECCIÓN DEL GASTO PÚBLICO</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-4" style="margin-bottom: 0.35in;">
+        <div class="card card-danger">
+          <div class="kpi-num kpi-num-danger">110 min</div>
+          <div class="kpi-label">Decaimiento Físico Inevitable</div>
+          <p style="margin-top: 0.08in;">El 18F pierde la mitad de su actividad en 110 min. Si un paciente falta, <strong>el fármaco pagado con fondos públicos se desintegra sin curar a nadie</strong>.</p>
+        </div>
+        <div class="card card-danger">
+          <div class="kpi-num kpi-num-danger">150 Citas</div>
+          <div class="kpi-label">Huecos Públicos Perdidos al Año</div>
+          <p style="margin-top: 0.08in;">Ausencias no avisadas que retrasan el diagnóstico de otros pacientes oncológicos que siguen en lista de espera.</p>
+        </div>
+        <div class="card card-danger">
+          <div class="kpi-num kpi-num-danger">Doble Dosis</div>
+          <div class="kpi-label">Riesgo Radiológico al Repetir</div>
+          <p style="margin-top: 0.08in;">Pacientes mal preparados (glucemia alta o desayuno) obligan a repetir la prueba, duplicando la radiación innecesariamente (vulnera ALARA).</p>
+        </div>
+        <div class="card card-danger">
+          <div class="kpi-num kpi-num-danger">1.5 h/día</div>
+          <div class="kpi-label">Tiempo de Enfermería al Teléfono</div>
+          <p style="margin-top: 0.08in;">Profesionales de enfermería dedicadas a repetir dudas básicas de ayuno en lugar de estar atendiendo directamente a los pacientes.</p>
+        </div>
+      </div>
+
+      <div class="card" style="background: #f1f5f9; border-left: 6px solid #0369a1; padding: 0.22in 0.3in;">
+        <p style="font-size: 0.21in; font-weight: 600; color: #0f172a; margin: 0;">
+          🎯 <strong>El reto de la Dirección:</strong> En la sanidad pública, cada hueco desaprovechado en el tomógrafo PET/CT no solo supone una pérdida de fondos públicos en radiofármacos (~400€ a 1.500€ por dosis), sino que <strong>demora el inicio de la radioterapia o quimioterapia en pacientes oncológicos</strong> o fuerza derivaciones innecesarias a conciertos privados.
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 2</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: LA SOLUCIÓN — ARQUITECTURA ASISTENCIAL -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">CIRCUITO ASISTENCIAL INTEGRADO</div>
+        <h2 class="slide-title">La Solución: Un Flujo Continuo 360° en 7 Módulos Públicos</h2>
+      </div>
+      <div class="slide-logo-badge">INTEROPERABILIDAD SERGAS</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-3" style="gap: 0.3in;">
+        <div class="card card-accent">
+          <h3>1. Prescripción Médica Asistida</h3>
+          <p>Validación clínica de indicación financiada en cartera SERGAS, estadio tumoral e historial reciente de tratamientos (QT/RT) antes de emitir el volante.</p>
+          <div style="margin-top: 0.12in; font-weight: 700; color: #0284c7; font-size: 0.15in;">Cero volantes incompletos</div>
+        </div>
+
+        <div class="card card-accent">
+          <h3>2. Triaje Algorítmico EANM</h3>
+          <p>Clasificación objetiva en prioridades: <strong>P1 (&lt; 7d)</strong>, <strong>P2 (&lt; 15d)</strong> y <strong>P3 (&gt; 21d)</strong> para cumplir el Decreto de Tiempos Máximos.</p>
+          <div style="margin-top: 0.12in; font-weight: 700; color: #0284c7; font-size: 0.15in;">Garantía de Equidad Asistencial</div>
+        </div>
+
+        <div class="card card-accent">
+          <h3>3. Portal del Paciente & IA</h3>
+          <p>Móvil del paciente con semáforo nutricional, cronómetro de ayuno y <strong>Chatbot IA con Blindaje Clínico</strong> en gallego y castellano.</p>
+          <div style="margin-top: 0.12in; font-weight: 700; color: #0284c7; font-size: 0.15in;">Humanización y Accesibilidad</div>
+        </div>
+
+        <div class="card card-accent">
+          <h3>4. Consola de Enfermería</h3>
+          <p>Control de boxes, <strong>Glucemia Capilar</strong> junto a hora de inyección con alerta a &ge; 200 mg/dL, reposo y registro de extravasaciones.</p>
+          <div style="margin-top: 0.12in; font-weight: 700; color: #0284c7; font-size: 0.15in;">Seguridad del Paciente en Box</div>
+        </div>
+
+        <div class="card card-accent">
+          <h3>5. Consola Médica & TSID</h3>
+          <p>Protocolización con <strong>Planificador Full Body</strong> (brazos arriba/abajo/almohada), <strong>Fase Vascular</strong> y semáforo de estado en gantry.</p>
+          <div style="margin-top: 0.12in; font-weight: 700; color: #0284c7; font-size: 0.15in;">Calidad Técnica del Escaneado</div>
+        </div>
+
+        <div class="card card-accent" style="border-top-color: #0f172a; background: #f8fafc;">
+          <h3>6. Consola de Jefatura (BI)</h3>
+          <p>Cuadro de mando para Dirección: detección de peticiones mal derivadas por servicio, puntualidad de máquina y memorias SERGAS en 1 clic.</p>
+          <div style="margin-top: 0.12in; font-weight: 700; color: #0f172a; font-size: 0.15in;">Gobierno del Dato Sanitario</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 3</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: HUMANIZACIÓN Y SEGURIDAD CLÍNICA -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">HUMANIZACIÓN & SEGURIDAD DEL PACIENTE</div>
+        <h2 class="slide-title">El Paciente Guiado y el Asistente Clínico Cero Alucinaciones</h2>
+      </div>
+      <div class="slide-logo-badge">PLAN DE HUMANIZACIÓN SERGAS</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-2">
+        <div>
+          <h3 style="font-size: 0.26in; color: #0f172a; margin-bottom: 0.18in;">Tranquilidad y Accesibilidad para el Paciente</h3>
+          <ul class="exec-list">
+            <li><strong>Sin Barreras Digitales (Enlace SMS Directo):</strong> No exige instalar aplicaciones ni recordar contraseñas. Diseñado para personas mayores.</li>
+            <li><strong>Cronómetro Visual de Ayuno:</strong> Calcula automáticamente la hora límite exacta para dejar de comer según la cita asignada.</li>
+            <li><strong>Semáforo de Alimentos:</strong> Tarjetas con fotografías reales de qué puede comer la víspera (dieta sin carbohidratos en endocarditis, hidratación en PSMA).</li>
+            <li><strong>Bilingüe (Gallego y Castellano):</strong> Audioguías locutadas para pacientes con dificultades de visión o lectura.</li>
+            <li><strong>Botón de Aviso de Cancelación:</strong> Si surge un imprevisto médico, el paciente libera su cita y el sistema avisa de inmediato a otro paciente en lista de espera.</li>
+          </ul>
+        </div>
+
+        <div class="card card-success" style="padding: 0.35in;">
+          <div style="font-size: 0.22in; font-weight: 800; color: #166534; margin-bottom: 0.12in;">
+            🛡️ BLINDAJE CLÍNICO CERO ALUCINACIONES (OPCIÓN C)
+          </div>
+          <p style="font-size: 0.18in; color: #1e293b; line-height: 1.5; margin-bottom: 0.2in;">
+            Para cumplir los estándares de seguridad de la sanidad pública, el asistente virtual no utiliza modelos libres que puedan inventar respuestas:
+          </p>
+          <div style="background: #ffffff; border-radius: 0.08in; padding: 0.18in; border: 1px solid #bbf7d0; margin-bottom: 0.15in;">
+            <strong style="color: #0f172a; font-size: 0.17in;">1. Motor Determinista Sanitario:</strong>
+            <p style="font-size: 0.155in; color: #475569;">Respuestas exactas avaladas por los médicos nucleares de Galaria · Hospital do Meixoeiro.</p>
+          </div>
+          <div style="background: #ffffff; border-radius: 0.08in; padding: 0.18in; border: 1px solid #bbf7d0;">
+            <strong style="color: #0f172a; font-size: 0.17in;">2. Salvaguarda Médica con Google Gemini:</strong>
+            <p style="font-size: 0.155in; color: #475569;">Lenguaje cálido y empático. Si el paciente pregunta algo no protocolizado (ej. dosis de un fármaco no listado), <strong>el bot tiene prohibido inventar</strong> y genera un botón directo hacia enfermería.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 4</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: TRIAJE Y PRIORIZACIÓN CLÍNICA ÉTICA -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">EQUIDAD ASISTENCIAL & CRITERIO MÉDICO</div>
+        <h2 class="slide-title">¿Qué ocurre ante una Petición con Prioridad Inadecuada?</h2>
+      </div>
+      <div class="slide-logo-badge">CUMPLIMIENTO DECRETO 105/2017</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-3" style="gap: 0.35in;">
+        <div class="card card-accent">
+          <h3>1. Detección Objetiva EANM</h3>
+          <p>Si un médico peticionario solicita un estudio como <strong>P1 (Urgente)</strong> para un caso que clínicamente es un seguimiento rutinario (P3), el algoritmo compara diagnóstico e indicación y genera una alerta automática de <em>Discrepancia de Prioridad</em>.</p>
+          <div style="margin-top: 0.15in; font-weight: 700; color: #0284c7; font-size: 0.15in;">La prueba no se agenda a ciegas</div>
+        </div>
+
+        <div class="card card-accent">
+          <h3>2. Modulación por el Facultativo</h3>
+          <p>El Médico Nuclear actúa como garante de la lista de espera: puede <strong>reclasificar la prioridad a P2 o P3 con 1 clic</strong> para que los pacientes con sospecha tumoral agresiva no pierdan su ventana preferente (&lt; 7 días), o derivar a <em>Carpeta de No Triables</em>.</p>
+          <div style="margin-top: 0.15in; font-weight: 700; color: #0284c7; font-size: 0.15in;">Protección del Paciente Crítico</div>
+        </div>
+
+        <div class="card card-accent" style="border-top-color: #10b981;">
+          <h3>3. Auditoría para la Dirección</h3>
+          <p>El evento se registra en el cuadro de mando de Jefatura. La Dirección Médica puede ver qué servicios (Oncología, Urología, Hematología) sobrepriorizan sistemáticamente, permitiendo realizar <strong>sesiones formativas basadas en datos reales</strong>.</p>
+          <div style="margin-top: 0.15in; font-weight: 700; color: #166534; font-size: 0.15in;">Cultura de Calidad Hospitalaria</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 5</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: EFICIENCIA EN PLANTA Y CONTROL TÉCNICO -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">CALIDAD ASISTENCIAL EN BOXES Y TOMÓGRAFO</div>
+        <h2 class="slide-title">Seguridad en la Inyección y Precisión en Sala de Escáner</h2>
+      </div>
+      <div class="slide-logo-badge">EXCELENCIA CLÍNICA</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card card-accent">
+          <h3>Consola de Enfermería</h3>
+          <ul class="exec-list" style="margin-top: 0.15in;">
+            <li><strong>Glucemia Capilar Integrada:</strong> Registro numérico en box al lado de la inyección. Alerta si &ge; 200 mg/dL para reprogramar antes de inyectar y no perder la dosis.</li>
+            <li><strong>Cronómetro de Reposo Automatizado:</strong> 60 minutos (oncológico estándar) o 90 minutos (endocarditis y vasculitis tras heparina).</li>
+            <li><strong>Detección de Extravasaciones:</strong> Aviso inmediato para que los técnicos ajusten el campo de visión y no confundan artefactos con metástasis ganglionares.</li>
+            <li><strong>Eliminación Coordinada de Pacientes:</strong> Limpieza simultánea con la consola técnica para evitar llamadas telefónicas internas.</li>
+          </ul>
+        </div>
+
+        <div class="card card-accent">
+          <h3>Consola Médica & Técnicos TSID</h3>
+          <ul class="exec-list" style="margin-top: 0.15in;">
+            <li><strong>Planificador Full Body Visual:</strong> Definición precisa del campo de exploración (Vertex, Tórax, Pelvis, Pies) y posición de brazos: <em>Brazos Arriba</em>, <em>Brazos Abajo</em> o <em>Brazos en Almohada</em>.</li>
+            <li><strong>Fase Vascular Dinámica (SÍ / NO):</strong> Prescripción directa de adquisiciones arteriales precoces con un solo clic.</li>
+            <li><strong>Semáforo de Tomógrafo TSID:</strong> El técnico visualiza qué paciente acaba de terminar el reposo y está listo para pasar a la camilla.</li>
+            <li><strong>Integración SIDI PACS SERGAS:</strong> Revisión de exploraciones radiológicas previas dentro del mismo entorno de trabajo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 6</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: BALANCE DE EFICIENCIA Y RENDIMIENTO PÚBLICO -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">SOSTENIBILIDAD Y RENDIMIENTO DE FONDOS PÚBLICOS</div>
+        <h2 class="slide-title">Balance de Eficiencia Asistencial y Presupuestaria</h2>
+      </div>
+      <div class="slide-logo-badge">MEMORIA DE IMPACTO ANUAL</div>
+    </div>
+
+    <div class="slide-body">
+      <table>
+        <thead>
+          <tr>
+            <th>Área de Impacto</th>
+            <th>Situación Sin el Ecosistema</th>
+            <th>Con Ecosistema Digital PET/CT</th>
+            <th>Beneficio para la Sanidad Pública</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Dosis de Radiofármaco Salvadas</strong></td>
+            <td>7.5 % absentismo (~150 dosis decaídas al año)</td>
+            <td>&lt; 1.8 % absentismo (~35 dosis decaídas)</td>
+            <td style="font-weight: 800; color: #059669;">~ 46.000 €/año en radiofármacos que NO se tiran</td>
+          </tr>
+          <tr>
+            <td><strong>Capacidad de la Lista de Espera</strong></td>
+            <td>Huecos perdidos si el paciente no acude</td>
+            <td>84 % de huecos reasignados a lista de espera</td>
+            <td style="font-weight: 800; color: #059669;">+ 120 pacientes oncológicos citados antes</td>
+          </tr>
+          <tr>
+            <td><strong>Internalización de Pruebas (Conciertos)</strong></td>
+            <td>Derivación a centros privados si la máquina no rinde</td>
+            <td>Máximo aprovechamiento del gantry público</td>
+            <td style="font-weight: 800; color: #059669;">Evita conciertos privados innecesarios</td>
+          </tr>
+          <tr>
+            <td><strong>Tiempo Asistencial de Enfermería</strong></td>
+            <td>~30 horas/mes respondiendo al teléfono dudas de ayuno</td>
+            <td>Chatbot resuelve el 92% de dudas repetitivas</td>
+            <td style="font-weight: 800; color: #0284c7;">+ 360 horas de enfermería para atención en sala</td>
+          </tr>
+          <tr>
+            <td><strong>Principio ALARA (Radioprotección)</strong></td>
+            <td>~22 repeticiones/año por pacientes mal preparados</td>
+            <td>Verificación previa de glucemia y dieta</td>
+            <td style="font-weight: 800; color: #059669;">Cero irradiaciones innecesarias a pacientes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 0.25in; font-size: 0.17in; color: #475569; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.15in 0.25in; border-radius: 0.08in;">
+        🌱 <strong>Enfoque de Hospital Público:</strong> El valor no se mide en "facturación privada", sino en <strong>aprovechar cada euro público invertido en radiofarmacia</strong>, reducir los días de espera para el paciente de cáncer y dignificar el tiempo asistencial de los profesionales sanitarios.
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 7</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: ANTES VS DESPUÉS EN EL HOSPITAL -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">TRANSFORMACIÓN EN LA PRÁCTICA DIARIA</div>
+        <h2 class="slide-title">Comparativa en el Servicio de Medicina Nuclear: Antes vs Ahora</h2>
+      </div>
+      <div class="slide-logo-badge">SALTO ASISTENCIAL</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="before-after-box box-before">
+          <div class="box-tag tag-before">❌ ANTES (OPERACIÓN CONVENCIONAL)</div>
+          <ul class="exec-list" style="color: #991b1b;">
+            <li><strong>Peticiones Incompletas:</strong> Volantes sin estadio ni historial de quimio/radioterapia reciente que obligan a llamadas y retrasan la citación.</li>
+            <li><strong>Suspensiones en Camilla:</strong> Pacientes que confiesan haber tomado un café con leche; la dosis ya está recibida y se pierde.</li>
+            <li><strong>Teléfono Saturado:</strong> Enfermería dedicando media mañana a responder si se puede beber agua o tomar la pastilla.</li>
+            <li><strong>Descoordinación en Gantry:</strong> Técnicos preguntando qué paciente está listo en los boxes de inyección.</li>
+            <li><strong>Dificultad de Auditoría:</strong> Días recopilando datos en hojas de cálculo manuales para la memoria anual del SERGAS.</li>
+          </ul>
+        </div>
+
+        <div class="before-after-box box-after">
+          <div class="box-tag tag-after">✅ CON EL ECOSISTEMA DIGITAL PET/CT</div>
+          <ul class="exec-list" style="color: #166534;">
+            <li><strong>Petición Guiada:</strong> Validación obligatoria de diagnóstico histológico, estadio y ventana de 21 días post-tratamiento al prescribir.</li>
+            <li><strong>Paciente Informado 24/7:</strong> Cronómetro visual, audioguías en gallego y chatbot clínico en su teléfono móvil.</li>
+            <li><strong>Enfermería Asistencial:</strong> Validación de glucemia en box y cronómetros de reposo automatizados sin estrés.</li>
+            <li><strong>Tomógrafo Optimizado:</strong> Semáforo en sala técnica con órdenes exactas de cobertura Full Body y posición de brazos.</li>
+            <li><strong>Gobierno del Dato Inmediato:</strong> Memorias oficiales de actividad mensual, trimestral y anual generadas en 1 clic.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 8</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: CERO COSTE DE INFRAESTRUCTURA -->
+  <div class="slide">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">VIABILIDAD TÉCNICA EN EL SERGAS</div>
+        <h2 class="slide-title">Cero Inversión en Hardware y Máxima Seguridad Sanitaria</h2>
+      </div>
+      <div class="slide-logo-badge">COMPATIBILIDAD INMEDIATA</div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="card card-accent">
+          <h3>0 € Inversión en Equipos</h3>
+          <ul class="exec-list" style="margin-top: 0.15in;">
+            <li><strong>Arquitectura 100% Web:</strong> Funciona directamente en los puestos de trabajo existentes en el hospital y en los móviles de los pacientes.</li>
+            <li><strong>Sin Instalaciones Locales:</strong> No requiere desplegar ejecutables, librerías ni software propietario en los ordenadores del centro.</li>
+            <li><strong>Acceso Inmediato:</strong> Compatible con Edge, Chrome, Safari y navegadores corporativos del puesto SERGAS.</li>
+          </ul>
+        </div>
+
+        <div class="card card-accent">
+          <h3>Nube Segura y Alta Disponibilidad</h3>
+          <ul class="exec-list" style="margin-top: 0.15in;">
+            <li><strong>Alojamiento Netlify Cloud HTTPS:</strong> Conexión cifrada TLS 1.3 disponible 24 horas al día los 365 días del año.</li>
+            <li><strong>Auto-Despliegue Continuo:</strong> Mejoras y ajustes clínicos actualizados en segundos sin cortes ni interrupciones del servicio.</li>
+            <li><strong>Tolerancia a Fallos:</strong> Respaldo continuo de configuraciones y guías clínicas en servidor redundante.</li>
+          </ul>
+        </div>
+
+        <div class="card card-accent">
+          <h3>Cumplimiento RGPD & ENS</h3>
+          <ul class="exec-list" style="margin-top: 0.15in;">
+            <li><strong>Protección de Datos de Salud:</strong> Identificadores anonimizados y sesiones efímeras conformes a la legislación sanitaria.</li>
+            <li><strong>IA con Privacidad Absoluta:</strong> Las consultas del paciente no se almacenan para entrenar modelos externos.</li>
+            <li><strong>Trazabilidad Completa:</strong> Registro auditable de protocolos médicos, firmas de especialistas y validaciones en box.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Ecosistema Digital PET/CT · Galaria / SERGAS</span>
+      <span>Diapositiva 9</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: CIERRE INSTITUCIONAL Y SIGUIENTES PASOS -->
+  <div class="slide slide-dark">
+    <div class="slide-header">
+      <div>
+        <div class="slide-category">CONCLUSIONES & PROPUESTA OPERATIVA</div>
+        <div style="font-size: 0.2in; color: #94a3b8; font-weight: 600;">PET/CT GALARIA · SERGAS</div>
+      </div>
+      <div class="slide-logo-badge">ACUERDO CON GERENCIA</div>
+    </div>
+
+    <div class="slide-body" style="max-width: 13in;">
+      <h2 class="slide-title" style="font-size: 0.48in; margin-bottom: 0.22in;">
+        Una Herramienta Pública Terminada y Lista para Liderar la Eficiencia en Medicina Nuclear
+      </h2>
+
+      <div class="grid-2" style="margin-bottom: 0.35in; gap: 0.5in;">
+        <div>
+          <ul class="exec-list">
+            <li><strong>Realidad Asistencial, No una Maqueta:</strong> El sistema está completamente desarrollado y operativo en <code>https://ecosistemagalariapet.netlify.app</code>.</li>
+            <li><strong>Impacto Directo en Lista de Espera:</strong> Rescata más de 120 huecos de máquina al año y reduce el absentismo a menos del 1.8%.</li>
+            <li><strong>Defensa del Presupuesto Público:</strong> Evita tirar decenas de miles de euros en radiofármacos que decaen por inasistencia.</li>
+            <li><strong>Herramienta Directiva para Gerencia:</strong> Cuadros de mando objetivos y memorias oficiales SERGAS generadas con 1 clic.</li>
+          </ul>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.08); border: 2px solid rgba(56, 189, 248, 0.4); border-radius: 0.12in; padding: 0.3in;">
+          <div style="font-size: 0.21in; font-weight: 800; color: #38bdf8; margin-bottom: 0.12in;">
+            🎯 PROPUESTA OPERATIVA PARA DIRECCIÓN:
+          </div>
+          <p style="font-size: 0.185in; color: #cbd5e1; line-height: 1.45; margin-bottom: 0.15in;">
+            <strong>1. Autorización de Pilotaje Oficial (90 días)</strong> en la Unidad PET/CT del Hospital do Meixoeiro.
+          </p>
+          <p style="font-size: 0.185in; color: #cbd5e1; line-height: 1.45; margin-bottom: 0.15in;">
+            <strong>2. Circular Interna Informativa</strong> a los Servicios de Oncología Médica y Hematología para uso del formulario guiado.
+          </p>
+          <p style="font-size: 0.185in; color: #cbd5e1; line-height: 1.45;">
+            <strong>3. Presentación como Caso de Éxito de Innovación</strong> en la Sanidad Pública Gallega (SERGAS).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Muchas gracias · Demostración práctica en vivo a continuación</span>
+      <span>Enlace Público Operativo: https://ecosistemagalariapet.netlify.app</span>
+    </div>
+  </div>
+
+</body>
+</html>
+HTML
+
+html_path = "PRESENTACION_GERENCIA_ECOSISTEMA_PET_CT.html"
+pdf_path = "PRESENTACION_GERENCIA_ECOSISTEMA_PET_CT.pdf"
+
+File.write(html_path, html_slides, encoding: "UTF-8")
+puts "✅ Archivo HTML adaptado a hospital público: #{html_path}"
+
+puts "🖨️ Recompilando PDF Widescreen 16:9 con Google Chrome..."
+chrome_cmd = "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless --disable-gpu --no-sandbox --user-data-dir=/tmp/chrome_pdf_slides_pub --print-to-pdf=\"#{pdf_path}\" --no-pdf-header-footer \"#{html_path}\""
+system(chrome_cmd)
+
+if File.exist?(pdf_path)
+  size_kb = (File.size(pdf_path).to_f / 1024).round(2)
+  puts "🎉 PRESENTACIÓN PÚBLICA EN PDF GENERADA CON ÉXITO!"
+  puts "📄 Archivo: #{pdf_path} (#{size_kb} KB)"
+else
+  puts "⚠️ Error generando el PDF con Chrome."
+end

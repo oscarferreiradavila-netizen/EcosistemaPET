@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Impresión — Informe del Final del Día Enfermería PET-TC (14/11/2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sergas-navy: #00354d;
+      --sergas-blue: #004868;
+      --sergas-cyan: #0284c7;
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-500: #64748b;
+      --slate-200: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #e2e8f0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--slate-900);
+    }
+
+    /* Barra superior flotante (No se imprime) */
+    .toolbar-no-print {
+      max-width: 900px;
+      margin: 0 auto 18px auto;
+      background: linear-gradient(135deg, #00354d 0%, #004868 60%, #0284c7 100%);
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(0, 53, 77, 0.25);
+    }
+
+    .toolbar-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toolbar-title h2 {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .toolbar-title p {
+      margin: 2px 0 0 0;
+      font-size: 0.78rem;
+      color: #bae6fd;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-print {
+      background: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-csv {
+      background: #ffffff;
+      color: #004868;
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Hoja Imprimible A4 */
+    .a4-sheet {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 28px 34px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
+      border: 1px solid #cbd5e1;
+    }
+
+    /* Cabecera Oficial SERGAS / Galaria */
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 3px solid var(--sergas-blue);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      gap: 16px;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .org-kicker {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #0284c7;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .report-main-title {
+      margin: 3px 0 0 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.24rem;
+      font-weight: 900;
+      color: var(--sergas-navy);
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+
+    .report-subtitle {
+      margin: 3px 0 0 0;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+
+    .meta-box {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.75rem;
+      text-align: right;
+      min-width: 245px;
+      line-height: 1.45;
+    }
+
+    .meta-box .doc-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      color: var(--sergas-blue);
+      font-size: 0.76rem;
+    }
+
+    /* Tiras de Resumen */
+    .section-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--sergas-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin: 0 0 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .kpi-card {
+      border-radius: 8px;
+      padding: 8px 12px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+    }
+
+    .kpi-card .k-title {
+      font-size: 0.69rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .kpi-card .k-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.04rem;
+      font-weight: 900;
+      margin-top: 2px;
+      color: var(--slate-900);
+    }
+
+    /* Tabla Principal de Pacientes Inyectados (5 columnas solicitadas) */
+    .shift-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .shift-table thead tr {
+      background: var(--sergas-blue);
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.35px;
+    }
+
+    .shift-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 800;
+      border-right: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .shift-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #cbd5e1;
+      vertical-align: middle;
+    }
+
+    .shift-table tbody tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Badges de Fármaco */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.76rem;
+      white-space: nowrap;
+    }
+
+    .b-fdg { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+    .b-psma { background: #ede9fe; color: #6d28d9; border: 1px solid #c4b5fd; }
+    .b-colina { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+    .b-ga68 { background: #fce7f3; color: #be185d; border: 1px solid #f9a8d4; }
+
+    /* Bloques de Firma Oficiales */
+    .signatures-grid {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      font-size: 0.75rem;
+      color: var(--slate-700);
+    }
+
+    .sig-box {
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 12px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 125px;
+    }
+
+    .sig-box strong {
+      display: block;
+      color: var(--sergas-navy);
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .sig-subtitle {
+      font-size: 0.68rem;
+      color: #64748b;
+      margin-top: 2px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .sig-enf-turns {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+      text-align: left;
+    }
+
+    .enf-turn-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: #ffffff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .enf-turn-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #004868;
+    }
+
+    .sig-init-input {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: #0f172a;
+      border: 1px dashed #94a3b8;
+      border-radius: 4px;
+      padding: 2px 6px;
+      width: 90px;
+      text-align: center;
+      text-transform: uppercase;
+      background: #f8fafc;
+    }
+
+    .sig-init-input:focus {
+      outline: none;
+      border-color: #0284c7;
+      background: #ffffff;
+    }
+
+    .sig-space {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+
+    .sig-line {
+      border-top: 1.5px dashed #64748b;
+      margin-bottom: 4px;
+    }
+
+    .sig-caption {
+      font-size: 0.69rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .footer-legal {
+      margin-top: 18px;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.69rem;
+      color: var(--slate-500);
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .toolbar-no-print {
+        display: none !important;
+      }
+      .a4-sheet {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      .sig-init-input {
+        border: none;
+        border-bottom: 1.5px solid #000000;
+        background: transparent;
+      }
+      .sig-box {
+        background: #ffffff;
+        border: 1px solid #64748b;
+      }
+      .enf-turn-row {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA SUPERIOR DE CONTROLES (OCULTA AL IMPRIMIR) -->
+  <div class="toolbar-no-print">
+    <div class="toolbar-title">
+      <span style="font-size:1.75rem;">🖨️</span>
+      <div>
+        <h2>DEMO DE IMPRESIÓN — INFORME DEL FINAL DEL DÍA ENFERMERÍA PET-TC</h2>
+        <p>Refleja exclusivamente: Fármaco, Iniciales, Número de Historia, Dosis Inyectada (mCi) y Hora de Inyección</p>
+      </div>
+    </div>
+    <div class="toolbar-actions">
+      <a href="pet_prep_page/enfermeria.html" class="btn-action btn-back">⬅ Volver a Enfermería</a>
+      <button type="button" class="btn-action btn-csv" onclick="descargarCSVDemo()">📊 Exportar CSV / Excel</button>
+      <button type="button" class="btn-action btn-print" onclick="window.print()">🖨️ Imprimir / Guardar en PDF</button>
+    </div>
+  </div>
+
+  <!-- HOJA OFICIAL A4 LISTA PARA IMPRIMIR -->
+  <main class="a4-sheet">
+    <header class="report-header">
+      <div class="brand-left">
+        <img src="galaria_logo.jpg" alt="Galaria SERGAS" class="brand-logo" onerror="this.style.display='none'">
+        <div>
+          <div class="org-kicker">XUNTA DE GALICIA · CONSELLERÍA DE SANIDADE · SERGAS · GALARIA</div>
+          <h1 class="report-main-title">Informe del Final del Día — Inyecciones Enfermería PET-TC</h1>
+          <div class="report-subtitle">Unidad de Medicina Nuclear (Hospital do Meixoeiro) · Registro de Fármaco, Iniciales, NHC, Dosis Inyectada y Hora</div>
+        </div>
+      </div>
+      <div class="meta-box">
+        <div class="doc-code">REF: SERGAS-GAL-ENF-PET-20261114</div>
+        <div><strong>Fecha de la Jornada:</strong> Sábado, 14/11/2026</div>
+        <div><strong>Turno:</strong> Mañana / Continuado (08:00 – 15:00 h)</div>
+        <div><strong>Pacientes Inyectados:</strong> <strong>14 pacientes</strong></div>
+      </div>
+    </header>
+
+    <!-- RESUMEN DE ACTIVIDAD POR FÁRMACO -->
+    <div class="section-label">
+      <span>☢️ Resumen de Dosis Administrada por Fármaco (mCi)</span>
+      <span>Total Jornada: 98.60 mCi</span>
+    </div>
+    <section class="kpi-grid-5">
+      <div class="kpi-card" style="background:#f0f9ff; border-color:#7dd3fc;">
+        <div class="k-title" style="color:#0369a1;">☢️ FDG</div>
+        <div class="k-val">8 pac. · 61.30 mCi</div>
+      </div>
+      <div class="kpi-card" style="background:#f5f3ff; border-color:#c4b5fd;">
+        <div class="k-title" style="color:#6d28d9;">☢️ PSMA</div>
+        <div class="k-val">3 pac. · 19.65 mCi</div>
+      </div>
+      <div class="kpi-card" style="background:#fffbeb; border-color:#fcd34d;">
+        <div class="k-title" style="color:#b45309;">☢️ COLINA</div>
+        <div class="k-val">2 pac. · 13.90 mCi</div>
+      </div>
+      <div class="kpi-card" style="background:#fdf2f8; border-color:#f9a8d4;">
+        <div class="k-title" style="color:#be185d;">☢️ GA68</div>
+        <div class="k-val">1 pac. · 3.75 mCi</div>
+      </div>
+      <div class="kpi-card" style="background:#ecfdf5; border-color:#10b981;">
+        <div class="k-title" style="color:#047857;">💉 TOTAL</div>
+        <div class="k-val" style="color:#065f46;">14 pac. · 98.60 mCi</div>
+      </div>
+    </section>
+
+    <!-- TABLA CON LAS 5 COLUMNAS SOLICITADAS -->
+    <div class="section-label">
+      <span>📋 Listado de Pacientes Inyectados al Finalizar el Turno</span>
+      <span>14 Registros</span>
+    </div>
+    <table class="shift-table" id="tablaDemoTurno">
+      <thead>
+        <tr>
+          <th>Fármaco</th>
+          <th>Iniciales</th>
+          <th>Número de Historia</th>
+          <th>Dosis Inyectada</th>
+          <th>Hora de Inyección</th>
+        </tr>
+      </thead>
+      <tbody id="tbodyDemoPacientes"></tbody>
+    </table>
+
+    <!-- FIRMAS OFICIALES DEL TURNO -->
+    <div class="signatures-grid">
+      <!-- BLOQUE 1: ENFERMERÍA DE PET (INICIALES TURNO MAÑANA Y TARDE) -->
+      <div class="sig-box">
+        <div>
+          <strong>Enfermería de PET</strong>
+          <div class="sig-subtitle">Validación de Turno e Inyecciones</div>
+        </div>
+        <div class="sig-enf-turns">
+          <div class="enf-turn-row">
+            <span class="enf-turn-label">Turno Mañana:</span>
+            <input type="text" id="enfMananaInit" class="sig-init-input" placeholder="Iniciales" value="L.V.P." maxlength="10" title="Iniciales del enfermero turno de mañana">
+          </div>
+          <div class="enf-turn-row">
+            <span class="enf-turn-label">Turno Tarde:</span>
+            <input type="text" id="enfTardeInit" class="sig-init-input" placeholder="Iniciales" value="M.S.R." maxlength="10" title="Iniciales del enfermero turno de tarde">
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: FIRMA DEL MÉDICO -->
+      <div class="sig-box">
+        <div>
+          <strong>Firma del Médico</strong>
+          <div class="sig-subtitle">Facultativo Especialista Medicina Nuclear</div>
+        </div>
+        <div class="sig-space">
+          <div class="sig-line"></div>
+          <span class="sig-caption">Firma y Sello del Médico</span>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: FIRMA DE FARMACIA -->
+      <div class="sig-box">
+        <div>
+          <strong>Firma de Farmacia</strong>
+          <div class="sig-subtitle">Radiofarmacia · Control de Dosis y Activímetro</div>
+        </div>
+        <div class="sig-space">
+          <div class="sig-line"></div>
+          <span class="sig-caption">Firma y Sello de Farmacia</span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer-legal">
+      <span>Ecosistema Digital Inteligente PET-TC · Galaria · Servizo Galego de Saúde (SERGAS)</span>
+      <span>Informe de Fin de Turno de Enfermería — Página 1 de 1</span>
+    </footer>
+  </main>
+
+  <script>
+    const DEMO_PACIENTES_DIA = [
+      { farmaco: 'FDG', iniciales: 'M.P.C.', nhc: 'NHC-391042', inyectado: 7.65, hora: '08:15' },
+      { farmaco: 'FDG', iniciales: 'J.A.G.R.', nhc: 'NHC-412890', inyectado: 6.80, hora: '08:35' },
+      { farmaco: 'PSMA', iniciales: 'A.V.S.', nhc: 'NHC-518290', inyectado: 6.60, hora: '09:00' },
+      { farmaco: 'FDG', iniciales: 'C.D.L.', nhc: 'NHC-602118', inyectado: 7.10, hora: '09:20' },
+      { farmaco: 'COLINA', iniciales: 'R.E.P.', nhc: 'NHC-449812', inyectado: 7.45, hora: '09:45' },
+      { farmaco: 'FDG', iniciales: 'P.L.M.', nhc: 'NHC-338901', inyectado: 9.75, hora: '10:10' },
+      { farmaco: 'GA68', iniciales: 'D.M.C.', nhc: 'NHC-710394', inyectado: 3.75, hora: '10:35' },
+      { farmaco: 'FDG', iniciales: 'B.N.R.', nhc: 'NHC-829104', inyectado: 7.35, hora: '11:00' },
+      { farmaco: 'PSMA', iniciales: 'F.J.S.B.', nhc: 'NHC-590231', inyectado: 6.00, hora: '11:25' },
+      { farmaco: 'FDG', iniciales: 'M.T.O.V.', nhc: 'NHC-674112', inyectado: 5.55, hora: '11:50' },
+      { farmaco: 'COLINA', iniciales: 'E.R.C.', nhc: 'NHC-498723', inyectado: 6.45, hora: '12:15' },
+      { farmaco: 'FDG', iniciales: 'L.G.F.', nhc: 'NHC-781205', inyectado: 9.20, hora: '12:40' },
+      { farmaco: 'PSMA', iniciales: 'S.P.D.', nhc: 'NHC-615409', inyectado: 7.05, hora: '13:10' },
+      { farmaco: 'FDG', iniciales: 'A.M.B.L.', nhc: 'NHC-845920', inyectado: 7.90, hora: '13:35' }
+    ];
+
+    function getBadgeFarmacoClass(f) {
+      if (f === 'PSMA') return 'b-psma';
+      if (f === 'COLINA') return 'b-colina';
+      if (f === 'GA68') return 'b-ga68';
+      return 'b-fdg';
+    }
+
+    function renderTablaDemo() {
+      const tbody = document.getElementById('tbodyDemoPacientes');
+      tbody.innerHTML = DEMO_PACIENTES_DIA.map((p) => {
+        return `
+          <tr>
+            <td><span class="badge ${getBadgeFarmacoClass(p.farmaco)}">☢️ ${p.farmaco}</span></td>
+            <td style="font-weight:900; color:#00354d; font-size:0.9rem; letter-spacing:0.4px;">${p.iniciales}</td>
+            <td><span class="mono" style="background:#f1f5f9; color:#0284c7; border:1px solid #cbd5e1; padding:3px 8px; border-radius:6px; font-weight:800;">${p.nhc}</span></td>
+            <td class="mono" style="font-weight:900; color:#0f172a; font-size:0.88rem;">💉 ${p.inyectado.toFixed(2)} mCi</td>
+            <td class="mono" style="font-weight:800; color:#0f172a; font-size:0.88rem;">⏰ ${p.hora} h</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function descargarCSVDemo() {
+      const headers = [
+        'Farmaco',
+        'Iniciales',
+        'Numero de Historia',
+        'Dosis Inyectada',
+        'Hora de Inyeccion'
+      ];
+      const rows = [headers.join(';')];
+      DEMO_PACIENTES_DIA.forEach((p) => {
+        rows.push([
+          p.farmaco,
+          p.iniciales,
+          p.nhc,
+          `${p.inyectado.toFixed(2)} mCi`,
+          `${p.hora} h`
+        ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(';'));
+      });
+      const blob = new Blob(['\uFEFF' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Informe_Final_Dia_Enfermeria_PET_14-11-2026.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    try {
+      const m = localStorage.getItem('PET_INF_ENF_INIT_MANANA');
+      const t = localStorage.getItem('PET_INF_ENF_INIT_TARDE');
+      if (m && document.getElementById('enfMananaInit')) document.getElementById('enfMananaInit').value = m;
+      if (t && document.getElementById('enfTardeInit')) document.getElementById('enfTardeInit').value = t;
+    } catch(e) {}
+
+    renderTablaDemo();
+  </script>
+</body>
+</html>

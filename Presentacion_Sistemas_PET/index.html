@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentación Oficial: Ecosistema Digital PET/CT & Medicina Nuclear | Galaria · SERGAS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --sergas-blue: #007eb4;
+      --sergas-blue-hover: #005b82;
+      --sergas-navy: #004868;
+      --sergas-dark: #08293d;
+      --sergas-soft-blue: #e6f4fa;
+      --sergas-subtle: #f0f7fb;
+      --bg-page: #0b1329;
+      --slide-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #526071;
+      --border-subtle: #d6e2e9;
+      --accent-green: #16a34a;
+      --accent-yellow: #d97706;
+      --accent-red: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Toolbar */
+    .deck-toolbar {
+      width: 100%;
+      max-width: 1260px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      color: #e2e8f0;
+      z-index: 100;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .toolbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .toolbar-brand span {
+      background: var(--sergas-blue);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #fff;
+      color: #fff;
+    }
+
+    .btn-primary-action {
+      background: var(--sergas-blue);
+      border-color: var(--sergas-blue);
+    }
+
+    .btn-primary-action:hover {
+      background: var(--sergas-blue-hover);
+    }
+
+    .btn-demo-live {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-color: #10b981;
+    }
+
+    .btn-demo-live:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    /* Presentation Viewport (16:9 ratio) */
+    .deck-viewport {
+      width: 95vw;
+      max-width: 1260px;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: var(--slide-bg);
+      border-radius: 14px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slides Container */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateX(25px);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 34px;
+      background: #f8fafc;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+      z-index: 2;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      background: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .slide-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--sergas-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--sergas-navy);
+      line-height: 1.2;
+    }
+
+    .slide-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .pill-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .pill-badge {
+      background: var(--sergas-soft-blue);
+      color: var(--sergas-navy);
+      border: 1px solid #bce1f1;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .pill-badge.alert-pill {
+      background: #fef2f2;
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+
+    .pill-badge.success-pill {
+      background: #f0fdf4;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+
+    .kpi-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .kpi-card {
+      background: var(--sergas-subtle);
+      border: 1px solid #bce1f1;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .kpi-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Slide Body (Split Layout) */
+    .slide-body {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 20px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Text Column */
+    .slide-text-col {
+      background: #fff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
+      overflow-y: auto;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-item {
+      font-size: 0.88rem;
+      line-height: 1.42;
+      color: var(--text-main);
+      padding-left: 22px;
+      position: relative;
+    }
+
+    .feature-item::before {
+      content: "▪";
+      position: absolute;
+      left: 6px;
+      color: var(--sergas-blue);
+      font-size: 1.3rem;
+      line-height: 0.9;
+    }
+
+    .feature-item strong {
+      color: var(--sergas-navy);
+    }
+
+    /* Image Column */
+    .slide-image-col {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid var(--sergas-blue);
+      background: #08293d;
+      box-shadow: 0 4px 16px rgba(0, 126, 180, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-image-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #041724;
+    }
+
+    .image-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(8, 41, 61, 0.9);
+      color: #e6f4fa;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    /* Slide Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    /* Cover Slide Styling */
+    .slide.cover-slide {
+      background: radial-gradient(circle at 80% 20%, #0c3e5e 0%, #004868 60%, #08293d 100%);
+      color: #ffffff;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .cover-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      padding: 34px 44px;
+      border-radius: 16px;
+      max-width: 950px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: var(--sergas-blue);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .cover-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    .cover-subtitle {
+      font-size: 1.05rem;
+      color: #e6f4fa;
+      line-height: 1.45;
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    .cover-meta {
+      display: flex;
+      justify-content: center;
+      gap: 26px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cover-meta strong {
+      color: #ffffff;
+    }
+
+    /* Bottom Control Bar */
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 14px;
+      color: #e2e8f0;
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #334155;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--sergas-blue);
+      border-color: var(--sergas-blue);
+      transform: scale(1.05);
+    }
+
+    .slide-counter {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .shortcuts-hint {
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+
+    /* Print styles */
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .deck-toolbar,
+      .deck-controls {
+        display: none !important;
+      }
+
+      .deck-viewport {
+        box-shadow: none !important;
+        width: 1920px !important;
+        height: 1080px !important;
+        max-width: 1920px !important;
+        aspect-ratio: auto !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+      }
+
+      .slide {
+        position: relative !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        width: 1920px !important;
+        height: 1080px !important;
+        min-height: 1080px !important;
+        max-height: 1080px !important;
+        box-sizing: border-box !important;
+        padding: 40px 60px !important;
+      }
+
+      .slide.cover-slide {
+        padding: 60px !important;
+      }
+
+      .slide-body {
+        gap: 30px !important;
+      }
+
+      .feature-item {
+        font-size: 1.15rem !important;
+        line-height: 1.5 !important;
+      }
+
+      .slide-title {
+        font-size: 1.85rem !important;
+      }
+
+      .slide-subtitle {
+        font-size: 1.1rem !important;
+      }
+
+      .slide-tag {
+        font-size: 0.85rem !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Toolbar -->
+  <header class="deck-toolbar">
+    <div class="toolbar-brand">
+      <span>SERGAS</span>
+      <strong>Galaria · Medicina Nuclear & Diagnóstico Molecular</strong>
+    </div>
+    <div class="toolbar-actions">
+      <a href="../index.html" class="btn-action btn-demo-live" title="Abrir Portal Maestro en vivo">
+        🚀 Abrir Demo en Vivo
+      </a>
+      <a href="Presentacion_Ecosistema_PET_CT.pptx" download class="btn-action btn-primary-action"
+        title="Descargar archivo PowerPoint .pptx">
+        📥 Descargar PPTX (1.6 MB)
+      </a>
+      <button class="btn-action" onclick="toggleFullscreen()" title="Pantalla Completa (F)">
+        ⛶ Pantalla Completa
+      </button>
+      <button class="btn-action" onclick="window.print()" title="Imprimir o Guardar en PDF">
+        🖨️ Exportar a PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- Presentation Viewport (16:9) -->
+  <main class="deck-viewport" id="viewport">
+
+    <!-- SLIDE 1: Portada Oficial -->
+    <section class="slide cover-slide active" data-slide="1">
+      <div class="cover-card">
+        <span class="cover-badge">🏥 Ecosistema Digital Clínico PET/CT</span>
+        <h1 class="cover-title">ECOSISTEMA DIGITAL PET/CT & MEDICINA NUCLEAR</h1>
+        <p class="cover-subtitle">
+          Plataforma Asistencial Integral de Prescripción Médica, Triaje Matricial, Audioguías Asistenciales con IA,
+          Consola Médica, Consola TSID y Enfermería
+        </p>
+        <div class="cover-meta">
+          <div>Entidad: <strong>Galaria · SERGAS</strong></div>
+          <div>Unidad: <strong>Medicina Nuclear & PET/CT (Hospital Meixoeiro / Vigo)</strong></div>
+          <div>Edición: <strong>Oficial 2026</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: El Reto y los Cuellos de Botella Asistenciales -->
+    <section class="slide" data-slide="2">
+      <div class="slide-header">
+        <span class="slide-tag">El Problema Clínico Real</span>
+        <h2 class="slide-title">1. Retos y Cuellos de Botella en Medicina Nuclear</h2>
+        <p class="slide-subtitle">La carrera contra el decaimiento isotópico y las cancelaciones en el día de la cita</p>
+        <div class="pill-badges">
+          <span class="pill-badge alert-pill">⏳ T½ Flúor-18: 110 min</span>
+          <span class="pill-badge alert-pill">💶 Coste dosis: 400€ - 1.200€</span>
+          <span class="pill-badge">🚫 Absentismo previo: 8 - 12%</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Decaimiento Físico Inflexible:</strong> $^{18}\text{F}$ (110 min) y $^{68}\text{Ga}$ (68 min). Cada cita perdida destruye la dosis.
+            </li>
+            <li class="feature-item">
+              <strong>Cancelaciones en el Día:</strong> Ingestas inadvertidas o glucemias descompensadas en el box de inyección.
+            </li>
+            <li class="feature-item">
+              <strong>Volantes No Estructurados:</strong> Solicitudes en papel sin peso ni talla para MBq, ni antecedentes de QT/RT.
+            </li>
+            <li class="feature-item">
+              <strong>Sobrecarga Telefónica:</strong> Enfermería consumida respondiendo dudas básicas repetitivas sobre el ayuno.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/pet_triage_table.png" alt="Retos y Cuellos de Botella">
+          <span class="image-badge">Monitorización de Incidencias</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 2 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Arquitectura End-to-End: Los 6 Eslabones -->
+    <section class="slide" data-slide="3">
+      <div class="slide-header">
+        <span class="slide-tag">Arquitectura del Ecosistema</span>
+        <h2 class="slide-title">2. Arquitectura Integral End-to-End: 6 Módulos Conectados</h2>
+        <p class="slide-subtitle">Flujo asistencial unificado mediante Base de Datos Clínica Sincronizada en Tiempo Real</p>
+        <div class="pill-badges">
+          <span class="pill-badge success-pill">🔄 Interoperabilidad HL7 / JSON</span>
+          <span class="pill-badge">🩺 3 Consolas Dedicadas</span>
+          <span class="pill-badge success-pill">⚡ Sincronización en Vivo</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Ciclo Completo 360°:</strong> Desde la prescripción del oncólogo hasta el alta de enfermería tras la prueba.
+            </li>
+            <li class="feature-item">
+              <strong>Base de Datos Unificada:</strong> Sincronización instantánea entre volantes, agendas y pantallas de sala.
+            </li>
+            <li class="feature-item">
+              <strong>Consolas por Perfil Clínico:</strong> Pantallas específicas para Médicos Nucleares, Enfermería y Técnicos TSID.
+            </li>
+            <li class="feature-item">
+              <strong>Acompañamiento Continuo:</strong> 12 audioguías y asistente virtual empático 24/7 en el móvil del paciente.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/pet_peticion_db.png" alt="Base de Datos Clínica Unificada">
+          <span class="image-badge">Base de Datos Central Sincronizada</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 3 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Módulo 1 — Prescripción Médica Asistida -->
+    <section class="slide" data-slide="4">
+      <div class="slide-header">
+        <span class="slide-tag">Módulo 1 · Prescripción Médica</span>
+        <h2 class="slide-title">3. Portal Clínico de Prescripción Médica PET/CT</h2>
+        <p class="slide-subtitle">Captura de parámetros dosimétricos y clasificación objetiva según guías EANM</p>
+        <div class="pill-badges">
+          <span class="pill-badge">☢️ 10 Trazadores Tipificados</span>
+          <span class="pill-badge">🧮 Dosimetría en MBq</span>
+          <span class="pill-badge success-pill">Prioridad EANM: 🔴 P1 · 🟡 P2 · 🟢 P3</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Cálculo Dosimétrico Automático:</strong> Peso y talla obligatorios para calcular la actividad en MBq.
+            </li>
+            <li class="feature-item">
+              <strong>Catálogo de 10 Protocolos:</strong> FDG oncológico, contraste iodado, Endocarditis HEP, PSMA, Colina y Cerebro.
+            </li>
+            <li class="feature-item">
+              <strong>Motor de Priorización EANM:</strong> Clasificación objetiva en P1 (&lt;7d), P2 (&lt;14d) o P3 (&gt;14d).
+            </li>
+            <li class="feature-item">
+              <strong>Panel 'Mis Peticiones':</strong> Seguimiento de estado en vivo para el médico peticionario.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/pet_peticion.png" alt="Formulario Oficial de Prescripción">
+          <span class="image-badge">Formulario de Prescripción</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 4 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Módulo 2 — Triaje y Agendamiento Matricial -->
+    <section class="slide" data-slide="5">
+      <div class="slide-header">
+        <span class="slide-tag">Módulo 2 · Triaje Clínico</span>
+        <h2 class="slide-title">4. Suite de Triaje y Agendamiento Matricial</h2>
+        <p class="slide-subtitle">Asignación inteligente por suministro de ciclotrón y filtros preventivos de seguridad</p>
+        <div class="pill-badges">
+          <span class="pill-badge alert-pill">⛔ Bloqueo QT/RT: 21 días</span>
+          <span class="pill-badge">🗓️ Matriz Semanal de Isótopos</span>
+          <span class="pill-badge">⏰ Zonificación por Movilidad</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Parrilla por Radiofármaco:</strong> Cupos semanales sincronizados con el ciclotrón (FDG, PSMA y Colina).
+            </li>
+            <li class="feature-item">
+              <strong>⛔ Bloqueo Preventivo QT/RT (&lt;21 días):</strong> Evita falsos negativos por aturdimiento tumoral fijando fecha mínima.
+            </li>
+            <li class="feature-item">
+              <strong>Zonificación Horaria Asistencial:</strong> 08:00h autónomos, 10:00h traslados en camilla, 11:00h sedación.
+            </li>
+            <li class="feature-item">
+              <strong>Gestión de Demoras:</strong> Planificación de agendas ordinarias y jornadas vespertinas extraordinarias.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/pet_triage_dashboard.png" alt="Parrilla Semanal de Triaje">
+          <span class="image-badge">Parrilla Semanal de Isótopos</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 5 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Módulo 3 — Preparación y Audioguías -->
+    <section class="slide" data-slide="6">
+      <div class="slide-header">
+        <span class="slide-tag">Módulo 3 · Asistencia al Paciente</span>
+        <h2 class="slide-title">5. Portal de Audioguías Oficiales de Preparación</h2>
+        <p class="slide-subtitle">12 protocolos interactivos en el móvil del paciente con voz, cronómetro y enlace oficial SMS</p>
+        <div class="pill-badges">
+          <span class="pill-badge success-pill">🔊 12 Audioguías Oficiales</span>
+          <span class="pill-badge">📲 Enlace Web Directo por SMS</span>
+          <span class="pill-badge">⏱️ Cronómetro de Ayuno en Vivo</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>12 Protocolos Específicos:</strong> Desde FDG estándar hasta dieta cetogénica 16h en Endocarditis.
+            </li>
+            <li class="feature-item">
+              <strong>Narración Oral con Voz:</strong> Locución clara pensada para personas mayores o con dificultades visuales.
+            </li>
+            <li class="feature-item">
+              <strong>Cronómetro de Ayuno:</strong> Cuenta atrás visual adaptada a la hora exacta de la cita del paciente.
+            </li>
+            <li class="feature-item">
+              <strong>Cero Barreras:</strong> Enlace web directo por SMS oficial del SERGAS, sin instalar aplicaciones ni recordar contraseñas.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/pet_prep.png" alt="Audioguía Oficial de Preparación">
+          <span class="image-badge">Audioguía Interactiva Móvil</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 6 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Innovación — Chatbot Empático con Streaming -->
+    <section class="slide" data-slide="7">
+      <div class="slide-header">
+        <span class="slide-tag">Innovación Asistencial con IA</span>
+        <h2 class="slide-title">6. Chatbot Empático de Enfermería con Streaming</h2>
+        <p class="slide-subtitle">Asistente clínico virtual 24/7 con escritura palabra por palabra y datos reales</p>
+        <div class="pill-badges">
+          <span class="pill-badge success-pill">✍️ Escritura Progresiva en Streaming</span>
+          <span class="pill-badge">👤 Personalización con NHC</span>
+          <span class="pill-badge">🗣️ Audio Síntesis 24/7</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Efecto Typewriter Streaming:</strong> Respuestas redactadas progresivamente con ritmo pausado y humano.
+            </li>
+            <li class="feature-item">
+              <strong>Personalización Real:</strong> Llama al paciente por su nombre, confirma hora y sala en el Meixoeiro.
+            </li>
+            <li class="feature-item">
+              <strong>Contención de Ansiedad:</strong> Explica con cercanía que el tomógrafo es abierto, ventilado y luminoso.
+            </li>
+            <li class="feature-item">
+              <strong>Síntesis de Voz Integrada:</strong> Botón «🔊 Escuchar» para reproducir la respuesta locutada en alta fidelidad.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/prep_chatbot.png" alt="Chatbot de Enfermería con IA">
+          <span class="image-badge">Chatbot con Escritura Fluida</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 7 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Módulo 4 — Consola de Enfermería y Altas -->
+    <section class="slide" data-slide="8">
+      <div class="slide-header">
+        <span class="slide-tag">Módulo 4 · Enfermería Clínica</span>
+        <h2 class="slide-title">7. Consola de Enfermería y Control Pre-Analítico</h2>
+        <p class="slide-subtitle">Semáforo metabólico domiciliario, gestión de incidencias y altas seguras</p>
+        <div class="pill-badges">
+          <span class="pill-badge alert-pill">🩸 Alerta Glucemia ≥200 mg/dL</span>
+          <span class="pill-badge success-pill">✅ Botón 'Pode Marchar'</span>
+          <span class="pill-badge">📞 Detección Temprana</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Semáforo Domiciliario:</strong> Paciente reporta glucemia antes de salir de casa; alerta si $\ge 200$ mg/dL.
+            </li>
+            <li class="feature-item">
+              <strong>Anticipación de Huecos:</strong> Cancelaciones detectadas 24-48h antes para citar pacientes de lista de espera.
+            </li>
+            <li class="feature-item">
+              <strong>Protocolo 'Pode Marchar':</strong> Validación de hidratación y micción para archivar el episodio con un clic.
+            </li>
+            <li class="feature-item">
+              <strong>Bandeja de Incidencias:</strong> Atención prioritaria a pacientes que requieren consulta telefónica real.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/enfermeria_dashboard.png" alt="Consola de Enfermería">
+          <span class="image-badge">Consola de Enfermería en Vivo</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 8 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Módulo 5 — Consola Médica & Carpeta No Triables -->
+    <section class="slide" data-slide="9">
+      <div class="slide-header">
+        <span class="slide-tag">Módulo 5 · Facultativos de Medicina Nuclear</span>
+        <h2 class="slide-title">8. Consola Médica & Carpeta de Peticiones No Triables</h2>
+        <p class="slide-subtitle">Autonomía facultativa intacta, visor de volante oficial y pauta técnica a máquina</p>
+        <div class="pill-badges">
+          <span class="pill-badge success-pill">🩺 Criterio Médico Soberano</span>
+          <span class="pill-badge alert-pill">📁 Buzón de Casos Complejos</span>
+          <span class="pill-badge">⚙️ Pauta Técnica Digital en 3 Clics</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Carpeta de No Triables:</strong> Casos clínicos complejos retenidos para que el médico decida prioridad.
+            </li>
+            <li class="feature-item">
+              <strong>Visor Oficial SERGAS:</strong> Acceso inmediato a antecedentes oncológicos, informes de TC y analíticas.
+            </li>
+            <li class="feature-item">
+              <strong>Pauta a Máquina en 3 Clics:</strong> Brazos arriba/abajo, tiempos por cama, diurético (Seguril) y contraste.
+            </li>
+            <li class="feature-item">
+              <strong>Sincronización en Sala:</strong> Órdenes médicas visibles de inmediato en el tomógrafo de los TSID.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/triage_confirmaciones.png" alt="Consola Médica y Volantes">
+          <span class="image-badge">Consola Médica & Buzón Clínico</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 9 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Módulo 6 — Consola Técnica TSID -->
+    <section class="slide" data-slide="10">
+      <div class="slide-header">
+        <span class="slide-tag">Módulo 6 · Técnicos Superiores TSID</span>
+        <h2 class="slide-title">9. Consola Técnica TSID (Sala de Tomógrafo)</h2>
+        <p class="slide-subtitle">Tiempos exactos de captación, diagramas anatómicos y semáforo de contraste IV</p>
+        <div class="pill-badges">
+          <span class="pill-badge success-pill">⏱️ Pico Metabólico Óptimo (60 min)</span>
+          <span class="pill-badge">📐 Esquema Anatómico Vectorial</span>
+          <span class="pill-badge">💉 Control Vía 18G / Contraste</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Cronómetro de Captación:</strong> Tiempo exacto tras inyección para pasar a camilla en pico óptimo (60 min).
+            </li>
+            <li class="feature-item">
+              <strong>Esquemas Vectoriales Posturales:</strong> Indicación visual inequívoca de brazos, centrado láser e isocentro.
+            </li>
+            <li class="feature-item">
+              <strong>Mapa de Campos FOV:</strong> Longitud de corte clara (cráneo-muslos vs cuerpo entero con extremidades).
+            </li>
+            <li class="feature-item">
+              <strong>Semáforo de Contraste IV:</strong> Confirmación de calibre de vía (18G), volumen en mL y retardo de fase.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/enfermeria_consola_abierta.png" alt="Consola Técnica TSID">
+          <span class="image-badge">Consola TSID en Sala de Tomógrafo</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 10 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Resultados Cuantitativos y ROI -->
+    <section class="slide" data-slide="11">
+      <div class="slide-header">
+        <span class="slide-tag">Impacto y Eficiencia Asistencial</span>
+        <h2 class="slide-title">10. Impacto Asistencial, Clínico y Retorno de Inversión (ROI)</h2>
+        <p class="slide-subtitle">Eficiencia contrastada en listas de espera, aprovechamiento radiofarmacéutico y tiempos</p>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <div class="kpi-cards-grid">
+            <div class="kpi-card">
+              <div class="kpi-num">&lt; 1.5%</div>
+              <div class="kpi-label">Absentismo (No-Shows)<br><small>Frente al 8-12% en papel</small></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-num">100%</div>
+              <div class="kpi-label">Dosis Aprovechadas<br><small>Cero pérdidas de ciclotrón</small></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-num">Minutos</div>
+              <div class="kpi-label">Tiempo de Triaje<br><small>De 48h manual a minutos</small></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-num">-70%</div>
+              <div class="kpi-label">Carga Telefónica<br><small>Enfermería liberada</small></div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/deck_preview.png" alt="Métricas e Impacto del Ecosistema">
+          <span class="image-badge">Métricas y Retorno de Inversión</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 11 de 12</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: Demostración en Vivo y Despliegue -->
+    <section class="slide" data-slide="12">
+      <div class="slide-header">
+        <span class="slide-tag">Demostración y Cierre</span>
+        <h2 class="slide-title">11. Demostración en Vivo & Despliegue Inmediato</h2>
+        <p class="slide-subtitle">Plataforma 100% web con modo demostración auto-reiniciable cada 24 horas</p>
+        <div class="pill-badges">
+          <span class="pill-badge success-pill">🔄 Auto-Reset 24h</span>
+          <span class="pill-badge">💻 Cero Instalación de Software</span>
+          <span class="pill-badge">🚀 Validación Inmediata</span>
+        </div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-text-col">
+          <ul class="feature-list">
+            <li class="feature-item">
+              <strong>Modo Demo Auto-Reset 24h:</strong> Citas siempre activas para HOY y MAÑANA en cualquier fecha.
+            </li>
+            <li class="feature-item">
+              <strong>Acceso Universal sin Instalación:</strong> Operativo en ordenadores del hospital, tablets y teléfonos móviles.
+            </li>
+            <li class="feature-item">
+              <strong>Caso Piloto (Carmen Lois Souto):</strong> Demostración en 3 min (No Triables -&gt; Triaje P1 -&gt; Chatbot -&gt; Alta).
+            </li>
+            <li class="feature-item">
+              <strong>Listo para Implantación:</strong> Validación departamental para despliegue en Galaria y el SERGAS.
+            </li>
+          </ul>
+        </div>
+        <div class="slide-image-col">
+          <img src="screenshots/pet_peticion_db.png" alt="Portal Maestro en Vivo">
+          <span class="image-badge">Portal Maestro en Vivo</span>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Galaria · Servizo Galego de Saúde</span>
+        <span>Diapositiva 12 de 12</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Deck Control Bar -->
+  <footer class="deck-controls">
+    <button class="nav-btn" onclick="prevSlide()" title="Anterior (Flecha Izquierda)">❮</button>
+    <div class="slide-counter" id="counter">1 / 12</div>
+    <button class="nav-btn" onclick="nextSlide()" title="Siguiente (Flecha Derecha / Espacio)">❯</button>
+    <span class="shortcuts-hint">Atajos: [← / → / Espacio] Cambiar diapositiva · [F] Pantalla Completa</span>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 12;
+    const slides = document.querySelectorAll('.slide');
+    const counter = document.getElementById('counter');
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+
+      slides.forEach((s, idx) => {
+        if (idx + 1 === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      counter.textContent = `${currentSlide} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    function toggleFullscreen() {
+      const elem = document.getElementById('viewport');
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          alert(`Error al activar pantalla completa: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+    });
+  </script>
+
+</body>
+
+</html>
