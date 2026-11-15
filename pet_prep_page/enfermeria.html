@@ -818,6 +818,24 @@
       color: var(--sergas-navy);
     }
 
+    .tab-pill-btn.anulaciones {
+      background: #fff1f2;
+      border-color: #fecdd3;
+      color: #be123c;
+    }
+
+    .tab-pill-btn.anulaciones:hover {
+      background: #ffe4e6;
+      border-color: #fda4af;
+      color: #9f1239;
+    }
+
+    .tab-pill-btn.active.anulaciones {
+      background: #ffe4e6;
+      border-color: #e11d48;
+      color: #9f1239;
+    }
+
     .search-input-box {
       position: relative;
       flex: 1;
@@ -2793,6 +2811,13 @@
           </svg>
           <span>📑 Ver Todos los Paneles</span>
         </button>
+
+        <button type="button" class="tab-pill-btn anulaciones" id="pillBtnAnulaciones" onclick="abrirModalAnularPruebaEnf()" title="Pestaña de anulación de la prueba con selección oficial de motivos">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" />
+          </svg>
+          <span>🛑 Anulación de la Prueba (<span id="badgeAnulacionesPill">0</span>)</span>
+        </button>
       </div>
 
       <div class="search-input-box">
@@ -3574,6 +3599,7 @@
        -------------------------------------------------------------------------- */
     function iniciarConsolaEnfermeria() {
       actualizarBadgeEnfermeroToolbar();
+      actualizarContadorAnulaciones();
       cargarDatosPanel();
       if (autoRefreshTimer) clearInterval(autoRefreshTimer);
       // Auto-refresco cada 6 segundos para detección rápida de nuevas alertas
@@ -4027,6 +4053,8 @@
     function renderizarPacientesCitados() {
       const container = document.getElementById("citadosContainer");
       if (!container) return;
+
+      actualizarContadorAnulaciones();
 
       const lblFormatted = document.getElementById("lblDateFormatted");
       const badgeCount = document.getElementById("badgeCitadosCount");
@@ -5735,6 +5763,393 @@
     }
 
     /* --------------------------------------------------------------------------
+       SISTEMA DE ANULACIÓN DE PRUEBAS PET-TC (ENFERMERÍA & CALIDAD)
+       -------------------------------------------------------------------------- */
+    const MOTIVOS_ANULACION_ENF = [
+      {
+        id: 'mala_preparacion',
+        nombre: 'Mala preparación',
+        icono: '🍽️',
+        badgeBg: '#fffbeb',
+        badgeColor: '#b45309',
+        badgeBorder: '#fcd34d',
+        desc: 'Hiperglucemia >160-200 mg/dL, ayuno no respetado (6h), ingesta de carbohidratos o ejercicio físico intenso previo.'
+      },
+      {
+        id: 'no_acude',
+        nombre: 'El paciente no acude',
+        icono: '🚶‍♂️',
+        badgeBg: '#fff1f2',
+        badgeColor: '#be123c',
+        badgeBorder: '#fecdd3',
+        desc: 'No-show / inasistencia del paciente al horario asignado sin preaviso a la unidad.'
+      },
+      {
+        id: 'decision_medica',
+        nombre: 'Decisión médica',
+        icono: '🩺',
+        badgeBg: '#f0f9ff',
+        badgeColor: '#0369a1',
+        badgeBorder: '#bae6fd',
+        desc: 'Criterio facultativo del médico nuclear o prescriptor, contraindicación aguda sobrevenida o cambio de pauta.'
+      },
+      {
+        id: 'averia_maquina',
+        nombre: 'Avería de máquina',
+        icono: '⚙️',
+        badgeBg: '#f8fafc',
+        badgeColor: '#475569',
+        badgeBorder: '#cbd5e1',
+        desc: 'Incidencia técnica o parada imprevista del tomógrafo PET-TC, sistema inyector o software de adquisición.'
+      },
+      {
+        id: 'fallo_radiofarmaco',
+        nombre: 'Fallo síntesis radiofármaco',
+        icono: '☢️',
+        badgeBg: '#f5f3ff',
+        badgeColor: '#6d28d9',
+        badgeBorder: '#ddd6fe',
+        desc: 'No conformidad en control de calidad de radiofarmacia, parada de ciclotrón o retraso crítico en suministro de dosis.'
+      }
+    ];
+
+    function obtenerAnulacionesEnf() {
+      try {
+        const raw = localStorage.getItem('PET_SHARED_ANULACIONES_V1');
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function guardarAnulacionesEnf(lista) {
+      try {
+        localStorage.setItem('PET_SHARED_ANULACIONES_V1', JSON.stringify(lista));
+      } catch (e) {}
+      actualizarContadorAnulaciones();
+    }
+
+    function actualizarContadorAnulaciones() {
+      const badge = document.getElementById('badgeAnulacionesPill');
+      if (!badge) return;
+      const anulaciones = obtenerAnulacionesEnf();
+      const fechaFiltro = selectedCitadosDate && selectedCitadosDate !== 'all' ? selectedCitadosDate : getTodayDateStr();
+      const filtradas = anulaciones.filter(a => a.fecha === fechaFiltro || !a.fecha);
+      badge.textContent = filtradas.length;
+    }
+    window.actualizarContadorAnulaciones = actualizarContadorAnulaciones;
+
+    function abrirModalAnularPruebaEnf(subIdOpcional = null) {
+      const modalId = 'modalAnularPruebaEnf';
+      const old = document.getElementById(modalId);
+      if (old) old.remove();
+
+      let pacienteInicial = null;
+      if (subIdOpcional) {
+        pacienteInicial = findScheduledPatient(subIdOpcional);
+      }
+
+      const citasHoy = scheduledPatients.filter(p => {
+        if (!p) return false;
+        if (selectedCitadosDate === 'all') return true;
+        const f = String(p["Fecha Cita Asignada"] || p.appointmentDate || "").trim();
+        return f === (selectedCitadosDate || getTodayDateStr());
+      });
+
+      const anulacionesTotales = obtenerAnulacionesEnf();
+      const fechaFiltro = selectedCitadosDate && selectedCitadosDate !== 'all' ? selectedCitadosDate : getTodayDateStr();
+      const anuladasHoy = anulacionesTotales.filter(a => a.fecha === fechaFiltro || !a.fecha);
+
+      let motivoPreseleccionado = 'mala_preparacion';
+      let obsPrevia = '';
+      if (pacienteInicial) {
+        const idStr = String(pacienteInicial["Submission ID"] || pacienteInicial.id);
+        const yaAnulado = anuladasHoy.find(a => String(a.subId) === idStr);
+        if (yaAnulado) {
+          motivoPreseleccionado = yaAnulado.motivo || 'mala_preparacion';
+          obsPrevia = yaAnulado.observaciones || '';
+        }
+      }
+
+      const overlay = document.createElement('div');
+      overlay.id = modalId;
+      overlay.style.cssText = `
+        position: fixed; inset: 0; z-index: 10001;
+        background: rgba(15, 23, 42, 0.72);
+        backdrop-filter: blur(4px);
+        display: flex; align-items: center; justify-content: center;
+        padding: 16px;
+      `;
+
+      overlay.innerHTML = `
+        <div style="background: #ffffff; border-radius: 14px; max-width: 620px; width: 100%; max-height: 90vh; box-shadow: 0 25px 60px rgba(0,0,0,0.4); border: 2px solid #e11d48; overflow: hidden; display: flex; flex-direction: column;">
+          <!-- CABECERA -->
+          <div style="background: linear-gradient(135deg, #9f1239, #881337); color: #ffffff; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="font-size: 1.8rem;">🛑</span>
+              <div>
+                <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.3px;">Anulación Oficial de Prueba PET-TC</h3>
+                <div style="font-size: 0.78rem; opacity: 0.9; margin-top: 2px;">Consola de Enfermería · Registro de Incidencias y Motivos</div>
+              </div>
+            </div>
+            <button type="button" onclick="cerrarModalAnularPruebaEnf()" style="background: rgba(255,255,255,0.18); border: none; color: #ffffff; width: 32px; height: 32px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Cerrar">✕</button>
+          </div>
+
+          <!-- CUERPO CON SCROLL -->
+          <div style="padding: 20px 22px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;">
+            <!-- SELECTOR DE PACIENTE -->
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 800; color: #004868; display: block; margin-bottom: 6px;">
+                👤 Paciente a Anular:
+              </label>
+              ${pacienteInicial ? `
+                <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+                  <div>
+                    <strong style="color: #0f172a; font-size: 0.95rem;">${escapeHTML(pacienteInicial["Nombre del Paciente"] || pacienteInicial.patientName || 'Paciente')}</strong>
+                    <div style="font-size: 0.76rem; color: #64748b; margin-top: 2px;">
+                      NHC: <strong>${escapeHTML(pacienteInicial["NHC / Historia Clínica"] || pacienteInicial.nhc || '--')}</strong> · Turno: <strong>${escapeHTML(pacienteInicial["Hora Cita Asignada"] || '--:--')} h</strong> · Estudio: <strong>${escapeHTML(pacienteInicial["Tipo de Estudio PET Solicitado"] || pacienteInicial.studyType || 'FDG')}</strong>
+                    </div>
+                  </div>
+                  <input type="hidden" id="anulSelectSubId" value="${escapeHTML(pacienteInicial["Submission ID"] || pacienteInicial.id)}">
+                </div>
+              ` : `
+                <select id="anulSelectSubId" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid #0284c7; font-size: 0.88rem; font-weight: 700; color: #0f172a; background: #ffffff; cursor: pointer;">
+                  <option value="">-- Selecciona el paciente citado a anular (${citasHoy.length} disponibles) --</option>
+                  ${citasHoy.map(p => {
+                    const sid = p["Submission ID"] || p.id;
+                    const nom = p["Nombre del Paciente"] || p.patientName || 'Paciente';
+                    const n = p["NHC / Historia Clínica"] || p.nhc || '--';
+                    const h = p["Hora Cita Asignada"] || '--:--';
+                    const ya = anuladasHoy.some(a => String(a.subId) === String(sid));
+                    return `<option value="${escapeHTML(sid)}">${h} h · ${escapeHTML(nom)} (${escapeHTML(n)})${ya ? ' [YA ANULADO]' : ''}</option>`;
+                  }).join('')}
+                </select>
+              `}
+            </div>
+
+            <!-- MOTIVOS DE ANULACIÓN (LOS 5 SOLICITADOS) -->
+            <div>
+              <label style="font-size: 0.82rem; font-weight: 800; color: #004868; display: block; margin-bottom: 8px;">
+                📋 Selecciona el Motivo de la Anulación:
+              </label>
+              <div style="display: flex; flex-direction: column; gap: 8px;" id="anulMotivosListContainer">
+                ${MOTIVOS_ANULACION_ENF.map(m => {
+                  const isChecked = m.id === motivoPreseleccionado;
+                  return `
+                    <label class="anul-motivo-card" style="display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 2px solid ${isChecked ? '#e11d48' : '#cbd5e1'}; background: ${isChecked ? '#fff1f2' : '#ffffff'}; cursor: pointer; transition: all 0.15s ease;" onclick="seleccionarMotivoAnulacionCard('${m.id}')">
+                      <input type="radio" name="motivoAnulacionRadio" value="${m.id}" ${isChecked ? 'checked' : ''} style="margin-top: 3px; accent-color: #e11d48; cursor: pointer;">
+                      <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <span style="font-size: 1.15rem;">${m.icono}</span>
+                          <strong style="font-size: 0.88rem; color: #0f172a;">${escapeHTML(m.nombre)}</strong>
+                        </div>
+                        <div style="font-size: 0.74rem; color: #475569; margin-top: 2px; line-height: 1.35;">
+                          ${escapeHTML(m.desc)}
+                        </div>
+                      </div>
+                    </label>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- OBSERVACIONES CLINICAS -->
+            <div>
+              <label for="anulObservaciones" style="font-size: 0.82rem; font-weight: 800; color: #004868; display: block; margin-bottom: 6px;">
+                📝 Observaciones / Detalle Clínico de la Incidencia (Opcional):
+              </label>
+              <textarea id="anulObservaciones" rows="2" placeholder="Ej. Glucemia en box 245 mg/dL tras desayuno. Paciente llamado 3 veces sin respuesta..." style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1.5px solid #cbd5e1; font-size: 0.84rem; font-family: inherit; resize: vertical; box-sizing: border-box;">${escapeHTML(obsPrevia)}</textarea>
+            </div>
+
+            <!-- AVISO DE SINCRONIZACIÓN -->
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; font-size: 0.74rem; color: #475569; display: flex; align-items: center; gap: 8px;">
+              <span>⚡</span>
+              <span>La anulación se comunicará al instante a la <strong>Consola Técnica TSID</strong> para liberar el gantry y se computará en el <strong>Cuadro de Mando de Jefatura de Servicio</strong>.</span>
+            </div>
+
+            ${anuladasHoy.length > 0 ? `
+              <!-- LISTA DE PRUEBAS YA ANULADAS HOY -->
+              <div style="border-top: 1px dashed #cbd5e1; padding-top: 14px;">
+                <div style="font-size: 0.8rem; font-weight: 800; color: #9f1239; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                  <span>🛑 Pruebas Anuladas en esta Jornada (${anuladasHoy.length}):</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 140px; overflow-y: auto;">
+                  ${anuladasHoy.map(a => `
+                    <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 6px; padding: 7px 10px; display: flex; align-items: center; justify-content: space-between; font-size: 0.76rem;">
+                      <div>
+                        <strong>${escapeHTML(a.nombre)}</strong> <span style="color:#64748b;">(${escapeHTML(a.nhc)})</span> — <span style="color:#be123c; font-weight:700;">${escapeHTML(a.motivoNombre)}</span> (${escapeHTML(a.hora)} h)
+                      </div>
+                      <button type="button" onclick="deshacerAnulacionPruebaEnf('${escapeHTML(a.subId)}')" style="background:#ffffff; color:#be123c; border:1px solid #fda4af; border-radius:4px; padding:3px 8px; font-size:0.7rem; font-weight:800; cursor:pointer;" title="Reactivar prueba">
+                        🔄 Reactivar
+                      </button>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- BOTONES DE ACCIÓN -->
+          <div style="padding: 14px 22px; background: #f8fafc; border-top: 1px solid #cbd5e1; display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+            <button type="button" onclick="cerrarModalAnularPruebaEnf()" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1; padding: 9px 16px; border-radius: 8px; font-weight: 700; font-size: 0.84rem; cursor: pointer;">
+              Cancelar
+            </button>
+            <button type="button" onclick="confirmarRegistroAnulacionEnf()" style="background: linear-gradient(135deg, #e11d48, #be123c); color: #ffffff; border: none; padding: 9px 20px; border-radius: 8px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);">
+              <span>🛑 Confirmar Anulación de la Prueba</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(overlay);
+    }
+    window.abrirModalAnularPruebaEnf = abrirModalAnularPruebaEnf;
+
+    function seleccionarMotivoAnulacionCard(motivoId) {
+      const container = document.getElementById('anulMotivosListContainer');
+      if (!container) return;
+      const cards = container.querySelectorAll('.anul-motivo-card');
+      cards.forEach(c => {
+        const rad = c.querySelector('input[type="radio"]');
+        if (rad) {
+          if (rad.value === motivoId) {
+            rad.checked = true;
+            c.style.borderColor = '#e11d48';
+            c.style.background = '#fff1f2';
+          } else {
+            rad.checked = false;
+            c.style.borderColor = '#cbd5e1';
+            c.style.background = '#ffffff';
+          }
+        }
+      });
+    }
+    window.seleccionarMotivoAnulacionCard = seleccionarMotivoAnulacionCard;
+
+    function cerrarModalAnularPruebaEnf() {
+      const el = document.getElementById('modalAnularPruebaEnf');
+      if (el) el.remove();
+    }
+    window.cerrarModalAnularPruebaEnf = cerrarModalAnularPruebaEnf;
+
+    function confirmarRegistroAnulacionEnf() {
+      const selEl = document.getElementById('anulSelectSubId');
+      const subId = selEl ? selEl.value.trim() : '';
+      if (!subId) {
+        mostrarToast('⚠️ Debes seleccionar a qué paciente corresponde la anulación.');
+        return;
+      }
+
+      const radChecked = document.querySelector('input[name="motivoAnulacionRadio"]:checked');
+      const motivoId = radChecked ? radChecked.value : 'mala_preparacion';
+      const motivoObj = MOTIVOS_ANULACION_ENF.find(m => m.id === motivoId) || MOTIVOS_ANULACION_ENF[0];
+
+      const obsEl = document.getElementById('anulObservaciones');
+      const observaciones = obsEl ? obsEl.value.trim() : '';
+
+      const pat = findScheduledPatient(subId) || {};
+      const nombre = pat["Nombre del Paciente"] || pat.patientName || 'Paciente';
+      const nhc = pat["NHC / Historia Clínica"] || pat.nhc || 'NHC-N/D';
+      const estudio = pat["Tipo de Estudio PET Solicitado"] || pat.studyType || '18F-FDG';
+      const fechaCita = pat["Fecha Cita Asignada"] || getTodayDateStr();
+
+      const now = new Date();
+      const horaNow = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      const enfInit = localStorage.getItem('PET_INF_ENF_INIT_MANANA') || 'L.V.P.';
+
+      const anulaciones = obtenerAnulacionesEnf();
+      const nuevas = anulaciones.filter(a => String(a.subId) !== String(subId));
+      nuevas.push({
+        subId: String(subId),
+        nhc: String(nhc),
+        nombre: String(nombre),
+        estudio: String(estudio),
+        fecha: fechaCita,
+        hora: horaNow,
+        motivo: motivoObj.id,
+        motivoNombre: motivoObj.nombre,
+        motivoIcono: motivoObj.icono,
+        observaciones: observaciones,
+        enfermero: enfInit,
+        timestamp: Date.now()
+      });
+
+      guardarAnulacionesEnf(nuevas);
+
+      // Sincronizar con Cuadro de Mando de Jefatura de Servicio
+      try {
+        const mgmtRaw = localStorage.getItem('PET_SERVICE_MANAGEMENT_V1');
+        if (mgmtRaw) {
+          const mgmt = JSON.parse(mgmtRaw);
+          mgmt.anulaciones = mgmt.anulaciones || [];
+          mgmt.anulaciones = mgmt.anulaciones.filter(a => String(a.pacienteId) !== String(subId));
+          mgmt.anulaciones.unshift({
+            anulId: `ANUL-${Date.now()}`,
+            fecha: fechaCita,
+            horaSlot: pat["Hora Cita Asignada"] || horaNow,
+            pacienteId: String(subId),
+            nombre: String(nombre),
+            nhc: String(nhc),
+            subcausa: motivoObj.nombre,
+            trazador: String(estudio),
+            detalleClinico: `Anulada en Box Enfermería: ${motivoObj.nombre}. ${observaciones}`,
+            reprogramado: false,
+            nuevaCita: ''
+          });
+          localStorage.setItem('PET_SERVICE_MANAGEMENT_V1', JSON.stringify(mgmt));
+        }
+      } catch (e) {}
+
+      // Emitir mensaje por canal clínico para TSID y Médicos
+      if (petClinicalBroadcast) {
+        try {
+          petClinicalBroadcast.postMessage({
+            type: 'PET_PRUEBA_ANULADA',
+            subId: String(subId),
+            nhc: String(nhc),
+            nombre: String(nombre),
+            motivo: motivoObj.id,
+            motivoNombre: motivoObj.nombre,
+            observaciones: observaciones,
+            hora: horaNow,
+            timestamp: Date.now()
+          });
+        } catch (e) {}
+      }
+
+      cerrarModalAnularPruebaEnf();
+      mostrarToast(`🛑 Prueba ANULADA para ${nombre} (${motivoObj.nombre}). Sincronizado con TSID y Jefatura.`);
+      renderizarPacientesCitados();
+    }
+    window.confirmarRegistroAnulacionEnf = confirmarRegistroAnulacionEnf;
+
+    function deshacerAnulacionPruebaEnf(subId) {
+      if (!confirm('¿Deseas reactivar la prueba de este paciente y eliminar la anulación registrada?')) {
+        return;
+      }
+      const anulaciones = obtenerAnulacionesEnf();
+      const filtradas = anulaciones.filter(a => String(a.subId) !== String(subId));
+      guardarAnulacionesEnf(filtradas);
+
+      // Limpiar también en Jefatura si estaba
+      try {
+        const mgmtRaw = localStorage.getItem('PET_SERVICE_MANAGEMENT_V1');
+        if (mgmtRaw) {
+          const mgmt = JSON.parse(mgmtRaw);
+          if (Array.isArray(mgmt.anulaciones)) {
+            mgmt.anulaciones = mgmt.anulaciones.filter(a => String(a.pacienteId) !== String(subId));
+            localStorage.setItem('PET_SERVICE_MANAGEMENT_V1', JSON.stringify(mgmt));
+          }
+        }
+      } catch (e) {}
+
+      cerrarModalAnularPruebaEnf();
+      mostrarToast('✅ Anulación eliminada. La prueba del paciente vuelve a estar activa en la unidad.');
+      renderizarPacientesCitados();
+    }
+    window.deshacerAnulacionPruebaEnf = deshacerAnulacionPruebaEnf;
+
+    /* --------------------------------------------------------------------------
        REGISTRO DE INICIALES DE ENFERMERÍA (PACIENTES CITADOS HOY / INFORME)
        -------------------------------------------------------------------------- */
     function actualizarBadgeEnfermeroToolbar() {
@@ -6356,8 +6771,35 @@
       const horaAltaStr = dStatus.horaAlta;
       const tardiaOrder = dStatus.tardiaOrder;
 
+      // Detección de Anulación Oficial de Prueba
+      const todasAnulacionesCard = obtenerAnulacionesEnf();
+      const anulacionActual = todasAnulacionesCard.find(a => String(a.subId) === String(subId) && (selectedCitadosDate === 'all' || a.fecha === (selectedCitadosDate || getTodayDateStr()) || !a.fecha));
+
       return `
-        <article class="scheduled-card ${pClass}" id="card-scheduled-${subId}" style="${isDischarged ? 'border: 2.5px solid #10b981; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.18);' : ''}">
+        <article class="scheduled-card ${pClass}" id="card-scheduled-${subId}" style="${isDischarged ? 'border: 2.5px solid #10b981; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.18);' : ''} ${anulacionActual ? 'border: 2.5px solid #f43f5e; background: #fffbfa;' : ''}">
+          ${anulacionActual ? `
+            <div style="background:#fff1f2; border:2px solid #f43f5e; border-radius:10px; padding:12px 16px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 3px 10px rgba(225,29,72,0.12);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.8rem; line-height:1;">🛑</span>
+                <div>
+                  <div style="font-family:'Outfit',sans-serif; font-weight:900; font-size:0.95rem; color:#9f1239; text-transform:uppercase; letter-spacing:0.3px;">
+                    PRUEBA ANULADA: ${escapeHTML(anulacionActual.motivoNombre || 'Anulada')}
+                  </div>
+                  <div style="font-size:0.78rem; color:#be123c; margin-top:2px;">
+                    ⏰ Registrada a las <strong>${escapeHTML(anulacionActual.hora || '--:--')} h</strong> · Motivo: <strong>${escapeHTML(anulacionActual.motivoNombre)}</strong>${anulacionActual.observaciones ? ` (<em>"${escapeHTML(anulacionActual.observaciones)}"</em>)` : ''} · Enf: <strong>${escapeHTML(anulacionActual.enfermero || 'Enfermería')}</strong>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button type="button" onclick="abrirModalAnularPruebaEnf('${escapeHTML(subId)}')" style="background:#ffffff; color:#9f1239; border:1.5px solid #fda4af; border-radius:6px; padding:6px 12px; font-size:0.76rem; font-weight:800; cursor:pointer;" title="Cambiar motivo de anulación">
+                  ✏️ Cambiar Motivo
+                </button>
+                <button type="button" onclick="deshacerAnulacionPruebaEnf('${escapeHTML(subId)}')" style="background:#f43f5e; color:#ffffff; border:none; border-radius:6px; padding:6px 14px; font-size:0.76rem; font-weight:800; cursor:pointer; box-shadow:0 2px 6px rgba(244,63,94,0.3);" title="Reactivar la prueba si se anuló por error">
+                  🔄 Reactivar Prueba
+                </button>
+              </div>
+            </div>
+          ` : ''}
           ${
             isDischarged ? `
   <div onclick="mostrarModalConfirmarMarchaEnf('${escapeHTML(subId)}', '${escapeHTML(nhc)}', '${escapeHTML(nombre)}')" title="Pinchar aquí para confirmar que el paciente se marchó y eliminarlo" style="background:linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border:2px solid #10b981; border-radius:10px; padding:10px 14px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; color:#065f46; cursor:pointer; transition:background 0.2s;">
@@ -6883,6 +7325,9 @@
                       <button type="button" onclick="abrirModalInformeFinDeTurnoEnf()" style="background:#004868; color:#ffffff; border:1.5px solid #0284c7; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
                         <span>📋 Ver Informe Fin de Turno</span>
                       </button>
+                      <button type="button" onclick="abrirModalAnularPruebaEnf('${subId}')" style="background:#fff1f2; color:#be123c; border:1.5px solid #fecdd3; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; display:inline-flex; align-items:center; gap:6px;" title="Anular la prueba por mala preparación, no acude, decisión médica, avería o fallo de radiofármaco">
+                        <span>🛑 Anular Prueba</span>
+                      </button>
                     </div>
                     <span class="sync-status-msg" id="syncMsg_${subId}">
                       ✅ ¡Sincronizado en tiempo real con la sala de tomógrafo TSID!
@@ -6902,6 +7347,9 @@
             <button type="button" class="btn-download-volante" onclick="descargarVolantePaciente('${subId}')" title="Descargar o imprimir directamente el volante en PDF">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" /></svg>
               <span>Descargar Volante (PDF)</span>
+            </button>
+            <button type="button" onclick="abrirModalAnularPruebaEnf('${subId}')" style="background:#fff1f2; color:#be123c; border:1.5px solid #fecdd3; padding:7px 12px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; display:inline-flex; align-items:center; gap:5px;" title="Registrar anulación de la prueba con motivos">
+              <span>🛑 Anular Prueba</span>
             </button>
             <button type="button" onclick="mostrarModalConfirmarMarchaEnf('${escapeHTML(subId)}', '${escapeHTML(nhc)}', '${escapeHTML(nombre)}')" title="Eliminar paciente de Enfermería y de Consola Técnica TSID" style="background:#fef2f2; color:#dc2626; border:1.5px solid #fecaca; padding:7px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; display:inline-flex; align-items:center; gap:5px; margin-left:auto;">
               <span>🗑️ Eliminar Paciente</span>
