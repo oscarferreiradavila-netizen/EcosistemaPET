@@ -1082,6 +1082,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  if (petClinicalBroadcast) {
+    petClinicalBroadcast.addEventListener('message', (ev) => {
+      if (ev.data && (ev.data.type === 'PETITION_CREATED_OR_UPDATED' || ev.data.type === 'TRIAGE_DATABASE_UPDATED')) {
+        console.log('🔄 Sincronización BroadcastChannel detectada:', ev.data.type);
+        syncClinicalDatabase(false);
+      }
+    });
+  }
+
   // Event Listeners
   btnSyncSheet.addEventListener('click', () => syncClinicalDatabase(true));
   
@@ -1895,37 +1904,50 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {}
       }
       persistTriageCitedPatientsSnapshot();
+      let dbItems = [];
       const stored = localStorage.getItem('PET_DATABASE_MASTER_V4');
       if (stored) {
-        const dbItems = JSON.parse(stored);
-        let found = false;
+        try {
+          dbItems = JSON.parse(stored);
+        } catch(e) {
+          dbItems = [];
+        }
+      }
+      if (!Array.isArray(dbItems)) dbItems = [];
 
-        for (let i = 0; i < dbItems.length; i++) {
-          const item = dbItems[i];
-          const itemSubId = item["Submission ID"] || item.id || item.paciente_id || `sub_${i + 1}`;
-          const itemNhc = item["NHC / Historia Clínica"] || item.nhc;
-          if (itemSubId === patientId || (targetNhc && itemNhc === targetNhc)) {
-            item["Fecha Cita Asignada"] = fechaCita;
-            item["Hora Cita Asignada"] = horaCita;
-            item["Estado de Triaje"] = (fechaCita && !fechaCita.includes("SIN AGENDAR") && fechaCita.trim() !== "") ? "Cita Asignada" : "Pendiente de Triaje";
-            found = true;
-            break;
-          }
+      let found = false;
+      for (let i = 0; i < dbItems.length; i++) {
+        const item = dbItems[i];
+        const itemSubId = item["Submission ID"] || item.id || item.paciente_id || `sub_${i + 1}`;
+        const itemNhc = item["NHC / Historia Clínica"] || item.nhc;
+        if (itemSubId === patientId || (targetNhc && itemNhc === targetNhc)) {
+          item["Fecha Cita Asignada"] = fechaCita;
+          item["Hora Cita Asignada"] = horaCita;
+          item["Estado de Triaje"] = (fechaCita && !fechaCita.includes("SIN AGENDAR") && fechaCita.trim() !== "") ? "Cita Asignada" : "Pendiente de Triaje";
+          found = true;
+          break;
         }
-        if (!found && extraData) {
-          dbItems.unshift(extraData);
-        } else if (!found && targetSub && targetSub.raw) {
-          dbItems.unshift(targetSub.raw);
-        }
-        localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(dbItems));
-        const baseUrl = (window.location.protocol === 'http:' || window.location.protocol === 'https:') ? '' : 'http://localhost:8000';
-        fetch(`${baseUrl}/api/sync-database`, {
+      }
+      if (!found && extraData) {
+        dbItems.unshift(extraData);
+      } else if (!found && targetSub && targetSub.raw) {
+        dbItems.unshift(targetSub.raw);
+      }
+      localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(dbItems));
+      const baseUrl = (window.location.protocol === 'http:' || window.location.protocol === 'https:') ? '' : 'http://localhost:8000';
+      if (extraData) {
+        fetch(`${baseUrl}/api/peticiones/crear`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dbItems)
+          body: JSON.stringify(extraData)
         }).catch(() => {});
-        notifyClinicalEcosystemUpdated();
       }
+      fetch(`${baseUrl}/api/sync-database`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dbItems)
+      }).catch(() => {});
+      notifyClinicalEcosystemUpdated();
     } catch(e) {
       console.warn("Error sincronizando asignación con PET_DATABASE_MASTER_V4:", e);
     }

@@ -5166,7 +5166,7 @@ function anularPautaTardia() {
 
     if (petClinicalBroadcast) {
       petClinicalBroadcast.addEventListener('message', async (ev) => {
-        if (ev.data && ev.data.type === 'TRIAGE_DATABASE_UPDATED') {
+        if (ev.data && (ev.data.type === 'TRIAGE_DATABASE_UPDATED' || ev.data.type === 'PETITION_CREATED_OR_UPDATED')) {
           loadStoredProtocols();
           await loadPatientsData(true);
           render();

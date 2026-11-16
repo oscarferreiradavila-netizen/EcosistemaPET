@@ -96,6 +96,123 @@ end
 # Endpoint de sincronización de base de datos de peticiones
 $live_database_records = nil
 
+def persist_master_records(records)
+  return unless records.is_a?(Array)
+
+  master_json = File.join(BASE_DIR, 'pet_peticion_medica', 'database', 'peticiones_db.json')
+  triage_json = File.join(BASE_DIR, 'pet_ct_triage', 'web_app', 'peticiones_db.json')
+  master_js   = File.join(BASE_DIR, 'pet_peticion_medica', 'database', 'peticiones_data.js')
+  triage_js   = File.join(BASE_DIR, 'pet_ct_triage', 'web_app', 'peticiones_data.js')
+
+  json_content = JSON.pretty_generate(records)
+  js_content   = "window.PETICIONES_DATABASE_SEED = #{json_content};"
+
+  # Escribir en pet_peticion_medica
+  FileUtils.mkdir_p(File.dirname(master_json))
+  File.write(master_json, json_content)
+  File.write(master_js, js_content)
+
+  # Escribir réplica en pet_ct_triage/web_app
+  FileUtils.mkdir_p(File.dirname(triage_json))
+  File.write(triage_json, json_content)
+  File.write(triage_js, js_content)
+  puts "💾 Base de datos persistida en disco (#{records.length} registros sincronizados)"
+rescue => e
+  warn "⚠️ Error persistiendo base de datos de peticiones: #{e.message}"
+end
+
+# API Crear Petición Médica Individual
+server.mount_proc '/api/peticiones/crear' do |req, res|
+  res['Access-Control-Allow-Origin'] = '*'
+  res['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+  res['Access-Control-Allow-Headers'] = 'Content-Type, Accept'
+  res['Content-Type'] = 'application/json'
+
+  if req.request_method == 'OPTIONS'
+    res.status = 200
+    next
+  end
+
+  begin
+    petition_data = JSON.parse(req.body.to_s)
+    json_path = File.join(BASE_DIR, 'pet_peticion_medica', 'database', 'peticiones_db.json')
+    current_records = []
+    if $live_database_records && !$live_database_records.empty?
+      current_records = $live_database_records
+    elsif File.exist?(json_path)
+      current_records = JSON.parse(File.read(json_path)) rescue []
+    end
+
+    sub_id = petition_data['Submission ID'] || "sub_#{Time.now.to_i}_#{rand(1000..9999)}"
+    petition_data['Submission ID'] = sub_id
+
+    # Si ya existe con ese Submission ID o NHC, actualizarlo; si no, insertar al inicio
+    idx = current_records.find_index { |p| p['Submission ID'] == sub_id || (p['NHC / Historia Clínica'] && !p['NHC / Historia Clínica'].to_s.empty? && p['NHC / Historia Clínica'] == petition_data['NHC / Historia Clínica']) }
+    if idx
+      current_records[idx] = petition_data
+    else
+      current_records.unshift(petition_data)
+    end
+
+    $live_database_records = current_records
+    persist_master_records(current_records)
+
+    res.status = 201
+    res.body = JSON.generate({
+      status: 'success',
+      id: sub_id,
+      count: current_records.length,
+      petition: petition_data
+    })
+  rescue => e
+    res.status = 500
+    res.body = JSON.generate({ status: 'error', message: e.message })
+  end
+end
+
+# API Asignar Cita / Peonada
+server.mount_proc '/api/assign-peonada' do |req, res|
+  res['Access-Control-Allow-Origin'] = '*'
+  res['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+  res['Access-Control-Allow-Headers'] = 'Content-Type, Accept'
+  res['Content-Type'] = 'application/json'
+
+  if req.request_method == 'OPTIONS'
+    res.status = 200
+    next
+  end
+
+  begin
+    body = JSON.parse(req.body.to_s)
+    paciente_id = body['paciente_id']
+    fecha_cita = body['fecha_cita']
+    hora_cita = body['hora_cita']
+
+    json_path = File.join(BASE_DIR, 'pet_peticion_medica', 'database', 'peticiones_db.json')
+    current_records = []
+    if $live_database_records && !$live_database_records.empty?
+      current_records = $live_database_records
+    elsif File.exist?(json_path)
+      current_records = JSON.parse(File.read(json_path)) rescue []
+    end
+
+    idx = current_records.find_index { |p| p['Submission ID'] == paciente_id || p['id'] == paciente_id || p['NHC / Historia Clínica'] == paciente_id }
+    if idx
+      current_records[idx]['Fecha Cita Asignada'] = fecha_cita
+      current_records[idx]['Hora Cita Asignada'] = hora_cita
+      current_records[idx]['Estado de Triaje'] = (fecha_cita && !fecha_cita.empty? && !fecha_cita.include?('SIN AGENDAR')) ? 'Cita Asignada' : 'Pendiente de Triaje'
+      $live_database_records = current_records
+      persist_master_records(current_records)
+    end
+
+    res.status = 200
+    res.body = JSON.generate({ status: 'success', paciente_id: paciente_id })
+  rescue => e
+    res.status = 500
+    res.body = JSON.generate({ status: 'error', message: e.message })
+  end
+end
+
 server.mount_proc '/api/sync-database' do |req, res|
   res['Access-Control-Allow-Origin'] = '*'
   res['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
@@ -110,13 +227,18 @@ server.mount_proc '/api/sync-database' do |req, res|
   if req.request_method == 'POST'
     begin
       body_data = JSON.parse(req.body.to_s)
+      records = nil
       if body_data.is_a?(Array) && !body_data.empty?
-        $live_database_records = body_data
+        records = body_data
       elsif body_data.is_a?(Hash) && body_data['data'].is_a?(Array)
-        $live_database_records = body_data['data']
+        records = body_data['data']
+      end
+      if records
+        $live_database_records = records
+        persist_master_records(records)
       end
     rescue => e
-      # Ignorar errores de parseo en POST
+      warn "⚠️ Error parseando cuerpo en /api/sync-database: #{e.message}"
     end
     res.status = 200
     res.body = JSON.generate({

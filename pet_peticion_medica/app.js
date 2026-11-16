@@ -403,6 +403,39 @@ if (document.readyState === 'loading') {
 }
 
 // Escucha cambios en tiempo real desde la Suite Triaje PET
+const petClinicalBroadcast = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('pet_clinical_channel') : null;
+
+function notifyClinicalBroadcast(record) {
+  if (petClinicalBroadcast) {
+    try {
+      petClinicalBroadcast.postMessage({
+        type: 'PETITION_CREATED_OR_UPDATED',
+        petition: record,
+        timestamp: Date.now()
+      });
+    } catch(e) {}
+  }
+}
+
+if (petClinicalBroadcast) {
+  petClinicalBroadcast.onmessage = (e) => {
+    if (e.data && (e.data.type === 'TRIAGE_DATABASE_UPDATED' || e.data.type === 'PETITION_CREATED_OR_UPDATED')) {
+      const stored = localStorage.getItem('PET_DATABASE_MASTER_V4');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            petitions = parsed;
+            updateKpis();
+            renderPetitionsTable();
+            renderDatabaseView();
+          }
+        } catch(err) {}
+      }
+    }
+  };
+}
+
 window.addEventListener('storage', (e) => {
   if (e.key === 'PET_DATABASE_MASTER_V4') {
     try {
@@ -453,7 +486,30 @@ async function loadPetitionsDatabase() {
     if (res.ok) {
       const json = await res.json();
       if (json.status === "success" && Array.isArray(json.data) && json.data.length > 0) {
-        petitions = applyOneMonthAutoPurgePetitions(json.data);
+        let merged = [...json.data];
+        try {
+          const localStr = localStorage.getItem('PET_DATABASE_MASTER_V4');
+          if (localStr) {
+            const localArr = JSON.parse(localStr);
+            if (Array.isArray(localArr) && localArr.length > 0) {
+              const idxMap = new Map();
+              merged.forEach((r, idx) => {
+                const k = r["Submission ID"] || r.id || r["NHC / Historia Clínica"] || r.nhc;
+                if (k) idxMap.set(k, idx);
+              });
+              localArr.forEach(item => {
+                const k = item["Submission ID"] || item.id || item["NHC / Historia Clínica"] || item.nhc;
+                if (k && idxMap.has(k)) {
+                  merged[idxMap.get(k)] = Object.assign({}, merged[idxMap.get(k)], item);
+                } else if (k) {
+                  idxMap.set(k, merged.length);
+                  merged.unshift(item);
+                }
+              });
+            }
+          }
+        } catch (eMerge) {}
+        petitions = applyOneMonthAutoPurgePetitions(merged);
         localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
         updateKpis();
         renderPetitionsTable();
@@ -1035,11 +1091,21 @@ function handlePetSubmit(event) {
     "Resumen Clínico": summary
   };
 
-  // Iniciar Paso de Doble Confirmación (NO guardar hasta confirmación explícita)
+  // Guardar de forma inmediata y persistente (memoria, localStorage y servidor)
+  const existingIdx = petitions.findIndex(p => p["Submission ID"] === newPetitionRecord["Submission ID"]);
+  if (existingIdx >= 0) {
+    petitions[existingIdx] = newPetitionRecord;
+  } else {
+    petitions.unshift(newPetitionRecord);
+  }
+  savePetitionsToStorage(newPetitionRecord);
+  notifyClinicalBroadcast(newPetitionRecord);
+
+  // Iniciar Paso de Doble Confirmación visual con volante oficial
   pendingPetitionToConfirm = newPetitionRecord;
   pendingFormType = 'pet';
   openDoubleConfirmationModal(newPetitionRecord, false);
-  showToast('Por favor, revise los datos del volante e imprima el PDF antes de confirmar.', 'info');
+  showToast(`✅ Paciente ${patientName} guardado en el sistema. Revise el volante e imprímalo si lo desea.`, 'success');
 }
 
 function resetPetForm() {
@@ -1159,11 +1225,21 @@ function handleConvSubmit(event) {
     "Resumen Clínico": summary
   };
 
-  // Iniciar Paso de Doble Confirmación (NO guardar hasta confirmación explícita)
+  // Guardar de forma inmediata y persistente (memoria, localStorage y servidor)
+  const existingIdx = petitions.findIndex(p => p["Submission ID"] === newPetitionRecord["Submission ID"]);
+  if (existingIdx >= 0) {
+    petitions[existingIdx] = newPetitionRecord;
+  } else {
+    petitions.unshift(newPetitionRecord);
+  }
+  savePetitionsToStorage(newPetitionRecord);
+  notifyClinicalBroadcast(newPetitionRecord);
+
+  // Iniciar Paso de Doble Confirmación visual con volante oficial
   pendingPetitionToConfirm = newPetitionRecord;
   pendingFormType = 'conv';
   openDoubleConfirmationModal(newPetitionRecord, false);
-  showToast('Por favor, revise los datos del volante e imprima el PDF antes de confirmar.', 'info');
+  showToast(`✅ Paciente ${patientName} guardado en el sistema. Revise el volante e imprímalo si lo desea.`, 'success');
 }
 
 function resetConvForm() {
@@ -1754,9 +1830,15 @@ function executeFinalConfirmation() {
   const patientName = p["Nombre del Paciente"] || 'Paciente';
   const subId = p["Submission ID"] || 'REQ-0000';
 
-  // 1. Guardar en base de datos oficial
-  petitions.unshift(p);
+  // 1. Guardar o actualizar en base de datos oficial
+  const alreadyIdx = petitions.findIndex(item => item["Submission ID"] === subId);
+  if (alreadyIdx >= 0) {
+    petitions[alreadyIdx] = p;
+  } else {
+    petitions.unshift(p);
+  }
   savePetitionsToStorage(p);
+  notifyClinicalBroadcast(p);
 
   // 2. Modificar el banner a estado confirmado
   const banner = document.getElementById('sheet-double-confirm-banner');
