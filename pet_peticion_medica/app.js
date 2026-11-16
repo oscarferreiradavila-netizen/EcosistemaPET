@@ -497,15 +497,18 @@ async function loadPetitionsDatabase() {
                 const k = r["Submission ID"] || r.id || r["NHC / Historia Clínica"] || r.nhc;
                 if (k) idxMap.set(k, idx);
               });
+              const extraItems = [];
               localArr.forEach(item => {
                 const k = item["Submission ID"] || item.id || item["NHC / Historia Clínica"] || item.nhc;
                 if (k && idxMap.has(k)) {
                   merged[idxMap.get(k)] = Object.assign({}, merged[idxMap.get(k)], item);
                 } else if (k) {
-                  idxMap.set(k, merged.length);
-                  merged.unshift(item);
+                  extraItems.push(item);
                 }
               });
+              if (extraItems.length > 0) {
+                merged = extraItems.concat(merged);
+              }
             }
           }
         } catch (eMerge) {}
@@ -539,15 +542,18 @@ async function loadPetitionsDatabase() {
                 const k = r["Submission ID"] || r.id || r["NHC / Historia Clínica"] || r.nhc;
                 if (k) idxMap.set(k, idx);
               });
+              const extraItems = [];
               localArr.forEach(item => {
                 const k = item["Submission ID"] || item.id || item["NHC / Historia Clínica"] || item.nhc;
                 if (k && idxMap.has(k)) {
                   merged[idxMap.get(k)] = Object.assign({}, merged[idxMap.get(k)], item);
                 } else if (k) {
-                  idxMap.set(k, merged.length);
-                  merged.unshift(item);
+                  extraItems.push(item);
                 }
               });
+              if (extraItems.length > 0) {
+                merged = extraItems.concat(merged);
+              }
             }
           }
         } catch (eMerge) {}

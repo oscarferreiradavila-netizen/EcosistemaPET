@@ -59,6 +59,24 @@
     const today = getTodayString();
     console.log('[PET Demo Reset] Aplicando reinicio de simulación para a data:', today);
 
+    // Conservar peticións creadas hoxe polo usuario durante o reinicio automático
+    let preservedTodayPetitions = [];
+    if (!isManual) {
+      try {
+        const masterStr = localStorage.getItem('PET_DATABASE_MASTER_V4');
+        if (masterStr) {
+          const parsedMaster = JSON.parse(masterStr);
+          if (Array.isArray(parsedMaster)) {
+            preservedTodayPetitions = parsedMaster.filter(item =>
+              item &&
+              item["Fecha Solicitud"] === today &&
+              String(item["Submission ID"] || '').startsWith('sub_')
+            );
+          }
+        }
+      } catch (e) {}
+    }
+
     STORAGE_KEYS_TO_CLEAR.forEach(key => {
       try {
         localStorage.removeItem(key);
@@ -66,6 +84,12 @@
         console.warn('Error limpando clave de simulación:', key, e);
       }
     });
+
+    if (preservedTodayPetitions.length > 0) {
+      try {
+        localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(preservedTodayPetitions));
+      } catch (e) {}
+    }
 
     try {
       localStorage.setItem('PET_DEMO_RESET_DATE', today);

@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('pet_ct_confirmations');
       localStorage.removeItem('pet_ct_freed_slots');
       localStorage.removeItem('pet_ct_audioguia_sent');
-      localStorage.removeItem('PET_DATABASE_MASTER_V4');
       localStorage.removeItem('PET_TRIAGE_CITED_PATIENTS_V1');
       localStorage.setItem('PET_UNCITED_INITIALIZED_V7', 'true');
       state.peonadaAssignments = {};
@@ -757,15 +756,18 @@ document.addEventListener('DOMContentLoaded', () => {
               const k = r["Submission ID"] || r.id || r.paciente_id || r["NHC / Historia Clínica"] || r.nhc;
               if (k) idxMap.set(k, idx);
             });
+            const extraItems = [];
             parsed.forEach(item => {
               const k = item["Submission ID"] || item.id || item.paciente_id || item["NHC / Historia Clínica"] || item.nhc;
               if (k && idxMap.has(k)) {
                 result[idxMap.get(k)] = Object.assign({}, result[idxMap.get(k)], item);
               } else if (k) {
-                idxMap.set(k, result.length);
-                result.unshift(item);
+                extraItems.push(item);
               }
             });
+            if (extraItems.length > 0) {
+              result = extraItems.concat(result);
+            }
           }
         }
       }
@@ -782,6 +784,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (k1) idxMap.set(k1, idx);
             if (k2) idxMap.set(k2, idx);
           });
+          const extraCited = [];
           citedList.forEach(cItem => {
             const k1 = cItem["Submission ID"] || cItem.id || cItem.paciente_id;
             const k2 = cItem["NHC / Historia Clínica"] || cItem.nhc;
@@ -789,9 +792,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (foundIdx !== -1) {
               result[foundIdx] = Object.assign({}, result[foundIdx], cItem);
             } else {
-              result.unshift(cItem);
+              extraCited.push(cItem);
             }
           });
+          if (extraCited.length > 0) {
+            result = extraCited.concat(result);
+          }
         }
       }
 

@@ -23,8 +23,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Rutas de Archivos y Bases de Datos
 DB_SQLITE_PATH = os.path.join(BASE_DIR, "pet_prep_page", "pet_database.db")
 MASTER_JSON_PATH = os.path.join(BASE_DIR, "pet_peticion_medica", "database", "peticiones_db.json")
+MASTER_JS_PATH = os.path.join(BASE_DIR, "pet_peticion_medica", "database", "peticiones_data.js")
 MASTER_CSV_PATH = os.path.join(BASE_DIR, "pet_peticion_medica", "database", "peticiones_db.csv")
 TRIAGE_JSON_PATH = os.path.join(BASE_DIR, "pet_ct_triage", "web_app", "peticiones_db.json")
+TRIAGE_JS_PATH = os.path.join(BASE_DIR, "pet_ct_triage", "web_app", "peticiones_data.js")
 TRIAGE_CSV_PATH = os.path.join(BASE_DIR, "pet_ct_triage", "web_app", "peticiones_db.csv")
 
 DEFAULT_EMAIL = "oscarferreiradavila@gmail.com"
@@ -223,10 +225,14 @@ def init_sqlite_db():
 def sync_csv_and_replicas(records):
     """Sincroniza peticiones_db.json y peticiones_db.csv concurrentemente."""
     try:
-        # Guardar JSON Maestro
+        # Guardar JSON Maestro y semilla JS
+        json_text = json.dumps(records, ensure_ascii=False, indent=2)
+        js_text = f"window.PETICIONES_DATABASE_SEED = {json_text};"
         os.makedirs(os.path.dirname(MASTER_JSON_PATH), exist_ok=True)
         with open(MASTER_JSON_PATH, 'w', encoding='utf-8') as f:
-            json.dump(records, f, ensure_ascii=False, indent=2)
+            f.write(json_text)
+        with open(MASTER_JS_PATH, 'w', encoding='utf-8') as f:
+            f.write(js_text)
 
         # Guardar CSV Maestro con BOM
         with open(MASTER_CSV_PATH, 'w', encoding='utf-8-sig', newline='') as f:
@@ -238,7 +244,9 @@ def sync_csv_and_replicas(records):
         # Guardar Réplicas en pet_ct_triage
         os.makedirs(os.path.dirname(TRIAGE_JSON_PATH), exist_ok=True)
         with open(TRIAGE_JSON_PATH, 'w', encoding='utf-8') as f:
-            json.dump(records, f, ensure_ascii=False, indent=2)
+            f.write(json_text)
+        with open(TRIAGE_JS_PATH, 'w', encoding='utf-8') as f:
+            f.write(js_text)
         with open(TRIAGE_CSV_PATH, 'w', encoding='utf-8-sig', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(CSV_HEADERS)
