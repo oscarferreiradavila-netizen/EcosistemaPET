@@ -1519,6 +1519,7 @@
                 <th>Diabetes</th>
                 <th>Alergias</th>
                 <th>Alertas Técnicas</th>
+                <th style="text-align: right;">Acciones</th>
               </tr>
             </thead>
             <tbody id="db-table-body">
@@ -1667,6 +1668,9 @@
       <div class="modal-footer" id="sheet-modal-footer">
         <button type="button" class="btn btn-secondary" id="btn-sheet-cancel" onclick="closeModal('modal-official-sheet')">
           ✏️ Modificar Datos / Volver
+        </button>
+        <button type="button" class="btn btn-danger" id="btn-sheet-delete" onclick="deletePetitionFromModal()" style="display:none; background:#dc2626; border-color:#dc2626; color:white; font-weight:700;">
+          🗑️ Anular / Borrar Petición
         </button>
         <button type="button" class="btn btn-primary" id="btn-sheet-print" onclick="window.print()" style="background:#0284c7; border-color:#0284c7; font-weight:700;">
           🖨️ Imprimir Volante / Guardar PDF

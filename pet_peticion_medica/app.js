@@ -1566,6 +1566,9 @@ function renderPetitionsTable() {
           <button class="btn btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.78rem;" onclick="openOfficialSheetById('${id}')" title="Ver Volante Imprimible">
             🖨️ Volante
           </button>
+          <button class="btn btn-danger" style="padding: 0.35rem 0.65rem; font-size: 0.78rem; background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; font-weight: 700; margin-left: 0.35rem; cursor: pointer; border-radius: 6px;" onclick="deletePetition('${id}')" title="Borrar o anular esta solicitud">
+            🗑️ Borrar
+          </button>
         </td>
       </tr>
     `;
@@ -1662,6 +1665,14 @@ function renderDatabaseView() {
         <td>${diab}</td>
         <td>${alerg}</td>
         <td><small>${alert}</small></td>
+        <td style="text-align: right; white-space: nowrap;">
+          <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.74rem;" onclick="openOfficialSheetById('${id}')" title="Ver Volante">
+            🖨️
+          </button>
+          <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.74rem; background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; font-weight: 700; margin-left: 0.25rem; cursor: pointer; border-radius: 4px;" onclick="deletePetition('${id}')" title="Borrar solicitud">
+            🗑️
+          </button>
+        </td>
       </tr>
     `;
   }).join('');
@@ -1963,7 +1974,11 @@ function openDoubleConfirmationModal(p, isAlreadyConfirmed = false) {
     if (btnConfirm) {
       btnConfirm.style.display = 'none';
     }
+    const btnDelete = document.getElementById('btn-sheet-delete');
+    if (btnDelete) btnDelete.style.display = 'inline-flex';
   } else {
+    const btnDelete = document.getElementById('btn-sheet-delete');
+    if (btnDelete) btnDelete.style.display = 'none';
     if (banner) {
       banner.style.background = '#FEF3C7';
       banner.style.borderColor = '#F59E0B';
@@ -2000,6 +2015,77 @@ function openDoubleConfirmationModal(p, isAlreadyConfirmed = false) {
 
 function openOfficialSheetModal(p, isAlreadyConfirmed = false) {
   openDoubleConfirmationModal(p, isAlreadyConfirmed);
+}
+
+// ==============================================================================
+// ELIMINACIÓN Y ANULACIÓN DE PETICIONES MÉDICAS
+// ==============================================================================
+async function deletePetition(id) {
+  if (!id) return;
+  const target = petitions.find(p => (p["Submission ID"] || p.id) === id);
+  const patientName = target ? (target["Nombre del Paciente"] || target["Nombre y Apellidos"] || target["NHC / Historia Clínica"] || id) : id;
+
+  const confirmMsg = `¿Está seguro de que desea anular y eliminar la solicitud médica de:\n\n👤 Paciente: ${patientName}\n🆔 Solicitud: ${id}\n\nEsta acción borrará la petición del sistema y de la lista de triaje.`;
+  if (!confirm(confirmMsg)) return;
+
+  // 1. Filtrar de la memoria local
+  petitions = petitions.filter(p => (p["Submission ID"] || p.id) !== id);
+
+  // 2. Eliminar de la copia dedicada en localStorage (si fue creada por el usuario)
+  try {
+    const createdRaw = localStorage.getItem('PET_USER_CREATED_PETITIONS_V1');
+    if (createdRaw) {
+      let createdList = JSON.parse(createdRaw);
+      if (Array.isArray(createdList)) {
+        createdList = createdList.filter(x => (x["Submission ID"] || x.id) !== id);
+        localStorage.setItem('PET_USER_CREATED_PETITIONS_V1', JSON.stringify(createdList));
+      }
+    }
+  } catch (e) { }
+
+  // 3. Guardar en localStorage maestro
+  try {
+    localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
+  } catch (e) { }
+
+  // 4. Actualizar vistas inmediatamente
+  updateKpis();
+  renderPetitionsTable();
+  renderDatabaseView();
+
+  // 5. Notificar a backend (/api/peticiones/eliminar y /api/sync-database)
+  const baseUrl = getApiBaseUrl();
+  try {
+    await fetch(`${baseUrl}/api/peticiones/eliminar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id })
+    });
+  } catch (e) {
+    console.warn("Fallo en llamada /api/peticiones/eliminar:", e);
+  }
+
+  try {
+    await fetch(`${baseUrl}/api/sync-database`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(petitions)
+    });
+  } catch (e) { }
+
+  // 6. Notificar evento de almacenamiento entre pestañas
+  try {
+    window.dispatchEvent(new Event('storage'));
+  } catch (e) { }
+
+  showToast(`🗑️ Solicitud de ${patientName} eliminada correctamente.`, 'info');
+}
+
+function deletePetitionFromModal() {
+  if (!currentViewingPetition) return;
+  const id = currentViewingPetition["Submission ID"] || currentViewingPetition.id;
+  closeModal('modal-official-sheet');
+  deletePetition(id);
 }
 
 function executeFinalConfirmation() {

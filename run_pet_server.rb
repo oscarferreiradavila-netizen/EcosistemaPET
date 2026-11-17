@@ -170,6 +170,52 @@ server.mount_proc '/api/peticiones/crear' do |req, res|
   end
 end
 
+# API Eliminar / Anular Petición Médica
+server.mount_proc '/api/peticiones/eliminar' do |req, res|
+  res['Access-Control-Allow-Origin'] = '*'
+  res['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+  res['Access-Control-Allow-Headers'] = 'Content-Type, Accept'
+  res['Content-Type'] = 'application/json'
+
+  if req.request_method == 'OPTIONS'
+    res.status = 200
+    next
+  end
+
+  begin
+    body = JSON.parse(req.body.to_s) rescue {}
+    del_id = body['id'] || body['submission_id'] || body['Submission ID']
+
+    json_path = File.join(BASE_DIR, 'pet_peticion_medica', 'database', 'peticiones_db.json')
+    current_records = []
+    if $live_database_records && !$live_database_records.empty?
+      current_records = $live_database_records
+    elsif File.exist?(json_path)
+      current_records = JSON.parse(File.read(json_path)) rescue []
+    end
+
+    initial_len = current_records.length
+    current_records.reject! { |p| (p['Submission ID'] == del_id || p['id'] == del_id || p['NHC / Historia Clínica'] == del_id) }
+    deleted = (current_records.length < initial_len)
+
+    if deleted
+      $live_database_records = current_records
+      persist_master_records(current_records)
+    end
+
+    res.status = 200
+    res.body = JSON.generate({
+      status: 'success',
+      deleted: deleted,
+      id: del_id,
+      count: current_records.length
+    })
+  rescue => e
+    res.status = 500
+    res.body = JSON.generate({ status: 'error', message: e.message })
+  end
+end
+
 # API Asignar Cita / Peonada
 server.mount_proc '/api/assign-peonada' do |req, res|
   res['Access-Control-Allow-Origin'] = '*'
