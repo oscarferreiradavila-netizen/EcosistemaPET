@@ -766,7 +766,7 @@
             <div class="form-section-header">
               <span class="section-number">4</span>
               <h3 class="section-title">Antecedentes Médicos y Factores de Riesgo del Paciente</h3>
-              <span class="section-hint">Seguridad y contraindicaciones</span>
+              <span class="section-hint">Seguridad, comparativas previas y contraindicaciones</span>
             </div>
 
             <!-- Movilidad del Paciente -->
@@ -777,6 +777,45 @@
                 <option value="Movilidad reducida">Movilidad reducida</option>
                 <option value="Encamado">Encamado</option>
               </select>
+            </div>
+
+            <!-- ¿El paciente tiene estudio PET/CT previo? -->
+            <div style="margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border-color);">
+              <div class="tally-yn-row" style="background: #F8FAFC; padding: 0.85rem 1rem; border-radius: 10px; border: 1px solid var(--border-color);">
+                <div class="tally-yn-label" style="font-weight: 600; font-size: 0.95rem;">
+                  <span>🔬 ¿El paciente ya hizo antes un estudio PET / CT?</span>
+                </div>
+                <div class="tally-yn-buttons">
+                  <button type="button" class="tally-yn-btn selected-no" id="btn-prior-pet-no" onclick="setPriorPetChoice('No')">No (Primer PET / Basal)</button>
+                  <button type="button" class="tally-yn-btn" id="btn-prior-pet-yes" onclick="setPriorPetChoice('Sí')">Sí (Tiene PET previo)</button>
+                </div>
+                <input type="hidden" id="pet-prior-pet" value="No">
+              </div>
+
+              <div id="pet-prior-pet-subfields" class="tally-criteria-container hidden" style="margin-top: 0.75rem; background: #F0F9FF; border: 1px solid #BAE6FD; border-left: 4px solid var(--sergas-blue);">
+                <div class="tally-criteria-title" style="color: #0369A1;">
+                  <span>📋 Datos del Estudio PET/CT Previo para Valoración Comparativa</span>
+                </div>
+                <div class="form-grid-3">
+                  <div class="form-group">
+                    <label for="pet-prior-date">Fecha aproximada del último PET</label>
+                    <input type="text" id="pet-prior-date" placeholder="Ej. 14/03/2025 o 'hace 6 meses'">
+                  </div>
+                  <div class="form-group">
+                    <label for="pet-prior-center">Centro donde se realizó</label>
+                    <select id="pet-prior-center">
+                      <option value="SERGAS (Galaria / SIDI / PACS Galicia)">SERGAS (Galaria / SIDI / PACS Galicia)</option>
+                      <option value="Hospital Público de otra Comunidad">Hospital Público de otra Comunidad</option>
+                      <option value="Centro Privado / Concertado (Aportará CD)">Centro Privado / Concertado (Aportará CD)</option>
+                      <option value="Extranjero / Otro centro">Extranjero / Otro centro</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="pet-prior-findings">Hallazgos / Indicación del PET previo</label>
+                    <input type="text" id="pet-prior-findings" placeholder="Ej. PET basal con adenopatías axilares activas...">
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Listado de Factores de Riesgo (Tally) -->
@@ -1584,9 +1623,10 @@
           <!-- Section C: Estudio Solicitado -->
           <div class="sheet-section">
             <div class="sheet-section-title">C. Estudio Solicitado & Parámetros Clínicos</div>
-            <div class="sheet-grid-3" style="grid-template-columns: 1fr 1fr;">
+            <div class="sheet-grid-3">
               <div class="sheet-field"><label>Estudio / Tipo:</label> <span id="sheet-study-type" style="color: var(--blue-corporate); font-weight: 700;">--</span></div>
               <div class="sheet-field"><label>Carácter / Prioridad:</label> <span id="sheet-priority">--</span></div>
+              <div class="sheet-field"><label>¿Estudio PET Previo Realizado?:</label> <span id="sheet-prior-pet" style="font-weight: 700;">No (Estudio Basal)</span></div>
             </div>
             <div class="sheet-field" style="margin-top: 0.4rem;">
               <label>Sospecha Diagnóstica & Indicación Concreta:</label>
@@ -1641,7 +1681,7 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="../pet_demo_reset.js"></script>
-  <script src="app.js"></script>
+  <script src="../pet_demo_reset.js?v=20261116_SYNC_FIX_01"></script>
+  <script src="app.js?v=20261116_SYNC_FIX_01"></script>
 </body>
 </html>

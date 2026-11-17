@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       state.confirmations = {};
       state.freedSlots = {};
       state.audioguiaSent = {};
-    } catch(e) {}
+    } catch (e) { }
   }
 
   /**
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function getPatientMobilityHospitalizationInfo(p) {
     if (!p) return { isLateShift: false, isHospitalized: false, isReducedMobility: false, mobilityType: 'autónomo', label: '' };
     const raw = p.raw || (state.rawSubmissionsMap && (state.rawSubmissionsMap[p.id] || state.rawSubmissionsMap[p.nhc])) || {};
-    
+
     // 1. Ingresado
     const ingVal = String(raw["¿El paciente está ingresado?"] || raw.ingresado || raw["Ingresado"] || '').trim().toLowerCase();
     const motivo = String(p.motivo || raw["Motivo de Solicitud"] || '').toLowerCase();
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('PET_DATABASE_MASTER_V4');
       localStorage.removeItem('PET_TRIAGE_CITED_PATIENTS_V1');
       localStorage.setItem('PET_UNCITED_INITIALIZED_V7', 'true');
-    } catch(e) {}
+    } catch (e) { }
 
     // Resetear en memoria todos los pacientes
     state.submissions.forEach(s => {
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(cleanRawList));
       localStorage.setItem('PET_TRIAGE_CITED_PATIENTS_V1', JSON.stringify([]));
-    } catch(e) {}
+    } catch (e) { }
 
     // ¡SINCRONIZAR AL SERVIDOR PARA QUE NO VUELVAN A APARECER EN EL PRÓXIMO POLLING!
     const baseUrl = (window.location.protocol === 'http:' || window.location.protocol === 'https:') ? '' : 'http://localhost:8000';
@@ -297,13 +297,13 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
       localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
       localStorage.setItem('pet_ct_freed_slots', JSON.stringify(state.freedSlots));
-    } catch(e) {}
+    } catch (e) { }
 
     const cleanRawList = state.submissions.map(s => s.raw || s);
     try {
       localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(cleanRawList));
       localStorage.setItem('PET_TRIAGE_CITED_PATIENTS_V1', JSON.stringify([]));
-    } catch(e) {}
+    } catch (e) { }
 
     // Sincronizar al servidor para que el polling de 12s no restaure las citas
     const baseUrl = (window.location.protocol === 'http:' || window.location.protocol === 'https:') ? '' : 'http://localhost:8000';
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (petClinicalBroadcast) {
       try {
         petClinicalBroadcast.postMessage({ type: 'TRIAGE_DATABASE_UPDATED', timestamp: Date.now() });
-      } catch(e) {}
+      } catch (e) { }
     }
   }
 
@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const isGa68 = s.includes('ga68') || s.includes('68ga') || s.includes('ga 68') || s.includes('galio') || s.includes('dotatoc') || s.includes('dotatate') || s.includes('somatostatina') || (s.includes('ga') && s.includes('neuroendocrin'));
-    
+
     if (isGa68) {
       if (window.location.protocol === 'file:') {
         return `../../audioguia_ga68/index.html`;
@@ -574,8 +574,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let resolvedPatient = patientObj;
     if (!resolvedPatient && state && state.submissions) {
       if (nhcVal && nhcVal !== 'NHC-PENDIENTE' && nhcVal !== 'N/A') {
-        resolvedPatient = state.submissions.find(s => 
-          s.id === nhcVal || s.nhc === nhcVal || 
+        resolvedPatient = state.submissions.find(s =>
+          s.id === nhcVal || s.nhc === nhcVal ||
           (s.raw && (s.raw['Nº Historia'] === nhcVal || s.raw['NHC'] === nhcVal || s.raw['NHC / Historia Clínica'] === nhcVal || String(s.raw['Paciente'] || '').includes(nhcVal))) ||
           String(s.nombre || '').includes(nhcVal)
         );
@@ -685,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSyncSheet = document.getElementById('btn-sync-sheet');
   const syncStatus = document.getElementById('sync-status');
   const weekSelector = document.getElementById('week-selector');
-  
+
   const kpiP1 = document.getElementById('kpi-p1');
   const kpiP2 = document.getElementById('kpi-p2');
   const kpiP3 = document.getElementById('kpi-p3');
@@ -703,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tbodyPropP1 = document.getElementById('tbody-prop-p1');
   const tbodyPropP2 = document.getElementById('tbody-prop-p2');
   const tbodyPropP3 = document.getElementById('tbody-prop-p3');
-  
+
   const tbodyConfirmPending = document.getElementById('tbody-confirm-pending');
   const tbodyConfirmDone = document.getElementById('tbody-confirm-done');
   const tbodyConfirmAll = document.getElementById('tbody-confirm-all');
@@ -772,6 +772,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
+      // Fusionar peticiones creadas por el usuario (copia ligera dedicada PET_USER_CREATED_PETITIONS_V1)
+      const userCreatedRaw = localStorage.getItem('PET_USER_CREATED_PETITIONS_V1');
+      if (userCreatedRaw) {
+        const createdList = JSON.parse(userCreatedRaw);
+        if (Array.isArray(createdList) && createdList.length > 0) {
+          const idxMap = new Map();
+          result.forEach((r, idx) => {
+            const k = r["Submission ID"] || r.id || r.paciente_id;
+            if (k) idxMap.set(k, idx);
+          });
+          const extraCreated = [];
+          createdList.forEach(item => {
+            const k = item["Submission ID"] || item.id || item.paciente_id;
+            if (k && idxMap.has(k)) {
+              result[idxMap.get(k)] = Object.assign({}, item, result[idxMap.get(k)]);
+            } else if (k) {
+              extraCreated.push(item);
+            }
+          });
+          if (extraCreated.length > 0) {
+            result = extraCreated.concat(result);
+          }
+        }
+      }
+
       // Aplicar siempre las citaciones activas de Triaje (PET_TRIAGE_CITED_PATIENTS_V1 y pet_ct_peonada_assignments)
       const citedSnapshotRaw = localStorage.getItem('PET_TRIAGE_CITED_PATIENTS_V1');
       if (citedSnapshotRaw) {
@@ -814,7 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       }
-    } catch (e) {}
+    } catch (e) { }
     return result;
   }
 
@@ -992,7 +1017,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sessionStorage.setItem('pet_triage_user', user);
       localStorage.setItem('pet_triage_token', token);
       localStorage.setItem('pet_triage_user', user);
-    } catch(e) {}
+    } catch (e) { }
 
     if (loginScreen) {
       loginScreen.classList.add('hidden');
@@ -1001,15 +1026,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (activeUserName) activeUserName.textContent = user.toUpperCase();
     try {
       syncClinicalDatabase(false);
-    } catch (e) {}
+    } catch (e) { }
     startPeriodicSync();
   }
 
   window.completeTriageLogin = completeTriageLogin;
 
-  window.handleTriageLoginSubmit = async function(event) {
+  window.handleTriageLoginSubmit = async function (event) {
     if (event) {
-      try { event.preventDefault(); } catch(e){}
+      try { event.preventDefault(); } catch (e) { }
     }
     const userField = document.getElementById('loginUser');
     const passField = document.getElementById('loginPass');
@@ -1025,20 +1050,20 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usuario: user, password: pass })
-      }).catch(() => {});
-    } catch (apiErr) {}
+      }).catch(() => { });
+    } catch (apiErr) { }
 
     // Entrada asistencial autorizada universalmente
     completeTriageLogin(user);
   };
 
-  window.bypassTriageLogin = function() {
+  window.bypassTriageLogin = function () {
     const userField = document.getElementById('loginUser');
     const u = (userField ? userField.value : '').trim() || 'triaje';
     completeTriageLogin(u);
   };
 
-  window.cerrarSesionTriaje = function() {
+  window.cerrarSesionTriaje = function () {
     sessionStorage.removeItem('pet_triage_token');
     sessionStorage.removeItem('pet_triage_user');
     localStorage.removeItem('pet_triage_token');
@@ -1058,14 +1083,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  window.toggleTriagePasswordVisibility = function() {
+  window.toggleTriagePasswordVisibility = function () {
     const input = document.getElementById('loginPass');
     if (input) {
       input.type = input.type === 'password' ? 'text' : 'password';
     }
   };
 
-  window.fillTriageDemoCredentials = function(autoSubmit = false) {
+  window.fillTriageDemoCredentials = function (autoSubmit = false) {
     const u = document.getElementById('loginUser');
     const p = document.getElementById('loginPass');
     const errBox = document.getElementById('loginError');
@@ -1099,7 +1124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Event Listeners
   btnSyncSheet.addEventListener('click', () => syncClinicalDatabase(true));
-  
+
   weekSelector.addEventListener('change', (e) => {
     state.selectedWeekIndex = parseInt(e.target.value) || 0;
     renderWeeklyGrid();
@@ -1385,7 +1410,7 @@ document.addEventListener('DOMContentLoaded', () => {
           switchConfirmSubTab('view-confirm-done');
         }, 150);
       }
-    } catch(e) {}
+    } catch (e) { }
   }
   handleUrlDeepLink();
 
@@ -1451,7 +1476,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       try {
         localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
-      } catch(e) {}
+      } catch (e) { }
       updateKPIs();
       renderConfirmationsTable();
       renderWeeklyGrid();
@@ -1507,14 +1532,14 @@ document.addEventListener('DOMContentLoaded', () => {
       opt.value = w;
       const startStr = `${wStart.getDate()} ${getMonthAbbr(wStart.getMonth())}`;
       const endStr = `${wEnd.getDate()} ${getMonthAbbr(wEnd.getMonth())} ${wEnd.getFullYear()}`;
-      
+
       if (w === 0) {
         opt.textContent = `⭐ Semana Actual (${startStr} - ${endStr}) [Hoy en adelante]`;
         opt.selected = true;
       } else {
         opt.textContent = `Semana +${w} (${startStr} - ${endStr})`;
       }
-      
+
       weekSelector.appendChild(opt);
     }
   }
@@ -1530,7 +1555,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function applyOneMonthAutoPurge(records) {
     if (!Array.isArray(records)) return { filtered: [], purgedCount: 0 };
-    
+
     const today = new Date();
     const cutoffDate = new Date(today);
     cutoffDate.setDate(today.getDate() - 30);
@@ -1565,7 +1590,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
         localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
-      } catch (e) {}
+      } catch (e) { }
     }
 
     return { filtered, purgedCount };
@@ -1583,7 +1608,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!state.submissions || state.submissions.length === 0) {
       loadInitialSynchronousData();
     }
-    
+
     try {
       // 1. Conexión directa a la API en vivo /api/sync-database (conectada con pet_peticion_medica)
       try {
@@ -1596,7 +1621,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const { filtered, purgedCount } = applyOneMonthAutoPurge(mergedRaw);
             try {
               localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(filtered));
-            } catch(e) {}
+            } catch (e) { }
             const mappedItems = mapDatabaseRecords(filtered);
             processFetchedItems(mappedItems);
             if (syncStatus) {
@@ -1614,24 +1639,24 @@ document.addEventListener('DOMContentLoaded', () => {
       let fileRes = null;
       try {
         fileRes = await fetch('/pet_peticion_medica/database/peticiones_db.json');
-      } catch (e) {}
+      } catch (e) { }
 
       if (!fileRes || !fileRes.ok) {
         try {
           fileRes = await fetch('../../pet_peticion_medica/database/peticiones_db.json');
-        } catch (e) {}
+        } catch (e) { }
       }
 
       if (!fileRes || !fileRes.ok) {
         try {
           fileRes = await fetch('peticiones_db.json');
-        } catch (e) {}
+        } catch (e) { }
       }
 
       if (!fileRes || !fileRes.ok) {
         try {
           fileRes = await fetch('pacientes_pet_ct_250.json');
-        } catch (e) {}
+        } catch (e) { }
       }
 
       if (fileRes && fileRes.ok) {
@@ -1640,7 +1665,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { filtered, purgedCount } = applyOneMonthAutoPurge(mergedRaw);
         try {
           localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(filtered));
-        } catch(e) {}
+        } catch (e) { }
         const mappedItems = mapDatabaseRecords(filtered);
         processFetchedItems(mappedItems);
         if (syncStatus) {
@@ -1657,7 +1682,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { filtered, purgedCount } = applyOneMonthAutoPurge(mergedRaw);
         try {
           localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(filtered));
-        } catch(e) {}
+        } catch (e) { }
         const mappedItems = mapDatabaseRecords(filtered);
         processFetchedItems(mappedItems);
         if (syncStatus) {
@@ -1704,7 +1729,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const fullNombre = (nhc && !nombre.includes('NHC:')) ? `${nombre} (NHC: ${nhc})` : nombre;
       const rf = row["Tipo de Estudio PET Solicitado"] || row.radiofarmaco || row.tipo_estudio || "18F-FDG";
       const motivo = row["Motivo de Solicitud"] || row["Motivo de la Petición"] || row["Diagnóstico Clínico"] || row.motivo || row.indicacion || getSampleMotivo(rf);
-      
+
       const prioRaw = String(row["Prioridad Calculada"] || row["Carácter de la Petición"] || row.prioridad || "🟢 P3");
       let prio = prioRaw;
       if (!prio.includes('P1') && !prio.includes('P2') && !prio.includes('P3')) {
@@ -1712,6 +1737,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (prioLower.includes('urgente')) prio = '🔴 P1';
         else if (prioLower.includes('preferente')) prio = '🟡 P2';
         else prio = '🟢 P3';
+      }
+
+      // Comprobar si existe discrepancia entre la prioridad solicitada y la calculada
+      const prioSolicitada = row["Carácter de la Petición"] || row["Prioridad Solicitada"] || row.prioridad || "🟢 P3";
+      const prioCalculada = row["Prioridad Calculada"] || row["Prioridad Protocolo"] || prio;
+
+      const getPrioCat = (p) => {
+        const s = String(p || '').toLowerCase();
+        if (s.includes('1') || s.includes('urgente')) return 'P1';
+        if (s.includes('2') || s.includes('preferente')) return 'P2';
+        return 'P3';
+      };
+
+      const catSolicitada = getPrioCat(prioSolicitada);
+      const catCalculada = getPrioCat(prioCalculada);
+      const hasDiscrepancy = (catSolicitada !== catCalculada) && !row.resolucionMedicaTriaje;
+
+      const estadoTriaje = String(row["Estado de Triaje"] || "").toLowerCase();
+      const isNoTriable = hasDiscrepancy || row.noTriable === true || estadoTriaje === "no triable";
+
+      if (isNoTriable) {
+        row.noTriable = true;
+        row["Estado de Triaje"] = "No Triable";
+        if (hasDiscrepancy && !row.motivoNoTriable) {
+          row.motivoNoTriable = `⚠️ Discrepancia de prioridades: El médico solicitó ${catSolicitada} (${prioSolicitada}), pero el protocolo del programa calculó ${catCalculada} (${prioCalculada}). Enviado a la Carpeta No Triable para que el médico de Medicina Nuclear lo trie.`;
+        }
       }
 
       let maxDays = parseInt(row["Ventana Clínica (Días Laborables)"] || 0);
@@ -1722,9 +1773,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const fechaSol = row["Fecha Solicitud"] || row["Submitted at"] || row.fecha_solicitud || "2026-08-01";
       const fechaCita = row["Fecha Cita Asignada"] || row.fecha_cita || "";
       const horaCita = row["Hora Cita Asignada"] || row.hora_cita || "";
-      
-      const estadoTriaje = String(row["Estado de Triaje"] || "").toLowerCase();
-      const isUnscheduled = !fechaCita || fechaCita.includes("SIN AGENDAR") || fechaCita.trim() === "" || estadoTriaje.includes("pendiente");
+
+      const isUnscheduled = isNoTriable ? true : (!fechaCita || fechaCita.includes("SIN AGENDAR") || fechaCita.trim() === "" || estadoTriaje.includes("pendiente"));
 
       if (row["Audioguía Enviada"] === "Sí" || row["Audioguía Enviada"] === "Si" || row.audioguia_enviada === true) {
         if (!state.audioguiaSent) state.audioguiaSent = {};
@@ -1743,11 +1793,11 @@ document.addEventListener('DOMContentLoaded', () => {
         max_dias_ventana: maxDays,
         fecha_solicitud: fechaSol,
         fecha_limite: addBusinessDaysJS(fechaSol, maxDays),
-        fecha_cita: isUnscheduled ? "SIN AGENDAR" : fechaCita,
-        hora_cita: isUnscheduled ? "Pendiente de Triaje" : horaCita,
-        requires_proposal: isUnscheduled,
+        fecha_cita: isNoTriable ? "SIN AGENDAR" : (isUnscheduled ? "SIN AGENDAR" : fechaCita),
+        hora_cita: isNoTriable ? "Sin Cita / No Triable (Derivado a Medicina Nuclear)" : (isUnscheduled ? "Pendiente de Triaje" : horaCita),
+        requires_proposal: isNoTriable ? false : isUnscheduled,
         proposed_date: isUnscheduled ? (row.proposed_date || row["Fecha Propuesta"] || addBusinessDaysJS(fechaSol, 3)) : fechaCita,
-        alertas_tecnicas: row["Alertas Técnicas"] || row.alertas_tecnicas || "Ninguna",
+        alertas_tecnicas: isNoTriable ? (row.motivoNoTriable || "⚠️ No Triable - No concuerdan prioridades") : (row["Alertas Técnicas"] || row.alertas_tecnicas || "Ninguna"),
         raw: row
       };
     });
@@ -1812,14 +1862,14 @@ document.addEventListener('DOMContentLoaded', () => {
         raw: rawRecord
       };
 
-      if (!record.requiresProposal) {
+      if (!record.requiresProposal && !record.raw.noTriable && item.fecha_cita && !item.fecha_cita.includes('SIN AGENDAR')) {
         const mapKey = `${item.fecha_cita}_${rfKey}`;
         state.occupiedMap[mapKey] = (state.occupiedMap[mapKey] || 0) + 1;
       }
 
       state.submissions.push(record);
 
-      if (record.requiresProposal) {
+      if (record.requiresProposal && !record.raw.noTriable) {
         if (record.prioridad.includes('P1')) state.proposalsByPriority.p1.push(record);
         else if (record.prioridad.includes('P2')) state.proposalsByPriority.p2.push(record);
         else state.proposalsByPriority.p3.push(record);
@@ -1907,7 +1957,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (targetNhc && departedMap[targetNhc]) delete departedMap[targetNhc];
           if (nhcDigits && departedMap[nhcDigits]) delete departedMap[nhcDigits];
           localStorage.setItem('PET_DELETED_DEPARTED_PATIENTS_V1', JSON.stringify(departedMap));
-        } catch (e) {}
+        } catch (e) { }
       }
       persistTriageCitedPatientsSnapshot();
       let dbItems = [];
@@ -1915,7 +1965,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (stored) {
         try {
           dbItems = JSON.parse(stored);
-        } catch(e) {
+        } catch (e) {
           dbItems = [];
         }
       }
@@ -1946,15 +1996,15 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(extraData)
-        }).catch(() => {});
+        }).catch(() => { });
       }
       fetch(`${baseUrl}/api/sync-database`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dbItems)
-      }).catch(() => {});
+      }).catch(() => { });
       notifyClinicalEcosystemUpdated();
-    } catch(e) {
+    } catch (e) {
       console.warn("Error sincronizando asignación con PET_DATABASE_MASTER_V4:", e);
     }
   }
@@ -1977,9 +2027,9 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dbItems)
-        }).catch(() => {});
+        }).catch(() => { });
       }
-    } catch(e) {}
+    } catch (e) { }
   }
 
   function syncAudioguiaSentToMasterDb(patientId) {
@@ -2002,9 +2052,9 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dbItems)
-        }).catch(() => {});
+        }).catch(() => { });
       }
-    } catch(e) {
+    } catch (e) {
       console.warn("Error sincronizando Audioguía Enviada en Master DB:", e);
     }
   }
@@ -2080,7 +2130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       localStorage.setItem('pet_ct_agenda_config', JSON.stringify(state.agendaConfig));
-    } catch(e) {}
+    } catch (e) { }
   }
 
   function generateShiftSlotTimes(shiftConfig) {
@@ -2113,13 +2163,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (tLower.includes('psma') && pLower.includes('psma')) return true;
       if (tLower.includes('colina') && pLower.includes('colina')) return true;
       if ((tLower.includes('68ga') || tLower.includes('ga68') || tLower.includes('somatostatina') || tLower.includes('dotat')) &&
-          (pLower.includes('68ga') || pLower.includes('ga68') || pLower.includes('somatostatina') || pLower.includes('dotat'))) return true;
+        (pLower.includes('68ga') || pLower.includes('ga68') || pLower.includes('somatostatina') || pLower.includes('dotat'))) return true;
       if (tLower.includes('dopa') && pLower.includes('dopa')) return true;
       if ((tLower.includes('amiloide') || tLower.includes('florbetapir') || tLower.includes('flutemetamol') || tLower.includes('tau') || tLower.includes('demencia')) &&
-          (pLower.includes('amiloide') || pLower.includes('florbetapir') || pLower.includes('flutemetamol') || pLower.includes('tau') || pLower.includes('neuro'))) return true;
+        (pLower.includes('amiloide') || pLower.includes('florbetapir') || pLower.includes('flutemetamol') || pLower.includes('tau') || pLower.includes('neuro'))) return true;
       if (tLower.includes('neuro') && pLower.includes('neuro')) return true;
       if ((tLower.includes('lu-177') || tLower.includes('177lu') || tLower.includes('terapia')) &&
-          (pLower.includes('lu-177') || pLower.includes('177lu') || pLower.includes('terapia') || pLower.includes('radioligand'))) return true;
+        (pLower.includes('lu-177') || pLower.includes('177lu') || pLower.includes('terapia') || pLower.includes('radioligand'))) return true;
       return pLower.includes(tLower) || tLower.includes(pLower);
     });
   }
@@ -2163,7 +2213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderWeeklyGrid() {
     weeklyGrid.innerHTML = '';
-    
+
     const startOfWeek = new Date(state.baseDate);
     startOfWeek.setDate(state.baseDate.getDate() + (state.selectedWeekIndex * 7));
     const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -2196,11 +2246,11 @@ document.addEventListener('DOMContentLoaded', () => {
       dayHeader.innerHTML = `
         <div style="display: flex; align-items: center; gap: 0.35rem;">
           <span style="color: ${isToday ? '#0369a1' : 'inherit'}; font-weight: ${isToday ? '800' : '700'};">${days[i]}</span>
-          <span style="font-size: 0.72rem; color: ${isToday ? '#0284c7' : '#52718A'}; font-weight: ${isToday ? '700' : '500'};">${colDate.getDate()}/${colDate.getMonth()+1}</span>
+          <span style="font-size: 0.72rem; color: ${isToday ? '#0284c7' : '#52718A'}; font-weight: ${isToday ? '700' : '500'};">${colDate.getDate()}/${colDate.getMonth() + 1}</span>
           ${todayBadge}
         </div>
         <div style="display: flex; align-items: center; gap: 0.15rem;">
-          <button class="btn-day-action btn-config-day" data-date="${dateStr}" title="⚙️ Configurar citación, turnos y tratamientos de ${days[i]} ${colDate.getDate()}/${colDate.getMonth()+1}">
+          <button class="btn-day-action btn-config-day" data-date="${dateStr}" title="⚙️ Configurar citación, turnos y tratamientos de ${days[i]} ${colDate.getDate()}/${colDate.getMonth() + 1}">
             ⚙️
           </button>
           <button class="btn-day-action btn-fill-day" data-date="${dateStr}" title="⚡ Rellenar este día automáticamente con su triaje clínico (P1 > P2 > P3)">
@@ -2209,10 +2259,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <button class="btn-day-action btn-order-day" data-date="${dateStr}" title="📦 Confirmar citas de ${days[i]} y generar pedido de dosis (Ciclotrón / Radiofarmacia / Curium Madrid)">
             📦
           </button>
-          <button class="btn-day-action btn-unassign-day" data-date="${dateStr}" title="🧹 Desagendar este día (${days[i]} ${colDate.getDate()}/${colDate.getMonth()+1}) y devolver los pacientes a la lista de espera">
+          <button class="btn-day-action btn-unassign-day" data-date="${dateStr}" title="🧹 Desagendar este día (${days[i]} ${colDate.getDate()}/${colDate.getMonth() + 1}) y devolver los pacientes a la lista de espera">
             🧹
           </button>
-          <button class="btn-day-action btn-print-day" data-date="${dateStr}" title="🖨️ Imprimir Citas de ${days[i]} ${colDate.getDate()}/${colDate.getMonth()+1}">
+          <button class="btn-day-action btn-print-day" data-date="${dateStr}" title="🖨️ Imprimir Citas de ${days[i]} ${colDate.getDate()}/${colDate.getMonth() + 1}">
             🖨️
           </button>
         </div>
@@ -2705,7 +2755,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     allTreatments.forEach(t => {
-      const isSelected = selectedTreatments.some(st => 
+      const isSelected = selectedTreatments.some(st =>
         st.toLowerCase().trim() === t.name.toLowerCase().trim() ||
         st.toLowerCase().trim() === t.id.toLowerCase().trim()
       );
@@ -2891,7 +2941,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       localStorage.setItem('pet_ct_agenda_config', JSON.stringify(state.agendaConfig));
-    } catch(e) {}
+    } catch (e) { }
 
     const modal = document.getElementById('agenda-template-modal');
     if (modal) {
@@ -2931,7 +2981,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. Extraer pacientes elegibles en espera
-    const waitingPatients = state.submissions.filter(s => 
+    const waitingPatients = state.submissions.filter(s =>
       s.requiresProposal === true ||
       !s.fechaCita ||
       s.fechaCita.includes("SIN AGENDAR") ||
@@ -3017,7 +3067,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Si es hueco temprano (de los primeros), evitar hospitalizados / mov reducida si hay autónomos disponibles
             const mob = getPatientMobilityHospitalizationInfo(p);
             if (idx === 0 && mob.isLateShift) {
-              const hasAutonomousCandidate = waitingPatients.some(cand => 
+              const hasAutonomousCandidate = waitingPatients.some(cand =>
                 !scheduledPatientIds.has(cand.id) &&
                 (slotRf === 'Flexible' || matchesTreatment(cand.radiofarmaco, [slotRf])) &&
                 !getPatientMobilityHospitalizationInfo(cand).isLateShift
@@ -3231,7 +3281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Guardar asignaciones en localStorage
     try {
       localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
-    } catch(e) {}
+    } catch (e) { }
 
     // 5. Actualizar la interfaz completa
     updateProposalsLists();
@@ -3270,7 +3320,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tbodyScheduled.innerHTML = scheduledList.map(item => {
           const p = item.patient;
           const rfClass = getRfClass(p.radiofarmaco);
-          const shiftBadge = item.turno === 'Tarde' 
+          const shiftBadge = item.turno === 'Tarde'
             ? '<span class="badge" style="background:#fef3c7; color:#b45309; font-weight:700;">🌆 Tarde</span>'
             : '<span class="badge" style="background:#e0f2fe; color:#0369a1; font-weight:700;">☀️ Mañana</span>';
 
@@ -3339,7 +3389,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.confirmations[patient.id] = nextState;
         try {
           localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
-        } catch(e) {}
+        } catch (e) { }
         updateConfirmationInMasterDb(patient.id, nextState);
         updateKPIs();
         renderConfirmationsTable();
@@ -3434,6 +3484,13 @@ document.addEventListener('DOMContentLoaded', () => {
       ? `<div><strong>Logística Asistencial:</strong> <span class="badge-late-shift">${mobModal.label} (Debe ir de último)</span></div>`
       : `<div><strong>Movilidad:</strong> <span style="color:#059669; font-weight:700;">🟢 Autónomo / Ambulatorio</span></div>`;
 
+    const rawP = patient.raw || (state.rawSubmissionsMap && state.rawSubmissionsMap[patient.id]) || {};
+    const hasPriorPetVal = rawP["¿Tiene estudio PET previo?"] || rawP["PET Previo Realizado"] || (rawP["Detalle PET Previo"] && !rawP["Detalle PET Previo"].startsWith('No') ? 'Sí' : 'No');
+    const isPriorPetSi = String(hasPriorPetVal).toLowerCase().includes('s') || String(hasPriorPetVal).toLowerCase().includes('si');
+    const priorPetInfoHtml = isPriorPetSi
+      ? `<div><strong>🔬 Estudio PET Previo:</strong> <span style="color:#0284c7; font-weight:700;">🔵 Sí (${escapeHTML(rawP["Detalle PET Previo"] || 'Revisar comparativa en SIDI / PACS')})</span></div>`
+      : `<div><strong>🔬 Estudio PET Previo:</strong> <span style="color:#059669; font-weight:700;">🟢 No (Estudio Basal)</span></div>`;
+
     modalPatientInfo.innerHTML = `
       ${badAlertModalHtml}
       <div><strong>Paciente:</strong> ${patient.nombre}</div>
@@ -3441,6 +3498,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ${mobModalBadgeHtml}
       <div><strong>Estudio:</strong> ${patient.radiofarmaco}</div>
       <div><strong>🩺 Indicación / Motivo (Excel):</strong> <strong style="color: #0f4c81;">${patient.motivo || 'Estudio PET/CT Oncológico'}</strong></div>
+      ${priorPetInfoHtml}
       <div><strong>Cita Actual:</strong> 📅 ${patient.fechaCita} a las ⏰ ${patient.horaCita} h</div>
       <button class="btn btn-primary btn-pdf-patient" data-id="${patient.id}" style="margin-top:0.75rem; width:100%; font-weight:700; background:var(--sergas-blue); border-color:var(--sergas-blue); display:flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.65rem 1rem; color:white; border-radius:8px; cursor:pointer; box-shadow:0 3px 10px rgba(0,126,180,0.25);">
         <span>📄</span> <span>Ver Volante de Petición del Médico (Imprimir / PDF)</span>
@@ -3486,7 +3544,7 @@ document.addEventListener('DOMContentLoaded', () => {
       delete state.peonadaAssignments[targetPatient.id];
       try {
         localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
-      } catch(e) {}
+      } catch (e) { }
     }
 
     if (dateStr && dateStr !== "SIN AGENDAR (PROPUESTA TURNO EXTRA)" && timeStr && timeStr !== "-") {
@@ -3498,7 +3556,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       try {
         localStorage.setItem('pet_ct_freed_slots', JSON.stringify(state.freedSlots));
-      } catch(e) {}
+      } catch (e) { }
     }
 
     targetPatient.requiresProposal = true;
@@ -3555,7 +3613,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       try {
         localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
-      } catch(e) {}
+      } catch (e) { }
 
       syncAssignmentToMasterDatabase(currentPatient.id, "", "Pendiente de Triaje");
       syncAssignmentToMasterDatabase(replacementPatient.id, originalDate, originalTime);
@@ -3703,8 +3761,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const isFDGOncoItem = rfLower.includes('fdg') && !rfLower.includes('vasculitis') && !rfLower.includes('endocarditis') && !rfLower.includes('contraste') && !rfLower.includes('neuro');
           const diabBadgeHtml = isFDGOncoItem
             ? (isPatientDiabetic(s)
-                ? '<div style="margin-top:3px;"><span class="badge" style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; font-size:0.72rem; font-weight:700;">💉 Diabético (indexFDG.html)</span></div>'
-                : '<div style="margin-top:3px;"><span class="badge" style="background:#ecfdf5; color:#059669; border:1px solid #6ee7b7; font-size:0.72rem; font-weight:700;">🟢 Non Diabético (indexFDG_NoDiabetico.html)</span></div>')
+              ? '<div style="margin-top:3px;"><span class="badge" style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; font-size:0.72rem; font-weight:700;">💉 Diabético (indexFDG.html)</span></div>'
+              : '<div style="margin-top:3px;"><span class="badge" style="background:#ecfdf5; color:#059669; border:1px solid #6ee7b7; font-size:0.72rem; font-weight:700;">🟢 Non Diabético (indexFDG_NoDiabetico.html)</span></div>')
             : '';
 
           tr.innerHTML = `
@@ -3783,8 +3841,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const isFDGOncoItemAll = rfLowerAll.includes('fdg') && !rfLowerAll.includes('vasculitis') && !rfLowerAll.includes('endocarditis') && !rfLowerAll.includes('contraste') && !rfLowerAll.includes('neuro');
           const diabBadgeAll = isFDGOncoItemAll
             ? (isPatientDiabetic(s)
-                ? '<div style="margin-top:2px;"><span class="badge" style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; font-size:0.7rem; font-weight:700;">💉 Diabético</span></div>'
-                : '<div style="margin-top:2px;"><span class="badge" style="background:#ecfdf5; color:#059669; border:1px solid #6ee7b7; font-size:0.7rem; font-weight:700;">🟢 Non Diabético</span></div>')
+              ? '<div style="margin-top:2px;"><span class="badge" style="background:#fef3c7; color:#92400e; border:1px solid #fcd34d; font-size:0.7rem; font-weight:700;">💉 Diabético</span></div>'
+              : '<div style="margin-top:2px;"><span class="badge" style="background:#ecfdf5; color:#059669; border:1px solid #6ee7b7; font-size:0.7rem; font-weight:700;">🟢 Non Diabético</span></div>')
             : '';
 
           tr.innerHTML = `
@@ -3834,7 +3892,7 @@ document.addEventListener('DOMContentLoaded', () => {
         state.confirmations[pId] = true;
         try {
           localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
-        } catch(err) {}
+        } catch (err) { }
         updateConfirmationInMasterDb(pId, true);
         updateKPIs();
         renderConfirmationsTable();
@@ -3859,7 +3917,7 @@ document.addEventListener('DOMContentLoaded', () => {
         delete state.confirmations[pId];
         try {
           localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
-        } catch(err) {}
+        } catch (err) { }
         updateConfirmationInMasterDb(pId, false);
         updateKPIs();
         renderConfirmationsTable();
@@ -3951,15 +4009,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const tr = document.createElement('tr');
       const alertsText = s.alertas ? s.alertas.map(a => a.text).join(' | ') : 'Ninguna';
       const isConfirmed = state.confirmations[s.id];
-      
+
       const isSent = state.audioguiaSent && state.audioguiaSent[s.id];
-      const statusBadge = s.requiresProposal 
-        ? `<span class="badge badge-proposal btn-schedule-peonada" data-id="${s.id}" style="cursor:pointer;" title="Haz clic para agendar en Peonada">💡 Propuesta Peonada (Haz Clic)</span>` 
-        : isConfirmed
-        ? (isSent 
-            ? '<span class="badge badge-confirmed" style="background:#ecfdf5; color:#065f46; border:1px solid #10b981;">✓ Confirmada | ✅ Audioguía</span>'
-            : '<span class="badge badge-confirmed">✓ Confirmada</span>')
-        : '<span class="badge badge-pending">⏳ Pendiente</span>';
+      const isNoTriable = !!(s.raw && (s.raw.noTriable || s.raw["Estado de Triaje"] === "No Triable" || s.raw.discrepanciaPrioridad));
+      const statusBadge = isNoTriable
+        ? `<span class="badge" style="background:#fff1f2; color:#be123c; border:1px solid #fecdd3; font-weight:800; cursor:help;" title="${s.raw.motivoNoTriable || 'No concuerdan prioridades'}">🚫 No Triable: No concuerdan prioridades</span>`
+        : s.requiresProposal
+          ? `<span class="badge badge-proposal btn-schedule-peonada" data-id="${s.id}" style="cursor:pointer;" title="Haz clic para agendar en Peonada">💡 Propuesta Peonada (Haz Clic)</span>`
+          : isConfirmed
+            ? (isSent
+              ? '<span class="badge badge-confirmed" style="background:#ecfdf5; color:#065f46; border:1px solid #10b981;">✓ Confirmada | ✅ Audioguía</span>'
+              : '<span class="badge badge-confirmed">✓ Confirmada</span>')
+            : '<span class="badge badge-pending">⏳ Pendiente</span>';
 
       tr.innerHTML = `
         <td><strong>${s.id}</strong></td>
@@ -3999,9 +4060,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const matches = state.submissions.filter(s => 
-      s.nombre.toLowerCase().includes(q) || 
-      s.id.toLowerCase().includes(q) || 
+    const matches = state.submissions.filter(s =>
+      s.nombre.toLowerCase().includes(q) ||
+      s.id.toLowerCase().includes(q) ||
       (s.radiofarmaco && s.radiofarmaco.toLowerCase().includes(q))
     );
 
@@ -4229,7 +4290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     slots.forEach(slot => {
       const btn = document.createElement('button');
       btn.className = 'time-slot-btn';
-      
+
       const isOccupied = takenTimeSlots.some(t => t.includes(slot));
       if (isOccupied) {
         btn.textContent = `🔒 ${slot} (Ocupado)`;
@@ -4249,7 +4310,7 @@ document.addEventListener('DOMContentLoaded', () => {
           btnConfirmPeonada.disabled = false;
         });
       }
-      
+
       peonadaTimeSlots.appendChild(btn);
     });
   }
@@ -4286,7 +4347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     try {
       localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
-    } catch(e) {}
+    } catch (e) { }
 
     fetch('/api/assign-peonada', {
       method: 'POST',
@@ -4720,7 +4781,7 @@ document.addEventListener('DOMContentLoaded', () => {
       state.audioguiaSent[pId] = true;
       try {
         localStorage.setItem('pet_ct_audioguia_sent', JSON.stringify(state.audioguiaSent));
-      } catch(e) {}
+      } catch (e) { }
       syncAudioguiaSentToMasterDb(pId);
       renderConfirmationsTable();
       renderWeeklyGrid();
@@ -5020,6 +5081,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const contraste = raw["Contraindicación Contraste"] || "No";
     const metal = raw["Portador Objetos Metálicos"] || "No";
 
+    const petPrevio = raw["¿Tiene estudio PET previo?"] || raw["PET Previo Realizado"] || (raw["Detalle PET Previo"] && !raw["Detalle PET Previo"].startsWith('No') ? 'Sí' : 'No');
+    const petPrevioDetalle = raw["Detalle PET Previo"] || (raw["Fecha PET Previo"] ? `${raw["Fecha PET Previo"]} (${raw["Centro PET Previo"] || 'SERGAS'})` : '');
+    const isPetPrevioSi = String(petPrevio).toLowerCase().includes('s') || String(petPrevio).toLowerCase().includes('si');
+
     let alertas = "Ninguna";
     if (Array.isArray(p.alertas) && p.alertas.length > 0) {
       alertas = p.alertas.map(a => typeof a === 'string' ? a : (a && a.text ? a.text : '')).filter(Boolean).join(' | ');
@@ -5292,9 +5357,10 @@ document.addEventListener('DOMContentLoaded', () => {
     <!-- Sección C: Estudio Solicitado & Indicación Clínica -->
     <div class="sheet-section">
       <div class="sheet-section-title">C. Estudio Solicitado & Indicación Clínica</div>
-      <div class="sheet-grid-2">
+      <div class="sheet-grid-3">
         <div class="sheet-field"><label>Tipo de Estudio / Radiofármaco:</label> <span style="color: #004868; font-size: 13px;">${escapeHTML(estudio)}</span></div>
         <div class="sheet-field"><label>Prioridad Asignada:</label> <span>${escapeHTML(prioridad)}</span></div>
+        <div class="sheet-field"><label>¿Estudio PET Previo Realizado?:</label> <span style="color: ${isPetPrevioSi ? '#0284c7' : '#059669'}; font-weight:700;">${isPetPrevioSi ? '🔵 Sí (' + escapeHTML(petPrevioDetalle || 'Consta estudio previo') + ')' : '🟢 No (Estudio Basal)'}</span></div>
       </div>
       <div class="sheet-field" style="margin-top: 8px;">
         <label>Diagnóstico Clínico & Motivo de Solicitud:</label>
@@ -5383,7 +5449,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.opacity = '1';
         modal.style.pointerEvents = 'auto';
       }
-    } catch(e) {}
+    } catch (e) { }
 
     // Abrir ventana emergente dedicada con el documento imprimible
     try {
@@ -5395,7 +5461,7 @@ document.addEventListener('DOMContentLoaded', () => {
         printWin.focus();
         return;
       }
-    } catch(err) {
+    } catch (err) {
       console.warn("Error al abrir ventana emergente del volante:", err);
     }
 
@@ -5521,7 +5587,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dayPatients.forEach((p, idx) => {
         const isPeonada = String(p.horaCita).includes('Peonada');
         const shiftBadge = isPeonada ? '<span style="color:#d97706; font-weight:bold;"> [Turno Extra/Peonada]</span>' : '';
-        
+
         let alertsText = 'Sin alertas';
         if (Array.isArray(p.alertas) && p.alertas.length > 0) {
           alertsText = p.alertas.map(a => typeof a === 'string' ? a : (a && a.text ? a.text : '')).filter(Boolean).join(' | ');
@@ -5769,14 +5835,14 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         try {
           localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
-        } catch(e) {}
+        } catch (e) { }
 
         const freedKey = `${dateVal}_${timeVal}`;
         if (state.freedSlots[freedKey]) {
           delete state.freedSlots[freedKey];
           try {
             localStorage.setItem('pet_ct_freed_slots', JSON.stringify(state.freedSlots));
-          } catch(e) {}
+          } catch (e) { }
         }
 
         fetch('/api/assign-peonada', {
@@ -5883,14 +5949,14 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       try {
         localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(state.peonadaAssignments));
-      } catch(e) {}
+      } catch (e) { }
 
       const freedKey = `${dateVal}_${timeVal}`;
       if (state.freedSlots[freedKey]) {
         delete state.freedSlots[freedKey];
         try {
           localStorage.setItem('pet_ct_freed_slots', JSON.stringify(state.freedSlots));
-        } catch(e) {}
+        } catch (e) { }
       }
 
       fetch('/api/assign-peonada', {
@@ -6040,7 +6106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       );
 
       const card = document.createElement('div');
-      
+
       if (!p.requiresProposal) {
         // AGENDADO: Haz clic para abrir automáticamente el modal '⚙️ Gestión de Cita de Paciente'
         card.style.cssText = 'border: 1px solid #10b981; border-left: 5px solid #10b981; background: #f0fdf4; border-radius: 10px; padding: 0.75rem; margin-bottom: 0.6rem; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;';
@@ -6184,7 +6250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  
+
   // ==============================================================================
   // INICIALIZACIÓN DE LISTENERS PARA GESTIÓN DE AGENDAS Y TRIAJE
   // ==============================================================================
@@ -6334,7 +6400,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDayCustomSlots[existingIdx].shift = shiftVal;
       } else {
         currentDayCustomSlots.push({
-          id: `slot_${Date.now()}_${Math.random().toString(36).substr(2,4)}`,
+          id: `slot_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
           time: timeVal,
           radiofarmaco: rfVal,
           shift: shiftVal
@@ -6592,7 +6658,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           injectedDoseMci = Math.round((rawWeight * 0.1) * 10) / 10;
           if (injectedDoseMci <= 0) injectedDoseMci = 10.0;
-          doseExplanation = weightKnown 
+          doseExplanation = weightKnown
             ? `${injectedDoseMci.toFixed(1)} mCi (1 mCi / 10 kg · ${rawWeight} kg)`
             : `10.0 mCi (Nominal · Peso no reg.)`;
         }
@@ -6634,7 +6700,7 @@ document.addEventListener('DOMContentLoaded', () => {
         patientName: p.nombre || 'Paciente',
         nhc: p.nhc || raw.nhc || raw.NHC || '--',
         horaCita: p.horaCita,
-        slotTimeFormatted: `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`,
+        slotTimeFormatted: `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`,
         shiftLabel,
         refCalStr,
         weightKg: rawWeight,
@@ -6740,7 +6806,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       try {
         localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
-      } catch(e) {}
+      } catch (e) { }
       updateKPIs();
       renderConfirmationsTable();
       renderWeeklyGrid();
@@ -6798,7 +6864,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (changed) {
         try {
           localStorage.setItem('pet_ct_confirmations', JSON.stringify(state.confirmations));
-        } catch(e) {}
+        } catch (e) { }
         updateKPIs();
         renderConfirmationsTable();
         renderWeeklyGrid();
@@ -6977,7 +7043,7 @@ document.addEventListener('DOMContentLoaded', () => {
         res.items.forEach(it => {
           const tr = document.createElement('tr');
           const isAft = it.shiftLabel === 'Tarde';
-          const shiftBadge = isAft 
+          const shiftBadge = isAft
             ? '<span class="badge" style="background:#fef3c7; color:#b45309; font-size:0.65rem; padding:1px 4px; margin-left:2px;">Tarde</span>'
             : '';
 
@@ -7200,7 +7266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-    function downloadRadiopharmacyOrderCSV() {
+  function downloadRadiopharmacyOrderCSV() {
     const res = state.lastCalculatedDoseOrder;
     if (!res) return;
 
@@ -7574,6 +7640,6 @@ document.addEventListener('DOMContentLoaded', () => {
         executeLiveTopSearch(searchParam);
       }, 600);
     }
-  } catch(e) {}
+  } catch (e) { }
 });
 

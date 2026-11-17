@@ -515,6 +515,62 @@
         noTriable: true,
         motivoNoTriable: "Intervalo post-inmunoterapia/quimioterapia insuficiente (< 10 días tras infusión R-CHOP). Riesgo severo de falsos positivos metabólicos por efecto inflamatorio ('flare').",
         sugerenciaTriaje: "Diferir la citación al menos hasta 3-4 semanas post-ciclo de quimioterapia para asegurar validez diagnóstica según criterios Lugano."
+      },
+      {
+        "Submission ID": "UNTRIAGED_005",
+        "NHC / Historia Clínica": "NHC-914820",
+        "Nombre del Paciente": "Gonzalo Rey Taboada",
+        "Edad": 64,
+        "Sexo": "Varón",
+        "Peso (kg)": 78,
+        "Talla (cm)": 174,
+        "Servicio Solicitante": "Medicina Interna (H. Álvaro Cunqueiro)",
+        "Médico Solicitante": "Dr. Alberto Domínguez (M. Interna)",
+        "Diagnóstico Clínico": "Control evolutivo rutinario tras 3 años en remisión completa de Linfoma no Hodgkin folicular. Paciente asintomático, sin pérdida ponderal ni adenopatías periféricas palpables. Analítica con LDH y hemograma en rango normal.",
+        "Motivo de Solicitud": "Control evolutivo anual y seguimiento asintomático de rutina.",
+        "Tipo de Estudio PET Solicitado": "18F-FDG (Oncológico / Hematología)",
+        "Carácter de la Petición": "🔴 P1 (Urgente)",
+        "Prioridad Solicitada": "🔴 P1 (Urgente)",
+        "Prioridad Calculada": "🟢 P3 (Ordinaria)",
+        "Fecha Cita Asignada": "",
+        "Hora Cita Asignada": "Sin Cita / Pendiente de Triaje",
+        "¿Tiene Diabetes Mellitus?": "No",
+        "Glucemia (mg/dL)": 94,
+        "Alergias Conocidas": "Ninguna",
+        "Contraindicación Contraste": "No",
+        "Movilidad / Traslado": "Autónomo",
+        "Estado de Triaje": "No Triable",
+        noTriable: true,
+        motivoNoTriable: "⚠️ Discrepancia de prioridades: El médico solicitante indicó prioridad 🔴 P1 (Urgente), pero el protocolo clínico del programa calculó 🟢 P3 (Ordinaria) al tratarse de un control evolutivo anual en paciente asintomático. Requiere triaje médico por facultativo de Medicina Nuclear.",
+        sugerenciaTriaje: "El protocolo no justifica urgencia P1 (< 7 días) para un seguimiento rutinario asintomático. Se sugiere adecuar a P3 (o ratificar P1 si el especialista detecta sospecha clínica en informe)."
+      },
+      {
+        "Submission ID": "UNTRIAGED_006",
+        "NHC / Historia Clínica": "NHC-503819",
+        "Nombre del Paciente": "Elena Méndez Salgado",
+        "Edad": 73,
+        "Sexo": "Mujer",
+        "Peso (kg)": 62,
+        "Talla (cm)": 158,
+        "Servicio Solicitante": "Cardiología (H. Meixoeiro)",
+        "Médico Solicitante": "Dra. Lucía Barbeito (Cardiología)",
+        "Diagnóstico Clínico": "Portadora de prótesis aórtica biológica implantada hace 2 años. Ingresada por bacteriemia persistente por S. aureus y picos febriles de 38.6 ºC. Sospecha alta de endocarditis protésica con ETE no concluyente.",
+        "Motivo de Solicitud": "PET cardíaco con protocolo HEP para detección precoz de infección activa en anillo protésico.",
+        "Tipo de Estudio PET Solicitado": "18F-FDG (Infección Cardíaca / Protocolo HEP)",
+        "Carácter de la Petición": "🟢 P3 (Ordinaria)",
+        "Prioridad Solicitada": "🟢 P3 (Ordinaria)",
+        "Prioridad Calculada": "🔴 P1 (Urgente)",
+        "Fecha Cita Asignada": "",
+        "Hora Cita Asignada": "Sin Cita / Pendiente de Triaje",
+        "¿Tiene Diabetes Mellitus?": "No",
+        "Glucemia (mg/dL)": 102,
+        "Alergias Conocidas": "Ninguna",
+        "Contraindicación Contraste": "No",
+        "Movilidad / Traslado": "Ambulatorio / Cama",
+        "Estado de Triaje": "No Triable",
+        noTriable: true,
+        motivoNoTriable: "⚠️ Discrepancia de prioridades: El médico solicitante marcó por error 🟢 P3 (Ordinaria), pero según el protocolo clínico de Endocarditis/Infección Protésica Aguda la prioridad asistencial calculada por el programa es 🔴 P1 (Urgente, < 7 días). Requiere triaje médico urgente por facultativo de Medicina Nuclear.",
+        sugerenciaTriaje: "Adecuar inmediatamente a 🔴 P1 (< 7 días) e iniciar preparación dietética miocárdica (dieta rica en grasas sin hidratos) para realizar el estudio en los próximos 3-5 días."
       }
     ];
 
@@ -549,16 +605,36 @@
     const radiofarmaco = raw["Tipo de Estudio PET Solicitado"] || raw.radiofarmaco || "18F-FDG (Oncológico / Inflamatorio General)";
     const prioridad = raw["Carácter de la Petición"] || raw["Prioridad Calculada"] || raw.prioridad || "🟢 P3";
     
+    const prioSolicitada = raw["Carácter de la Petición"] || raw["Prioridad Solicitada"] || raw.prioridad || "🟢 P3";
+    const prioCalculada = raw["Prioridad Calculada"] || raw["Prioridad Protocolo"] || raw.prioridadCalculada || prioSolicitada;
+
+    const getPrioCat = (p) => {
+      const s = String(p || '').toLowerCase();
+      if (s.includes('1') || s.includes('urgente')) return 'P1';
+      if (s.includes('2') || s.includes('preferente')) return 'P2';
+      return 'P3';
+    };
+
+    const catSolicitada = getPrioCat(prioSolicitada);
+    const catCalculada = getPrioCat(prioCalculada);
+    const hasDiscrepancy = (catSolicitada !== catCalculada) && !raw.resolucionMedicaTriaje;
+
     // Detección de No Triable / Incidencias del algoritmo
-    const noTriable = !!(
+    const noTriable = hasDiscrepancy || !!(
       raw.noTriable === true ||
       raw["Estado de Triaje"] === "No Triable" ||
       raw.estadoTriaje === "No Triable" ||
       raw.motivoNoTriable ||
       raw["Motivo No Triable"]
     );
-    const motivoNoTriable = raw.motivoNoTriable || raw["Motivo No Triable"] || "";
-    const sugerenciaTriaje = raw.sugerenciaTriaje || raw["Sugerencia Triaje"] || "";
+
+    let motivoNoTriable = raw.motivoNoTriable || raw["Motivo No Triable"] || "";
+    let sugerenciaTriaje = raw.sugerenciaTriaje || raw["Sugerencia Triaje"] || "";
+
+    if (hasDiscrepancy && !motivoNoTriable) {
+      motivoNoTriable = `⚠️ Discrepancia de prioridades: El médico solicitante indicó prioridad ${catSolicitada} (${prioSolicitada}), pero el protocolo asistencial del programa calculó ${catCalculada} (${prioCalculada}). Requiere triaje médico por facultativo de Medicina Nuclear.`;
+      sugerenciaTriaje = `El médico peticionario indicó ${catSolicitada}, pero según las guías clínicas para esta patología corresponde ${catCalculada}. Valide la prioridad definitiva para desbloquear el triaje.`;
+    }
 
     // Los pacientes NO TRIABLES NUNCA están citados (no tienen fecha ni hora de cita asignada)
     const rawFecha = (raw["Fecha Cita Asignada"] || raw.fechaCita || '').trim();
@@ -577,6 +653,10 @@
     const contraindicacionContraste = raw["Contraindicación Contraste"] || "No";
     const movilidad = raw["Movilidad / Traslado"] || "Autónomo";
 
+    const petPrevio = raw["¿Tiene estudio PET previo?"] || raw["PET Previo Realizado"] || (raw["Detalle PET Previo"] && !raw["Detalle PET Previo"].startsWith('No') ? 'Sí' : 'No');
+    const isPetPrevio = String(petPrevio).toLowerCase().includes('s') || String(petPrevio).toLowerCase().includes('si');
+    const detallePetPrevio = raw["Detalle PET Previo"] || (raw["Fecha PET Previo"] ? `${raw["Fecha PET Previo"]} (${raw["Centro PET Previo"] || 'SERGAS'})` : '');
+
     const savedProto = state.protocols[subId] || state.protocols[nhc] || raw.protocoloMedico || null;
 
     return {
@@ -590,6 +670,11 @@
       diagnostico: diag,
       radiofarmaco: radiofarmaco,
       prioridad: prioridad,
+      isDiscrepancy: hasDiscrepancy,
+      prioSolicitada: prioSolicitada,
+      prioCalculada: prioCalculada,
+      catSolicitada: catSolicitada,
+      catCalculada: catCalculada,
       fechaCita: fechaCita,
       horaCita: horaCita,
       isDiabetic: isDiabetic,
@@ -597,6 +682,8 @@
       alergia: alergia,
       contraindicacionContraste: contraindicacionContraste,
       movilidad: movilidad,
+      hasPriorPet: isPetPrevio,
+      priorPetDetail: detallePetPrevio,
       noTriable: noTriable,
       estadoTriaje: noTriable ? "No Triable" : (raw["Estado de Triaje"] || raw.estadoTriaje || "Pendiente de Triaje"),
       motivoNoTriable: motivoNoTriable,
@@ -925,6 +1012,39 @@
             <div style="font-size:0.72rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em;">Diagnóstico / Motivo de Solicitud en Volante:</div>
             <div style="font-size:0.86rem; color:var(--text-main); font-weight:600; margin-top:3px; line-height:1.4;">${escapeHTML(p.diagnostico)}</div>
           </div>
+
+          <!-- AVISO DE DISCREPANCIA DE PRIORIDADES (SI NO CONCUERDAN) -->
+          ${(p.isDiscrepancy || (p.motivoNoTriable && p.motivoNoTriable.includes('Discrepancia'))) ? `
+            <div style="background:#fff1f2; border:1px solid #fecdd3; border-left:6px solid #e11d48; border-radius:8px; padding:12px 14px; margin-top:6px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="font-size:0.85rem; font-weight:800; color:#9f1239; display:flex; align-items:center; gap:6px;">
+                  <span>⚠️</span> <span>NO CONCUERDAN PRIORIDADES DE TRIAJE</span>
+                </div>
+                <span style="font-size:0.72rem; font-weight:800; background:#ffe4e6; color:#be123c; padding:3px 10px; border-radius:12px; border:1px solid #fecdd3;">
+                  DESVIADO A MEDICINA NUCLEAR
+                </span>
+              </div>
+              <div style="font-size:0.80rem; color:#881337; margin-top:4px; font-weight:600;">
+                El médico peticionario solicitó una prioridad que no se corresponde con la calculada por el programa según protocolo asistencial SERGAS.
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; background:#ffffff; border:1px solid #fda4af; border-radius:6px; padding:10px 12px;">
+                <div style="border-right:1px solid #fee2e2; padding-right:8px;">
+                  <div style="font-size:0.68rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">1. Prioridad Solicitada en Volante:</div>
+                  <div style="font-size:0.92rem; font-weight:800; color:#0f172a; margin-top:3px; display:flex; align-items:center; gap:6px;">
+                    <span>${p.catSolicitada === 'P1' ? '🔴' : (p.catSolicitada === 'P2' ? '🟡' : '🟢')}</span>
+                    <span>${escapeHTML(p.prioSolicitada || p.prioridad)}</span>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:0.68rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">2. Prioridad Calculada por Protocolo:</div>
+                  <div style="font-size:0.92rem; font-weight:800; color:#0369a1; margin-top:3px; display:flex; align-items:center; gap:6px;">
+                    <span>${p.catCalculada === 'P1' ? '🔴' : (p.catCalculada === 'P2' ? '🟡' : '🟢')}</span>
+                    <span>${escapeHTML(p.prioCalculada || p.prioridadCalculada || p.prioridad)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ` : ''}
 
           <!-- MOTIVO DE NO TRIAJE -->
           <div class="folder-incidence-box">
@@ -1852,6 +1972,9 @@ setInterval(() => {
       }
       if (p.movilidad && p.movilidad !== 'Autónomo') {
         alertsHtml += `<span class="clinical-alert-tag alert-mobility">🦽 ${escapeHTML(p.movilidad)}</span>`;
+      }
+      if (p.hasPriorPet) {
+        alertsHtml += `<span class="clinical-alert-tag" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc; font-weight:700;" title="${escapeHTML(p.priorPetDetail || 'PET Previo disponible para comparativa')}">🔬 PET Previo: Sí</span>`;
       }
 
       return `
@@ -3839,6 +3962,10 @@ function anularPautaTardia() {
     const contraste = p.contraindicacionContraste || raw["Contraindicación Contraste"] || "No";
     const metal = raw["Portador Objetos Metálicos"] || "No";
 
+    const petPrevio = raw["¿Tiene estudio PET previo?"] || raw["PET Previo Realizado"] || (raw["Detalle PET Previo"] && !raw["Detalle PET Previo"].startsWith('No') ? 'Sí' : 'Non');
+    const petPrevioDetalle = raw["Detalle PET Previo"] || (raw["Fecha PET Previo"] ? `${raw["Fecha PET Previo"]} (${raw["Centro PET Previo"] || 'SERGAS'})` : '');
+    const isPetPrevioSi = String(petPrevio).toLowerCase().includes('s') || String(petPrevio).toLowerCase().includes('si');
+
     const fechaCita = p.fechaCita || raw["Fecha Cita Asignada"] || "19/10/2026";
     const horaCita = p.horaCita || raw["Hora Cita Asignada"] || "08:30 h";
 
@@ -4127,6 +4254,14 @@ function anularPautaTardia() {
             <div style="font-size:11.5px; color:#334155; line-height:1.5; margin-top:2px;">
               ${escapeHTML(resumen)}
             </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <span class="field-lbl">¿Estudo PET/CT Previo Realizado?:</span>
+            <span class="field-val" style="color: ${isPetPrevioSi ? '#0284c7' : '#059669'}; font-size:12px;">
+              ${isPetPrevioSi ? '🔵 Si (Revisar comparativa no SIDI / PACS): ' + escapeHTML(petPrevioDetalle || 'Consta estudo previo') : '🟢 Non (Estudo Basal / Primeiro PET)'}
+            </span>
           </td>
         </tr>
         <tr>
