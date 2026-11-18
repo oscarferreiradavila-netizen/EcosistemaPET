@@ -536,6 +536,28 @@
     mergeLateScanOrders();
     mergeNursingData();
     mergeDischargeData();
+
+    // Filtrar pacientes eliminados registrados en PET_DELETED_PETITION_IDS_V1
+    try {
+      const deletedRaw = localStorage.getItem('PET_DELETED_PETITION_IDS_V1');
+      if (deletedRaw) {
+        const deletedList = JSON.parse(deletedRaw);
+        if (Array.isArray(deletedList) && deletedList.length > 0) {
+          const delSet = new Set(deletedList.map(x => String(x).toLowerCase().trim()));
+          state.patients = state.patients.filter(p => {
+            if (!p) return false;
+            const s1 = String(p.id || '').toLowerCase().trim();
+            const s2 = String(p.subId || '').toLowerCase().trim();
+            const s3 = String(p.nhc || '').toLowerCase().trim();
+            if (s1 && delSet.has(s1)) return false;
+            if (s2 && delSet.has(s2)) return false;
+            if (s3 && delSet.has(s3) && (delSet.has(s1) || delSet.has(s2))) return false;
+            return true;
+          });
+        }
+      }
+    } catch (eDel) { }
+
     savePatients();
   }
 
@@ -801,6 +823,28 @@
     mergeLateScanOrders();
     mergeNursingData();
     mergeDischargeData();
+
+    // Filtrar pacientes eliminados registrados en PET_DELETED_PETITION_IDS_V1
+    try {
+      const deletedRaw = localStorage.getItem('PET_DELETED_PETITION_IDS_V1');
+      if (deletedRaw) {
+        const deletedList = JSON.parse(deletedRaw);
+        if (Array.isArray(deletedList) && deletedList.length > 0) {
+          const delSet = new Set(deletedList.map(x => String(x).toLowerCase().trim()));
+          state.patients = state.patients.filter(p => {
+            if (!p) return false;
+            const s1 = String(p.id || '').toLowerCase().trim();
+            const s2 = String(p.subId || '').toLowerCase().trim();
+            const s3 = String(p.nhc || '').toLowerCase().trim();
+            if (s1 && delSet.has(s1)) return false;
+            if (s2 && delSet.has(s2)) return false;
+            if (s3 && delSet.has(s3) && (delSet.has(s1) || delSet.has(s2))) return false;
+            return true;
+          });
+        }
+      }
+    } catch (eDel) { }
+
     savePatients();
     updateDateButtons();
     renderWorklist();
@@ -835,6 +879,19 @@
   function savePatients() {
     try {
       localStorage.setItem('PET_TSID_WORKLIST_V1', JSON.stringify(state.patients));
+      // Sincronizar en el mapa compartido para la Consola Médica en tiempo real
+      if (state.selectedPatient) {
+        const p = state.selectedPatient;
+        const syncKey = 'PET_SHARED_TSID_STATUS_V1';
+        const syncMap = JSON.parse(localStorage.getItem(syncKey) || '{}');
+        if (!syncMap[p.id]) syncMap[p.id] = { id: p.id, nhc: p.nhc };
+        syncMap[p.id].notasTecnico = p.notasTecnico || '';
+        if (p.nhc) {
+          if (!syncMap[p.nhc]) syncMap[p.nhc] = syncMap[p.id];
+          syncMap[p.nhc].notasTecnico = p.notasTecnico || '';
+        }
+        localStorage.setItem(syncKey, JSON.stringify(syncMap));
+      }
     } catch (e) { }
   }
 

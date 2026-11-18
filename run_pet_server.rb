@@ -194,8 +194,16 @@ server.mount_proc '/api/peticiones/eliminar' do |req, res|
       current_records = JSON.parse(File.read(json_path)) rescue []
     end
 
+    target = del_id.to_s.strip.downcase
+    del_nhc = body['nhc'].to_s.strip.downcase
     initial_len = current_records.length
-    current_records.reject! { |p| (p['Submission ID'] == del_id || p['id'] == del_id || p['NHC / Historia Clínica'] == del_id) }
+    current_records.reject! do |p|
+      s_id = (p['Submission ID'] || p['id'] || p['paciente_id']).to_s.strip.downcase
+      s_nhc = (p['NHC / Historia Clínica'] || p['nhc']).to_s.strip.downcase
+      matched = (!target.empty? && (s_id == target || s_nhc == target))
+      matched ||= (!del_nhc.empty? && s_nhc == del_nhc)
+      matched
+    end
     deleted = (current_records.length < initial_len)
 
     if deleted

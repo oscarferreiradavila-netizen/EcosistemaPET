@@ -839,6 +839,27 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       }
+
+      // Filtrar pacientes eliminados registrados en PET_DELETED_PETITION_IDS_V1
+      const deletedRaw = localStorage.getItem('PET_DELETED_PETITION_IDS_V1');
+      if (deletedRaw) {
+        const deletedList = JSON.parse(deletedRaw);
+        if (Array.isArray(deletedList) && deletedList.length > 0) {
+          const delSet = new Set(deletedList.map(x => String(x).toLowerCase().trim()));
+          result = result.filter(item => {
+            if (!item) return false;
+            const s1 = String(item["Submission ID"] || '').toLowerCase().trim();
+            const s2 = String(item.id || '').toLowerCase().trim();
+            const s3 = String(item.paciente_id || '').toLowerCase().trim();
+            const s4 = String(item["NHC / Historia Clínica"] || item.nhc || '').toLowerCase().trim();
+            if (s1 && delSet.has(s1)) return false;
+            if (s2 && delSet.has(s2)) return false;
+            if (s3 && delSet.has(s3)) return false;
+            if (s4 && delSet.has(s4) && (delSet.has(s1) || delSet.has(s2))) return false;
+            return true;
+          });
+        }
+      }
     } catch (e) { }
     return result;
   }

@@ -370,6 +370,29 @@
       console.warn('Error leyendo datos de Triaje en localStorage:', e);
     }
 
+    // Filtrar pacientes eliminados registrados en PET_DELETED_PETITION_IDS_V1
+    try {
+      const deletedRaw = localStorage.getItem('PET_DELETED_PETITION_IDS_V1');
+      if (deletedRaw) {
+        const deletedList = JSON.parse(deletedRaw);
+        if (Array.isArray(deletedList) && deletedList.length > 0) {
+          const delSet = new Set(deletedList.map(x => String(x).toLowerCase().trim()));
+          rawList = rawList.filter(item => {
+            if (!item) return false;
+            const s1 = String(item["Submission ID"] || '').toLowerCase().trim();
+            const s2 = String(item.id || '').toLowerCase().trim();
+            const s3 = String(item.paciente_id || '').toLowerCase().trim();
+            const s4 = String(item["NHC / Historia Clínica"] || item.nhc || '').toLowerCase().trim();
+            if (s1 && delSet.has(s1)) return false;
+            if (s2 && delSet.has(s2)) return false;
+            if (s3 && delSet.has(s3)) return false;
+            if (s4 && delSet.has(s4) && (delSet.has(s1) || delSet.has(s2))) return false;
+            return true;
+          });
+        }
+      }
+    } catch (eDel) { }
+
     // 5. Normalizar pacientes para la consola médica
     state.allPatients = rawList.map((item, index) => normalizePatient(item, index));
 
@@ -1470,7 +1493,8 @@ function getTsidLiveStatus(patient) {
     horaInicioFaseVascular,
     tardiaOrder,
     altaMedicaAutorizada: isDischarged,
-    horaAltaMedica: horaAlta
+    horaAltaMedica: horaAlta,
+    notasTecnico: (tsidState && (tsidState.notasTecnico || tsidState.notasTSID || tsidState.observaciones)) || ''
   };
 }
 
@@ -1612,6 +1636,12 @@ function buildScannerStatusCardHtml(p, s) {
           <span class="scanner-badge-status ${badgeClass}" data-badge-pid="${p.id}">${badgeText}</span>
           <span class="scanner-time-item">${timeText}</span>
         </div>
+        ${s.notasTecnico ? `
+          <div class="tsid-live-note-pill" style="margin-top:6px; font-size:0.75rem; background:#eff6ff; color:#1e40af; border:1px solid #bfdbfe; border-radius:5px; padding:3px 8px; display:inline-flex; align-items:center; gap:6px;">
+            <span>📝 <strong>Incidencia / Observación Técnico (TSID):</strong></span>
+            <span style="font-style:italic;">"${escapeHTML(s.notasTecnico)}"</span>
+          </div>
+        ` : ''}
       </div>
       ${postScanDecisionHtml}
     </div>
@@ -3969,6 +3999,15 @@ function anularPautaTardia() {
     const fechaCita = p.fechaCita || raw["Fecha Cita Asignada"] || "19/10/2026";
     const horaCita = p.horaCita || raw["Hora Cita Asignada"] || "08:30 h";
 
+    let tsidNotes = p.notasTecnico || '';
+    if (!tsidNotes) {
+      try {
+        const syncMap = JSON.parse(localStorage.getItem('PET_SHARED_TSID_STATUS_V1') || '{}');
+        const st = syncMap[p.id] || syncMap[p.nhc];
+        if (st && st.notasTecnico) tsidNotes = st.notasTecnico;
+      } catch(e) {}
+    }
+
     let protocolSection = '';
     if (p.protocoloMedico && p.protocoloMedico.completed) {
       const pr = p.protocoloMedico;
@@ -3993,6 +4032,7 @@ function anularPautaTardia() {
             </tr>
             ${medsBadgeList ? `<tr><td style="padding:4px;" colspan="4"><strong>💊 Medicación Opcional Validada:</strong> ${medsBadgeList}</td></tr>` : ''}
             ${pr.doctorNotes ? `<tr><td style="padding:4px;" colspan="4"><strong>📝 Notas Facultativas para TSID:</strong> ${escapeHTML(pr.doctorNotes)}</td></tr>` : ''}
+            ${tsidNotes ? `<tr><td style="padding:4px; color:#1e40af; background:#f0f9ff;" colspan="4"><strong>📝 Observaciones Técnicas TSID (Adquisición):</strong> ${escapeHTML(tsidNotes)}</td></tr>` : ''}
             <tr>
               <td style="padding:4px; padding-top:8px;" colspan="4">
                 <strong>👨‍⚕️ Facultativo Validador:</strong> ${escapeHTML(pr.doctorSign || pr.doctorName || 'Dr. Manuel Gómez Feijóo')}

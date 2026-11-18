@@ -425,13 +425,16 @@ function notifyClinicalBroadcast(record) {
 
 if (petClinicalBroadcast) {
   petClinicalBroadcast.onmessage = (e) => {
-    if (e.data && (e.data.type === 'TRIAGE_DATABASE_UPDATED' || e.data.type === 'PETITION_CREATED_OR_UPDATED')) {
+    if (e.data && (e.data.type === 'TRIAGE_DATABASE_UPDATED' || e.data.type === 'PETITION_CREATED_OR_UPDATED' || e.data.type === 'PETITION_DELETED')) {
+      if (e.data.type === 'PETITION_DELETED' && (e.data.id || e.data.subId)) {
+        registerDeletedPetitionId(e.data.id || e.data.subId, e.data.nhc);
+      }
       const stored = localStorage.getItem('PET_DATABASE_MASTER_V4');
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            petitions = parsed;
+          if (Array.isArray(parsed)) {
+            petitions = filterOutDeletedPetitions(parsed);
             updateKpis();
             renderPetitionsTable();
             renderDatabaseView();
@@ -443,15 +446,20 @@ if (petClinicalBroadcast) {
 }
 
 window.addEventListener('storage', (e) => {
-  if (e.key === 'PET_DATABASE_MASTER_V4') {
+  if (e.key === 'PET_DATABASE_MASTER_V4' && e.newValue) {
     try {
-      petitions = JSON.parse(e.newValue);
+      petitions = filterOutDeletedPetitions(JSON.parse(e.newValue));
       updateKpis();
       renderPetitionsTable();
       renderDatabaseView();
     } catch (err) {
       console.warn("Error actualizando desde storage event:", err);
     }
+  } else if (e.key === 'PET_DELETED_PETITION_IDS_V1') {
+    petitions = filterOutDeletedPetitions(petitions);
+    updateKpis();
+    renderPetitionsTable();
+    renderDatabaseView();
   }
 });
 
@@ -481,6 +489,54 @@ function getApiBaseUrl() {
     return '';
   }
   return 'http://localhost:8000';
+}
+
+function getDeletedPetitionIds() {
+  try {
+    const raw = localStorage.getItem('PET_DELETED_PETITION_IDS_V1');
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function registerDeletedPetitionId(id, nhc = null) {
+  if (!id) return;
+  try {
+    const current = getDeletedPetitionIds();
+    const toAdd = [String(id).trim()];
+    if (nhc && String(nhc).trim()) toAdd.push(String(nhc).trim());
+    let changed = false;
+    toAdd.forEach(item => {
+      if (item && !current.some(x => String(x).toLowerCase().trim() === item.toLowerCase().trim())) {
+        current.push(item);
+        changed = true;
+      }
+    });
+    if (changed) {
+      localStorage.setItem('PET_DELETED_PETITION_IDS_V1', JSON.stringify(current));
+    }
+  } catch (e) { }
+}
+
+function filterOutDeletedPetitions(list) {
+  if (!Array.isArray(list)) return [];
+  const deletedList = getDeletedPetitionIds();
+  if (deletedList.length === 0) return list;
+  const deletedSet = new Set(deletedList.map(x => String(x).toLowerCase().trim()));
+  return list.filter(p => {
+    if (!p) return false;
+    const s1 = String(p["Submission ID"] || '').toLowerCase().trim();
+    const s2 = String(p.id || '').toLowerCase().trim();
+    const s3 = String(p.paciente_id || '').toLowerCase().trim();
+    const s4 = String(p["NHC / Historia Clínica"] || p.nhc || '').toLowerCase().trim();
+    if (s1 && deletedSet.has(s1)) return false;
+    if (s2 && deletedSet.has(s2)) return false;
+    if (s3 && deletedSet.has(s3)) return false;
+    if (s4 && deletedSet.has(s4) && (deletedSet.has(s1) || deletedSet.has(s2))) return false;
+    return true;
+  });
 }
 
 async function loadPetitionsDatabase() {
@@ -518,7 +574,7 @@ async function loadPetitionsDatabase() {
             }
           }
         } catch (eMerge) { }
-        petitions = applyOneMonthAutoPurgePetitions(merged);
+        petitions = filterOutDeletedPetitions(applyOneMonthAutoPurgePetitions(merged));
         localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
         updateKpis();
         renderPetitionsTable();
@@ -563,7 +619,7 @@ async function loadPetitionsDatabase() {
             }
           }
         } catch (eMerge) { }
-        petitions = applyOneMonthAutoPurgePetitions(merged);
+        petitions = filterOutDeletedPetitions(applyOneMonthAutoPurgePetitions(merged));
         localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
         updateKpis();
         renderPetitionsTable();
@@ -580,7 +636,7 @@ async function loadPetitionsDatabase() {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      petitions = applyOneMonthAutoPurgePetitions(parsed);
+      petitions = filterOutDeletedPetitions(applyOneMonthAutoPurgePetitions(parsed));
       if (petitions && petitions.length > 0) {
         updateKpis();
         renderPetitionsTable();
@@ -1975,10 +2031,16 @@ function openDoubleConfirmationModal(p, isAlreadyConfirmed = false) {
       btnConfirm.style.display = 'none';
     }
     const btnDelete = document.getElementById('btn-sheet-delete');
-    if (btnDelete) btnDelete.style.display = 'inline-flex';
+    if (btnDelete) {
+      btnDelete.style.display = 'inline-flex';
+      btnDelete.textContent = '🗑️ Anular / Borrar Petición';
+    }
   } else {
     const btnDelete = document.getElementById('btn-sheet-delete');
-    if (btnDelete) btnDelete.style.display = 'none';
+    if (btnDelete) {
+      btnDelete.style.display = 'inline-flex';
+      btnDelete.textContent = '🗑️ Descartar / Anular Solicitud';
+    }
     if (banner) {
       banner.style.background = '#FEF3C7';
       banner.style.borderColor = '#F59E0B';
@@ -2022,44 +2084,132 @@ function openOfficialSheetModal(p, isAlreadyConfirmed = false) {
 // ==============================================================================
 async function deletePetition(id) {
   if (!id) return;
-  const target = petitions.find(p => (p["Submission ID"] || p.id) === id);
-  const patientName = target ? (target["Nombre del Paciente"] || target["Nombre y Apellidos"] || target["NHC / Historia Clínica"] || id) : id;
+  const targetId = String(id).trim();
 
-  const confirmMsg = `¿Está seguro de que desea anular y eliminar la solicitud médica de:\n\n👤 Paciente: ${patientName}\n🆔 Solicitud: ${id}\n\nEsta acción borrará la petición del sistema y de la lista de triaje.`;
+  // Buscar el paciente en petitions o en localStorage
+  let target = petitions.find(p => {
+    const s1 = String(p["Submission ID"] || '').trim();
+    const s2 = String(p.id || '').trim();
+    const s3 = String(p.paciente_id || '').trim();
+    const s4 = String(p["NHC / Historia Clínica"] || p.nhc || '').trim();
+    return s1 === targetId || s2 === targetId || s3 === targetId || (targetId.startsWith('NHC') && s4 === targetId);
+  });
+
+  if (!target) {
+    try {
+      const createdRaw = localStorage.getItem('PET_USER_CREATED_PETITIONS_V1');
+      if (createdRaw) {
+        const createdList = JSON.parse(createdRaw);
+        if (Array.isArray(createdList)) {
+          target = createdList.find(p => {
+            const s1 = String(p["Submission ID"] || '').trim();
+            const s2 = String(p.id || '').trim();
+            const s3 = String(p.paciente_id || '').trim();
+            return s1 === targetId || s2 === targetId || s3 === targetId;
+          });
+        }
+      }
+    } catch (e) { }
+  }
+
+  const patientName = target ? (target["Nombre del Paciente"] || target["Nombre y Apellidos"] || target["NHC / Historia Clínica"] || targetId) : targetId;
+  const actualSubId = target ? (target["Submission ID"] || target.id || targetId) : targetId;
+  const patientNhc = target ? (target["NHC / Historia Clínica"] || target.nhc || '') : '';
+
+  const confirmMsg = `¿Está seguro de que desea anular y eliminar la solicitud médica de:\n\n👤 Paciente: ${patientName}\n🆔 Solicitud: ${actualSubId}\n\nEsta acción borrará la petición del sistema y de la lista de triaje.`;
   if (!confirm(confirmMsg)) return;
 
-  // 1. Filtrar de la memoria local
-  petitions = petitions.filter(p => (p["Submission ID"] || p.id) !== id);
+  // 1. Registrar permanentemente en la lista de eliminados (tombstones)
+  registerDeletedPetitionId(actualSubId, patientNhc);
+  registerDeletedPetitionId(targetId);
 
-  // 2. Eliminar de la copia dedicada en localStorage (si fue creada por el usuario)
+  // 2. Filtrar de la memoria local
+  const matchId = actualSubId.toLowerCase();
+  const matchTarget = targetId.toLowerCase();
+  petitions = filterOutDeletedPetitions(petitions).filter(p => {
+    const s1 = String(p["Submission ID"] || '').toLowerCase().trim();
+    const s2 = String(p.id || '').toLowerCase().trim();
+    const s3 = String(p.paciente_id || '').toLowerCase().trim();
+    return s1 !== matchId && s2 !== matchId && s3 !== matchId && s1 !== matchTarget && s2 !== matchTarget;
+  });
+
+  // 3. Eliminar de la copia dedicada en localStorage (PET_USER_CREATED_PETITIONS_V1)
   try {
     const createdRaw = localStorage.getItem('PET_USER_CREATED_PETITIONS_V1');
     if (createdRaw) {
       let createdList = JSON.parse(createdRaw);
       if (Array.isArray(createdList)) {
-        createdList = createdList.filter(x => (x["Submission ID"] || x.id) !== id);
+        createdList = filterOutDeletedPetitions(createdList).filter(x => {
+          const s1 = String(x["Submission ID"] || '').toLowerCase().trim();
+          const s2 = String(x.id || '').toLowerCase().trim();
+          const s3 = String(x.paciente_id || '').toLowerCase().trim();
+          return s1 !== matchId && s2 !== matchId && s3 !== matchId && s1 !== matchTarget && s2 !== matchTarget;
+        });
         localStorage.setItem('PET_USER_CREATED_PETITIONS_V1', JSON.stringify(createdList));
       }
     }
   } catch (e) { }
 
-  // 3. Guardar en localStorage maestro
+  // 4. Eliminar de snapshots de Triaje si estuviese citado
   try {
-    localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
+    const triageRaw = localStorage.getItem('PET_TRIAGE_CITED_PATIENTS_V1');
+    if (triageRaw) {
+      let triageList = JSON.parse(triageRaw);
+      if (Array.isArray(triageList)) {
+        triageList = filterOutDeletedPetitions(triageList).filter(x => {
+          const s1 = String(x["Submission ID"] || '').toLowerCase().trim();
+          const s2 = String(x.id || '').toLowerCase().trim();
+          return s1 !== matchId && s2 !== matchId && s1 !== matchTarget && s2 !== matchTarget;
+        });
+        localStorage.setItem('PET_TRIAGE_CITED_PATIENTS_V1', JSON.stringify(triageList));
+      }
+    }
   } catch (e) { }
 
-  // 4. Actualizar vistas inmediatamente
+  try {
+    const peonadaRaw = localStorage.getItem('pet_ct_peonada_assignments');
+    if (peonadaRaw) {
+      let peonadaMap = JSON.parse(peonadaRaw);
+      if (peonadaMap && typeof peonadaMap === 'object') {
+        delete peonadaMap[actualSubId];
+        delete peonadaMap[targetId];
+        if (patientNhc) delete peonadaMap[patientNhc];
+        localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(peonadaMap));
+      }
+    }
+  } catch (e) { }
+
+  // 5. Guardar en localStorage maestro
+  try {
+    localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
+    localStorage.setItem('PET_DATABASE_SYNC_TIMESTAMP', Date.now().toString());
+  } catch (e) { }
+
+  // 6. Actualizar vistas inmediatamente
   updateKpis();
   renderPetitionsTable();
   renderDatabaseView();
 
-  // 5. Notificar a backend (/api/peticiones/eliminar y /api/sync-database)
+  // 7. Notificar por BroadcastChannel
+  if (petClinicalBroadcast) {
+    try {
+      petClinicalBroadcast.postMessage({
+        type: 'PETITION_DELETED',
+        id: actualSubId,
+        subId: actualSubId,
+        nhc: patientNhc,
+        timestamp: Date.now()
+      });
+    } catch (e) { }
+  }
+
+  // 8. Notificar a backend (/api/peticiones/eliminar y /api/sync-database)
   const baseUrl = getApiBaseUrl();
   try {
     await fetch(`${baseUrl}/api/peticiones/eliminar`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: id })
+      body: JSON.stringify({ id: actualSubId, submission_id: actualSubId, nhc: patientNhc })
     });
   } catch (e) {
     console.warn("Fallo en llamada /api/peticiones/eliminar:", e);
@@ -2073,7 +2223,7 @@ async function deletePetition(id) {
     });
   } catch (e) { }
 
-  // 6. Notificar evento de almacenamiento entre pestañas
+  // 9. Disparar evento de almacenamiento
   try {
     window.dispatchEvent(new Event('storage'));
   } catch (e) { }
@@ -2082,11 +2232,20 @@ async function deletePetition(id) {
 }
 
 function deletePetitionFromModal() {
-  if (!currentViewingPetition) return;
-  const id = currentViewingPetition["Submission ID"] || currentViewingPetition.id;
+  const target = currentViewingPetition || pendingPetitionToConfirm;
+  if (!target) {
+    closeModal('modal-official-sheet');
+    return;
+  }
+  const id = target["Submission ID"] || target.id;
   closeModal('modal-official-sheet');
+  pendingPetitionToConfirm = null;
+  currentViewingPetition = null;
   deletePetition(id);
 }
+
+window.deletePetition = deletePetition;
+window.deletePetitionFromModal = deletePetitionFromModal;
 
 function executeFinalConfirmation() {
   if (!pendingPetitionToConfirm) {
@@ -2116,6 +2275,7 @@ function executeFinalConfirmation() {
   const bannerBadge = document.getElementById('sheet-banner-badge');
   const btnCancel = document.getElementById('btn-sheet-cancel');
   const btnConfirm = document.getElementById('btn-final-confirm-petition');
+  const btnDelete = document.getElementById('btn-sheet-delete');
 
   if (banner) {
     banner.style.background = '#ECFDF5';
@@ -2141,6 +2301,10 @@ function executeFinalConfirmation() {
     btnConfirm.innerHTML = '✔️ Solicitud Doblemente Confirmada';
     btnConfirm.style.background = '#059669';
     btnConfirm.style.opacity = '0.9';
+  }
+  if (btnDelete) {
+    btnDelete.style.display = 'inline-flex';
+    btnDelete.textContent = '🗑️ Anular / Borrar Petición';
   }
   if (btnCancel) {
     btnCancel.textContent = 'Cerrar y Ver Mis Peticiones';
