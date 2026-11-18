@@ -2649,7 +2649,18 @@
         text.innerHTML = `Tu cifra de glucosa es de <strong>${val} mg/dL</strong>. Con cifras superiores a 200 mg/dL el FDG no puede captarse correctamente y las imágenes pierden validez diagnóstica. Hemos transmitido esta alerta al equipo de enfermería de Medicina Nuclear para valorar tu caso antes de tu desplazamiento.`;
       }
 
-      // Notificar a base de datos de enfermería
+      // Notificar a base de datos de enfermería y sincronizar con ecosistema
+      if (typeof registrarGlucemiaEcosistema === "function") {
+        registrarGlucemiaEcosistema({
+          paciente_nombre: name,
+          hora_control_capilar: time,
+          glucemia_mg_dl: val,
+          origen: 'SEMAFORO_GLUCEMIA_FDG_CONTRASTE',
+          nivel: val >= 200 ? 'ROJO_PREFERENTE' : (val >= 160 ? 'AMBAR_MODERADA' : 'VERDE_OPTIMA'),
+          mensaje_alerta: `Control capilar FDG+Contraste: ${val} mg/dL a las ${time} h reportado por ${name}`
+        });
+      }
+
       fetch(CONFIG.DATABASE_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2657,7 +2668,7 @@
           origen: 'SEMAFORO_GLUCEMIA_FDG_CONTRASTE',
           paciente_nombre: name,
           glucemia_mg_dl: val,
-          hora_control: time,
+          hora_control_capilar: time,
           mensaje_alerta: `Control capilar FDG+Contraste: ${val} mg/dL reportado por ${name}`
         })
       }).catch(() => {});
@@ -2753,6 +2764,7 @@
     </div>
   </div>
 
+  <script src="assets/pet_glucose_sync.js"></script>
   <script src="assets/pet_chat_human_stream.js"></script>
 </body>
 </html>

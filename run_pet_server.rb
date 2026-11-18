@@ -3,6 +3,7 @@ require 'json'
 require 'net/http'
 require 'uri'
 require 'openssl'
+require 'sqlite3'
 
 # Compatibilidad con Google Drive FileProvider y macOS (evita Errno::EPERM en sendfile)
 module WEBrick
@@ -324,7 +325,36 @@ server.mount_proc '/api/sync-database' do |req, res|
   })
 end
 
-# Endpoint para registros y consultas de enfermería desde las audioguías
+# -------------------------------------------------------------
+# BASE DE DATOS Y CONEXIÓN CON ENFERMERÍA (SQLITE Y AUDIOGUÍAS)
+# -------------------------------------------------------------
+ENF_DB_PATH = File.join(BASE_DIR, 'pet_prep_page', 'pet_database.db')
+
+def get_enf_db
+  db = SQLite3::Database.new(ENF_DB_PATH)
+  db.results_as_hash = true
+  db.execute <<-SQL
+    CREATE TABLE IF NOT EXISTS registros_enfermeria (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      origen TEXT NOT NULL,
+      nivel TEXT,
+      fecha_hora TEXT NOT NULL,
+      paciente_nombre TEXT NOT NULL,
+      paciente_telefono TEXT,
+      hora_control_capilar TEXT,
+      glucemia_mg_dl INTEGER,
+      modo_envio TEXT,
+      mensaje_escrito TEXT,
+      transcripcion_audio TEXT,
+      duracion_audio_segundos INTEGER,
+      mensaje_alerta TEXT,
+      fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  SQL
+  db
+end
+
+# Endpoint para registros y consultas de enfermería desde las audioguías (Control Capilar / Dudas)
 server.mount_proc '/api/enfermeria/base_datos' do |req, res|
   res['Access-Control-Allow-Origin'] = '*'
   res['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
@@ -336,8 +366,157 @@ server.mount_proc '/api/enfermeria/base_datos' do |req, res|
     next
   end
 
-  res.status = 201
-  res.body = JSON.generate({ status: 'ok', message: 'Consulta registrada correctamente en enfermería' })
+  begin
+    data = JSON.parse(req.body.to_s) rescue {}
+    db = get_enf_db
+
+    db.execute(
+      "INSERT INTO registros_enfermeria (origen, nivel, fecha_hora, paciente_nombre, paciente_telefono, hora_control_capilar, glucemia_mg_dl, modo_envio, mensaje_escrito, mensaje_alerta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        data['origen'] || 'AUDIOGUIA_METABOLICA',
+        data['nivel'] || (data['glucemia_mg_dl'].to_i >= 200 ? 'URGENCIA_METABOLICA' : 'CONTROL_GLUCEMIA'),
+        data['fecha_hora'] || Time.now.strftime("%Y-%m-%d %H:%M:%S"),
+        data['paciente_nombre'] || 'Paciente',
+        data['paciente_telefono'] || '',
+        data['hora_control_capilar'] || Time.now.strftime("%H:%M"),
+        data['glucemia_mg_dl'] ? data['glucemia_mg_dl'].to_i : nil,
+        data['modo_envio'] || 'texto',
+        data['mensaje_escrito'] || '',
+        data['mensaje_alerta'] || (data['glucemia_mg_dl'] ? "Glucemia capilar reportada en domicilio: #{data['glucemia_mg_dl']} mg/dL" : '')
+      ]
+    )
+    rec_id = db.last_insert_row_id
+    db.close
+
+    # Sincronizar en vivo en la base de datos maestra de peticiones si se identifica al paciente
+    p_name = data['paciente_nombre'].to_s.strip.downcase
+    p_gluc = data['glucemia_mg_dl'] ? data['glucemia_mg_dl'].to_i : nil
+    p_hora = data['hora_control_capilar'] || Time.now.strftime("%H:%M")
+
+    if p_gluc && !p_name.empty? && $live_database_records && !$live_database_records.empty?
+      clean_search = p_name.gsub(/^(sr\.|sra\.|don|doña)\s+/i, '').strip
+      modified_records = false
+      $live_database_records.each do |p|
+        p_rec_name = (p["Nombre del Paciente"] || p["Nombre y Apellidos"] || "").to_s.strip.downcase
+        if p_rec_name.include?(clean_search) || clean_search.include?(p_rec_name)
+          p["Glucemia (mg/dL)"] = p_gluc
+          p["Hora Glucemia Capilar"] = p_hora
+          if p_gluc >= 200
+            p["Alertas Técnicas"] = "⚠️ ALERTA GLUCEMIA CRÍTICA (#{p_gluc} mg/dL a las #{p_hora} h)"
+          end
+          modified_records = true
+        end
+      end
+      persist_master_records($live_database_records) if modified_records
+    end
+
+    res.status = 201
+    res.body = JSON.generate({ status: 'ok', id: rec_id, message: 'Glucemia registrada correctamente en enfermería' })
+  rescue => err
+    res.status = 500
+    res.body = JSON.generate({ status: 'error', message: err.message })
+  end
+end
+
+# Panel Principal de Enfermería (Dudas y Urgencias Diabéticas)
+server.mount_proc '/api/enfermeria/panel' do |req, res|
+  res['Access-Control-Allow-Origin'] = '*'
+  res['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
+  res['Access-Control-Allow-Headers'] = 'Content-Type, Accept'
+  res['Content-Type'] = 'application/json; charset=utf-8'
+
+  if req.request_method == 'OPTIONS'
+    res.status = 200
+    next
+  end
+
+  begin
+    db = get_enf_db
+    rows = db.execute("SELECT * FROM registros_enfermeria ORDER BY id DESC")
+    db.close
+
+    urgencias = []
+    dudas = []
+
+    rows.each do |r|
+      is_urgencia = (r['glucemia_mg_dl'].to_i >= 200) ||
+                    (r['nivel'].to_s.upcase.include?('URGENCIA')) ||
+                    (r['nivel'].to_s.upcase.include?('ROJO')) ||
+                    (r['nivel'].to_s.upcase.include?('CANCELACION'))
+      if is_urgencia
+        urgencias << r
+      else
+        dudas << r
+      end
+    end
+
+    res.status = 200
+    res.body = JSON.generate({
+      status: 'success',
+      total_dudas: dudas.length,
+      total_urgencias: urgencias.length,
+      dudas: dudas,
+      urgencias: urgencias
+    })
+  rescue => err
+    res.status = 500
+    res.body = JSON.generate({ status: 'error', message: err.message })
+  end
+end
+
+# Eliminar / Atender registro en Enfermería
+server.mount_proc '/api/enfermeria/eliminar' do |req, res|
+  res['Access-Control-Allow-Origin'] = '*'
+  res['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+  res['Access-Control-Allow-Headers'] = 'Content-Type, Accept'
+  res['Content-Type'] = 'application/json'
+
+  if req.request_method == 'OPTIONS'
+    res.status = 200
+    next
+  end
+
+  begin
+    body = JSON.parse(req.body.to_s) rescue {}
+    item_id = body['id'] || body['itemId']
+    if item_id
+      db = get_enf_db
+      db.execute("DELETE FROM registros_enfermeria WHERE id = ?", [item_id])
+      db.close
+      res.status = 200
+      res.body = JSON.generate({ status: 'success', message: 'Registro atendido y archivado correctamente', id: item_id })
+    else
+      res.status = 400
+      res.body = JSON.generate({ status: 'error', message: 'ID de registro no especificado' })
+    end
+  rescue => err
+    res.status = 500
+    res.body = JSON.generate({ status: 'error', message: err.message })
+  end
+end
+
+# Listado histórico de registros de enfermería
+server.mount_proc '/api/enfermeria/registros' do |req, res|
+  res['Access-Control-Allow-Origin'] = '*'
+  res['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
+  res['Access-Control-Allow-Headers'] = 'Content-Type, Accept'
+  res['Content-Type'] = 'application/json; charset=utf-8'
+
+  if req.request_method == 'OPTIONS'
+    res.status = 200
+    next
+  end
+
+  begin
+    db = get_enf_db
+    rows = db.execute("SELECT * FROM registros_enfermeria ORDER BY id DESC LIMIT 50")
+    db.close
+    res.status = 200
+    res.body = JSON.generate(rows)
+  rescue => err
+    res.status = 500
+    res.body = JSON.generate({ status: 'error', message: err.message })
+  end
 end
 
 # Endpoint para cancelación de citas desde la audioguía

@@ -2974,18 +2974,33 @@
         nursingAlert.style.display = "block";
         nursingAlert.innerHTML = "<strong>🚨 ALERTA ASISTENCIAL EN PUESTO DE ENFERMERÍA:</strong><br>" +
           "\"ALERTA METABÓLICA: Paciente " + escapeHTML(nameInput) + " (Cita hoy, FDG) reporta glucemia capilar de " + valInput + " mg/dL a las " + escapeHTML(timeInput) + " h\".";
+      }
 
-        // SOLO SE ENVÍA A LA BASE DE DATOS LA ALERTA DE GLUCEMIA SUPERIOR A 200 mg/dL
-        sendToDatabase({
-          origen: "ALERTA_GLUCEMIA_DIABETES",
-          nivel: "ROJO_PREFERENTE",
-          fecha_hora: new Date().toISOString(),
+      // Sincronizar siempre con el Puesto de Enfermería, Consola Médica y Técnicos TSID
+      if (typeof registrarGlucemiaEcosistema === "function") {
+        let patNhc = "";
+        try { patNhc = (typeof getPatientCitationInfo === 'function' ? getPatientCitationInfo().nhc : "") || sessionStorage.getItem("pet_patient_nhc") || ""; } catch(e){}
+        registrarGlucemiaEcosistema({
           paciente_nombre: nameInput,
           hora_control_capilar: timeInput,
           glucemia_mg_dl: valInput,
-          mensaje_alerta: `ALERTA METABÓLICA: Paciente ${nameInput} (Cita hoy, FDG) reporta glucemia capilar de ${valInput} mg/dL a las ${timeInput} h`
+          nhc: patNhc,
+          origen: "AUDIOGUIA_METABOLICA",
+          nivel: valInput >= 200 ? "ROJO_PREFERENTE" : (valInput >= 160 ? "AMBAR_MODERADA" : "VERDE_OPTIMA"),
+          mensaje_alerta: `Control capilar audioguía: ${valInput} mg/dL a las ${timeInput} h (Paciente: ${nameInput})`
         });
       }
+
+      // Enviar siempre a la base de datos de enfermería
+      sendToDatabase({
+        origen: "AUDIOGUIA_METABOLICA",
+        nivel: valInput >= 200 ? "ROJO_PREFERENTE" : (valInput >= 160 ? "AMBAR_MODERADA" : "VERDE_OPTIMA"),
+        fecha_hora: new Date().toISOString(),
+        paciente_nombre: nameInput,
+        hora_control_capilar: timeInput,
+        glucemia_mg_dl: valInput,
+        mensaje_alerta: `Control capilar reportado en audioguía: ${valInput} mg/dL a las ${timeInput} h (Paciente: ${nameInput})`
+      });
 
       resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -3973,6 +3988,7 @@ O si lo prefieres, llámanos al [CONFIG_TEL].`;
     </div>
   </div>
 
+  <script src="assets/pet_glucose_sync.js"></script>
   <script src="assets/pet_chat_human_stream.js"></script>
 </body>
 </html>
