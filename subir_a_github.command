@@ -48,3 +48,4 @@ fi
 echo ""
 read -n 1 -s -r -p "Presiona cualquier tecla para cerrar esta ventana..."
 echo ""
+https://www.gstatic.com/antigravity/nuxes/gemini-4-neon.jpg
