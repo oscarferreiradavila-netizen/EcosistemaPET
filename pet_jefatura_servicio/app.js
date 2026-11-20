@@ -25,6 +25,7 @@
 
   const state = {
     periodo: 'all', // 'all' | 'month' | 'week' | 'today'
+    activeRole: 'jefatura', // 'jefatura' | 'enfermeria' | 'global'
     activeTab: 'resumen',
     peticiones: [],
     machineEntries: [],
@@ -716,8 +717,8 @@
         prioridad: '🟢 P3',
         fechaCita: today,
         horaCita: '08:45 h',
-        costeDosisEur: 185,
-        observaciones: 'No acude a admisión ni responde a 3 llamadas telefónicas de Enfermería. Dosis FDG reasignada parcialmente.'
+        impactoAsistencial: '1 dosis FDG comprometida / slot público vacante',
+        observaciones: 'No acude a admisión ni responde a 3 llamadas telefónicas de Enfermería. Dosis FDG reasignada parcialmente a paciente de lista de espera.'
       },
       {
         noShowId: 'NOSHOW-002',
@@ -728,8 +729,8 @@
         prioridad: '🟡 P2',
         fechaCita: today,
         horaCita: '11:15 h',
-        costeDosisEur: 240,
-        observaciones: 'No se presenta sin avisar (olvido de cita). Se registra incidencia en historia electrónica.'
+        impactoAsistencial: '1 dosis Colina comprometida / slot público vacante',
+        observaciones: 'No se presenta sin avisar (olvido de cita). Se registra incidencia en historia electrónica del SERGAS.'
       }
     ];
 
@@ -1201,7 +1202,7 @@
     const recMBq = Math.round(8420 * scale);
     const inyMBq = Math.round(7680 * scale);
     const perdMBq = recMBq - inyMBq;
-    const perdEur = Math.round(485 * scale);
+    const dosisPerdidasEquiv = Math.max(1, Math.round(4 * scale));
     const pctAprov = ((inyMBq / Math.max(recMBq, 1)) * 100);
 
     // Huecos libres de camilla (gantry)
@@ -1212,10 +1213,10 @@
 
     // Fármacos breakdown
     const farmacosEfficiency = [
-      { name: '18F-FDG (Glucosa)', dosisPedidas: Math.round(180 * scale), inyectadas: Math.round(171 * scale), mbqPerd: Math.round(310 * scale), pct: 95.0, costeEur: Math.round(140 * scale), accion: 'Ajuste de calibración con Ciclotrón según agenda confirmada' },
-      { name: '18F-PSMA (Próstata)', dosisPedidas: Math.round(45 * scale), inyectadas: Math.round(41 * scale), mbqPerd: Math.round(180 * scale), pct: 91.1, costeEur: Math.round(185 * scale), accion: 'Sincronización horaria con logística externa Curium Madrid' },
-      { name: '18F-Colina (Próstata / Parat.)', dosisPedidas: Math.round(24 * scale), inyectadas: Math.round(21 * scale), mbqPerd: Math.round(150 * scale), pct: 87.5, costeEur: Math.round(95 * scale), accion: 'Concentración de pacientes en tandas matinales tempranas' },
-      { name: '68Ga-DOTATOC (Neuroendócrinos)', dosisPedidas: Math.round(12 * scale), inyectadas: Math.round(10 * scale), mbqPerd: Math.round(100 * scale), pct: 83.3, costeEur: Math.round(65 * scale), accion: 'Optimización de elución de generador 68Ge/68Ga in situ' }
+      { name: '18F-FDG (Glucosa)', dosisPedidas: Math.round(180 * scale), inyectadas: Math.round(171 * scale), mbqPerd: Math.round(310 * scale), pct: 95.0, dosisPerdidas: Math.max(1, Math.round(9 * scale)), accion: 'Ajuste de calibración con Ciclotrón público según agenda confirmada' },
+      { name: '18F-PSMA (Próstata)', dosisPedidas: Math.round(45 * scale), inyectadas: Math.round(41 * scale), mbqPerd: Math.round(180 * scale), pct: 91.1, dosisPerdidas: Math.max(1, Math.round(4 * scale)), accion: 'Coordinación logística con radiofarmacia externa según demanda asistencial' },
+      { name: '18F-Colina (Próstata / Parat.)', dosisPedidas: Math.round(24 * scale), inyectadas: Math.round(21 * scale), mbqPerd: Math.round(150 * scale), pct: 87.5, dosisPerdidas: Math.max(1, Math.round(3 * scale)), accion: 'Concentración de pacientes en tandas matinales para maximizar actividad' },
+      { name: '68Ga-DOTATOC (Neuroendócrinos)', dosisPedidas: Math.round(12 * scale), inyectadas: Math.round(10 * scale), mbqPerd: Math.round(100 * scale), pct: 83.3, dosisPerdidas: Math.max(1, Math.round(2 * scale)), accion: 'Optimización de elución de generador 68Ge/68Ga in situ para lista de espera' }
     ];
 
     // Demoras Lead Time
@@ -1264,7 +1265,7 @@
       recMBq,
       inyMBq,
       perdMBq,
-      perdEur,
+      dosisPerdidasEquiv,
       pctAprov,
       totalSlotsDia,
       ocupadosDia,
@@ -2221,7 +2222,7 @@
         </div>
 
         <div style="font-size:0.8rem; color:#450a0a; display:flex; flex-direction:column; gap:3px;">
-          <div><strong>🧪 Dosis comprometida:</strong> ${escapeHTML(ns.radiofarmaco)} (~${ns.costeDosisEur || 185} €)</div>
+          <div><strong>🧪 Recurso Público Asignado:</strong> ${escapeHTML(ns.radiofarmaco)} (1 slot de alta tecnología desaprovechado)</div>
           <div><strong>📌 Prioridad:</strong> ${escapeHTML(ns.prioridad)} · <strong>Fecha:</strong> ${escapeHTML(ns.fechaCita)}</div>
           <div><strong>📝 Incidencia:</strong> ${escapeHTML(ns.observaciones)}</div>
         </div>
@@ -2462,7 +2463,7 @@
     const elIny = document.getElementById('statActividadInyectada');
     if (elIny) elIny.textContent = `${ef.inyMBq.toLocaleString('es-ES')} MBq`;
     const elPerdEur = document.getElementById('statDosisPerdidasEur');
-    if (elPerdEur) elPerdEur.textContent = `${ef.perdEur} € (${ef.perdMBq} MBq)`;
+    if (elPerdEur) elPerdEur.textContent = `${ef.dosisPerdidasEquiv} pac. equiv. (${ef.perdMBq} MBq)`;
     const elHuecosDia = document.getElementById('statHuecosLibresDia');
     if (elHuecosDia) elHuecosDia.textContent = `${ef.libresDia} / día (${ef.pctLibres.toFixed(1)}%)`;
 
@@ -2542,7 +2543,7 @@
           <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">${f.inyectadas} inyectadas</td>
           <td><span class="status-badge ${f.pct >= 90 ? 'badge-ok' : 'badge-warn'}">${f.pct.toFixed(1)}%</span></td>
           <td style="font-family:'JetBrains Mono',monospace; color:#dc2626;">${f.mbqPerd} MBq</td>
-          <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#e11d48;">${f.costeEur} €</td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#e11d48;">${f.dosisPerdidas} pac. equiv.</td>
           <td style="font-size:0.78rem; color:#475569;">${escapeHTML(f.accion)}</td>
         </tr>
       `).join('');
@@ -2997,7 +2998,7 @@
         prioridad: pat.prioridad,
         fechaCita: getTodayISO(),
         horaCita: horaSlot,
-        costeDosisEur: 195,
+        impactoAsistencial: '1 dosis comprometida / slot de alta tecnología vacante',
         observaciones: motivo || 'Paciente no acude a la cita sin previo aviso.'
       });
       showToast(`🚫 Paciente ${pat.nombre} registrado como No Presentado sin avisar (No-Show).`);
@@ -3242,4 +3243,652 @@
         petSeriesValidas: [248, 269, 284],
         petSeriesMal: [44, 38, 31],
         maqSeriesPct: [74, 79, Math.round(stats.pctEnHora)],
-        esperaSe
+        esperaSeries: [13.2, 11.4, Number(stats.docStats.globalEsperaPostImagen.toFixed(1))]
+      },
+      anual: {
+        badge: 'MEMORIA ANUAL DEL SERVICIO PET/CT',
+        titulo: 'Memoria Anual Ejecutiva de Actividad, Radiofarmacia y Calidad Asistencial',
+        periodoLabel: 'Ejercicio Completo 2026 (Enero – Diciembre · 12 Meses)',
+        codigoDoc: 'SERGAS-GAL-PET-ANU-2026-01',
+        xLabels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic(e)'],
+        petSeriesValidas: [215, 224, 238, 242, 255, 260, 248, 230, 258, 272, 285, 294],
+        petSeriesMal: [46, 44, 42, 39, 38, 36, 35, 33, 34, 31, 29, 27],
+        maqSeriesPct: [70, 71, 73, 74, 76, 77, 78, 79, 80, 81, 83, 85],
+        esperaSeries: [15.0, 14.5, 14.0, 13.5, 12.8, 12.2, 11.9, 11.5, 11.0, 10.6, 10.1, 9.6]
+      }
+    }[tipo];
+
+    const incPeticiones = !document.getElementById('chkRep_peticiones') || document.getElementById('chkRep_peticiones').checked;
+    const incRadiofarmacos = !document.getElementById('chkRep_radiofarmacos') || document.getElementById('chkRep_radiofarmacos').checked;
+    const incDosimetria = !document.getElementById('chkRep_dosimetria') || document.getElementById('chkRep_dosimetria').checked;
+    const incGraficas = !document.getElementById('chkRep_graficas') || document.getElementById('chkRep_graficas').checked;
+    const incPuntualidad = !document.getElementById('chkRep_puntualidad') || document.getElementById('chkRep_puntualidad').checked;
+    const incCitas = !document.getElementById('chkRep_citas') || document.getElementById('chkRep_citas').checked;
+    const incAnulaciones = !document.getElementById('chkRep_anulaciones') || document.getElementById('chkRep_anulaciones').checked;
+    const incMedicos = !document.getElementById('chkRep_medicos') || document.getElementById('chkRep_medicos').checked;
+    const incEficienciaFarmacos = !document.getElementById('chkRep_eficiencia_farmacos') || document.getElementById('chkRep_eficiencia_farmacos').checked;
+    const incDemorasTAT = !document.getElementById('chkRep_demoras_tat') || document.getElementById('chkRep_demoras_tat').checked;
+    const incPermanenciaEARL = !document.getElementById('chkRep_permanencia_earl') || document.getElementById('chkRep_permanencia_earl').checked;
+    const incAudioguiasCalidad = !document.getElementById('chkRep_audioguias_calidad') || document.getElementById('chkRep_audioguias_calidad').checked;
+    const incGlucemiasAltas = !document.getElementById('chkRep_glucemias_altas') || document.getElementById('chkRep_glucemias_altas').checked;
+
+    const destinatario = (document.getElementById('selectDestinatarioInforme') || {}).value || 'Dirección Asistencial SERGAS & Gerencia Galaria';
+    const firmante = (document.getElementById('selectFirmanteJefatura') || {}).value || 'Dr. Manuel Gómez Feijóo · Jefe de Servicio de Medicina Nuclear';
+    const dictamenTxt = (txtObs && txtObs.value) ? txtObs.value : getDefaultDictamenPorTipo(tipo);
+
+    // Magnitudes escaladas al periodo del informe (Mensual, Trimestral o Anual)
+    const totPet = stats.totalPeticiones * mult;
+    const totMal = stats.malList.length * mult;
+    const totOk = totPet - totMal;
+    const totPruebasRF = stats.rfStats.totalPruebas * mult;
+    const totCanc = Math.max(8, stats.totalCancelaciones * 3 * mult);
+    const totRecitados = Math.round(totCanc * (stats.pctRecitados / 100));
+    const totNoShow = Math.max(4, stats.totalNoShow * 2 * mult);
+    const totAnul = stats.totalAnulaciones * mult;
+    const totMalPrep = stats.malPrepList.length * mult;
+    const totFalloRF = stats.falloRFList.length * mult;
+    const totExtrav = stats.extravList.length * mult;
+
+    const byService = buildServiceBreakdown(stats.petList).slice(0, 6);
+
+    const chartEvol1 = renderEvolutionChartSVG({
+      title: `Evolución (${metaDoc.periodoLabel}): Peticiones Válidas vs Peticiones que Llegan Mal`,
+      xLabels: metaDoc.xLabels,
+      ySuffix: '',
+      series: [
+        { name: 'Peticiones Válidas', color: '#0284c7', data: metaDoc.petSeriesValidas },
+        { name: 'Llegan Mal (Incidencia)', color: '#dc2626', data: metaDoc.petSeriesMal }
+      ]
+    });
+
+    const chartEvol2 = renderEvolutionChartSVG({
+      title: `Evolución (${metaDoc.periodoLabel}): % Paso en Hora a Máquina y Espera Salir post-Imagen (min)`,
+      xLabels: metaDoc.xLabels,
+      ySuffix: '',
+      series: [
+        { name: '% Paso en Hora a Máquina', color: '#059669', data: metaDoc.maqSeriesPct },
+        { name: 'Espera Salir desde Últ. Imagen (min)', color: '#7c3aed', data: metaDoc.esperaSeries }
+      ]
+    });
+
+    sheet.innerHTML = `
+      <!-- CABECERA OFICIAL DEL FOLIO A4 SERGAS / GALARIA -->
+      <header class="a4-header-banner">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <img src="../galaria_logo.jpg" alt="Galaria SERGAS" style="height:54px; width:auto; object-fit:contain;" onerror="this.style.display='none'">
+          <div>
+            <div style="font-size:0.72rem; font-weight:800; color:#007eb4; letter-spacing:0.06em; text-transform:uppercase;">
+              XUNTA DE GALICIA · CONSELLERÍA DE SANIDADE · SERGAS · GALARIA
+            </div>
+            <h1 style="font-family:'Outfit',sans-serif; font-size:1.32rem; font-weight:800; color:#004868; margin-top:2px;">
+              ${escapeHTML(metaDoc.titulo)}
+            </h1>
+            <div style="font-size:0.8rem; color:#475569; font-weight:600; margin-top:2px;">
+              <strong>Destinatario:</strong> ${escapeHTML(destinatario)}
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:right; font-family:'JetBrains Mono',monospace; font-size:0.74rem; background:#f8fafc; border:1px solid #cbd5e1; padding:8px 12px; border-radius:8px;">
+          <div style="font-weight:800; color:#004868;">${escapeHTML(metaDoc.badge)}</div>
+          <div style="color:#334155; margin-top:2px;">Periodo: <strong>${escapeHTML(metaDoc.periodoLabel)}</strong></div>
+          <div style="color:#64748b; margin-top:2px;">Ref: ${escapeHTML(metaDoc.codigoDoc)} · Fecha: ${getTodayISO()}</div>
+        </div>
+      </header>
+
+      <!-- 1. TIRA EJECUTIVA DE 6 INDICADORES CLAVE DEL PERIODO -->
+      <section>
+        <div class="a4-kpi-strip">
+          <div class="a4-kpi-cell" style="--cell-color:#0284c7;">
+            <div class="c-lbl">1. Peticiones Recibidas</div>
+            <div class="c-val">${totPet}</div>
+            <div class="c-sub">${totOk} válidas (${stats.pctOk.toFixed(1)}%)</div>
+          </div>
+          <div class="a4-kpi-cell" style="--cell-color:#dc2626;">
+            <div class="c-lbl">2. % Peticiones Mal</div>
+            <div class="c-val" style="color:#dc2626;">${stats.pctMal.toFixed(1)}%</div>
+            <div class="c-sub">${totMal} con defecto</div>
+          </div>
+          <div class="a4-kpi-cell" style="--cell-color:#0d9488;">
+            <div class="c-lbl">3. Pruebas por Isótopo</div>
+            <div class="c-val" style="color:#0f766e;">${totPruebasRF}</div>
+            <div class="c-sub">8 radiofármacos activos</div>
+          </div>
+          <div class="a4-kpi-cell" style="--cell-color:#059669;">
+            <div class="c-lbl">4. Paso en Hora Máquina</div>
+            <div class="c-val" style="color:#059669;">${stats.pctEnHora.toFixed(1)}%</div>
+            <div class="c-sub">Desv. media: ±${stats.avgDiff} min</div>
+          </div>
+          <div class="a4-kpi-cell" style="--cell-color:#d97706;">
+            <div class="c-lbl">5. Recitaciones vs NoShow</div>
+            <div class="c-val" style="color:#d97706;">${stats.pctRecitados}%</div>
+            <div class="c-sub">${totRecitados}/${totCanc} salvadas · ${totNoShow} NoShow</div>
+          </div>
+          <div class="a4-kpi-cell" style="--cell-color:#7c3aed;">
+            <div class="c-lbl">6. Espera Salir / Anul.</div>
+            <div class="c-val" style="color:#7c3aed;">${stats.docStats.globalEsperaPostImagen.toFixed(1)}m</div>
+            <div class="c-sub">${totAnul} anul. (Prep/RF/Extrav)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. GRÁFICAS DE EVOLUCIÓN EN EL TIEMPO -->
+      ${incGraficas ? `
+        <section style="display:flex; flex-direction:column; gap:0.75rem;">
+          <div class="a4-section-title">
+            <span>📈 1. Evolución en el Tiempo de los Indicadores del Servicio (${escapeHTML(metaDoc.periodoLabel)})</span>
+            <span style="font-size:0.74rem; color:#bae6fd;">Trazabilidad Temporal</span>
+          </div>
+          <div class="a4-two-cols">
+            ${chartEvol1}
+            ${chartEvol2}
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 3. CALIDAD DE PETICIONES (% LLEGAN MAL) Y CANTIDAD POR RADIOFÁRMACO -->
+      ${(incPeticiones || incRadiofarmacos) ? `
+        <section class="a4-two-cols">
+          ${incPeticiones ? `
+            <div style="display:flex; flex-direction:column; gap:0.55rem;">
+              <div class="a4-section-title">
+                <span>📋 2. Calidad de Peticiones Recibidas (% Llegan Mal)</span>
+              </div>
+              <table class="chief-table" style="font-size:0.76rem;">
+                <thead>
+                  <tr>
+                    <th>Servicio Solicitante</th>
+                    <th>Recibidas</th>
+                    <th>Mal</th>
+                    <th>% Error</th>
+                    <th>Causa Frecuente</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${byService.map(s => `
+                    <tr>
+                      <td><strong>${escapeHTML(s.servicio)}</strong></td>
+                      <td>${s.total * mult}</td>
+                      <td style="color:#dc2626; font-weight:800;">${s.mal * mult}</td>
+                      <td><strong>${s.pctMal.toFixed(1)}%</strong></td>
+                      <td>${escapeHTML(s.topCausa)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          ` : ''}
+
+          ${incRadiofarmacos ? `
+            <div style="display:flex; flex-direction:column; gap:0.55rem;">
+              <div class="a4-section-title">
+                <span>☢️ 3. Cantidad de Pruebas Hechas por Radiofármaco</span>
+              </div>
+              <table class="chief-table" style="font-size:0.76rem;">
+                <thead>
+                  <tr>
+                    <th>Radiofármaco / Trazador</th>
+                    <th>Pruebas</th>
+                    <th>% Cuota</th>
+                    <th>Ventana / Máquina</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${stats.rfStats.items.slice(0, 6).map(rf => `
+                    <tr>
+                      <td><strong>${escapeHTML(rf.nombre)}</strong></td>
+                      <td style="font-family:'JetBrains Mono',monospace; font-weight:800;">${rf.pruebas * mult}</td>
+                      <td>${rf.pct.toFixed(1)}%</td>
+                      <td>${escapeHTML(rf.captacion)}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          ` : ''}
+        </section>
+      ` : ''}
+
+      <!-- 3B. AUDITORÍA DE CALIDAD DOSIMÉTRICA SEGÚN PESO Y TALLA (DOSIS IDEAL VS MÁS O MENOS) -->
+      ${incDosimetria ? (() => {
+        const dStats = stats.dosimetryStats || computeDosimetryQualityStats();
+        return `
+        <section style="display:flex; flex-direction:column; gap:0.55rem;">
+          <div class="a4-section-title">
+            <span>⚖️ 3B. Calidad Dosimétrica por Peso y Talla: Radiofármaco Ideal vs. Inyectado (Ideal, Más o Menos)</span>
+            <span style="font-size:0.74rem; color:#bae6fd;">🟢 Ideal: ${dStats.pctIdeal.toFixed(1)}% · 🔴 Más: ${dStats.pctMas.toFixed(1)}% · 🟡 Menos: ${dStats.pctMenos.toFixed(1)}%</span>
+            <span>⚖️ 3B. Calidad Dosimétrica por Peso/Talla y Estado de Inyección (Ideal/Más/Menos · Correcta/Extravasación)</span>
+            <span style="font-size:0.74rem; color:#bae6fd;">🟢 Ideal: ${dStats.pctIdeal.toFixed(1)}% · ✅ Correctas: ${dStats.pctCorrecta.toFixed(1)}% · 🚨 Extrav.: ${dStats.extravasacionCount * mult}</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.65rem; font-size:0.76rem;">
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.65rem; font-size:0.75rem;">
+            <div style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:7px; padding:0.55rem 0.75rem;">
+              <strong style="color:#065f46;">🟢 Dosis Ideal (±10% Peso/Talla):</strong> <strong>${dStats.idealCount * mult} pac. (${dStats.pctIdeal.toFixed(1)}%)</strong>
+              <strong style="color:#065f46;">🟢 Dosis Ideal (±10%):</strong> <strong>${dStats.idealCount * mult} pac. (${dStats.pctIdeal.toFixed(1)}%)</strong>
+            </div>
+            <div style="background:#fef2f2; border:1px solid #fca5a5; border-radius:7px; padding:0.55rem 0.75rem;">
+              <strong style="color:#991b1b;">🔴 Más del Ideal (&gt;+10% Sobredosis):</strong> <strong>${dStats.masCount * mult} pac. (${dStats.pctMas.toFixed(1)}%)</strong>
+              <strong style="color:#991b1b;">🔴 Más del Ideal (&gt;+10%):</strong> <strong>${dStats.masCount * mult} pac. (${dStats.pctMas.toFixed(1)}%)</strong>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:7px; padding:0.55rem 0.75rem;">
+              <strong style="color:#92400e;">🟡 Menos del Ideal (&lt;-10% Subdosis):</strong> <strong>${dStats.menosCount * mult} pac. (${dStats.pctMenos.toFixed(1)}%)</strong>
+              <strong style="color:#92400e;">🟡 Menos del Ideal (&lt;-10%):</strong> <strong>${dStats.menosCount * mult} pac. (${dStats.pctMenos.toFixed(1)}%)</strong>
+            </div>
+            <div style="background:${dStats.extravasacionCount > 0 ? '#fef2f2' : '#ecfdf5'}; border:1px solid ${dStats.extravasacionCount > 0 ? '#fca5a5' : '#6ee7b7'}; border-radius:7px; padding:0.55rem 0.75rem;">
+              <strong style="color:${dStats.extravasacionCount > 0 ? '#991b1b' : '#065f46'};">🩹 Vía / Inyección:</strong> <strong>✅ ${dStats.correctaCount * mult} OK · 🚨 ${dStats.extravasacionCount * mult} Extrav.</strong>
+            </div>
+          </div>
+          <table class="chief-table" style="font-size:0.74rem;">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Fármaco</th>
+                <th>Iniciales / NHC</th>
+                <th>Peso / Talla (IMC)</th>
+                <th>🎯 Dosis Ideal</th>
+                <th>💉 mCi Inyectados</th>
+                <th>Desviación</th>
+                <th>Calidad Dosimétrica</th>
+                <th>Estado Inyección</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${dStats.items.slice(0, 8).map(it => `
+                <tr>
+                  <td>${escapeHTML(it.fecha)}</td>
+                  <td><strong>${escapeHTML(it.farmaco)}</strong></td>
+                  <td><strong>${escapeHTML(it.iniciales)}</strong> (${escapeHTML(it.nhc)})</td>
+                  <td>${escapeHTML(it.pesoKg)} kg / ${escapeHTML(it.tallaCm)} cm (${escapeHTML(it.imc)})</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#0369a1;">${escapeHTML(it.dosisIdealMci)} mCi</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:800;">${escapeHTML(it.mciInyectados)} mCi</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${it.calidad.pctDiff >= 0 ? '+' : ''}${it.calidad.pctDiff}%</td>
+                  <td><strong>${escapeHTML(it.calidad.label)}</strong></td>
+                  <td><strong>${it.estadoInyeccion === 'extravasacion' ? '🚨 Extravasación' : '✅ Correcta'}</strong></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </section>
+        `;
+      })() : ''}
+
+      <!-- 4. PUNTUALIDAD MÁQUINA, NO-SHOWS, RECITACIONES Y ANULACIONES (PREP / RF / EXTRAV) -->
+      ${(incPuntualidad || incCitas || incAnulaciones) ? `
+        <section style="display:flex; flex-direction:column; gap:0.6rem;">
+          <div class="a4-section-title">
+            <span>🔄 4. Puntualidad en Máquina, No-Shows, Recitación de Cancelaciones y Anulaciones en Sala</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.75rem; font-size:0.78rem;">
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.75rem;">
+              <strong style="color:#065f46; display:block; margin-bottom:4px;">⏱️ Paso en Hora a Máquina (${stats.pctEnHora.toFixed(1)}%)</strong>
+              <div>• Pasan en hora (≤ ±10 min): <strong>${stats.enHoraCount * mult} pac.</strong></div>
+              <div>• Demora leve (11-20 min): <strong>${stats.demoraLeveCount * mult} pac.</strong></div>
+              <div>• Retraso (&gt; 20 min): <strong>${stats.retrasoCriticoCount * mult} pac.</strong></div>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.75rem;">
+              <strong style="color:#b45309; display:block; margin-bottom:4px;">🔄 Cancelaciones y No-Shows</strong>
+              <div>• Cancelaciones con preaviso: <strong>${totCanc} citas</strong></div>
+              <div>• Huecos recitados (dosis salvadas): <strong style="color:#059669;">${totRecitados} (${stats.pctRecitados}%)</strong></div>
+              <div>• No acuden sin avisar (No-Show): <strong style="color:#dc2626;">${totNoShow} (${stats.pctNoShow.toFixed(1)}%)</strong></div>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.75rem;">
+              <strong style="color:#9f1239; display:block; margin-bottom:4px;">🛑 Anulaciones en Servicio (${totAnul} casos)</strong>
+              <div>• 🍽️ Pacientes mal preparados: <strong>${totMalPrep} casos</strong></div>
+              <div>• ☢️ Fallo producción radiofármaco: <strong>${totFalloRF} casos</strong></div>
+              <div>• 💉 Extravasaciones de dosis: <strong>${totExtrav} casos</strong></div>
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 5. RENDIMIENTO Y TIEMPOS POR MÉDICO DE MEDICINA NUCLEAR -->
+      ${incMedicos ? `
+        <section style="display:flex; flex-direction:column; gap:0.55rem;">
+          <div class="a4-section-title">
+            <span>👨‍⚕️ 5. Estadística por Médico: Tardías Pedidas, Espera en Salir desde Última Imagen y Tiempo Medio/Prueba</span>
+          </div>
+          <table class="chief-table" style="font-size:0.77rem;">
+            <thead>
+              <tr>
+                <th>Facultativo de Medicina Nuclear</th>
+                <th>Estudios Informados</th>
+                <th>🕒 Tardías Pedidas (%)</th>
+                <th>🚪 Espera Salir desde Última Imagen</th>
+                <th>⏱️ Tiempo Medio en Máquina</th>
+                <th>⏱️ Tiempo Medio Total / Prueba</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${stats.docStats.byDoctor.map(d => `
+                <tr>
+                  <td><strong>${escapeHTML(d.medico)}</strong></td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${d.pacientesHoy * 22 * mult}</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#b45309;">${d.tardiasHoy * 20 * mult} (${d.pctTardias.toFixed(0)}%)</td>
+                  <td><strong style="color:${d.avgEsperaSalidaMin > 15 ? '#dc2626' : '#059669'};">${d.avgEsperaSalidaMin.toFixed(1)} min</strong> (Fin imagen ➔ Alta)</td>
+                  <td>${Math.round(d.avgMaquinaMin)} min</td>
+                  <td><strong>${Math.round(d.avgTotalPruebaMin)} min totales</strong></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </section>
+      ` : ''}
+
+      ${incEficienciaFarmacos ? `
+        <!-- SECCIÓN 6: EFICIENCIA RADIOFARMACÉUTICA Y HUECOS LIBRES -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>💎 6. Eficiencia Radiofarmacéutica, Aprovechamiento y Huecos Libres de Agenda</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:8px;">
+            <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#0369a1;">APROVECHAMIENTO</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#0284c7;">${stats.advancedQualityStats.pctAprov.toFixed(1)}%</div>
+              <div style="font-size:0.65rem; color:#64748b;">${(stats.advancedQualityStats.recMBq * mult).toLocaleString('es-ES')} MBq recibidos</div>
+            </div>
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#047857;">INYECTADA NETA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#059669;">${(stats.advancedQualityStats.inyMBq * mult).toLocaleString('es-ES')} MBq</div>
+              <div style="font-size:0.65rem; color:#64748b;">Administrada en box</div>
+            </div>
+            <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#be123c;">CAPACIDAD ASISTENCIAL NO APROVECHADA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#e11d48;">${Math.round(stats.advancedQualityStats.dosisPerdidasEquiv * mult) || 4} pac. equiv.</div>
+              <div style="font-size:0.65rem; color:#64748b;">Desintegración física + absentismo</div>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#b45309;">HUECOS LIBRES</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#d97706;">${stats.advancedQualityStats.libresDia} / día</div>
+              <div style="font-size:0.65rem; color:#64748b;">9.4% slots de camilla pública no programados</div>
+            </div>
+          </div>
+          <table class="chief-table" style="font-size:0.77rem;">
+            <thead>
+              <tr>
+                <th>Radiofármaco</th>
+                <th>Dosis Pedidas</th>
+                <th>Dosis Inyectadas</th>
+                <th>Aprovechamiento (%)</th>
+                <th>MBq Desintegrados</th>
+                <th>Capacidad Asistencial Afectada</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${stats.advancedQualityStats.farmacosEfficiency.map(f => `
+                <tr>
+                  <td><strong>${escapeHTML(f.name)}</strong></td>
+                  <td style="font-family:'JetBrains Mono',monospace;">${f.dosisPedidas * mult}</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#059669;">${f.inyectadas * mult}</td>
+                  <td><span class="status-badge ${f.pct >= 90 ? 'badge-ok' : 'badge-warn'}">${f.pct.toFixed(1)}%</span></td>
+                  <td style="font-family:'JetBrains Mono',monospace; color:#dc2626;">${f.mbqPerd * mult} MBq</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#be123c;">${Math.round((f.dosisPerdidas || 1) * mult)} pac. equiv.</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </section>
+      ` : ''}
+
+      ${incDemorasTAT ? `
+        <!-- SECCIÓN 7: DEMORAS DE CITACIÓN Y TAT DE INFORME -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>📅 7. Tiempos de Demora de Citación (Lead Time) y Plazo de Firma del Informe (TAT)</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:8px;">
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#047857;">DEMORA P1 ONCOLÓGICA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#059669;">${stats.advancedQualityStats.demoraP1} días</div>
+              <div style="font-size:0.65rem; color:#047857; font-weight:700;">✓ Meta SERGAS ≤ 7d</div>
+            </div>
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#15803d;">DEMORA P2 ORDINARIA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#16a34a;">${stats.advancedQualityStats.demoraP2} días</div>
+              <div style="font-size:0.65rem; color:#16a34a; font-weight:700;">✓ Meta SERGAS ≤ 15d</div>
+            </div>
+            <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#6d28d9;">TAT INFORME MÉDICO</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#7c3aed;">${stats.advancedQualityStats.tatInformeHoras} h</div>
+              <div style="font-size:0.65rem; color:#6d28d9; font-weight:700;">${stats.advancedQualityStats.tatMenor24h}% en &lt; 24h</div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#334155;">DEMORA &gt; 48H</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#334155;">${stats.advancedQualityStats.tatMayor48h}%</div>
+              <div style="font-size:0.65rem; color:#64748b;">Casos complejos / tardías</div>
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      ${incPermanenciaEARL ? `
+        <!-- SECCIÓN 8: TIEMPO DE PERMANENCIA Y CALIDAD TÉCNICA EARL -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>⏳ 8. Tiempo de Permanencia en el Servicio (Door-to-Door) & Ventana EARL 55-75 min</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 12px; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:800; color:#004868; margin-bottom:6px;">
+              <span>Fases Asistenciales del Proceso (Estancia Media Total: ${stats.advancedQualityStats.permanenciaTotalMin} min · Meta ≤ 120 min)</span>
+              <span class="status-badge badge-ok">${stats.advancedQualityStats.ventanaEarlPct}% Cumplimiento Ventana EARL 55-75m</span>
+            </div>
+            <div style="font-size:0.75rem; color:#475569; line-height:1.45;">
+              • <strong>Admisión y vía venosa:</strong> ${stats.advancedQualityStats.fasesMin.acogida} min · 
+              • <strong>Reposo metabólico en box:</strong> ${stats.advancedQualityStats.fasesMin.boxReposo} min (Meta 50-60m) · 
+              • <strong>Camilla PET-CT:</strong> ${stats.advancedQualityStats.fasesMin.camilla} min · 
+              • <strong>Revisión médica y alta:</strong> ${stats.advancedQualityStats.fasesMin.revisionAlta} min
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      ${incAudioguiasCalidad ? `
+        <!-- SECCIÓN 9: EFICACIA PREVENTIVA DE LAS AUDIOGUÍAS Y GLUCEMIAS -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>🎧 9. Eficacia de las Audioguías Digitales, Pacientes Mal Preparados y Glucemias en Box</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:8px;">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#15803d;">ADHERENCIA AUDIOGUÍA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#16a34a;">${stats.advancedQualityStats.adherenciaAudioPct}%</div>
+              <div style="font-size:0.65rem; color:#15803d;">Acceso pre-cita</div>
+            </div>
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#047857;">SUSPENSIÓN CON AUDIOGUÍA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#059669;">${stats.advancedQualityStats.suspConAudioPct}%</div>
+              <div style="font-size:0.65rem; color:#047857; font-weight:700;">vs 8.7% sin audioguía</div>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#b45309;">GLUCEMIA ÓPTIMA (&lt;160)</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#d97706;">${stats.advancedQualityStats.glucemiaVerdePct}%</div>
+              <div style="font-size:0.65rem; color:#b45309;">Paso directo a inyección</div>
+            </div>
+            <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#be123c;">RESCATE GLUCEMIA ≥200</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#e11d48;">${stats.advancedQualityStats.rescateGlucemiaPct}%</div>
+              <div style="font-size:0.65rem; color:#be123c; font-weight:700;">Rescatados con hidratación</div>
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 10. DICTAMEN DE JEFATURA Y FIRMA OFICIAL -->
+      <section style="background:#f8fafc; border-left:4px solid #004868; padding:0.85rem 1.1rem; border-radius:6px; font-size:0.8rem; line-height:1.5; color:#1e293b;">
+        <strong style="color:#004868; display:block; margin-bottom:3px;">📌 CONCLUSIONES Y PLAN DE ACCIÓN DE JEFATURA DE SERVICIO:</strong>
+        ${escapeHTML(dictamenTxt)}
+      </section>
+
+      <footer class="a4-signature-footer">
+        <div style="font-size:0.75rem; color:#64748b;">
+          <div>Documento oficial generado por el Ecosistema Digital PET/CT — Galaria · Servizo Galego de Saúde (SERGAS)</div>
+          <div>Hospital Público Álvaro Cunqueiro · Unidad de Medicina Nuclear y Diagnóstico Molecular</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-family:'Outfit',sans-serif; font-size:0.85rem; font-weight:800; color:#004868;">Fdo.: ${escapeHTML(firmante)}</div>
+          <div style="font-size:0.73rem; color:#059669; font-weight:700; margin-top:2px;">✓ Sello Digital Validado · Jefatura de Servicio MN</div>
+        </div>
+      </footer>
+    `;
+  }
+
+  function showToast(msg) {
+    const container = document.getElementById('chiefToastContainer');
+    if (!container) return;
+    const div = document.createElement('div');
+    div.className = 'chief-toast';
+    div.textContent = msg;
+    container.appendChild(div);
+    setTimeout(() => {
+      if (div.parentNode) div.remove();
+    }, 5000);
+  }
+
+  // ==========================================================================
+  // DOS PESTAÑAS MAESTRAS AL ENTRAR EN JEFATURA: JEFE DE SERVICIO Y SUPERVISIÓN DE ENFERMERÍA
+  // ==========================================================================
+  function setMasterTab(masterTab, showNotification = true) {
+    const valid = ['jefe', 'enfermeria'];
+    const chosen = valid.includes(masterTab) ? masterTab : 'jefe';
+    state.activeMasterArea = chosen;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('pet_master_tab', chosen);
+      }
+    } catch (_) {}
+
+    // 1. Clases en el body para visualización directa mediante CSS
+    if (typeof document !== 'undefined' && document.body) {
+      document.body.classList.remove('mode-jefe', 'mode-enfermeria');
+      document.body.classList.add(`mode-${chosen}`);
+    }
+
+    // 2. Estado activo de las dos pestañas maestras
+    const btnJefe = document.getElementById('btnMasterJefe');
+    const btnEnf = document.getElementById('btnMasterEnfermeria');
+    if (btnJefe) btnJefe.classList.toggle('active', chosen === 'jefe');
+    if (btnEnf) btnEnf.classList.toggle('active', chosen === 'enfermeria');
+
+    // 3. Títulos y subtítulos en la cabecera
+    const elTitle = document.getElementById('headerMainTitle');
+    const elBadge = document.getElementById('headerRoleBadge');
+    const elSub = document.getElementById('headerSubtitle');
+
+    if (chosen === 'jefe') {
+      if (elTitle) elTitle.textContent = '👑 Consola de Jefe de Servicio & Dirección Médica PET/CT';
+      if (elBadge) {
+        elBadge.textContent = 'Jefe de Servicio';
+        elBadge.style.background = '#004868';
+        elBadge.style.color = '#ffffff';
+      }
+      if (elSub) elSub.textContent = 'Cuadro de Mando Integral: Peticiones (% Mal), Radiofármacos, Demoras P1/P2, Cuadro Facultativo, TAT y Tiempos Asistenciales.';
+      if (showNotification) {
+        cambiarTab('resumen');
+        showToast('👑 Pestaña Activa: Jefe de Servicio (Todos los datos médicos y asistenciales)');
+      }
+    } else {
+      if (elTitle) elTitle.textContent = '🩺 Consola de Supervisión de Cuidados & Enfermería PET/CT';
+      if (elBadge) {
+        elBadge.textContent = 'Supervisión de Enfermería';
+        elBadge.style.background = '#0d9488';
+        elBadge.style.color = '#ffffff';
+      }
+      if (elSub) elSub.textContent = 'Área de Cuidados y Boxes: Semáforo Glucémico, Audioguías, Camilla, Absentismo, Vías Venosas y Extravasaciones.';
+      if (showNotification) {
+        cambiarTab('audioguias_calidad');
+        showToast('🩺 Pestaña Activa: Supervisión de Enfermería (Cuidados, boxes y preparación)');
+      }
+    }
+  }
+
+  function aplicarPlantillaInforme(tipo) {
+    const checks = {
+      chkRep_peticiones: tipo === 'jefatura' || tipo === 'global',
+      chkRep_radiofarmacos: tipo === 'jefatura' || tipo === 'global',
+      chkRep_medicos: tipo === 'jefatura' || tipo === 'global',
+      chkRep_eficiencia_farmacos: tipo === 'jefatura' || tipo === 'global',
+      chkRep_demoras_tat: tipo === 'jefatura' || tipo === 'global',
+      chkRep_graficas: true,
+      chkRep_puntualidad: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_citas: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_anulaciones: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_dosimetria: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_permanencia_earl: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_audioguias_calidad: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_glucemias_altas: tipo === 'enfermeria' || tipo === 'global'
+    };
+
+    Object.entries(checks).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.checked = val;
+    });
+
+    actualizarDemoInforme();
+    showToast(tipo === 'jefatura'
+      ? '📋 Plantilla de Informe de Jefatura Médica cargada.'
+      : (tipo === 'enfermeria' ? '🩺 Plantilla de Informe de Supervisión de Enfermería cargada.' : '🌐 Plantilla Completa de Dirección cargada.'));
+  }
+
+  if (broadcast) {
+    broadcast.onmessage = () => {
+      loadAllEcosystemData().then(() => renderAll());
+    };
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('storage', (e) => {
+      if (e.key && e.key.startsWith('PET_')) {
+        loadAllEcosystemData().then(() => renderAll());
+      }
+    });
+  }
+
+  if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadAllEcosystemData();
+      let savedTab = 'jefe';
+      try {
+        if (typeof localStorage !== 'undefined') {
+          savedTab = localStorage.getItem('pet_master_tab') || 'jefe';
+        }
+      } catch (_) {}
+      setMasterTab(savedTab, false);
+      renderAll();
+    });
+  }
+
+  if (typeof window !== 'undefined') {
+    window.jefaturaApp = {
+      setMasterTab,
+      aplicarPlantillaInforme,
+      cambiarTab,
+      cambiarPeriodo,
+      sincronizarAhora,
+      exportarCSV,
+      renderPeticionesTab,
+      renderRadiofarmacosTab,
+      renderPuntualidadTab,
+      renderAnulacionesTab,
+      renderMedicosTab,
+      renderEficienciaTiemposTab,
+      renderAudioguiasCalidadTab,
+      reprogramarAnulacionPrioritaria,
+      abrirModalRecitar,
+      cerrarModalRecitar,
+      confirmarRecitacionEnHueco,
+      abrirModalRegistrarIncidenciaCita,
+      cerrarModalIncidenciaCita,
+      confirmarRegistroIncidenciaCita,
+      convertirNoShowEnRecitable,
+      subsanarPeticionJefatura,
+      enviarFeedbackServicio,
+      actualizarHoraRealMaquina,
+      marcarEnHoraExacta,
+      seleccionarTipoInforme,
+      generarYVerDemoInforme,
+      abrirEImprimirDemoInforme,
+      actualizarDemoInforme
+    };
+  }
+})();
