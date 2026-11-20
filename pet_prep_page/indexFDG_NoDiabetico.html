@@ -2902,72 +2902,10 @@
     }
 
     /* --------------------------------------------------------------------------
-       4.1 PROTOCOLO DE ESCALADO NIVEL 2 - SEMÁFORO METABÓLICO EN DOMICILIO
+       4.1 PROTOCOLO PET FDG NO DIABÉTICOS - SIN ENVÍO DE GLICEMIA
        -------------------------------------------------------------------------- */
-    function evaluarGlucemiaDiabetica() {
-      const nameInput = document.getElementById("patientName").value.trim();
-      const timeInput = document.getElementById("glucoseTime").value;
-      const valInput = parseInt(document.getElementById("glucoseValue").value, 10);
-
-      if (!nameInput || !timeInput || isNaN(valInput)) return;
-
-      const resultBox = document.getElementById("glucoseResultBox");
-      const badge = document.getElementById("glucoseBadge");
-      const actionText = document.getElementById("glucoseActionText");
-      const nursingAlert = document.getElementById("nursingAlertBox");
-
-      resultBox.className = "glucose-result-box visible";
-      nursingAlert.style.display = "none";
-
-      if (valInput < 160) {
-        // Glucemia Verde (<160mg/dL)
-        resultBox.className = "glucose-result-box visible verde";
-        badge.innerHTML = "🟢 Glucemia Verde (" + valInput + " mg/dL) - Validación Autónoma Correcta";
-        actionText.textContent = "Cifra validada de forma automática. Tu nivel de glucemia es adecuado para la prueba. Continúa en ayunas estricto bebiendo abundante agua sola. No requiere alertar al personal.";
-      } else if (valInput >= 160 && valInput <= 199) {
-        // Glucemia Ámbar (160-199mg/dL)
-        resultBox.className = "glucose-result-box visible ambar";
-        badge.innerHTML = "🟡 Glucemia Ámbar (" + valInput + " mg/dL) - Aviso de Baja Prioridad a Enfermería";
-        actionText.textContent = "Glucemia moderadamente elevada. Es necesario que mantengas reposo estricto e hidratación abundante con agua sola. Hemos generado un aviso de baja prioridad en la consola de Enfermería para priorizar el control capilar inmediato a tu llegada al box.";
-      } else {
-        // Glucemia Roja (>=200mg/dL) - NIVEL 2: PROTOCOLO DE ESCALADO A ENFERMERÍA
-        resultBox.className = "glucose-result-box visible rojo";
-        badge.innerHTML = "🔴 Glucemia Roja (" + valInput + " mg/dL) - ALERTA METABÓLICA PREFERENTE (ESCALADO A ENFERMERÍA)";
-        actionText.textContent = "El sistema ha detectado un valor que supera el umbral de seguridad clínica. Se ha emitido una Alerta Asistencial Preferente en la Consola de Enfermería. En breves momentos se pondran en contacto con usted para indicarle la actuacion a seguir.";
-
-        nursingAlert.style.display = "block";
-        nursingAlert.innerHTML = "<strong>🚨 ALERTA ASISTENCIAL EN PUESTO DE ENFERMERÍA:</strong><br>" +
-          "\"ALERTA METABÓLICA: Paciente " + escapeHTML(nameInput) + " (Cita hoy, FDG) reporta glucemia capilar de " + valInput + " mg/dL a las " + escapeHTML(timeInput) + " h\".";
-      }
-
-      // Sincronizar siempre con el Puesto de Enfermería, Consola Médica y Técnicos TSID
-      if (typeof registrarGlucemiaEcosistema === "function") {
-        let patNhc = "";
-        try { patNhc = (typeof getPatientCitationInfo === 'function' ? getPatientCitationInfo().nhc : "") || sessionStorage.getItem("pet_patient_nhc") || ""; } catch(e){}
-        registrarGlucemiaEcosistema({
-          paciente_nombre: nameInput,
-          hora_control_capilar: timeInput,
-          glucemia_mg_dl: valInput,
-          nhc: patNhc,
-          origen: "AUDIOGUIA_METABOLICA",
-          nivel: valInput >= 200 ? "ROJO_PREFERENTE" : (valInput >= 160 ? "AMBAR_MODERADA" : "VERDE_OPTIMA"),
-          mensaje_alerta: `Control capilar audioguía: ${valInput} mg/dL a las ${timeInput} h (Paciente: ${nameInput})`
-        });
-      }
-
-      // Enviar siempre a la base de datos de enfermería
-      sendToDatabase({
-        origen: "AUDIOGUIA_METABOLICA",
-        nivel: valInput >= 200 ? "ROJO_PREFERENTE" : (valInput >= 160 ? "AMBAR_MODERADA" : "VERDE_OPTIMA"),
-        fecha_hora: new Date().toISOString(),
-        paciente_nombre: nameInput,
-        hora_control_capilar: timeInput,
-        glucemia_mg_dl: valInput,
-        mensaje_alerta: `Control capilar reportado en audioguía: ${valInput} mg/dL a las ${timeInput} h (Paciente: ${nameInput})`
-      });
-
-      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    // Los pacientes no diabéticos citados para PET FDG no requieren control capilar en domicilio.
+    // El control de glucemia basal se realiza directamente por Enfermería a la llegada al box.
 
     /* --------------------------------------------------------------------------
 
@@ -5170,7 +5108,6 @@ function resetTestSelection() {
     </div>
   </div>
 
-  <script src="assets/pet_glucose_sync.js"></script>
   <script src="assets/pet_chat_human_stream.js"></script>
 </body>
 </html>

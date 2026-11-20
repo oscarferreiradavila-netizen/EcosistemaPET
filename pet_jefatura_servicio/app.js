@@ -1161,6 +1161,7 @@
     const rfStats = computeRadiopharmaBreakdown(petList);
     const dosimetryStats = computeDosimetryQualityStats();
     const docStats = computeDoctorAndPatientMetrics(evaluatedMachine);
+    const advancedQualityStats = computeAdvancedQualityAndOperationalStats();
 
     return {
       petList,
@@ -1190,7 +1191,108 @@
       rendimientoGlobal,
       rfStats,
       dosimetryStats,
-      docStats
+      docStats,
+      advancedQualityStats
+    };
+  }
+
+  function computeAdvancedQualityAndOperationalStats() {
+    const scale = state.periodo === 'today' ? 0.05 : (state.periodo === 'week' ? 0.25 : 1.0);
+    const recMBq = Math.round(8420 * scale);
+    const inyMBq = Math.round(7680 * scale);
+    const perdMBq = recMBq - inyMBq;
+    const perdEur = Math.round(485 * scale);
+    const pctAprov = ((inyMBq / Math.max(recMBq, 1)) * 100);
+
+    // Huecos libres de camilla (gantry)
+    const totalSlotsDia = 32;
+    const ocupadosDia = 29;
+    const libresDia = 3;
+    const pctLibres = (libresDia / totalSlotsDia) * 100;
+
+    // Fármacos breakdown
+    const farmacosEfficiency = [
+      { name: '18F-FDG (Glucosa)', dosisPedidas: Math.round(180 * scale), inyectadas: Math.round(171 * scale), mbqPerd: Math.round(310 * scale), pct: 95.0, costeEur: Math.round(140 * scale), accion: 'Ajuste de calibración con Ciclotrón según agenda confirmada' },
+      { name: '18F-PSMA (Próstata)', dosisPedidas: Math.round(45 * scale), inyectadas: Math.round(41 * scale), mbqPerd: Math.round(180 * scale), pct: 91.1, costeEur: Math.round(185 * scale), accion: 'Sincronización horaria con logística externa Curium Madrid' },
+      { name: '18F-Colina (Próstata / Parat.)', dosisPedidas: Math.round(24 * scale), inyectadas: Math.round(21 * scale), mbqPerd: Math.round(150 * scale), pct: 87.5, costeEur: Math.round(95 * scale), accion: 'Concentración de pacientes en tandas matinales tempranas' },
+      { name: '68Ga-DOTATOC (Neuroendócrinos)', dosisPedidas: Math.round(12 * scale), inyectadas: Math.round(10 * scale), mbqPerd: Math.round(100 * scale), pct: 83.3, costeEur: Math.round(65 * scale), accion: 'Optimización de elución de generador 68Ge/68Ga in situ' }
+    ];
+
+    // Demoras Lead Time
+    const demoraP1 = 4.6;
+    const demoraP2 = 10.8;
+    const demoraP3 = 24.5;
+    const tatInformeHoras = 18.2;
+    const tatMenor24h = 78.5;
+    const tat24a48h = 16.2;
+    const tatMayor48h = 5.3;
+
+    // Tiempos permanencia door to door
+    const permanenciaTotalMin = 112;
+    const fasesMin = {
+      acogida: 14,
+      boxReposo: 58,
+      camilla: 18,
+      revisionAlta: 22
+    };
+    const ventanaEarlPct = 93.1;
+    const ventanaEarlPrecoz = 2.4;
+    const ventanaEarlTardia = 4.5;
+
+    // Audioguías & Calidad
+    const adherenciaAudioPct = 85.4;
+    const suspConAudioPct = 1.1;
+    const suspSinAudioPct = 8.7;
+    const consultasChatbot = Math.round(342 * scale);
+
+    // Mal preparados
+    const totalMalPrep = Math.max(1, Math.round(12 * scale));
+    const causasMalPrep = [
+      { causa: 'Rotura involuntaria de ayuno (comida/bebida calórica)', pct: 42, count: Math.round(totalMalPrep * 0.42) },
+      { causa: 'Medicación o insulina mal pautada', pct: 28, count: Math.round(totalMalPrep * 0.28) },
+      { causa: 'Ejercicio físico intenso en 24-48h previas', pct: 18, count: Math.round(totalMalPrep * 0.18) },
+      { causa: 'Incumplimiento de dieta cetogénica (Endocarditis)', pct: 12, count: Math.round(totalMalPrep * 0.12) }
+    ];
+
+    // Glucemias en Box
+    const glucemiaVerdePct = 76.2;
+    const glucemiaAmbarPct = 17.5;
+    const glucemiaRojaPct = 6.3;
+    const rescateGlucemiaPct = 71.4;
+
+    return {
+      recMBq,
+      inyMBq,
+      perdMBq,
+      perdEur,
+      pctAprov,
+      totalSlotsDia,
+      ocupadosDia,
+      libresDia,
+      pctLibres,
+      farmacosEfficiency,
+      demoraP1,
+      demoraP2,
+      demoraP3,
+      tatInformeHoras,
+      tatMenor24h,
+      tat24a48h,
+      tatMayor48h,
+      permanenciaTotalMin,
+      fasesMin,
+      ventanaEarlPct,
+      ventanaEarlPrecoz,
+      ventanaEarlTardia,
+      adherenciaAudioPct,
+      suspConAudioPct,
+      suspSinAudioPct,
+      consultasChatbot,
+      totalMalPrep,
+      causasMalPrep,
+      glucemiaVerdePct,
+      glucemiaAmbarPct,
+      glucemiaRojaPct,
+      rescateGlucemiaPct
     };
   }
 
@@ -1325,12 +1427,6 @@
 
     // 3. Semilla clínica de referencia para auditoría de calidad si hay pocos registros en vivo
     const baselineSamples = [
-      { fecha: todayStr, farmaco: 'FDG', nombre: 'Manuel Piñeiro Castro', iniciales: 'M.P.C.', nhc: 'NHC-391042', pesoKg: 76, tallaCm: 172, mciInyectados: '7.65', horaInyeccion: '08:35' },
-      { fecha: todayStr, farmaco: 'PSMA', nombre: 'Alfonso Vázquez Souto', iniciales: 'A.V.S.', nhc: 'NHC-518290', pesoKg: 82, tallaCm: 175, mciInyectados: '4.45', horaInyeccion: '09:05' },
-      { fecha: todayStr, farmaco: 'FDG', nombre: 'Carmen Domínguez Lago', iniciales: 'C.D.L.', nhc: 'NHC-602118', pesoKg: 64, tallaCm: 162, mciInyectados: '7.35', horaInyeccion: '09:35' },
-      { fecha: todayStr, farmaco: 'COLINA', nombre: 'Ramiro Estévez Pazos', iniciales: 'R.E.P.', nhc: 'NHC-449812', pesoKg: 78, tallaCm: 170, mciInyectados: '7.75', horaInyeccion: '10:10' },
-      { fecha: todayStr, farmaco: 'GA68', nombre: 'Dolores Méndez Conde', iniciales: 'D.M.C.', nhc: 'NHC-710394', pesoKg: 68, tallaCm: 160, mciInyectados: '3.40', horaInyeccion: '10:40' },
-      { fecha: todayStr, farmaco: 'FDG', nombre: 'Brais Nogueira Rial', iniciales: 'B.N.R.', nhc: 'NHC-829104', pesoKg: 85, tallaCm: 178, mciInyectados: '7.40', horaInyeccion: '11:15' }
       { fecha: todayStr, farmaco: 'FDG', nombre: 'Manuel Piñeiro Castro', iniciales: 'M.P.C.', nhc: 'NHC-391042', pesoKg: 76, tallaCm: 172, mciInyectados: '7.65', estadoInyeccion: 'correcta', horaInyeccion: '08:35' },
       { fecha: todayStr, farmaco: 'PSMA', nombre: 'Alfonso Vázquez Souto', iniciales: 'A.V.S.', nhc: 'NHC-518290', pesoKg: 82, tallaCm: 175, mciInyectados: '4.45', estadoInyeccion: 'correcta', horaInyeccion: '09:05' },
       { fecha: todayStr, farmaco: 'FDG', nombre: 'Carmen Domínguez Lago', iniciales: 'C.D.L.', nhc: 'NHC-602118', pesoKg: 64, tallaCm: 162, mciInyectados: '7.35', estadoInyeccion: 'correcta', horaInyeccion: '09:35' },
@@ -1384,7 +1480,6 @@
       extravasacionCount,
       pctIdeal: (idealCount / total) * 100,
       pctMas: (masCount / total) * 100,
-      pctMenos: (menosCount / total) * 100
       pctMenos: (menosCount / total) * 100,
       pctCorrecta: (correctaCount / total) * 100,
       pctExtravasacion: (extravasacionCount / total) * 100
@@ -1401,6 +1496,8 @@
     renderCitasTab(stats);
     renderAnulacionesTab(stats);
     renderMedicosTab(stats);
+    renderEficienciaTiemposTab(stats);
+    renderAudioguiasCalidadTab(stats);
     actualizarDemoInforme(stats);
   }
 
@@ -1456,6 +1553,47 @@
     document.getElementById('kpiTiempoMedioPruebaGlobal').textContent = `Espera post-imagen · Prueba media: ${Math.round(stats.docStats.globalTiempoMedioPrueba)} min`;
     document.getElementById('sparkKpiMedicos').innerHTML = renderSparklineSVG([14.2, 13.5, 12.4, 11.8, 11.1, Number(stats.docStats.globalEsperaPostImagen.toFixed(1))], '#7c3aed');
 
+    // KPI 8: Eficiencia y Aprovechamiento de Fármacos & Huecos Libres
+    const ef = stats.advancedQualityStats;
+    const elKpiAprov = document.getElementById('kpiPctAprovechamientoRF');
+    if (elKpiAprov) elKpiAprov.textContent = `${ef.pctAprov.toFixed(1)}%`;
+    const elKpiHuecos = document.getElementById('kpiHuecosLibresBadge');
+    if (elKpiHuecos) elKpiHuecos.textContent = `${ef.libresDia} huecos libres`;
+    const elSubAprov = document.getElementById('kpiSubtextAprovechamiento');
+    if (elSubAprov) elSubAprov.textContent = `Recibido: ${ef.recMBq.toLocaleString('es-ES')} MBq · Inyectado: ${ef.inyMBq.toLocaleString('es-ES')} MBq`;
+    const elSparkEf = document.getElementById('sparkKpiEficiencia');
+    if (elSparkEf) elSparkEf.innerHTML = renderSparklineSVG([86.2, 87.5, 88.9, 90.1, 90.8, Number(ef.pctAprov.toFixed(1))], '#0284c7');
+
+    // KPI 9: Demoras P1/P2 & TAT
+    const elKpiDemoraP1 = document.getElementById('kpiDemoraP1Media');
+    if (elKpiDemoraP1) elKpiDemoraP1.textContent = `${ef.demoraP1} d`;
+    const elKpiTat = document.getElementById('kpiTatInformeBadge');
+    if (elKpiTat) elKpiTat.textContent = `TAT: ${ef.tatInformeHoras} h`;
+    const elSubDemoras = document.getElementById('kpiSubtextDemoras');
+    if (elSubDemoras) elSubDemoras.textContent = `P1: ${ef.demoraP1}d (Meta ≤7d) · P2: ${ef.demoraP2}d · ${ef.tatMenor24h}% <24h`;
+    const elSparkDem = document.getElementById('sparkKpiDemoras');
+    if (elSparkDem) elSparkDem.innerHTML = renderSparklineSVG([6.8, 6.1, 5.5, 5.0, 4.8, ef.demoraP1], '#059669');
+
+    // KPI 10: Permanencia & Ventana EARL
+    const elKpiPerm = document.getElementById('kpiPermanenciaServicioMedia');
+    if (elKpiPerm) elKpiPerm.textContent = `${ef.permanenciaTotalMin} min`;
+    const elKpiEarl = document.getElementById('kpiVentanaEarlBadge');
+    if (elKpiEarl) elKpiEarl.textContent = `${ef.ventanaEarlPct}% EARL`;
+    const elSubPerm = document.getElementById('kpiSubtextPermanencia');
+    if (elSubPerm) elSubPerm.textContent = `Door-to-Door: ${ef.permanenciaTotalMin}m · Ventana 55-75m OK`;
+    const elSparkPerm = document.getElementById('sparkKpiPermanencia');
+    if (elSparkPerm) elSparkPerm.innerHTML = renderSparklineSVG([128, 124, 119, 116, 114, ef.permanenciaTotalMin], '#d97706');
+
+    // KPI 11: Audioguías & Glucemias Box
+    const elKpiAudio = document.getElementById('kpiAdherenciaAudioguia');
+    if (elKpiAudio) elKpiAudio.textContent = `${ef.adherenciaAudioPct}%`;
+    const elKpiGluc = document.getElementById('kpiGlucemiasAltasBadge');
+    if (elKpiGluc) elKpiGluc.textContent = `${ef.glucemiaRojaPct}% ≥200`;
+    const elSubAudio = document.getElementById('kpiSubtextAudioguias');
+    if (elSubAudio) elSubAudio.textContent = `Adherencia ${ef.adherenciaAudioPct}% · Susp: ${ef.suspConAudioPct}% con vs ${ef.suspSinAudioPct}% sin`;
+    const elSparkAud = document.getElementById('sparkKpiAudioguias');
+    if (elSparkAud) elSparkAud.innerHTML = renderSparklineSVG([62, 69, 75, 80, 83, ef.adherenciaAudioPct], '#be123c');
+
     // Badges de pestañas
     document.getElementById('tabBadgeMal').textContent = `${stats.malList.length} (${stats.pctMal.toFixed(0)}%)`;
     document.getElementById('tabBadgeRF').textContent = `${stats.rfStats.totalPruebas}`;
@@ -1463,6 +1601,10 @@
     document.getElementById('tabBadgeRecitar').textContent = `${stats.huecosDisponibles} libres`;
     document.getElementById('tabBadgeAnulaciones').textContent = `${stats.totalAnulaciones}`;
     document.getElementById('tabBadgeMedicos').textContent = `${NUCLEAR_DOCTORS.length} méd.`;
+    const elTabBadgeEf = document.getElementById('tabBadgeEficiencia');
+    if (elTabBadgeEf) elTabBadgeEf.textContent = `${ef.pctAprov.toFixed(0)}%`;
+    const elTabBadgeAud = document.getElementById('tabBadgeAudioguias');
+    if (elTabBadgeAud) elTabBadgeAud.textContent = `${ef.adherenciaAudioPct.toFixed(0)}%`;
   }
 
   // ==========================================================================
@@ -2307,6 +2449,401 @@
   }
 
   // ==========================================================================
+  // 10. PESTAÑA 8: EFICIENCIA DE FÁRMACOS, DEMORAS, TAT Y TIEMPOS DE PROCESO
+  // ==========================================================================
+  function renderEficienciaTiemposTab(statsObj) {
+    const stats = statsObj || computeServiceStats();
+    const ef = stats.advancedQualityStats;
+    const xLabels = getTimeAxisLabels();
+
+    // 1. Métricas de Cabecera
+    const elRec = document.getElementById('statActividadRecibida');
+    if (elRec) elRec.textContent = `${ef.recMBq.toLocaleString('es-ES')} MBq`;
+    const elIny = document.getElementById('statActividadInyectada');
+    if (elIny) elIny.textContent = `${ef.inyMBq.toLocaleString('es-ES')} MBq`;
+    const elPerdEur = document.getElementById('statDosisPerdidasEur');
+    if (elPerdEur) elPerdEur.textContent = `${ef.perdEur} € (${ef.perdMBq} MBq)`;
+    const elHuecosDia = document.getElementById('statHuecosLibresDia');
+    if (elHuecosDia) elHuecosDia.textContent = `${ef.libresDia} / día (${ef.pctLibres.toFixed(1)}%)`;
+
+    const elBadgeEf = document.getElementById('badgeEficienciaGlobal');
+    if (elBadgeEf) elBadgeEf.textContent = `${ef.pctAprov.toFixed(1)}% Aprovechamiento Global`;
+    const elBadgeHuecos = document.getElementById('badgeHuecosLibresGlobal');
+    if (elBadgeHuecos) elBadgeHuecos.textContent = `${ef.libresDia} Huecos Libres / Día`;
+
+    // 2. Gráfica Evolución Aprovechamiento Radiofármacos
+    const chartAprovEl = document.getElementById('chartAprovechamientoRF');
+    if (chartAprovEl) {
+      chartAprovEl.innerHTML = renderEvolutionChartSVG({
+        title: 'Evolución de Tasa de Aprovechamiento por Isótopo (%)',
+        xLabels,
+        ySuffix: '%',
+        series: [
+          { name: '18F-FDG (Glucosa)', color: '#0284c7', data: [92, 93, 93.5, 94, 94.6, 95.0] },
+          { name: '18F-PSMA', color: '#0d9488', data: [88, 89, 89.4, 90.2, 90.7, 91.1] },
+          { name: '18F-Colina', color: '#7c3aed', data: [84, 85, 85.5, 86.2, 86.8, 87.5] }
+        ]
+      });
+    }
+
+    // 3. Gráfica Ocupación Horaria de Slots y Huecos Vacíos (SVG)
+    const chartSlotsEl = document.getElementById('chartOcupacionSlots');
+    if (chartSlotsEl) {
+      const horas = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+      const ocupados = [5, 5, 4, 5, 4, 4, 2];
+      const libres = [0, 0, 1, 0, 1, 0, 1];
+      const w = 580; const h = 190;
+      const barW = 38; const gap = 38; const startX = 50;
+      const barsHtml = horas.map((hr, idx) => {
+        const x = startX + idx * (barW + gap);
+        const tot = ocupados[idx] + libres[idx];
+        const hOcup = (ocupados[idx] / 6) * 110;
+        const hLibre = (libres[idx] / 6) * 110;
+        const yOcup = 140 - hOcup;
+        const yLibre = yOcup - hLibre;
+        return `
+          <g>
+            <rect x="${x}" y="${yOcup}" width="${barW}" height="${hOcup}" fill="#0284c7" rx="3">
+              <title>${hr}: ${ocupados[idx]} ocupados</title>
+            </rect>
+            ${libres[idx] > 0 ? `
+              <rect x="${x}" y="${yLibre}" width="${barW}" height="${hLibre}" fill="#f59e0b" rx="3">
+                <title>${hr}: ${libres[idx]} hueco libre</title>
+              </rect>
+              <text x="${x + barW/2}" y="${yLibre - 5}" text-anchor="middle" font-size="9" font-weight="800" fill="#d97706">+${libres[idx]}</text>
+            ` : ''}
+            <text x="${x + barW/2}" y="${yOcup + hOcup/2 + 3}" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">${ocupados[idx]}</text>
+            <text x="${x + barW/2}" y="160" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">${hr}</text>
+          </g>
+        `;
+      }).join('');
+
+      chartSlotsEl.innerHTML = `
+        <svg viewBox="0 0 ${w} ${h}" width="100%" height="190">
+          <line x1="40" y1="140" x2="550" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+          ${barsHtml}
+          <g transform="translate(180, 180)">
+            <rect x="0" y="-8" width="12" height="10" fill="#0284c7" rx="2"/>
+            <text x="18" y="0" font-size="9.5" fill="#334155" font-weight="600">Slots Ocupados en Camilla</text>
+            <rect x="180" y="-8" width="12" height="10" fill="#f59e0b" rx="2"/>
+            <text x="198" y="0" font-size="9.5" fill="#b45309" font-weight="700">Huecos Libres No Citados</text>
+          </g>
+        </svg>
+      `;
+    }
+
+    // 4. Tabla de Aprovechamiento de Fármacos
+    const tablaFarmacosEl = document.getElementById('tablaAprovechamientoFarmacos');
+    if (tablaFarmacosEl) {
+      tablaFarmacosEl.innerHTML = ef.farmacosEfficiency.map(f => `
+        <tr>
+          <td><strong style="color:#0f172a;">${escapeHTML(f.name)}</strong></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${f.dosisPedidas} dosis</td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">${f.inyectadas} inyectadas</td>
+          <td><span class="status-badge ${f.pct >= 90 ? 'badge-ok' : 'badge-warn'}">${f.pct.toFixed(1)}%</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; color:#dc2626;">${f.mbqPerd} MBq</td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#e11d48;">${f.costeEur} €</td>
+          <td style="font-size:0.78rem; color:#475569;">${escapeHTML(f.accion)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 5. Demoras y TAT
+    const elDemP1 = document.getElementById('statDemoraP1');
+    if (elDemP1) elDemP1.textContent = `${ef.demoraP1} días`;
+    const elDemP2 = document.getElementById('statDemoraP2');
+    if (elDemP2) elDemP2.textContent = `${ef.demoraP2} días`;
+    const elDemP3 = document.getElementById('statDemoraP3');
+    if (elDemP3) elDemP3.textContent = `${ef.demoraP3} días`;
+    const elTatMedio = document.getElementById('statTatInformeMedio');
+    if (elTatMedio) elTatMedio.textContent = `${ef.tatInformeHoras} horas`;
+
+    // Gráfica Demoras
+    const chartDemorasEl = document.getElementById('chartEvolucionDemoras');
+    if (chartDemorasEl) {
+      chartDemorasEl.innerHTML = renderEvolutionChartSVG({
+        title: 'Evolución Demoras de Citación (Días) vs Metas SERGAS',
+        xLabels,
+        ySuffix: 'd',
+        series: [
+          { name: 'P1 Onco (Meta ≤ 7d)', color: '#059669', data: [6.8, 6.2, 5.7, 5.2, 4.9, ef.demoraP1] },
+          { name: 'P2 Ordinaria (Meta ≤ 15d)', color: '#0284c7', data: [14.1, 13.5, 12.8, 12.0, 11.4, ef.demoraP2] }
+        ]
+      });
+    }
+
+    // Gráfica Distribución TAT
+    const chartTatEl = document.getElementById('chartDistribucionTAT');
+    if (chartTatEl) {
+      const w = 560; const h = 185;
+      chartTatEl.innerHTML = `
+        <svg viewBox="0 0 ${w} ${h}" width="100%" height="185">
+          <g transform="translate(40, 20)">
+            <text x="0" y="16" font-size="11" font-weight="700" fill="#334155">&lt; 24 Horas (Meta ≥ 75%):</text>
+            <rect x="180" y="5" width="280" height="18" fill="#e2e8f0" rx="4"/>
+            <rect x="180" y="5" width="${(ef.tatMenor24h/100)*280}" height="18" fill="#059669" rx="4"/>
+            <text x="475" y="19" font-size="11" font-weight="800" fill="#047857">${ef.tatMenor24h}%</text>
+
+            <text x="0" y="60" font-size="11" font-weight="700" fill="#334155">24 a 48 Horas:</text>
+            <rect x="180" y="49" width="280" height="18" fill="#e2e8f0" rx="4"/>
+            <rect x="180" y="49" width="${(ef.tat24a48h/100)*280}" height="18" fill="#f59e0b" rx="4"/>
+            <text x="475" y="63" font-size="11" font-weight="800" fill="#b45309">${ef.tat24a48h}%</text>
+
+            <text x="0" y="104" font-size="11" font-weight="700" fill="#334155">&gt; 48 Horas (Demora):</text>
+            <rect x="180" y="93" width="280" height="18" fill="#e2e8f0" rx="4"/>
+            <rect x="180" y="93" width="${(ef.tatMayor48h/100)*280}" height="18" fill="#dc2626" rx="4"/>
+            <text x="475" y="107" font-size="11" font-weight="800" fill="#b91c1c">${ef.tatMayor48h}%</text>
+          </g>
+        </svg>
+      `;
+    }
+
+    // Tabla Demoras por Servicio
+    const tablaDemorasEl = document.getElementById('tablaDemorasPorServicio');
+    if (tablaDemorasEl) {
+      const servData = [
+        { name: 'Oncología Médica', p1: 58, demP1: 4.2, p2: 18, demP2: 9.8, cumplimiento: '98.5%', tat: '16.5 h' },
+        { name: 'Urología', p1: 22, demP1: 4.8, p2: 34, demP2: 11.2, cumplimiento: '95.0%', tat: '17.8 h' },
+        { name: 'Neumología', p1: 31, demP1: 4.5, p2: 14, demP2: 10.4, cumplimiento: '96.2%', tat: '18.1 h' },
+        { name: 'Hematología', p1: 19, demP1: 4.1, p2: 12, demP2: 9.5, cumplimiento: '100.0%', tat: '15.9 h' },
+        { name: 'Cirugía General y Digestiva', p1: 16, demP1: 5.2, p2: 19, demP2: 12.1, cumplimiento: '92.4%', tat: '19.4 h' },
+        { name: 'Neurología / Demencias', p1: 6, demP1: 6.4, p2: 24, demP2: 13.8, cumplimiento: '91.0%', tat: '22.0 h' }
+      ];
+      tablaDemorasEl.innerHTML = servData.map(s => `
+        <tr>
+          <td><strong style="color:#0f172a;">${escapeHTML(s.name)}</strong></td>
+          <td style="font-family:'JetBrains Mono',monospace;">${s.p1}</td>
+          <td><span class="status-badge badge-ok">${s.demP1} d</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;">${s.p2}</td>
+          <td><span class="status-badge badge-info">${s.demP2} d</span></td>
+          <td><span class="status-badge badge-ok">${s.cumplimiento}</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#4338ca;">${s.tat}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 6. Fases de Estancia & Ventana EARL
+    const chartFasesEl = document.getElementById('chartFasesEstancia');
+    if (chartFasesEl) {
+      const f = ef.fasesMin;
+      chartFasesEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:9px; padding:0.4rem 0;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>1. Acogida, Registro y Vía Venosa</span>
+              <span style="color:#0284c7;">${f.acogida} min</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#0284c7; width:${(f.acogida/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>2. Inyección y Reposo Metabólico en Box</span>
+              <span style="color:#0d9488;">${f.boxReposo} min (Meta 50-60m)</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#0d9488; width:${(f.boxReposo/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>3. Adquisición en Camilla PET-CT</span>
+              <span style="color:#7c3aed;">${f.camilla} min</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#7c3aed; width:${(f.camilla/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>4. Revisión Médica de Imágenes y Salida</span>
+              <span style="color:#059669;">${f.revisionAlta} min</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#059669; width:${(f.revisionAlta/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div style="text-align:right; font-family:'Outfit',sans-serif; font-weight:800; font-size:0.95rem; color:#004868; margin-top:5px;">
+            Total Estancia Media: ${ef.permanenciaTotalMin} min (Meta ≤ 120 min)
+          </div>
+        </div>
+      `;
+    }
+
+    const chartEarlEl = document.getElementById('chartVentanaEarl');
+    if (chartEarlEl) {
+      chartEarlEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:12px; padding:0.6rem 0;">
+          <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:10px; padding:0.8rem 1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="color:#047857; font-size:0.92rem;">🟢 Ventana Óptima EARL (55 a 75 min)</strong>
+              <span class="status-badge badge-ok" style="font-size:0.88rem;">${ef.ventanaEarlPct}% Cumplimiento</span>
+            </div>
+            <div style="font-size:0.75rem; color:#065f46; margin-top:3px;">Cumple estándar europeo EANM/EARL de biodistribución radiofarmacéutica estable.</div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div style="background:#fef2f2; border:1px solid #fecdd3; border-radius:8px; padding:0.7rem 0.9rem;">
+              <div style="font-size:0.75rem; font-weight:700; color:#991b1b;">⚠️ Precoz (&lt; 55 min)</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800; color:#dc2626;">${ef.ventanaEarlPrecoz}%</div>
+              <div style="font-size:0.7rem; color:#7f1d1d;">Riesgo captación incompleta</div>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.7rem 0.9rem;">
+              <div style="font-size:0.75rem; font-weight:700; color:#92400e;">⚠️ Tardía (&gt; 75 min)</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800; color:#d97706;">${ef.ventanaEarlTardia}%</div>
+              <div style="font-size:0.7rem; color:#78350f;">Demora por máquina o vía</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // ==========================================================================
+  // 11. PESTAÑA 9: EFICACIA DE AUDIOGUÍAS, PACIENTES MAL PREPARADOS Y GLUCEMIAS
+  // ==========================================================================
+  function renderAudioguiasCalidadTab(statsObj) {
+    const stats = statsObj || computeServiceStats();
+    const ef = stats.advancedQualityStats;
+    const xLabels = getTimeAxisLabels();
+
+    // 1. Métricas Cabecera Audioguías
+    const elAdh = document.getElementById('statAdherenciaPct');
+    if (elAdh) elAdh.textContent = `${ef.adherenciaAudioPct}%`;
+    const elSuspCon = document.getElementById('statSuspConAudio');
+    if (elSuspCon) elSuspCon.textContent = `${ef.suspConAudioPct}%`;
+    const elSuspSin = document.getElementById('statSuspSinAudio');
+    if (elSuspSin) elSuspSin.textContent = `${ef.suspSinAudioPct}%`;
+    const elCons = document.getElementById('statConsultasChatbot');
+    if (elCons) elCons.textContent = `${ef.consultasChatbot}`;
+
+    // 2. Gráfica Comparativa Suspensión Con vs Sin Audioguía
+    const chartCompEl = document.getElementById('chartEficaciaAudioguias');
+    if (chartCompEl) {
+      chartCompEl.innerHTML = renderEvolutionChartSVG({
+        title: 'Tasa de Suspensión por Fallos de Preparación: CON vs SIN Audioguía (%)',
+        xLabels,
+        ySuffix: '%',
+        series: [
+          { name: 'Sin Audioguía (8.7%)', color: '#dc2626', data: [9.8, 9.4, 9.1, 8.9, 8.8, ef.suspSinAudioPct] },
+          { name: 'Con Audioguía (1.1%)', color: '#059669', data: [2.1, 1.8, 1.5, 1.3, 1.2, ef.suspConAudioPct] }
+        ]
+      });
+    }
+
+    // 3. Gráfica Uso por Protocolo
+    const chartUsoEl = document.getElementById('chartUsoPorProtocolo');
+    if (chartUsoEl) {
+      const protos = [
+        { name: '18F-FDG Oncológico', pct: 91 },
+        { name: '18F-FDG Diabético', pct: 94 },
+        { name: '18F-PSMA Próstata', pct: 88 },
+        { name: '18F-Colina', pct: 86 },
+        { name: '18F-Endocarditis', pct: 92 },
+        { name: '18F-Vasculitis', pct: 83 }
+      ];
+      chartUsoEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:8px; padding:0.4rem 0;">
+          ${protos.map(p => `
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.79rem; font-weight:700; margin-bottom:2px;">
+                <span>${escapeHTML(p.name)}</span>
+                <span style="color:#0284c7;">${p.pct}% adherencia</span>
+              </div>
+              <div style="background:#e2e8f0; border-radius:5px; height:8px; overflow:hidden;">
+                <div style="background:linear-gradient(90deg, #0284c7, #0d9488); width:${p.pct}%; height:100%;"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // 4. Métricas Mal Preparados y Glucemias Box
+    const elTotMal = document.getElementById('statTotalMalPrepBox');
+    if (elTotMal) elTotMal.textContent = `${ef.totalMalPrep} pac`;
+    const elGlucVerde = document.getElementById('statGlucemiaVerdePct');
+    if (elGlucVerde) elGlucVerde.textContent = `${ef.glucemiaVerdePct}%`;
+    const elGlucAmbar = document.getElementById('statGlucemiaAmbarPct');
+    if (elGlucAmbar) elGlucAmbar.textContent = `${ef.glucemiaAmbarPct}%`;
+    const elGlucRoja = document.getElementById('statGlucemiaRojaPct');
+    if (elGlucRoja) elGlucRoja.textContent = `${ef.glucemiaRojaPct}%`;
+
+    // 5. Gráfica Causas Mal Preparados
+    const chartCausasEl = document.getElementById('chartCausasMalPrep');
+    if (chartCausasEl) {
+      chartCausasEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:9px; padding:0.4rem 0;">
+          ${ef.causasMalPrep.map(c => `
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700; margin-bottom:3px;">
+                <span>${escapeHTML(c.causa)}</span>
+                <span style="color:#c2410c;">${c.pct}% (${c.count} pac)</span>
+              </div>
+              <div style="background:#ffedd5; border-radius:5px; height:9px; overflow:hidden;">
+                <div style="background:#ea580c; width:${c.pct}%; height:100%;"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // 6. Gráfica Semáforo Glucemia Capilar en Box
+    const chartSemEl = document.getElementById('chartSemaforoGlucemia');
+    if (chartSemEl) {
+      chartSemEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:10px; padding:0.4rem 0;">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:#047857; font-size:0.86rem;">🟢 Glucemia Verde (&lt; 160 mg/dL)</strong>
+              <div style="font-size:0.72rem; color:#065f46;">Biodistribución óptima garantizada. Paso directo a box de inyección.</div>
+            </div>
+            <span class="status-badge badge-ok" style="font-size:0.88rem;">${ef.glucemiaVerdePct}%</span>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:#b45309; font-size:0.86rem;">🟡 Glucemia Ámbar (160 - 199 mg/dL)</strong>
+              <div style="font-size:0.72rem; color:#78350f;">Aviso a enfermería. Reposo estricto e hidratación con agua sola en box.</div>
+            </div>
+            <span class="status-badge badge-warn" style="font-size:0.88rem;">${ef.glucemiaAmbarPct}%</span>
+          </div>
+          <div style="background:#fef2f2; border:1px solid #fecdd3; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:#991b1b; font-size:0.86rem;">🔴 Glucemia Roja (≥ 200 mg/dL - Alerta Preferente)</strong>
+              <div style="font-size:0.72rem; color:#7f1d1d;"><strong>${ef.rescateGlucemiaPct}%</strong> rescatados tras 45 min hidratación y reposo.</div>
+            </div>
+            <span class="status-badge badge-danger" style="font-size:0.88rem;">${ef.glucemiaRojaPct}%</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // 7. Tabla Detalle Mal Prep & Glucemias
+    const tablaDetalleEl = document.getElementById('tablaDetalleMalPrepGlucemia');
+    if (tablaDetalleEl) {
+      const records = [
+        { nombre: 'Rosa María Calvo Soto', nhc: 'NHC-481920', fecha: 'Hoy · 08:45', proto: 'FDG Diabético', tipo: 'Glucemia alta en box', val: '228 mg/dL', sem: '🔴 ROJO', badge: 'badge-danger', res: 'Normalizada a 172 mg/dL tras 45 min hidratación oral; inyectada con éxito.' },
+        { nombre: 'Domingo Besteiro Prado', nhc: 'NHC-509182', fecha: 'Hoy · 09:30', proto: 'FDG Oncológico', tipo: 'Rotura ayuno involuntaria', val: '185 mg/dL', sem: '🟡 ÁMBAR', badge: 'badge-warn', res: 'Tomó café con leche a las 07:00h. Recitado prioritario para mañana 08:30h.' },
+        { nombre: 'Consuelo Otero Varela', nhc: 'NHC-612409', fecha: 'Ayer · 10:15', proto: 'FDG Endocarditis', tipo: 'Incumplimiento dieta cetogénica', val: '110 mg/dL', sem: '🟢 VERDE', badge: 'badge-ok', res: 'Cena con hidratos; reprogramada con refuerzo de audioguía específica.' },
+        { nombre: 'Ángel Souto Fernández', nhc: 'NHC-398244', fecha: 'Ayer · 11:00', proto: '18F-PSMA', tipo: 'Medicación no suspendida', val: 'Normal', sem: '🟢 N/A', badge: 'badge-info', res: 'Aclarada compatibilidad con radiofármaco por médico nuclear; realizada sin demora.' },
+        { nombre: 'Mercedes Rial Castro', nhc: 'NHC-724185', fecha: '18/11 · 08:30', proto: 'FDG Diabético', tipo: 'Glucemia capilar elevada', val: '245 mg/dL', sem: '🔴 ROJO', badge: 'badge-danger', res: 'Valor confirmado en glucómetro SERGAS; reprogramada a primera hora con pauta insulina.' }
+      ];
+      tablaDetalleEl.innerHTML = records.map(r => `
+        <tr>
+          <td><strong style="color:#0f172a;">${escapeHTML(r.nombre)}</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#0284c7;">${escapeHTML(r.nhc)}</span></td>
+          <td style="font-size:0.78rem; color:#475569;">${escapeHTML(r.fecha)}</td>
+          <td><span class="status-badge badge-info">${escapeHTML(r.proto)}</span></td>
+          <td><strong style="color:#334155; font-size:0.82rem;">${escapeHTML(r.tipo)}</strong></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#0f172a;">${escapeHTML(r.val)}</td>
+          <td><span class="status-badge ${r.badge}">${escapeHTML(r.sem)}</span></td>
+          <td style="font-size:0.79rem; color:#1e293b;">${escapeHTML(r.res)}</td>
+        </tr>
+      `).join('');
+    }
+  }
+
+  // ==========================================================================
   // 12. INTERACCIONES: RECITAR, ANULAR, REPROGRAMAR Y EXPORTAR
   // ==========================================================================
   function abrirModalRecitar(slotId) {
@@ -2705,407 +3242,4 @@
         petSeriesValidas: [248, 269, 284],
         petSeriesMal: [44, 38, 31],
         maqSeriesPct: [74, 79, Math.round(stats.pctEnHora)],
-        esperaSeries: [13.2, 11.4, Number(stats.docStats.globalEsperaPostImagen.toFixed(1))]
-      },
-      anual: {
-        badge: 'MEMORIA ANUAL DEL SERVICIO PET/CT',
-        titulo: 'Memoria Anual Ejecutiva de Actividad, Radiofarmacia y Calidad Asistencial',
-        periodoLabel: 'Ejercicio Completo 2026 (Enero – Diciembre · 12 Meses)',
-        codigoDoc: 'SERGAS-GAL-PET-ANU-2026-01',
-        xLabels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic(e)'],
-        petSeriesValidas: [215, 224, 238, 242, 255, 260, 248, 230, 258, 272, 285, 294],
-        petSeriesMal: [46, 44, 42, 39, 38, 36, 35, 33, 34, 31, 29, 27],
-        maqSeriesPct: [70, 71, 73, 74, 76, 77, 78, 79, 80, 81, 83, 85],
-        esperaSeries: [15.0, 14.5, 14.0, 13.5, 12.8, 12.2, 11.9, 11.5, 11.0, 10.6, 10.1, 9.6]
-      }
-    }[tipo];
-
-    const incPeticiones = !document.getElementById('chkRep_peticiones') || document.getElementById('chkRep_peticiones').checked;
-    const incRadiofarmacos = !document.getElementById('chkRep_radiofarmacos') || document.getElementById('chkRep_radiofarmacos').checked;
-    const incDosimetria = !document.getElementById('chkRep_dosimetria') || document.getElementById('chkRep_dosimetria').checked;
-    const incGraficas = !document.getElementById('chkRep_graficas') || document.getElementById('chkRep_graficas').checked;
-    const incPuntualidad = !document.getElementById('chkRep_puntualidad') || document.getElementById('chkRep_puntualidad').checked;
-    const incCitas = !document.getElementById('chkRep_citas') || document.getElementById('chkRep_citas').checked;
-    const incAnulaciones = !document.getElementById('chkRep_anulaciones') || document.getElementById('chkRep_anulaciones').checked;
-    const incMedicos = !document.getElementById('chkRep_medicos') || document.getElementById('chkRep_medicos').checked;
-
-    const destinatario = (document.getElementById('selectDestinatarioInforme') || {}).value || 'Dirección Asistencial SERGAS & Gerencia Galaria';
-    const firmante = (document.getElementById('selectFirmanteJefatura') || {}).value || 'Dr. Manuel Gómez Feijóo · Jefe de Servicio de Medicina Nuclear';
-    const dictamenTxt = (txtObs && txtObs.value) ? txtObs.value : getDefaultDictamenPorTipo(tipo);
-
-    // Magnitudes escaladas al periodo del informe (Mensual, Trimestral o Anual)
-    const totPet = stats.totalPeticiones * mult;
-    const totMal = stats.malList.length * mult;
-    const totOk = totPet - totMal;
-    const totPruebasRF = stats.rfStats.totalPruebas * mult;
-    const totCanc = Math.max(8, stats.totalCancelaciones * 3 * mult);
-    const totRecitados = Math.round(totCanc * (stats.pctRecitados / 100));
-    const totNoShow = Math.max(4, stats.totalNoShow * 2 * mult);
-    const totAnul = stats.totalAnulaciones * mult;
-    const totMalPrep = stats.malPrepList.length * mult;
-    const totFalloRF = stats.falloRFList.length * mult;
-    const totExtrav = stats.extravList.length * mult;
-
-    const byService = buildServiceBreakdown(stats.petList).slice(0, 6);
-
-    const chartEvol1 = renderEvolutionChartSVG({
-      title: `Evolución (${metaDoc.periodoLabel}): Peticiones Válidas vs Peticiones que Llegan Mal`,
-      xLabels: metaDoc.xLabels,
-      ySuffix: '',
-      series: [
-        { name: 'Peticiones Válidas', color: '#0284c7', data: metaDoc.petSeriesValidas },
-        { name: 'Llegan Mal (Incidencia)', color: '#dc2626', data: metaDoc.petSeriesMal }
-      ]
-    });
-
-    const chartEvol2 = renderEvolutionChartSVG({
-      title: `Evolución (${metaDoc.periodoLabel}): % Paso en Hora a Máquina y Espera Salir post-Imagen (min)`,
-      xLabels: metaDoc.xLabels,
-      ySuffix: '',
-      series: [
-        { name: '% Paso en Hora a Máquina', color: '#059669', data: metaDoc.maqSeriesPct },
-        { name: 'Espera Salir desde Últ. Imagen (min)', color: '#7c3aed', data: metaDoc.esperaSeries }
-      ]
-    });
-
-    sheet.innerHTML = `
-      <!-- CABECERA OFICIAL DEL FOLIO A4 SERGAS / GALARIA -->
-      <header class="a4-header-banner">
-        <div style="display:flex; align-items:center; gap:14px;">
-          <img src="../galaria_logo.jpg" alt="Galaria SERGAS" style="height:54px; width:auto; object-fit:contain;" onerror="this.style.display='none'">
-          <div>
-            <div style="font-size:0.72rem; font-weight:800; color:#007eb4; letter-spacing:0.06em; text-transform:uppercase;">
-              XUNTA DE GALICIA · CONSELLERÍA DE SANIDADE · SERGAS · GALARIA
-            </div>
-            <h1 style="font-family:'Outfit',sans-serif; font-size:1.32rem; font-weight:800; color:#004868; margin-top:2px;">
-              ${escapeHTML(metaDoc.titulo)}
-            </h1>
-            <div style="font-size:0.8rem; color:#475569; font-weight:600; margin-top:2px;">
-              <strong>Destinatario:</strong> ${escapeHTML(destinatario)}
-            </div>
-          </div>
-        </div>
-
-        <div style="text-align:right; font-family:'JetBrains Mono',monospace; font-size:0.74rem; background:#f8fafc; border:1px solid #cbd5e1; padding:8px 12px; border-radius:8px;">
-          <div style="font-weight:800; color:#004868;">${escapeHTML(metaDoc.badge)}</div>
-          <div style="color:#334155; margin-top:2px;">Periodo: <strong>${escapeHTML(metaDoc.periodoLabel)}</strong></div>
-          <div style="color:#64748b; margin-top:2px;">Ref: ${escapeHTML(metaDoc.codigoDoc)} · Fecha: ${getTodayISO()}</div>
-        </div>
-      </header>
-
-      <!-- 1. TIRA EJECUTIVA DE 6 INDICADORES CLAVE DEL PERIODO -->
-      <section>
-        <div class="a4-kpi-strip">
-          <div class="a4-kpi-cell" style="--cell-color:#0284c7;">
-            <div class="c-lbl">1. Peticiones Recibidas</div>
-            <div class="c-val">${totPet}</div>
-            <div class="c-sub">${totOk} válidas (${stats.pctOk.toFixed(1)}%)</div>
-          </div>
-          <div class="a4-kpi-cell" style="--cell-color:#dc2626;">
-            <div class="c-lbl">2. % Peticiones Mal</div>
-            <div class="c-val" style="color:#dc2626;">${stats.pctMal.toFixed(1)}%</div>
-            <div class="c-sub">${totMal} con defecto</div>
-          </div>
-          <div class="a4-kpi-cell" style="--cell-color:#0d9488;">
-            <div class="c-lbl">3. Pruebas por Isótopo</div>
-            <div class="c-val" style="color:#0f766e;">${totPruebasRF}</div>
-            <div class="c-sub">8 radiofármacos activos</div>
-          </div>
-          <div class="a4-kpi-cell" style="--cell-color:#059669;">
-            <div class="c-lbl">4. Paso en Hora Máquina</div>
-            <div class="c-val" style="color:#059669;">${stats.pctEnHora.toFixed(1)}%</div>
-            <div class="c-sub">Desv. media: ±${stats.avgDiff} min</div>
-          </div>
-          <div class="a4-kpi-cell" style="--cell-color:#d97706;">
-            <div class="c-lbl">5. Recitaciones vs NoShow</div>
-            <div class="c-val" style="color:#d97706;">${stats.pctRecitados}%</div>
-            <div class="c-sub">${totRecitados}/${totCanc} salvadas · ${totNoShow} NoShow</div>
-          </div>
-          <div class="a4-kpi-cell" style="--cell-color:#7c3aed;">
-            <div class="c-lbl">6. Espera Salir / Anul.</div>
-            <div class="c-val" style="color:#7c3aed;">${stats.docStats.globalEsperaPostImagen.toFixed(1)}m</div>
-            <div class="c-sub">${totAnul} anul. (Prep/RF/Extrav)</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. GRÁFICAS DE EVOLUCIÓN EN EL TIEMPO -->
-      ${incGraficas ? `
-        <section style="display:flex; flex-direction:column; gap:0.75rem;">
-          <div class="a4-section-title">
-            <span>📈 1. Evolución en el Tiempo de los Indicadores del Servicio (${escapeHTML(metaDoc.periodoLabel)})</span>
-            <span style="font-size:0.74rem; color:#bae6fd;">Trazabilidad Temporal</span>
-          </div>
-          <div class="a4-two-cols">
-            ${chartEvol1}
-            ${chartEvol2}
-          </div>
-        </section>
-      ` : ''}
-
-      <!-- 3. CALIDAD DE PETICIONES (% LLEGAN MAL) Y CANTIDAD POR RADIOFÁRMACO -->
-      ${(incPeticiones || incRadiofarmacos) ? `
-        <section class="a4-two-cols">
-          ${incPeticiones ? `
-            <div style="display:flex; flex-direction:column; gap:0.55rem;">
-              <div class="a4-section-title">
-                <span>📋 2. Calidad de Peticiones Recibidas (% Llegan Mal)</span>
-              </div>
-              <table class="chief-table" style="font-size:0.76rem;">
-                <thead>
-                  <tr>
-                    <th>Servicio Solicitante</th>
-                    <th>Recibidas</th>
-                    <th>Mal</th>
-                    <th>% Error</th>
-                    <th>Causa Frecuente</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${byService.map(s => `
-                    <tr>
-                      <td><strong>${escapeHTML(s.servicio)}</strong></td>
-                      <td>${s.total * mult}</td>
-                      <td style="color:#dc2626; font-weight:800;">${s.mal * mult}</td>
-                      <td><strong>${s.pctMal.toFixed(1)}%</strong></td>
-                      <td>${escapeHTML(s.topCausa)}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-          ` : ''}
-
-          ${incRadiofarmacos ? `
-            <div style="display:flex; flex-direction:column; gap:0.55rem;">
-              <div class="a4-section-title">
-                <span>☢️ 3. Cantidad de Pruebas Hechas por Radiofármaco</span>
-              </div>
-              <table class="chief-table" style="font-size:0.76rem;">
-                <thead>
-                  <tr>
-                    <th>Radiofármaco / Trazador</th>
-                    <th>Pruebas</th>
-                    <th>% Cuota</th>
-                    <th>Ventana / Máquina</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${stats.rfStats.items.slice(0, 6).map(rf => `
-                    <tr>
-                      <td><strong>${escapeHTML(rf.nombre)}</strong></td>
-                      <td style="font-family:'JetBrains Mono',monospace; font-weight:800;">${rf.pruebas * mult}</td>
-                      <td>${rf.pct.toFixed(1)}%</td>
-                      <td>${escapeHTML(rf.captacion)}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-          ` : ''}
-        </section>
-      ` : ''}
-
-      <!-- 3B. AUDITORÍA DE CALIDAD DOSIMÉTRICA SEGÚN PESO Y TALLA (DOSIS IDEAL VS MÁS O MENOS) -->
-      ${incDosimetria ? (() => {
-        const dStats = stats.dosimetryStats || computeDosimetryQualityStats();
-        return `
-        <section style="display:flex; flex-direction:column; gap:0.55rem;">
-          <div class="a4-section-title">
-            <span>⚖️ 3B. Calidad Dosimétrica por Peso y Talla: Radiofármaco Ideal vs. Inyectado (Ideal, Más o Menos)</span>
-            <span style="font-size:0.74rem; color:#bae6fd;">🟢 Ideal: ${dStats.pctIdeal.toFixed(1)}% · 🔴 Más: ${dStats.pctMas.toFixed(1)}% · 🟡 Menos: ${dStats.pctMenos.toFixed(1)}%</span>
-            <span>⚖️ 3B. Calidad Dosimétrica por Peso/Talla y Estado de Inyección (Ideal/Más/Menos · Correcta/Extravasación)</span>
-            <span style="font-size:0.74rem; color:#bae6fd;">🟢 Ideal: ${dStats.pctIdeal.toFixed(1)}% · ✅ Correctas: ${dStats.pctCorrecta.toFixed(1)}% · 🚨 Extrav.: ${dStats.extravasacionCount * mult}</span>
-          </div>
-          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.65rem; font-size:0.76rem;">
-          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.65rem; font-size:0.75rem;">
-            <div style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:7px; padding:0.55rem 0.75rem;">
-              <strong style="color:#065f46;">🟢 Dosis Ideal (±10% Peso/Talla):</strong> <strong>${dStats.idealCount * mult} pac. (${dStats.pctIdeal.toFixed(1)}%)</strong>
-              <strong style="color:#065f46;">🟢 Dosis Ideal (±10%):</strong> <strong>${dStats.idealCount * mult} pac. (${dStats.pctIdeal.toFixed(1)}%)</strong>
-            </div>
-            <div style="background:#fef2f2; border:1px solid #fca5a5; border-radius:7px; padding:0.55rem 0.75rem;">
-              <strong style="color:#991b1b;">🔴 Más del Ideal (&gt;+10% Sobredosis):</strong> <strong>${dStats.masCount * mult} pac. (${dStats.pctMas.toFixed(1)}%)</strong>
-              <strong style="color:#991b1b;">🔴 Más del Ideal (&gt;+10%):</strong> <strong>${dStats.masCount * mult} pac. (${dStats.pctMas.toFixed(1)}%)</strong>
-            </div>
-            <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:7px; padding:0.55rem 0.75rem;">
-              <strong style="color:#92400e;">🟡 Menos del Ideal (&lt;-10% Subdosis):</strong> <strong>${dStats.menosCount * mult} pac. (${dStats.pctMenos.toFixed(1)}%)</strong>
-              <strong style="color:#92400e;">🟡 Menos del Ideal (&lt;-10%):</strong> <strong>${dStats.menosCount * mult} pac. (${dStats.pctMenos.toFixed(1)}%)</strong>
-            </div>
-            <div style="background:${dStats.extravasacionCount > 0 ? '#fef2f2' : '#ecfdf5'}; border:1px solid ${dStats.extravasacionCount > 0 ? '#fca5a5' : '#6ee7b7'}; border-radius:7px; padding:0.55rem 0.75rem;">
-              <strong style="color:${dStats.extravasacionCount > 0 ? '#991b1b' : '#065f46'};">🩹 Vía / Inyección:</strong> <strong>✅ ${dStats.correctaCount * mult} OK · 🚨 ${dStats.extravasacionCount * mult} Extrav.</strong>
-            </div>
-          </div>
-          <table class="chief-table" style="font-size:0.74rem;">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Fármaco</th>
-                <th>Iniciales / NHC</th>
-                <th>Peso / Talla (IMC)</th>
-                <th>🎯 Dosis Ideal</th>
-                <th>💉 mCi Inyectados</th>
-                <th>Desviación</th>
-                <th>Calidad Dosimétrica</th>
-                <th>Estado Inyección</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${dStats.items.slice(0, 8).map(it => `
-                <tr>
-                  <td>${escapeHTML(it.fecha)}</td>
-                  <td><strong>${escapeHTML(it.farmaco)}</strong></td>
-                  <td><strong>${escapeHTML(it.iniciales)}</strong> (${escapeHTML(it.nhc)})</td>
-                  <td>${escapeHTML(it.pesoKg)} kg / ${escapeHTML(it.tallaCm)} cm (${escapeHTML(it.imc)})</td>
-                  <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#0369a1;">${escapeHTML(it.dosisIdealMci)} mCi</td>
-                  <td style="font-family:'JetBrains Mono',monospace; font-weight:800;">${escapeHTML(it.mciInyectados)} mCi</td>
-                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${it.calidad.pctDiff >= 0 ? '+' : ''}${it.calidad.pctDiff}%</td>
-                  <td><strong>${escapeHTML(it.calidad.label)}</strong></td>
-                  <td><strong>${it.estadoInyeccion === 'extravasacion' ? '🚨 Extravasación' : '✅ Correcta'}</strong></td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </section>
-        `;
-      })() : ''}
-
-      <!-- 4. PUNTUALIDAD MÁQUINA, NO-SHOWS, RECITACIONES Y ANULACIONES (PREP / RF / EXTRAV) -->
-      ${(incPuntualidad || incCitas || incAnulaciones) ? `
-        <section style="display:flex; flex-direction:column; gap:0.6rem;">
-          <div class="a4-section-title">
-            <span>🔄 4. Puntualidad en Máquina, No-Shows, Recitación de Cancelaciones y Anulaciones en Sala</span>
-          </div>
-          <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.75rem; font-size:0.78rem;">
-            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.75rem;">
-              <strong style="color:#065f46; display:block; margin-bottom:4px;">⏱️ Paso en Hora a Máquina (${stats.pctEnHora.toFixed(1)}%)</strong>
-              <div>• Pasan en hora (≤ ±10 min): <strong>${stats.enHoraCount * mult} pac.</strong></div>
-              <div>• Demora leve (11-20 min): <strong>${stats.demoraLeveCount * mult} pac.</strong></div>
-              <div>• Retraso (&gt; 20 min): <strong>${stats.retrasoCriticoCount * mult} pac.</strong></div>
-            </div>
-
-            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.75rem;">
-              <strong style="color:#b45309; display:block; margin-bottom:4px;">🔄 Cancelaciones y No-Shows</strong>
-              <div>• Cancelaciones con preaviso: <strong>${totCanc} citas</strong></div>
-              <div>• Huecos recitados (dosis salvadas): <strong style="color:#059669;">${totRecitados} (${stats.pctRecitados}%)</strong></div>
-              <div>• No acuden sin avisar (No-Show): <strong style="color:#dc2626;">${totNoShow} (${stats.pctNoShow.toFixed(1)}%)</strong></div>
-            </div>
-
-            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.75rem;">
-              <strong style="color:#9f1239; display:block; margin-bottom:4px;">🛑 Anulaciones en Servicio (${totAnul} casos)</strong>
-              <div>• 🍽️ Pacientes mal preparados: <strong>${totMalPrep} casos</strong></div>
-              <div>• ☢️ Fallo producción radiofármaco: <strong>${totFalloRF} casos</strong></div>
-              <div>• 💉 Extravasaciones de dosis: <strong>${totExtrav} casos</strong></div>
-            </div>
-          </div>
-        </section>
-      ` : ''}
-
-      <!-- 5. RENDIMIENTO Y TIEMPOS POR MÉDICO DE MEDICINA NUCLEAR -->
-      ${incMedicos ? `
-        <section style="display:flex; flex-direction:column; gap:0.55rem;">
-          <div class="a4-section-title">
-            <span>👨‍⚕️ 5. Estadística por Médico: Tardías Pedidas, Espera en Salir desde Última Imagen y Tiempo Medio/Prueba</span>
-          </div>
-          <table class="chief-table" style="font-size:0.77rem;">
-            <thead>
-              <tr>
-                <th>Facultativo de Medicina Nuclear</th>
-                <th>Estudios Informados</th>
-                <th>🕒 Tardías Pedidas (%)</th>
-                <th>🚪 Espera Salir desde Última Imagen</th>
-                <th>⏱️ Tiempo Medio en Máquina</th>
-                <th>⏱️ Tiempo Medio Total / Prueba</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${stats.docStats.byDoctor.map(d => `
-                <tr>
-                  <td><strong>${escapeHTML(d.medico)}</strong></td>
-                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${d.pacientesHoy * 22 * mult}</td>
-                  <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#b45309;">${d.tardiasHoy * 20 * mult} (${d.pctTardias.toFixed(0)}%)</td>
-                  <td><strong style="color:${d.avgEsperaSalidaMin > 15 ? '#dc2626' : '#059669'};">${d.avgEsperaSalidaMin.toFixed(1)} min</strong> (Fin imagen ➔ Alta)</td>
-                  <td>${Math.round(d.avgMaquinaMin)} min</td>
-                  <td><strong>${Math.round(d.avgTotalPruebaMin)} min totales</strong></td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </section>
-      ` : ''}
-
-      <!-- 6. DICTAMEN DE JEFATURA Y FIRMA OFICIAL -->
-      <section style="background:#f8fafc; border-left:4px solid #004868; padding:0.85rem 1.1rem; border-radius:6px; font-size:0.8rem; line-height:1.5; color:#1e293b;">
-        <strong style="color:#004868; display:block; margin-bottom:3px;">📌 CONCLUSIONES Y PLAN DE ACCIÓN DE JEFATURA DE SERVICIO:</strong>
-        ${escapeHTML(dictamenTxt)}
-      </section>
-
-      <footer class="a4-signature-footer">
-        <div style="font-size:0.75rem; color:#64748b;">
-          <div>Documento oficial generado por el Ecosistema Digital PET/CT — Galaria · Servizo Galego de Saúde (SERGAS)</div>
-          <div>Hospital Público Álvaro Cunqueiro · Unidad de Medicina Nuclear y Diagnóstico Molecular</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-family:'Outfit',sans-serif; font-size:0.85rem; font-weight:800; color:#004868;">Fdo.: ${escapeHTML(firmante)}</div>
-          <div style="font-size:0.73rem; color:#059669; font-weight:700; margin-top:2px;">✓ Sello Digital Validado · Jefatura de Servicio MN</div>
-        </div>
-      </footer>
-    `;
-  }
-
-  function showToast(msg) {
-    const container = document.getElementById('chiefToastContainer');
-    if (!container) return;
-    const div = document.createElement('div');
-    div.className = 'chief-toast';
-    div.textContent = msg;
-    container.appendChild(div);
-    setTimeout(() => {
-      if (div.parentNode) div.remove();
-    }, 5000);
-  }
-
-  if (broadcast) {
-    broadcast.onmessage = () => {
-      loadAllEcosystemData().then(() => renderAll());
-    };
-  }
-
-  window.addEventListener('storage', (e) => {
-    if (e.key && e.key.startsWith('PET_')) {
-      loadAllEcosystemData().then(() => renderAll());
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', async () => {
-    await loadAllEcosystemData();
-    renderAll();
-  });
-
-  window.jefaturaApp = {
-    cambiarTab,
-    cambiarPeriodo,
-    sincronizarAhora,
-    exportarCSV,
-    renderPeticionesTab,
-    renderRadiofarmacosTab,
-    renderPuntualidadTab,
-    renderAnulacionesTab,
-    renderMedicosTab,
-    reprogramarAnulacionPrioritaria,
-    abrirModalRecitar,
-    cerrarModalRecitar,
-    confirmarRecitacionEnHueco,
-    abrirModalRegistrarIncidenciaCita,
-    cerrarModalIncidenciaCita,
-    confirmarRegistroIncidenciaCita,
-    convertirNoShowEnRecitable,
-    subsanarPeticionJefatura,
-    enviarFeedbackServicio,
-    actualizarHoraRealMaquina,
-    marcarEnHoraExacta,
-    seleccionarTipoInforme,
-    generarYVerDemoInforme,
-    abrirEImprimirDemoInforme,
-    actualizarDemoInforme
-  };
-})();
+        esperaSe

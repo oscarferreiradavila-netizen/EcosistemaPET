@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Instrucciones de preparación para PET 18F-Paratiroides: adenoma paratiroideo, ayuno de 4-6h, suplementos de calcio/vitamina D y asistente virtual.">
+  <meta name="description"
+    content="Instrucciones de preparación para PET 18F-Paratiroides: adenoma paratiroideo, ayuno de 4-6h, suplementos de calcio/vitamina D y asistente virtual.">
   <title>PET 18F-Paratiroides | Audioguía Oficial de Preparación</title>
-  
+
   <!-- Fuente Google Fonts: Open Sans (Identidad Corporativa Galaria / SERGAS) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <style>
     /* ==========================================================================
@@ -17,46 +20,61 @@
        ========================================================================== */
     :root {
       /* Colores Institucionales Galaria / SERGAS */
-      --sergas-blue: #007eb4;             /* Azul principal Galaria / Sergas */
-      --sergas-blue-hover: #005b82;       /* Azul interacción */
-      --sergas-navy: #004868;            /* Azul escuro corporativo titulares */
-      --sergas-dark: #08293d;            /* Azul profundo institucional */
-      --sergas-soft-blue: #e6f4fa;       /* Azul pastel fondos e etiquetas */
-      --sergas-subtle: #f0f7fb;          /* Fondo suave destacados */
-      
+      --sergas-blue: #007eb4;
+      /* Azul principal Galaria / Sergas */
+      --sergas-blue-hover: #005b82;
+      /* Azul interacción */
+      --sergas-navy: #004868;
+      /* Azul escuro corporativo titulares */
+      --sergas-dark: #08293d;
+      /* Azul profundo institucional */
+      --sergas-soft-blue: #e6f4fa;
+      /* Azul pastel fondos e etiquetas */
+      --sergas-subtle: #f0f7fb;
+      /* Fondo suave destacados */
+
       --primary: #007eb4;
       --primary-hover: #005b82;
       --primary-dark: #004868;
       --accent-cyan: #0284c7;
-      
-      --bg-page: #f4f7f9;                /* Fondo limpo sanitario */
-      --bg-card: #ffffff;                /* Tarxetas e paneis brancos */
+
+      --bg-page: #f4f7f9;
+      /* Fondo limpo sanitario */
+      --bg-card: #ffffff;
+      /* Tarxetas e paneis brancos */
       --bg-card-hover: #f8fafc;
-      --bg-elevated: #e2e8f0;            /* Bordes institucionais */
+      --bg-elevated: #e2e8f0;
+      /* Bordes institucionais */
       --border-subtle: #d6e2e9;
-      
-      --danger: #dc2626;                 /* Alertas e cancelación */
+
+      --danger: #dc2626;
+      /* Alertas e cancelación */
       --danger-hover: #b91c1c;
       --danger-bg: #fef2f2;
       --danger-border: #fca5a5;
-      
-      --warning: #d97706;                /* Avisos precaución */
+
+      --warning: #d97706;
+      /* Avisos precaución */
       --warning-bg: #fffbeb;
       --warning-border: #fde68a;
-      
-      --success: #16a34a;                /* Verificación clínica */
+
+      --success: #16a34a;
+      /* Verificación clínica */
       --success-bg: #f0fdf4;
       --success-border: #86efac;
 
-      --text-main: #1e293b;              /* Texto principal de alta lexibilidade */
-      --text-muted: #526071;             /* Texto secundario */
-      --text-dim: #718096;               /* Notas ao pé e marcas */
-      
+      --text-main: #1e293b;
+      /* Texto principal de alta lexibilidade */
+      --text-muted: #526071;
+      /* Texto secundario */
+      --text-dim: #718096;
+      /* Notas ao pé e marcas */
+
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 14px;
       --radius-full: 9999px;
-      
+
       --transition-fast: 0.2s ease;
       --transition-normal: 0.3s ease;
       --shadow-sm: 0 1px 3px rgba(0, 40, 70, 0.06);
@@ -65,7 +83,9 @@
       --shadow-blue: 0 4px 16px rgba(0, 126, 180, 0.25);
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -110,7 +130,7 @@
       color: #ffffff;
       font-size: 0.8rem;
       padding: 0.45rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .sergas-top-container {
@@ -151,7 +171,7 @@
     }
 
     .lang-pill {
-      background: rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.12);
       padding: 2px 8px;
       border-radius: 12px;
       font-weight: 600;
@@ -328,9 +348,17 @@
     }
 
     @keyframes pulseGreen {
-      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
-      70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+      }
     }
 
     .patient-study-tag {
@@ -453,11 +481,11 @@
       object-fit: cover;
     }
 
-    
 
-    
 
-    
+
+
+
 
     /* ==========================================================================
        TARJETAS DE RESUMEN CLÍNICO (SERGAS)
@@ -751,7 +779,12 @@
       margin-bottom: 0.45rem;
     }
 
-    select, textarea, input[type="text"], input[type="tel"], input[type="time"], input[type="number"] {
+    select,
+    textarea,
+    input[type="text"],
+    input[type="tel"],
+    input[type="time"],
+    input[type="number"] {
       width: 100%;
       padding: 0.75rem 1rem;
       background-color: #ffffff;
@@ -763,7 +796,9 @@
       transition: var(--transition-fast);
     }
 
-    select:focus, textarea:focus, input:focus {
+    select:focus,
+    textarea:focus,
+    input:focus {
       border-color: var(--sergas-blue);
       box-shadow: 0 0 0 3px rgba(0, 126, 180, 0.18);
       outline: none;
@@ -852,7 +887,7 @@
       padding: 2rem;
       max-width: 500px;
       width: 100%;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
       text-align: center;
       transform: scale(0.95);
       transition: transform 0.3s ease;
@@ -1071,8 +1106,17 @@
     }
 
     @keyframes pulseGreenDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.1); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+      }
     }
 
     .nurse-name {
@@ -1205,8 +1249,15 @@
     }
 
     @keyframes messagePop {
-      from { opacity: 0; transform: translateY(8px) scale(0.97); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .message-bot {
@@ -1335,9 +1386,17 @@
       animation: typingBounce 1.4s infinite ease-in-out both;
     }
 
-    .typing-dot:nth-child(1) { animation-delay: 0s; }
-    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    .typing-dot:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
 
     .chat-footer {
       padding: 0.8rem 1rem;
@@ -1404,27 +1463,69 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes messagePop {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     @keyframes typingBounce {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1); }
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+      }
+
+      40% {
+        transform: scale(1);
+      }
     }
 
     @media (max-width: 600px) {
-      .brand-row { flex-direction: column; align-items: flex-start; }
-      .hospital-unit-info { align-items: flex-start; text-align: left; }
-      .hero-banner { padding: 1.5rem 0 1rem 0; }
-      .video-section { padding: 1rem; }
-      .cancel-actions { flex-direction: column; }
-      .cancel-actions .btn { width: 100%; }
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hospital-unit-info {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .hero-banner {
+        padding: 1.5rem 0 1rem 0;
+      }
+
+      .video-section {
+        padding: 1rem;
+      }
+
+      .cancel-actions {
+        flex-direction: column;
+      }
+
+      .cancel-actions .btn {
+        width: 100%;
+      }
+
       .chat-window {
         right: 4%;
         left: 4%;
@@ -1433,7 +1534,7 @@
         height: 75vh;
       }
     }
-  
+
     /* ==========================================================================
        CHATBOT INTERACTIVO CON VOZ Y GEMINI IA (SERGAS)
        ========================================================================== */
@@ -1526,9 +1627,20 @@
     }
 
     @keyframes pulseMic {
-      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); }
-      70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); transform: scale(1.08); }
-      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+        transform: scale(1);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+        transform: scale(1.08);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+        transform: scale(1);
+      }
     }
 
     .bot-speak-btn {
@@ -1561,8 +1673,17 @@
     }
 
     @keyframes pulseVoice {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.03); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.7;
+        transform: scale(1.03);
+      }
     }
 
     .chat-msg-actions {
@@ -1576,9 +1697,9 @@
       border-color: #dc2626 !important;
       background: #fff5f5 !important;
     }
-
   </style>
 </head>
+
 <body>
 
   <!-- BARRA SUPERIOR INSTITUCIONAL XUNTA / SERGAS -->
@@ -1599,7 +1720,8 @@
   <header class="galaria-main-header">
     <div class="container brand-row">
       <div class="brand-logo-area">
-        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="galaria-brand-logo" id="galariaLogoHeader">
+        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="galaria-brand-logo"
+          id="galariaLogoHeader">
       </div>
       <div class="hospital-unit-info">
         <span class="unit-tag">UNIDADE DE MEDICINA NUCLEAR E IMAXE MOLECULAR</span>
@@ -1611,9 +1733,13 @@
   <!-- HERO BANNER DE LA PRUEBA -->
   <section class="hero-banner">
     <div class="container">
-      <div class="header-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v4h4v2h-4v4h-2v-4H7v-2h4V7z"/></svg><span>PROTOCOLO EXCLUSIVO: PET 18F-PARATIROIDES</span></div>
+      <div class="header-badge"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v4h4v2h-4v4h-2v-4H7v-2h4V7z" />
+        </svg><span>PROTOCOLO EXCLUSIVO: PET 18F-PARATIROIDES</span></div>
       <h1>PET 18F-Paratiroides</h1>
-      <p class="subtitle">Audioguía interactiva de preparación para localización de adenomas paratiroideos hiperfuncionantes en hiperparatiroidismo con 18F-Fluorocolina.</p>
+      <p class="subtitle">Audioguía interactiva de preparación para localización de adenomas paratiroideos
+        hiperfuncionantes en hiperparatiroidismo con 18F-Fluorocolina.</p>
 
       <!-- TARJETA OFICIAL DEL PACIENTE CITADO (PET FDG GLUCOSA) -->
       <div id="patient-card-container" class="patient-card-container">
@@ -1638,14 +1764,19 @@
             <span class="p-value p-date" id="display-patient-cita">Asignada en Agenda</span>
           </div>
         </div>
-        <div style="margin-top: 0.75rem; padding: 0.5rem 1rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end;">
-          <button type="button" onclick="toggleCancelAccordion(true)" style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.3); color: #dc2626; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
+        <div
+          style="margin-top: 0.75rem; padding: 0.5rem 1rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end;">
+          <button type="button" onclick="toggleCancelAccordion(true)"
+            style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.3); color: #dc2626; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
             ⚠️ ¿No puedes asistir a tu cita? Cancelar o aplazar prueba
           </button>
         </div>
       </div>
 
-      <div class="alert-banner" role="alert"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span><strong>PROTOCOLO 18F-PARATIROIDES:</strong> Ayuno de 4 a 6 horas, comunicación de toma de suplementos de calcio o vitamina D e inmovilidad estricta del cuello durante el escáner cervical.</span></div>
+      <div class="alert-banner" role="alert"><svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+        </svg><span><strong>PROTOCOLO 18F-PARATIROIDES:</strong> Ayuno de 4 a 6 horas, comunicación de toma de
+          suplementos de calcio o vitamina D e inmovilidad estricta del cuello durante el escáner cervical.</span></div>
     </div>
   </section>
 
@@ -1656,8 +1787,11 @@
     <section class="video-section" aria-labelledby="video-heading">
       <div class="video-header-info">
         <h2 id="video-heading" class="video-title">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--primary-hover)" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Vídeo Explicativo: Preparación para <span id="videoTestTitle" style="color: var(--sergas-blue); font-weight: 700;">PET 18F-Paratiroides</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--primary-hover)" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          Vídeo Explicativo: Preparación para <span id="videoTestTitle"
+            style="color: var(--sergas-blue); font-weight: 700;">PET 18F-Paratiroides</span>
         </h2>
         <span class="video-duration">Duración: 4 min</span>
       </div>
@@ -1672,88 +1806,124 @@
 
     <!-- RESUMEN EN TARJETAS -->
     <section class="summary-grid" aria-label="Resumen de instrucciones de preparación">
-  <article class="card">
-    <div class="card-icon">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-    </div>
-    <h3 class="card-title">1. Suplementos y Medicación</h3>
-    <ul class="card-list">
-      <li>Informa a la unidad si tomas suplementos de calcio, calcimiméticos (Cinacalcet) o vitamina D.</li>
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+          </svg>
+        </div>
+        <h3 class="card-title">1. Suplementos y Medicación</h3>
+        <ul class="card-list">
+          <li>Informa a la unidad si tomas suplementos de calcio, calcimiméticos (Cinacalcet) o vitamina D.</li>
           <li>Avisa si te has sometido a cirugías previas de tiroides o cuello.</li>
-    </ul>
-  </article>
+        </ul>
+      </article>
 
-  <article class="card">
-    <div class="card-icon">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
-    </div>
-    <h3 class="card-title">2. Ayuno de 4-6h y Agua</h3>
-    <ul class="card-list">
-      <li>Ayuno estricto de alimentos sólidos entre 4 y 6 horas antes de la cita.</li>
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z" />
+          </svg>
+        </div>
+        <h3 class="card-title">2. Ayuno de 4-6h y Agua</h3>
+        <ul class="card-list">
+          <li>Ayuno estricto de alimentos sólidos entre 4 y 6 horas antes de la cita.</li>
           <li>Bebe abundante agua sola sin azúcar ni gas.</li>
           <li>Cena ligera y suave la noche anterior.</li>
-    </ul>
-  </article>
+        </ul>
+      </article>
 
-  <article class="card">
-    <div class="card-icon">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14V6c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v8c-1.66 0-3 1.34-3 3v3h2v-2h16v2h2v-3c0-1.66-1.34-3-3-3zm-9-8h4v2h-4V6zm-5 6h14v2H5v-2z"/></svg>
-    </div>
-    <h3 class="card-title">3. Adquisición Centrada en Cuello</h3>
-    <ul class="card-list">
-      <li>El escáner PET-CT se centra en cuello y mediastino superior a los 10-20 min post-inyección.</li>
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 14V6c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v8c-1.66 0-3 1.34-3 3v3h2v-2h16v2h2v-3c0-1.66-1.34-3-3-3zm-9-8h4v2h-4V6zm-5 6h14v2H5v-2z" />
+          </svg>
+        </div>
+        <h3 class="card-title">3. Adquisición Centrada en Cuello</h3>
+        <ul class="card-list">
+          <li>El escáner PET-CT se centra en cuello y mediastino superior a los 10-20 min post-inyección.</li>
           <li>Es crucial permanecer inmóvil y evitar tragar saliva continuamente durante el escáner.</li>
           <li>Duración total: ~1h30 a 2 horas (incluye 30 min de revisión médica de imágenes).</li>
-    </ul>
-  </article>
-</section>
+        </ul>
+      </article>
+    </section>
 
 
 
     <!-- SECCIÓN ASISTENTE CHATBOT EN PÁGINA -->
-    <section class="assistant-card-section" aria-labelledby="assistant-card-title" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border: 1.5px solid #d0e3ef; border-top: 4px solid var(--sergas-blue); border-radius: var(--radius-lg); padding: 1.75rem; margin: 2rem 0; box-shadow: 0 8px 24px rgba(0, 48, 76, 0.08);">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+    <section class="assistant-card-section" aria-labelledby="assistant-card-title"
+      style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border: 1.5px solid #d0e3ef; border-top: 4px solid var(--sergas-blue); border-radius: var(--radius-lg); padding: 1.75rem; margin: 2rem 0; box-shadow: 0 8px 24px rgba(0, 48, 76, 0.08);">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
         <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 52px; height: 52px; border-radius: 12px; background: #ffffff; padding: 4px; border: 1.5px solid #d0e3ef; box-shadow: 0 4px 10px rgba(0, 48, 76, 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
-            <img src="galaria_logo.jpg" alt="Galaria Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-            <span style="position: absolute; bottom: -3px; right: -3px; width: 12px; height: 12px; background-color: #22c55e; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px #22c55e;"></span>
+          <div
+            style="width: 52px; height: 52px; border-radius: 12px; background: #ffffff; padding: 4px; border: 1.5px solid #d0e3ef; box-shadow: 0 4px 10px rgba(0, 48, 76, 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
+            <img src="galaria_logo.jpg" alt="Galaria Logo"
+              style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            <span
+              style="position: absolute; bottom: -3px; right: -3px; width: 12px; height: 12px; background-color: #22c55e; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px #22c55e;"></span>
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-              <h3 id="assistant-card-title" style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--sergas-navy);">Asistente Virtual de Enfermería — PET 18F-Paratiroides</h3>
-              <span style="font-size: 0.72rem; background: rgba(0, 126, 180, 0.1); color: var(--sergas-blue); border: 1px solid rgba(0, 126, 180, 0.25); padding: 2px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
+              <h3 id="assistant-card-title"
+                style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--sergas-navy);">Asistente Virtual de
+                Enfermería — PET 18F-Paratiroides</h3>
+              <span
+                style="font-size: 0.72rem; background: rgba(0, 126, 180, 0.1); color: var(--sergas-blue); border: 1px solid rgba(0, 126, 180, 0.25); padding: 2px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
                 GALARIA · SERGAS
               </span>
-              <span style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700;">
+              <span
+                style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700;">
                 🟢 Asistencia Activa en Directo
               </span>
             </div>
             <p style="margin: 0.35rem 0 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
-              Resuelve tus dudas en tiempo real sobre preparación, ayuno, glucemia y medicación o pulsa sobre las preguntas frecuentes:
+              Resuelve tus dudas en tiempo real sobre preparación, ayuno, suplementos de calcio y medicación o pulsa
+              sobre las preguntas frecuentes:
             </p>
           </div>
         </div>
-        <button type="button" onclick="toggleChatbot(true)" class="btn" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; font-weight: 700; font-size: 0.92rem; padding: 0.7rem 1.4rem; border-radius: 30px; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(0, 126, 180, 0.28); cursor: pointer; transition: all 0.2s ease;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+        <button type="button" onclick="toggleChatbot(true)" class="btn"
+          style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; font-weight: 700; font-size: 0.92rem; padding: 0.7rem 1.4rem; border-radius: 30px; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(0, 126, 180, 0.28); cursor: pointer; transition: all 0.2s ease;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+          </svg>
           Abrir Chatbot de Enfermería
         </button>
       </div>
 
       <!-- Formulario para escribir una duda directamente desde la página -->
-      <form onsubmit="event.preventDefault(); const val=document.getElementById('pageChatInput').value.trim(); if(val){ openChatAndAsk(val); document.getElementById('pageChatInput').value=''; }" style="display: flex; gap: 0.6rem; margin-bottom: 1.15rem; flex-wrap: wrap;">
-        <input type="text" id="pageChatInput" placeholder="Escribe aquí tu duda clínica (ej. ¿Puedo tomar café?, ¿horas de ayuno?, ¿agua?)..." style="flex: 1; min-width: 280px; padding: 0.8rem 1.25rem; border-radius: 30px; border: 1.5px solid #d0e3ef; background: #ffffff; color: var(--text-main); font-size: 0.95rem; box-shadow: 0 2px 6px rgba(0, 48, 76, 0.04); outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" onfocus="this.style.borderColor='var(--sergas-blue)'; this.style.boxShadow='0 0 0 3px rgba(0, 126, 180, 0.15)';" onblur="this.style.borderColor='#d0e3ef'; this.style.boxShadow='0 2px 6px rgba(0, 48, 76, 0.04)';">
-        <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; border-radius: 30px; padding: 0.8rem 1.6rem; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 126, 180, 0.2);">
+      <form
+        onsubmit="event.preventDefault(); const val=document.getElementById('pageChatInput').value.trim(); if(val){ openChatAndAsk(val); document.getElementById('pageChatInput').value=''; }"
+        style="display: flex; gap: 0.6rem; margin-bottom: 1.15rem; flex-wrap: wrap;">
+        <input type="text" id="pageChatInput"
+          placeholder="Escribe aquí tu duda clínica (ej. ¿Puedo tomar café?, ¿horas de ayuno?, ¿agua?)..."
+          style="flex: 1; min-width: 280px; padding: 0.8rem 1.25rem; border-radius: 30px; border: 1.5px solid #d0e3ef; background: #ffffff; color: var(--text-main); font-size: 0.95rem; box-shadow: 0 2px 6px rgba(0, 48, 76, 0.04); outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;"
+          onfocus="this.style.borderColor='var(--sergas-blue)'; this.style.boxShadow='0 0 0 3px rgba(0, 126, 180, 0.15)';"
+          onblur="this.style.borderColor='#d0e3ef'; this.style.boxShadow='0 2px 6px rgba(0, 48, 76, 0.04)';">
+        <button type="submit" class="btn"
+          style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; border-radius: 30px; padding: 0.8rem 1.6rem; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 126, 180, 0.2);">
           Consultar al Asistente 💬
         </button>
       </form>
-      
+
       <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
         <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Horas de ayuno?')">⏱️ ¿Horas de ayuno?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo beber agua?')">💧 ¿Puedo beber agua?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo tomar café o té?')">☕ ¿Puedo tomar café o té?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo hacer deporte?')">🏃‍♂️ ¿Puedo hacer deporte?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Tomo mis pastillas?')">💊 ¿Tomo mis pastillas?</button>
-        <button type="button" class="chip-btn" style="border-color: var(--sergas-blue); background-color: var(--sergas-soft-blue); color: var(--sergas-navy); font-weight: 700;" onclick="abrirModalConsultaEnfermeria()">💬 Otras consultas (Enfermería)</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo beber agua?')">💧 ¿Puedo beber
+          agua?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo tomar café o té?')">☕ ¿Puedo tomar café o
+          té?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo hacer deporte?')">🏃‍♂️ ¿Puedo hacer
+          deporte?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Tomo mis pastillas?')">💊 ¿Tomo mis
+          pastillas?</button>
+        <button type="button" class="chip-btn"
+          style="border-color: var(--sergas-blue); background-color: var(--sergas-soft-blue); color: var(--sergas-navy); font-weight: 700;"
+          onclick="abrirModalConsultaEnfermeria()">💬 Otras consultas (Enfermería)</button>
       </div>
     </section>
 
@@ -1761,60 +1931,90 @@
 
     <!-- SECCIÓN 2: CANCELACIÓN DE CITA (CONFIRMACIÓN EN 2 PASOS) -->
     <section class="cancellation-wrapper" aria-labelledby="cancel-heading">
-      <div class="cancel-trigger-header" id="cancelHeaderTrigger" role="button" aria-expanded="false" aria-controls="cancelAccordionContent" tabindex="0" title="Haz clic para cancelar o aplazar tu prueba" onclick="toggleCancelAccordion()">
+      <div class="cancel-trigger-header" id="cancelHeaderTrigger" role="button" aria-expanded="false"
+        aria-controls="cancelAccordionContent" tabindex="0" title="Haz clic para cancelar o aplazar tu prueba"
+        onclick="toggleCancelAccordion()">
         <div class="cancel-trigger-title" style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
           <div class="cancel-trigger-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+            </svg>
           </div>
           <span id="cancel-heading" style="font-weight: 700;">¿Necesitas cancelar o aplazar tu prueba PET?</span>
-          <span style="background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+          <span
+            style="background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.4); padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
             ⚠️ Cancelación en 2 pasos
           </span>
         </div>
         <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: auto;">
           <span style="font-size: 0.85rem; color: #FCA5A5; font-weight: 600;">Abrir formulario</span>
-          <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          <svg class="chevron-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" />
+          </svg>
         </div>
       </div>
 
       <div class="cancel-accordion-content" id="cancelAccordionContent">
-        <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: var(--radius-md); padding: 0.85rem 1.1rem; margin-bottom: 1.25rem; font-size: 0.88rem; color: #FCA5A5; display: flex; align-items: center; gap: 0.75rem; line-height: 1.45;">
-          <svg style="width: 22px; height: 22px; fill: currentColor; flex-shrink: 0;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-          <span><strong>Gestión de cancelación en 2 pasos:</strong> La dosis radiactiva se calibra y sintetiza individualmente para tu hora de citación. En el <strong>Paso 1</strong> indícanos el motivo y tus datos para proceder a la recitación, y en el <strong>Paso 2</strong> confirma de nuevo la cancelación para liberar de inmediato tu hueco y remitir el aviso automático a <strong>oscarferreiradavila@gmail.com</strong>.</span>
+        <div
+          style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: var(--radius-md); padding: 0.85rem 1.1rem; margin-bottom: 1.25rem; font-size: 0.88rem; color: #FCA5A5; display: flex; align-items: center; gap: 0.75rem; line-height: 1.45;">
+          <svg style="width: 22px; height: 22px; fill: currentColor; flex-shrink: 0;" viewBox="0 0 24 24">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+          </svg>
+          <span><strong>Gestión de cancelación en 2 pasos:</strong> La dosis radiactiva se calibra y sintetiza
+            individualmente para tu hora de citación. En el <strong>Paso 1</strong> indícanos el motivo y tus datos para
+            proceder a la recitación, y en el <strong>Paso 2</strong> confirma de nuevo la cancelación para liberar de
+            inmediato tu hueco y remitir el aviso automático a <strong>oscarferreiradavila@gmail.com</strong>.</span>
         </div>
 
         <form id="cancellationForm" onsubmit="event.preventDefault(); triggerModalConfirmation();">
           <!-- Encabezado del Paso 1: Menú de Motivos -->
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--bg-elevated); padding-bottom: 0.6rem;">
+          <div
+            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--bg-elevated); padding-bottom: 0.6rem;">
             <div>
-              <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--danger); background: rgba(239, 68, 68, 0.12); padding: 2px 8px; border-radius: 4px;">Paso 1 de 2</span>
-              <h4 style="margin: 0.35rem 0 0.15rem 0; font-size: 1.15rem; color: var(--text-main);">¿Por qué quieres cancelar la prueba?</h4>
-              <p style="margin: 0; font-size: 0.84rem; color: var(--text-muted);">Selecciona un motivo del menú e introduce tus datos de contacto para tramitar la recitación.</p>
+              <span
+                style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--danger); background: rgba(239, 68, 68, 0.12); padding: 2px 8px; border-radius: 4px;">Paso
+                1 de 2</span>
+              <h4 style="margin: 0.35rem 0 0.15rem 0; font-size: 1.15rem; color: var(--text-main);">¿Por qué quieres
+                cancelar la prueba?</h4>
+              <p style="margin: 0; font-size: 0.84rem; color: var(--text-muted);">Selecciona un motivo del menú e
+                introduce tus datos de contacto para tramitar la recitación.</p>
             </div>
           </div>
 
           <!-- Datos de Identificación del Paciente para Recitación -->
-          <div style="background: rgba(15, 23, 42, 0.45); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-sm); padding: 0.9rem; margin-bottom: 1.25rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 6px;">
-              <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">
+          <div
+            style="background: rgba(15, 23, 42, 0.45); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-sm); padding: 0.9rem; margin-bottom: 1.25rem;">
+            <div
+              style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 6px;">
+              <span
+                style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">
                 👤 Datos del Paciente Citado (Autocompletados)
               </span>
-              <span style="font-size: 0.76rem; color: #34D399; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 12px; font-weight: 600;">
+              <span
+                style="font-size: 0.76rem; color: #34D399; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 12px; font-weight: 600;">
                 ✓ Verificado en agenda de citaciones
               </span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem;">
               <div class="form-group" style="margin-bottom: 0;">
-                <label for="cancelPatientName" style="font-size: 0.84rem;">Nombre del Paciente <span style="color: var(--danger)">*</span></label>
-                <input type="text" id="cancelPatientName" placeholder="Cargando paciente citado..." required oninput="validateCancelForm()">
+                <label for="cancelPatientName" style="font-size: 0.84rem;">Nombre del Paciente <span
+                    style="color: var(--danger)">*</span></label>
+                <input type="text" id="cancelPatientName" placeholder="Cargando paciente citado..." required
+                  oninput="validateCancelForm()">
               </div>
               <div class="form-group" style="margin-bottom: 0;">
-                <label for="cancelPatientNhc" style="font-size: 0.84rem;">Nº Historia Clínica (NHC) <span style="color: var(--danger)">*</span></label>
-                <input type="text" id="cancelPatientNhc" placeholder="Cargando NHC..." required oninput="validateCancelForm()">
+                <label for="cancelPatientNhc" style="font-size: 0.84rem;">Nº Historia Clínica (NHC) <span
+                    style="color: var(--danger)">*</span></label>
+                <input type="text" id="cancelPatientNhc" placeholder="Cargando NHC..." required
+                  oninput="validateCancelForm()">
               </div>
               <div class="form-group" style="margin-bottom: 0;">
-                <label for="cancelPatientPhone" style="font-size: 0.84rem;">Teléfono de contacto <span style="color: var(--danger)">*</span></label>
-                <input type="tel" id="cancelPatientPhone" placeholder="Teléfono para recitar" required oninput="validateCancelForm()">
+                <label for="cancelPatientPhone" style="font-size: 0.84rem;">Teléfono de contacto <span
+                    style="color: var(--danger)">*</span></label>
+                <input type="tel" id="cancelPatientPhone" placeholder="Teléfono para recitar" required
+                  oninput="validateCancelForm()">
               </div>
             </div>
           </div>
@@ -1824,24 +2024,31 @@
             <label for="cancelReason" style="font-weight: 600; display: block; margin-bottom: 0.5rem;">
               Menú de motivos: ¿Por qué necesitas cancelar? <span style="color: var(--danger)">*</span>
             </label>
-            
-            <div id="cancelReasonChips" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.5rem; margin-bottom: 0.75rem;">
-              <button type="button" class="reason-menu-btn" data-reason="enfermedad" onclick="selectReasonFromMenu('enfermedad')">
+
+            <div id="cancelReasonChips"
+              style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.5rem; margin-bottom: 0.75rem;">
+              <button type="button" class="reason-menu-btn" data-reason="enfermedad"
+                onclick="selectReasonFromMenu('enfermedad')">
                 🤒 Enfermedad, fiebre o infección
               </button>
-              <button type="button" class="reason-menu-btn" data-reason="imprevisto" onclick="selectReasonFromMenu('imprevisto')">
+              <button type="button" class="reason-menu-btn" data-reason="imprevisto"
+                onclick="selectReasonFromMenu('imprevisto')">
                 📅 Imprevisto personal o laboral
               </button>
-              <button type="button" class="reason-menu-btn" data-reason="transporte" onclick="selectReasonFromMenu('transporte')">
+              <button type="button" class="reason-menu-btn" data-reason="transporte"
+                onclick="selectReasonFromMenu('transporte')">
                 🚗 Problemas de desplazamiento
               </button>
-              <button type="button" class="reason-menu-btn" data-reason="dieta_incumplida" onclick="selectReasonFromMenu('dieta_incumplida')">
+              <button type="button" class="reason-menu-btn" data-reason="dieta_incumplida"
+                onclick="selectReasonFromMenu('dieta_incumplida')">
                 🍽️ Ayuno o dieta no cumplida
               </button>
-              <button type="button" class="reason-menu-btn" data-reason="diabetes_medicacion" onclick="selectReasonFromMenu('diabetes_medicacion')">
-                💉 Glucemia alta / Medicación
+              <button type="button" class="reason-menu-btn" data-reason="medicacion_problema"
+                onclick="selectReasonFromMenu('medicacion_problema')">
+                💊 Medicación / Problema clínico
               </button>
-              <button type="button" class="reason-menu-btn" data-reason="claustrofobia_duda" onclick="selectReasonFromMenu('claustrofobia_duda')">
+              <button type="button" class="reason-menu-btn" data-reason="claustrofobia_duda"
+                onclick="selectReasonFromMenu('claustrofobia_duda')">
                 😰 Ansiedad o dudas médicas
               </button>
               <button type="button" class="reason-menu-btn" data-reason="otro" onclick="selectReasonFromMenu('otro')">
@@ -1855,19 +2062,23 @@
               <option value="imprevisto">📅 No puedo asistir ese día / Imprevisto personal o laboral</option>
               <option value="transporte">🚗 Problemas de transporte o desplazamiento</option>
               <option value="dieta_incumplida">🍽️ No he podido seguir la dieta previa o las horas de ayuno</option>
-              <option value="diabetes_medicacion">💉 Glucemia descompensada / Medicación no suspendida</option>
+              <option value="medicacion_problema">💊 Problema médico / Medicación no suspendida</option>
               <option value="claustrofobia_duda">😰 Ansiedad / Claustrofobia / Dudas médicas pendientes</option>
               <option value="otro">✍️ Otro motivo (especificar en detalle abajo)</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="cancelReasonExplanation">Explica el motivo de la cancelación <span style="color: var(--danger)">*</span></label>
-            <textarea id="cancelReasonExplanation" rows="3" placeholder="Explica detalladamente por qué no puedes acudir a la cita para que el equipo médico y enfermería puedan valorarlo al recitar tu cita..." required oninput="validateCancelForm()"></textarea>
+            <label for="cancelReasonExplanation">Explica el motivo de la cancelación <span
+                style="color: var(--danger)">*</span></label>
+            <textarea id="cancelReasonExplanation" rows="3"
+              placeholder="Explica detalladamente por qué no puedes acudir a la cita para que el equipo médico y enfermería puedan valorarlo al recitar tu cita..."
+              required oninput="validateCancelForm()"></textarea>
           </div>
 
           <div class="cancel-actions">
-            <button type="button" class="btn btn-secondary" onclick="toggleCancelAccordion(false)">Cerrar sin cancelar</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleCancelAccordion(false)">Cerrar sin
+              cancelar</button>
             <button type="submit" id="btnConfirmStep1" class="btn btn-danger" disabled>
               Continuar al Paso 2: Revisar y Confirmar cancelación ➡️
             </button>
@@ -1876,30 +2087,44 @@
 
         <div id="cancellationSuccessBox" class="cancelled-success-box" role="status" aria-live="polite">
           <div class="success-icon-big">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+            </svg>
           </div>
-          <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-main);">Tu cita ha sido cancelada correctamente</h3>
-          
-          <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: var(--radius-md); padding: 1.25rem; text-align: left; margin: 1rem auto; max-width: 580px; font-size: 0.92rem; line-height: 1.6; box-shadow: var(--shadow-sm);">
-            <div>👤 <strong>Paciente:</strong> <span id="recordedNameDisplay" style="color: var(--sergas-navy); font-weight: 700;">--</span></div>
-            <div>📋 <strong>Nº Historia Clínica (NHC):</strong> <code id="recordedNhcDisplay" style="color: var(--sergas-blue); font-weight: 700; background: var(--sergas-soft-blue); padding: 2px 8px; border-radius: 4px;">--</code></div>
-            <div>📞 <strong>Teléfono registrado:</strong> <span id="recordedPhoneDisplay" style="color: var(--text-main); font-weight: 600;">--</span></div>
-            <div>🩺 <strong>Estudio cancelado:</strong> <span id="recordedRfDisplay" style="color: var(--text-main); font-weight: 600;">--</span></div>
+          <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-main);">Tu cita ha sido cancelada
+            correctamente</h3>
+
+          <div
+            style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: var(--radius-md); padding: 1.25rem; text-align: left; margin: 1rem auto; max-width: 580px; font-size: 0.92rem; line-height: 1.6; box-shadow: var(--shadow-sm);">
+            <div>👤 <strong>Paciente:</strong> <span id="recordedNameDisplay"
+                style="color: var(--sergas-navy); font-weight: 700;">--</span></div>
+            <div>📋 <strong>Nº Historia Clínica (NHC):</strong> <code id="recordedNhcDisplay"
+                style="color: var(--sergas-blue); font-weight: 700; background: var(--sergas-soft-blue); padding: 2px 8px; border-radius: 4px;">--</code>
+            </div>
+            <div>📞 <strong>Teléfono registrado:</strong> <span id="recordedPhoneDisplay"
+                style="color: var(--text-main); font-weight: 600;">--</span></div>
+            <div>🩺 <strong>Estudio cancelado:</strong> <span id="recordedRfDisplay"
+                style="color: var(--text-main); font-weight: 600;">--</span></div>
             <div style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed var(--border-subtle);">
-              ⚠️ <strong>Motivo principal:</strong> <strong id="recordedReasonDisplay" style="color: #dc2626;">--</strong>
+              ⚠️ <strong>Motivo principal:</strong> <strong id="recordedReasonDisplay"
+                style="color: #dc2626;">--</strong>
             </div>
             <div style="margin-top: 0.25rem;">
-              📝 <strong>Explicación del paciente:</strong> <span id="recordedExplanationDisplay" style="color: var(--text-muted); font-style: italic;">--</span>
+              📝 <strong>Explicación del paciente:</strong> <span id="recordedExplanationDisplay"
+                style="color: var(--text-muted); font-style: italic;">--</span>
             </div>
-            <div style="color: var(--success); font-weight: 700; margin-top: 0.6rem; display: flex; align-items: center; gap: 6px;">
+            <div
+              style="color: var(--success); font-weight: 700; margin-top: 0.6rem; display: flex; align-items: center; gap: 6px;">
               <span>🟢</span> Hueco liberado en agenda médica para proceder a la recitación.
             </div>
           </div>
-          
+
           <!-- Notificación enviada automáticamente a oscarferreiradavila@gmail.com -->
-          <div id="emailDeliveryStatus" style="margin: 1.25rem auto; max-width: 580px; padding: 16px 20px; border-radius: var(--radius-md); background: #f0fdf4; border: 1.5px solid #86efac; font-size: 0.92rem; text-align: left;">
+          <div id="emailDeliveryStatus"
+            style="margin: 1.25rem auto; max-width: 580px; padding: 16px 20px; border-radius: var(--radius-md); background: #f0fdf4; border: 1.5px solid #86efac; font-size: 0.92rem; text-align: left;">
             <div style="display: flex; align-items: flex-start; gap: 14px;">
-              <div style="background: #dcfce7; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
+              <div
+                style="background: #dcfce7; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
                 ✉️
               </div>
               <div style="flex: 1;">
@@ -1907,10 +2132,14 @@
                   Notificación enviada automáticamente a oscarferreiradavila@gmail.com
                 </div>
                 <div id="emailDeliveryStatusText" style="color: #1e293b; line-height: 1.55; font-size: 0.9rem;">
-                  Se ha remitido la notificación de cancelación a <strong>oscarferreiradavila@gmail.com</strong> con los datos clínicos del paciente citado (<strong id="notifiedName">--</strong>, NHC: <strong id="notifiedNhc">--</strong>) y el motivo explicado para proceder a su recitación médica.
+                  Se ha remitido la notificación de cancelación a <strong>oscarferreiradavila@gmail.com</strong> con los
+                  datos clínicos del paciente citado (<strong id="notifiedName">--</strong>, NHC: <strong
+                    id="notifiedNhc">--</strong>) y el motivo explicado para proceder a su recitación médica.
                 </div>
-                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #bbf7d0; font-size: 0.84rem; color: #15803d; display: flex; align-items: center; gap: 6px;">
-                  <span>🟢</span> <strong>Estado:</strong> Hueco liberado en agenda médica. Envío completado automáticamente en segundo plano.
+                <div
+                  style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed #bbf7d0; font-size: 0.84rem; color: #15803d; display: flex; align-items: center; gap: 6px;">
+                  <span>🟢</span> <strong>Estado:</strong> Hueco liberado en agenda médica. Envío completado
+                  automáticamente en segundo plano.
                 </div>
               </div>
             </div>
@@ -1922,33 +2151,48 @@
   </main>
 
   <!-- MODAL CONFIRMACIÓN CANCELACIÓN (PASO 2 DE 2) -->
-  <div class="confirmation-modal-overlay" id="confirmModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div class="confirmation-modal-overlay" id="confirmModalOverlay" role="dialog" aria-modal="true"
+    aria-labelledby="modalTitle" aria-describedby="modalDesc">
     <div class="modal-card">
       <div class="modal-warning-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+        </svg>
       </div>
       <div style="margin-bottom: 0.5rem;">
-        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--danger); background: rgba(239, 68, 68, 0.15); padding: 3px 10px; border-radius: 20px;">
+        <span
+          style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--danger); background: rgba(239, 68, 68, 0.15); padding: 3px 10px; border-radius: 20px;">
           Paso 2 de 2: Confirmación Final
         </span>
       </div>
       <h3 id="modalTitle" class="modal-title">¿Confirmas de nuevo la cancelación de tu prueba PET?</h3>
       <p id="modalDesc" class="modal-description">
-        Por favor, revisa tus datos antes de continuar. Al confirmar de nuevo la anulación, tu hueco quedará libre en la agenda y se remitirá una notificación oficial a <strong>oscarferreiradavila@gmail.com</strong> explicando el motivo para que el equipo médico y enfermería puedan ponerse en contacto contigo y gestionar tu recitación.
+        Por favor, revisa tus datos antes de continuar. Al confirmar de nuevo la anulación, tu hueco quedará libre en la
+        agenda y se remitirá una notificación oficial a <strong>oscarferreiradavila@gmail.com</strong> explicando el
+        motivo para que el equipo médico y enfermería puedan ponerse en contacto contigo y gestionar tu recitación.
       </p>
 
       <!-- Resumen previo de datos en el modal -->
-      <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: var(--radius-sm); padding: 0.85rem; text-align: left; margin: 1rem 0; font-size: 0.88rem; line-height: 1.55;">
-        <div>👤 <strong>Paciente:</strong> <span id="modalReviewName" style="color: var(--sergas-navy); font-weight: 700;">--</span></div>
-        <div>📋 <strong>Nº Historia Clínica (NHC):</strong> <span id="modalReviewNhc" style="color: var(--sergas-blue); font-family: monospace; font-weight: 700; background: var(--sergas-soft-blue); padding: 1px 6px; border-radius: 4px;">--</span></div>
-        <div>📞 <strong>Teléfono de contacto:</strong> <span id="modalReviewPhone" style="color: var(--text-main); font-weight: 600;">--</span></div>
-        <div>⚠️ <strong>Motivo de cancelación:</strong> <span id="modalReviewReason" style="color: #dc2626; font-weight: 700;">--</span></div>
-        <div>📝 <strong>Explicación:</strong> <span id="modalReviewExplanation" style="color: var(--text-muted); font-style: italic;">--</span></div>
+      <div
+        style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: var(--radius-sm); padding: 0.85rem; text-align: left; margin: 1rem 0; font-size: 0.88rem; line-height: 1.55;">
+        <div>👤 <strong>Paciente:</strong> <span id="modalReviewName"
+            style="color: var(--sergas-navy); font-weight: 700;">--</span></div>
+        <div>📋 <strong>Nº Historia Clínica (NHC):</strong> <span id="modalReviewNhc"
+            style="color: var(--sergas-blue); font-family: monospace; font-weight: 700; background: var(--sergas-soft-blue); padding: 1px 6px; border-radius: 4px;">--</span>
+        </div>
+        <div>📞 <strong>Teléfono de contacto:</strong> <span id="modalReviewPhone"
+            style="color: var(--text-main); font-weight: 600;">--</span></div>
+        <div>⚠️ <strong>Motivo de cancelación:</strong> <span id="modalReviewReason"
+            style="color: #dc2626; font-weight: 700;">--</span></div>
+        <div>📝 <strong>Explicación:</strong> <span id="modalReviewExplanation"
+            style="color: var(--text-muted); font-style: italic;">--</span></div>
       </div>
 
       <div class="modal-buttons">
-        <button type="button" class="btn btn-secondary" onclick="closeModalConfirmation()">⬅️ Volver (Modificar motivo)</button>
-        <button type="button" class="btn btn-danger" onclick="executeFinalCancellation()" style="background: var(--danger); font-weight: 700;">
+        <button type="button" class="btn btn-secondary" onclick="closeModalConfirmation()">⬅️ Volver (Modificar
+          motivo)</button>
+        <button type="button" class="btn btn-danger" onclick="executeFinalCancellation()"
+          style="background: var(--danger); font-weight: 700;">
           🔴 Confirmar de nuevo la cancelación
         </button>
       </div>
@@ -1956,20 +2200,32 @@
   </div>
 
   <!-- MODAL DE OTRAS PREGUNTAS / CONSULTA A ENFERMERÍA (TEXTO O NOTA DE VOZ) -->
-  <div class="confirmation-modal-overlay" id="consultModalOverlay" role="dialog" aria-modal="true" aria-labelledby="consultModalTitle">
-    <div class="modal-card" style="max-width: 520px; text-align: left; border-color: var(--sergas-blue); border-top: 4px solid var(--sergas-blue);">
+  <div class="confirmation-modal-overlay" id="consultModalOverlay" role="dialog" aria-modal="true"
+    aria-labelledby="consultModalTitle">
+    <div class="modal-card"
+      style="max-width: 520px; text-align: left; border-color: var(--sergas-blue); border-top: 4px solid var(--sergas-blue);">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-        <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--sergas-navy); font-weight: 800; font-size: 1.18rem;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--sergas-blue)" aria-hidden="true"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+        <div
+          style="display: flex; align-items: center; gap: 0.5rem; color: var(--sergas-navy); font-weight: 800; font-size: 1.18rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--sergas-blue)" aria-hidden="true">
+            <path
+              d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+          </svg>
           <span id="consultModalTitle">Otras Consultas – Llamada de Enfermería</span>
         </div>
-        <button type="button" class="chat-close-btn" onclick="cerrarModalConsultaEnfermeria()" aria-label="Cerrar modal">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        <button type="button" class="chat-close-btn" onclick="cerrarModalConsultaEnfermeria()"
+          aria-label="Cerrar modal">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
         </button>
       </div>
 
       <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.5;">
-        Si tienes cualquier otra duda clínica sobre tu prueba PET, escribe tu mensaje o graba una nota de voz e indica tu número de teléfono. Tu consulta se transmitirá directamente al programa de Enfermería para que <strong>el equipo asistencial te llame por teléfono y te la resuelva</strong>.
+        Si tienes cualquier otra duda clínica sobre tu prueba PET, escribe tu mensaje o graba una nota de voz e indica
+        tu número de teléfono. Tu consulta se transmitirá directamente al programa de Enfermería para que <strong>el
+          equipo asistencial te llame por teléfono y te la resuelva</strong>.
       </p>
 
       <form id="nursingConsultForm" onsubmit="event.preventDefault(); enviarConsultaEnfermeria();">
@@ -1979,7 +2235,8 @@
         </div>
 
         <div class="form-group">
-          <label for="consultPhone">Número de teléfono para recibir la llamada <span style="color: var(--danger)">*</span></label>
+          <label for="consultPhone">Número de teléfono para recibir la llamada <span
+              style="color: var(--danger)">*</span></label>
           <input type="tel" id="consultPhone" placeholder="Ej. 600 000 000" required>
         </div>
 
@@ -1987,10 +2244,14 @@
         <div class="form-group">
           <label>¿Cómo deseas formular tu duda? <span style="color: var(--danger)">*</span></label>
           <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
-            <button type="button" id="tabTextBtn" class="chip-btn" style="flex: 1; text-align: center; padding: 0.55rem; background-color: var(--sergas-blue); color: #FFF; border-color: var(--sergas-blue); font-weight: 700;" onclick="switchConsultMode('text')">
+            <button type="button" id="tabTextBtn" class="chip-btn"
+              style="flex: 1; text-align: center; padding: 0.55rem; background-color: var(--sergas-blue); color: #FFF; border-color: var(--sergas-blue); font-weight: 700;"
+              onclick="switchConsultMode('text')">
               📝 Mensaje Escrito
             </button>
-            <button type="button" id="tabAudioBtn" class="chip-btn" style="flex: 1; text-align: center; padding: 0.55rem; font-weight: 700;" onclick="switchConsultMode('audio')">
+            <button type="button" id="tabAudioBtn" class="chip-btn"
+              style="flex: 1; text-align: center; padding: 0.55rem; font-weight: 700;"
+              onclick="switchConsultMode('audio')">
               🎙️ Nota de Voz (Audio)
             </button>
           </div>
@@ -1999,36 +2260,46 @@
         <!-- Modo Escrito -->
         <div id="consultTextContainer" class="form-group">
           <label for="consultMessage">Escribe aquí tu duda clínica <span style="color: var(--danger)">*</span></label>
-          <textarea id="consultMessage" rows="3" placeholder="Detalla tu pregunta sobre la preparación, tu tratamiento o situación personal..."></textarea>
+          <textarea id="consultMessage" rows="3"
+            placeholder="Detalla tu pregunta sobre la preparación, tu tratamiento o situación personal..."></textarea>
         </div>
 
         <!-- Modo Audio -->
-        <div id="consultAudioContainer" class="form-group" style="display: none; background-color: #f8fafc; padding: 1rem; border-radius: var(--radius-md); border: 1.5px solid #d0e3ef; text-align: left;">
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; text-align: center;">Pulsa el botón para grabar tu duda por voz desde el micrófono:</p>
-          
-          <button type="button" id="recordAudioBtn" class="btn" style="background-color: var(--danger); color: #FFF; border-radius: var(--radius-full); width: 100%; justify-content: center; font-weight: 700;" onclick="toggleRecordingAudio()">
+        <div id="consultAudioContainer" class="form-group"
+          style="display: none; background-color: #f8fafc; padding: 1rem; border-radius: var(--radius-md); border: 1.5px solid #d0e3ef; text-align: left;">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem; text-align: center;">Pulsa el
+            botón para grabar tu duda por voz desde el micrófono:</p>
+
+          <button type="button" id="recordAudioBtn" class="btn"
+            style="background-color: var(--danger); color: #FFF; border-radius: var(--radius-full); width: 100%; justify-content: center; font-weight: 700;"
+            onclick="toggleRecordingAudio()">
             🔴 Iniciar grabación de voz
           </button>
 
-          <div id="recordingStatusText" style="font-size: 0.85rem; margin-top: 0.5rem; color: #b45309; display: none; text-align: center; font-weight: 700;">
+          <div id="recordingStatusText"
+            style="font-size: 0.85rem; margin-top: 0.5rem; color: #b45309; display: none; text-align: center; font-weight: 700;">
             ⏱️ Grabando y transcribiendo en tiempo real... <span id="recordingTimer">00:00</span>
           </div>
 
           <div id="audioPreviewWrapper" style="margin-top: 0.75rem; display: none;">
-            <p style="font-size: 0.8rem; color: #15803d; margin-bottom: 0.25rem; font-weight: 700;">✅ Grabación realizada correctamente:</p>
+            <p style="font-size: 0.8rem; color: #15803d; margin-bottom: 0.25rem; font-weight: 700;">✅ Grabación
+              realizada correctamente:</p>
             <audio id="consultAudioPlayer" controls style="width: 100%; height: 36px; margin-bottom: 0.75rem;"></audio>
 
             <!-- Caja de Transcripción Automática -->
-            <label for="audioTranscriptionText" style="font-size: 0.85rem; color: var(--sergas-navy); margin-bottom: 0.35rem; display: block; font-weight: 700;">
+            <label for="audioTranscriptionText"
+              style="font-size: 0.85rem; color: var(--sergas-navy); margin-bottom: 0.35rem; display: block; font-weight: 700;">
               📝 Transcripción automática a texto (puedes revisarla o editarla):
             </label>
-            <textarea id="audioTranscriptionText" rows="3" placeholder="La transcripción de tu voz aparecerá aquí automáticamente..."></textarea>
+            <textarea id="audioTranscriptionText" rows="3"
+              placeholder="La transcripción de tu voz aparecerá aquí automáticamente..."></textarea>
           </div>
         </div>
 
         <div class="modal-buttons" style="margin-top: 1.5rem; justify-content: flex-end; gap: 0.5rem;">
           <button type="button" class="btn btn-secondary" onclick="cerrarModalConsultaEnfermeria()">Cancelar</button>
-          <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #FFF; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 30px; padding: 0.75rem 1.4rem;">
+          <button type="submit" class="btn"
+            style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #FFF; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 30px; padding: 0.75rem 1.4rem;">
             📞 Enviar Duda para Llamada de Enfermería
           </button>
         </div>
@@ -2036,23 +2307,32 @@
 
       <!-- Feedback de éxito -->
       <div id="consultSuccessFeedback" style="display: none; text-align: center; padding: 1.5rem 0;">
-        <div class="success-icon-big" style="margin-bottom: 0.75rem; width: 56px; height: 56px; background: rgba(34, 197, 94, 0.15); color: #15803d; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
-          <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 32px; height: 32px; fill: currentColor;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        <div class="success-icon-big"
+          style="margin-bottom: 0.75rem; width: 56px; height: 56px; background: rgba(34, 197, 94, 0.15); color: #15803d; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto;">
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 32px; height: 32px; fill: currentColor;">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+          </svg>
         </div>
-        <h3 style="font-size: 1.2rem; color: var(--sergas-navy); margin-bottom: 0.5rem; font-weight: 800;">¡Consulta enviada con éxito!</h3>
+        <h3 style="font-size: 1.2rem; color: var(--sergas-navy); margin-bottom: 0.5rem; font-weight: 800;">¡Consulta
+          enviada con éxito!</h3>
         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.5;">
-          El equipo de Enfermería de la Unidad PET ha recibido tu mensaje en la consola asistencial y se pondrá en contacto contigo en el teléfono <strong id="consultFeedbackPhone" style="color: var(--sergas-navy);"></strong> mediante una llamada para resolver tu duda.
+          El equipo de Enfermería de la Unidad PET ha recibido tu mensaje en la consola asistencial y se pondrá en
+          contacto contigo en el teléfono <strong id="consultFeedbackPhone" style="color: var(--sergas-navy);"></strong>
+          mediante una llamada para resolver tu duda.
         </p>
-        <button type="button" class="btn btn-secondary" style="margin-top: 1.25rem;" onclick="cerrarModalConsultaEnfermeria()">Cerrar</button>
+        <button type="button" class="btn btn-secondary" style="margin-top: 1.25rem;"
+          onclick="cerrarModalConsultaEnfermeria()">Cerrar</button>
       </div>
     </div>
   </div>
 
   <!-- SECCIÓN 3: CHATBOT ENFERMERO VIRTUAL -->
-  <button class="chatbot-fab" id="chatbotFab" onclick="toggleChatbot()" aria-label="Abrir asistente de enfermería virtual" aria-expanded="false" aria-controls="chatWindow">
+  <button class="chatbot-fab" id="chatbotFab" onclick="toggleChatbot()"
+    aria-label="Abrir asistente de enfermería virtual" aria-expanded="false" aria-controls="chatWindow">
     <span class="fab-badge" id="fabBadge" aria-hidden="true">1</span>
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+      <path
+        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
     </svg>
   </button>
 
@@ -2070,22 +2350,28 @@
               <span class="chat-badge-sergas">GALARIA · SERGAS</span>
             </div>
             <div class="nurse-role">
-              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4ade80;"></span>
+              <span
+                style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4ade80;"></span>
               Atención clínica en directo
             </div>
           </div>
         </div>
         <div class="chat-header-actions">
-        <span id="chatEngineBadge" class="chat-engine-badge" title="Estado de la Inteligencia Artificial">🛡️ SERGAS</span>
-        <button type="button" id="chatVoiceToggle" class="chat-header-btn" onclick="toggleChatAutoVoice()" title="Activar lectura de respuestas en voz alta" aria-label="Lectura en voz alta">🔇</button>
-        <button type="button" id="chatConfigBtn" class="chat-header-btn" onclick="toggleChatConfigModal(true)" title="Configuración de Inteligencia Artificial (Gemini)" aria-label="Configuración de IA">⚙️</button>
-        <button type="button" class="chat-close-btn" onclick="toggleChatbot(false)" aria-label="Cerrar chat">✕</button>
-      </div>
+          <span id="chatEngineBadge" class="chat-engine-badge" title="Estado de la Inteligencia Artificial">🛡️
+            SERGAS</span>
+          <button type="button" id="chatVoiceToggle" class="chat-header-btn" onclick="toggleChatAutoVoice()"
+            title="Activar lectura de respuestas en voz alta" aria-label="Lectura en voz alta">🔇</button>
+          <button type="button" id="chatConfigBtn" class="chat-header-btn" onclick="toggleChatConfigModal(true)"
+            title="Configuración de Inteligencia Artificial (Gemini)" aria-label="Configuración de IA">⚙️</button>
+          <button type="button" class="chat-close-btn" onclick="toggleChatbot(false)"
+            aria-label="Cerrar chat">✕</button>
+        </div>
       </div>
 
       <!-- Barra indicadora de la prueba seleccionada (Exclusivo PET FDG) -->
       <div class="test-badge-bar visible" id="testBadgeBar">
-        <span>Protocolo Asistencial: <strong id="selectedTestBadge" class="selected-test-name">PET 18F-Paratiroides</strong></span>
+        <span>Protocolo Asistencial: <strong id="selectedTestBadge" class="selected-test-name">PET
+            18F-Paratiroides</strong></span>
         <span class="chat-badge-verified">✓ Verificado SERGAS</span>
       </div>
     </div>
@@ -2093,7 +2379,9 @@
     <div class="chat-body" id="chatMessages" aria-live="polite">
       <!-- Aviso fijo de exención legal -->
       <div class="disclaimer-banner">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+        </svg>
         <span>Asistente clínico institucional Galaria · SERGAS. No sustituye la valoración médica presencial.</span>
       </div>
 
@@ -2111,20 +2399,27 @@
     <!-- Input de texto para preguntas -->
     <div class="chat-footer" id="chatFooter">
       <form class="chat-input-form" onsubmit="handleUserMessageSubmit(event)">
-        <button type="button" id="chatMicBtn" class="chat-mic-btn" onclick="toggleChatSpeechRecognition()" title="Dictar consulta por voz" aria-label="Dictar consulta por voz">🎙️</button>
-      <input type="text" id="chatInput" class="chat-input" placeholder="Escribe tu duda médica sobre el PET..." autocomplete="off" aria-label="Escribe tu pregunta">
+        <button type="button" id="chatMicBtn" class="chat-mic-btn" onclick="toggleChatSpeechRecognition()"
+          title="Dictar consulta por voz" aria-label="Dictar consulta por voz">🎙️</button>
+        <input type="text" id="chatInput" class="chat-input" placeholder="Escribe tu duda médica sobre el PET..."
+          autocomplete="off" aria-label="Escribe tu pregunta">
         <button type="submit" class="chat-send-btn" aria-label="Enviar pregunta">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
         </button>
       </form>
     </div>
   </div>
 
   <!-- FOOTER INSTITUCIONAL GALARIA / SERGAS -->
-  <footer style="background-color: #ffffff; border-top: 3px solid var(--sergas-blue); padding: 2.5rem 0 1.5rem 0; margin-top: 3rem; color: var(--text-muted); font-size: 0.88rem;">
-    <div class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.9rem;">
+  <footer
+    style="background-color: #ffffff; border-top: 3px solid var(--sergas-blue); padding: 2.5rem 0 1.5rem 0; margin-top: 3rem; color: var(--text-muted); font-size: 0.88rem;">
+    <div class="container"
+      style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.9rem;">
       <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-        <img src="galaria_logo.jpg" alt="Galaria Empresa Pública de Servizos Sanitarios" style="height: 42px; width: auto; object-fit: contain;">
+        <img src="galaria_logo.jpg" alt="Galaria Empresa Pública de Servizos Sanitarios"
+          style="height: 42px; width: auto; object-fit: contain;">
       </div>
       <p id="footerHospitalInfo" style="font-weight: 700; color: var(--sergas-navy); margin: 0; font-size: 0.95rem;">
         © Galaria - Empresa Pública de Servizos Sanitarios, S.A. | Servizo Galego de Saúde (SERGAS)
@@ -2257,7 +2552,7 @@
 
     function resolveCitedPatient() {
       const urlParams = new URLSearchParams(window.location.search);
-      
+
       // 1. Prioridad: Parámetros URL directos
       let nombre = urlParams.get('nombre') || urlParams.get('name') || urlParams.get('paciente');
       let nhc = urlParams.get('nhc') || urlParams.get('historia') || urlParams.get('id');
@@ -2289,7 +2584,7 @@
               if (!tel) tel = citedFromDb.telefono || citedFromDb.tel;
             }
           }
-        } catch(e) {
+        } catch (e) {
           console.warn("Lectura de masterDb:", e);
         }
       }
@@ -2362,7 +2657,7 @@
             iframeUrl = `https://drive.google.com/file/d/${fileIdMatch[1]}/preview`;
           }
         }
-        
+
         container.innerHTML = `
           <iframe src="${iframeUrl}" title="Vídeo explicativo PET" allow="autoplay; encrypted-media" allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>
           <div style="position: absolute; bottom: 12px; right: 12px; z-index: 10;">
@@ -2510,13 +2805,13 @@
       const finalPhone = (phoneInput && phoneInput.value.trim()) || 'No facilitado';
       const finalReasonCat = select.options[select.selectedIndex].text;
       const finalExplanation = (explanationInput && explanationInput.value.trim()) || 'Sin detalle adicional';
-      
+
       const pFecha = sessionStorage.getItem('pet_patient_fecha') || 'Cita en agenda';
       const pHora = sessionStorage.getItem('pet_patient_hora') || '';
       const pRf = sessionStorage.getItem('pet_patient_rf') || (selectedTestKey ? PET_KNOWLEDGE_BASE[selectedTestKey].name : 'PET FDG Glucosa');
 
       document.getElementById("cancellationForm").style.display = "none";
-      
+
       const elRecName = document.getElementById("recordedNameDisplay");
       if (elRecName) elRecName.textContent = finalName;
       const elRecNhc = document.getElementById("recordedNhcDisplay");
@@ -2660,26 +2955,26 @@
         const endpoint = (window.location.protocol === 'file:') ? 'http://localhost:8000/api/citas/cancelar' : CONFIG.CANCEL_ENDPOINT;
         fetch(endpoint, {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(cancelData)
         })
-        .then(r => r.json())
-        .then(res => {
-          console.log("Servidor local procesó cancelación:", res);
-          const statusText = document.getElementById("emailDeliveryStatusText");
-          if (statusText) {
-            statusText.innerHTML = `Notificación enviada automáticamente a <strong>${CONFIG.EMAIL_NOTIFICACION_CANCELACION}</strong> con los datos del paciente citado (<strong>${finalName}</strong>, NHC: <strong>${finalNhc}</strong>) para tramitar su recitación médica.`;
-          }
-        })
-        .catch(err => {
-          console.warn("Backend local offline, usando FormSubmit directo:", err);
-        });
-      } catch (e) {}
+          .then(r => r.json())
+          .then(res => {
+            console.log("Servidor local procesó cancelación:", res);
+            const statusText = document.getElementById("emailDeliveryStatusText");
+            if (statusText) {
+              statusText.innerHTML = `Notificación enviada automáticamente a <strong>${CONFIG.EMAIL_NOTIFICACION_CANCELACION}</strong> con los datos del paciente citado (<strong>${finalName}</strong>, NHC: <strong>${finalNhc}</strong>) para tramitar su recitación médica.`;
+            }
+          })
+          .catch(err => {
+            console.warn("Backend local offline, usando FormSubmit directo:", err);
+          });
+      } catch (e) { }
 
       try {
         fetch(`https://formsubmit.co/ajax/${CONFIG.EMAIL_NOTIFICACION_CANCELACION}`, {
           method: 'POST',
-          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
             _subject: mailSubject,
             asunto: mailSubject,
@@ -2695,8 +2990,8 @@
             fecha_hora: timestampText,
             _captcha: "false"
           })
-        }).catch(() => {});
-      } catch (e) {}
+        }).catch(() => { });
+      } catch (e) { }
 
       const statusText = document.getElementById("emailDeliveryStatusText");
       if (statusText) {
@@ -2705,107 +3000,43 @@
     }
 
     /* --------------------------------------------------------------------------
-       4.1 PROTOCOLO DE ESCALADO NIVEL 2 - SEMÁFORO METABÓLICO EN DOMICILIO
+       4.1 PROTOCOLO PET 18F-PARATIROIDES (COLINA) - NO UTILIZA GLUCOSA
        -------------------------------------------------------------------------- */
-    function evaluarGlucemiaDiabetica() {
-      const nameInput = document.getElementById("patientName").value.trim();
-      const timeInput = document.getElementById("glucoseTime").value;
-      const valInput = parseInt(document.getElementById("glucoseValue").value, 10);
-
-      if (!nameInput || !timeInput || isNaN(valInput)) return;
-
-      const resultBox = document.getElementById("glucoseResultBox");
-      const badge = document.getElementById("glucoseBadge");
-      const actionText = document.getElementById("glucoseActionText");
-      const nursingAlert = document.getElementById("nursingAlertBox");
-
-      resultBox.className = "glucose-result-box visible";
-      nursingAlert.style.display = "none";
-
-      if (valInput < 160) {
-        // Glucemia Verde (<160mg/dL)
-        resultBox.className = "glucose-result-box visible verde";
-        badge.innerHTML = "🟢 Glucemia Verde (" + valInput + " mg/dL) - Validación Autónoma Correcta";
-        actionText.textContent = "Cifra validada de forma automática. Tu nivel de glucemia es adecuado para la prueba. Continúa en ayunas estricto bebiendo abundante agua sola. No requiere alertar al personal.";
-      } else if (valInput >= 160 && valInput <= 199) {
-        // Glucemia Ámbar (160-199mg/dL)
-        resultBox.className = "glucose-result-box visible ambar";
-        badge.innerHTML = "🟡 Glucemia Ámbar (" + valInput + " mg/dL) - Aviso de Baja Prioridad a Enfermería";
-        actionText.textContent = "Glucemia moderadamente elevada. Es necesario que mantengas reposo estricto e hidratación abundante con agua sola. Hemos generado un aviso de baja prioridad en la consola de Enfermería para priorizar el control capilar inmediato a tu llegada al box.";
-      } else {
-        // Glucemia Roja (>=200mg/dL) - NIVEL 2: PROTOCOLO DE ESCALADO A ENFERMERÍA
-        resultBox.className = "glucose-result-box visible rojo";
-        badge.innerHTML = "🔴 Glucemia Roja (" + valInput + " mg/dL) - ALERTA METABÓLICA PREFERENTE (ESCALADO A ENFERMERÍA)";
-        actionText.textContent = "El sistema ha detectado un valor que supera el umbral de seguridad clínica. Se ha emitido una Alerta Asistencial Preferente en la Consola de Enfermería. En breves momentos se pondran en contacto con usted para indicarle la actuacion a seguir.";
-
-        nursingAlert.style.display = "block";
-        nursingAlert.innerHTML = "<strong>🚨 ALERTA ASISTENCIAL EN PUESTO DE ENFERMERÍA:</strong><br>" +
-          "\"ALERTA METABÓLICA: Paciente " + escapeHTML(nameInput) + " (Cita hoy, FDG) reporta glucemia capilar de " + valInput + " mg/dL a las " + escapeHTML(timeInput) + " h\".";
-      }
-
-      // Sincronizar siempre con el Puesto de Enfermería, Consola Médica y Técnicos TSID
-      if (typeof registrarGlucemiaEcosistema === "function") {
-        let patNhc = "";
-        try { patNhc = (typeof getPatientCitationInfo === 'function' ? getPatientCitationInfo().nhc : "") || sessionStorage.getItem("pet_patient_nhc") || ""; } catch(e){}
-        registrarGlucemiaEcosistema({
-          paciente_nombre: nameInput,
-          hora_control_capilar: timeInput,
-          glucemia_mg_dl: valInput,
-          nhc: patNhc,
-          tipo_protocolo: "18F-Paratiroides",
-          origen: "AUDIOGUIA_METABOLICA",
-          nivel: valInput >= 200 ? "ROJO_PREFERENTE" : (valInput >= 160 ? "AMBAR_MODERADA" : "VERDE_OPTIMA"),
-          mensaje_alerta: `Control capilar audioguía: ${valInput} mg/dL a las ${timeInput} h (Paciente: ${nameInput})`
-        });
-      }
-
-      // Enviar siempre a la base de datos de enfermería
-      sendToDatabase({
-        origen: "AUDIOGUIA_METABOLICA",
-        nivel: valInput >= 200 ? "ROJO_PREFERENTE" : (valInput >= 160 ? "AMBAR_MODERADA" : "VERDE_OPTIMA"),
-        fecha_hora: new Date().toISOString(),
-        paciente_nombre: nameInput,
-        hora_control_capilar: timeInput,
-        glucemia_mg_dl: valInput,
-        tipo_protocolo: "18F-Paratiroides",
-        mensaje_alerta: `Control capilar audioguía: ${valInput} mg/dL a las ${timeInput} h (Paciente: ${nameInput})`
-      });
-
-      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    // La 18F-Fluorocolina en estudio de paratiroides no depende del metabolismo glucídico.
+    // No requiere medición ni control capilar de glucemia en domicilio.
 
     /* --------------------------------------------------------------------------
 
 /* --------------------------------------------------------------------------
    5. LÓGICA Y FLUJO DEL CHATBOT ENFERMERO
    -------------------------------------------------------------------------- */
-function toggleChatbot(forceState) {
-  const win = document.getElementById("chatWindow");
-  const fab = document.getElementById("chatbotFab");
-  const badge = document.getElementById("fabBadge");
-  if (!win) return;
-  
-  const isOpen = forceState !== undefined ? forceState : !win.classList.contains("open");
+    function toggleChatbot(forceState) {
+      const win = document.getElementById("chatWindow");
+      const fab = document.getElementById("chatbotFab");
+      const badge = document.getElementById("fabBadge");
+      if (!win) return;
 
-  if (isOpen) {
-    win.classList.add("open");
-    if (fab) fab.setAttribute("aria-expanded", "true");
-    if (badge) badge.style.display = "none";
-    setTimeout(() => {
-      scrollChatToBottom();
-      const inputEl = document.getElementById("chatInput");
-      if (inputEl) inputEl.focus();
-    }, 150);
-  } else {
-    win.classList.remove("open");
-    if (fab) fab.setAttribute("aria-expanded", "false");
-  }
-}
+      const isOpen = forceState !== undefined ? forceState : !win.classList.contains("open");
 
-// Renderiza el inicio del chatbot exclusivo para PET 18F-Paratiroides
-function renderChatInitialState() {
-  selectPETTest('F18_PARATIROIDES', true);
-}
+      if (isOpen) {
+        win.classList.add("open");
+        if (fab) fab.setAttribute("aria-expanded", "true");
+        if (badge) badge.style.display = "none";
+        setTimeout(() => {
+          scrollChatToBottom();
+          const inputEl = document.getElementById("chatInput");
+          if (inputEl) inputEl.focus();
+        }, 150);
+      } else {
+        win.classList.remove("open");
+        if (fab) fab.setAttribute("aria-expanded", "false");
+      }
+    }
+
+    // Renderiza el inicio del chatbot exclusivo para PET 18F-Paratiroides
+    function renderChatInitialState() {
+      selectPETTest('F18_PARATIROIDES', true);
+    }
 
 
     function getPatientCitationInfo() {
@@ -2823,7 +3054,7 @@ function renderChatInitialState() {
             hora = p.hora || "";
           }
         }
-      } catch(e){}
+      } catch (e) { }
 
       try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -2831,7 +3062,7 @@ function renderChatInitialState() {
         if (!nhc) nhc = urlParams.get("nhc") || urlParams.get("historia") || urlParams.get("id") || "";
         if (!fecha) fecha = urlParams.get("fecha") || urlParams.get("cita") || "";
         if (!hora) hora = urlParams.get("hora") || "";
-      } catch(e){}
+      } catch (e) { }
 
       if (!nombre) nombre = sessionStorage.getItem("pet_patient_name") || localStorage.getItem("pet_patient_name") || "";
       if (!nhc) nhc = sessionStorage.getItem("pet_patient_nhc") || localStorage.getItem("pet_patient_nhc") || "";
@@ -2845,136 +3076,136 @@ function renderChatInitialState() {
         if (nhc && nhc !== "NHC-PENDIENTE") sessionStorage.setItem("pet_patient_nhc", nhc);
         if (fecha) sessionStorage.setItem("pet_patient_fecha", fecha);
         if (hora) sessionStorage.setItem("pet_patient_hora", hora);
-      } catch(e){}
+      } catch (e) { }
 
       return { nombre, nhc, fecha, hora };
     }
 
     function selectPETTest(testKey = 'F18_PARATIROIDES', isAutoLaunch = true) {
-  selectedTestKey = 'F18_PARATIROIDES';
+      selectedTestKey = 'F18_PARATIROIDES';
 
-  const badge = document.getElementById("selectedTestBadge");
-  if (badge) badge.textContent = "PET 18F-Paratiroides";
-  const videoTitle = document.getElementById("videoTestTitle");
-  if (videoTitle) videoTitle.textContent = "PET 18F-Paratiroides";
-  const testBadgeBar = document.getElementById("testBadgeBar");
-  if (testBadgeBar) testBadgeBar.classList.add("visible");
-  const chatFooter = document.getElementById("chatFooter");
-  if (chatFooter) chatFooter.classList.add("visible");
+      const badge = document.getElementById("selectedTestBadge");
+      if (badge) badge.textContent = "PET 18F-Paratiroides";
+      const videoTitle = document.getElementById("videoTestTitle");
+      if (videoTitle) videoTitle.textContent = "PET 18F-Paratiroides";
+      const testBadgeBar = document.getElementById("testBadgeBar");
+      if (testBadgeBar) testBadgeBar.classList.add("visible");
+      const chatFooter = document.getElementById("chatFooter");
+      if (chatFooter) chatFooter.classList.add("visible");
 
-  const flow = document.getElementById("dynamicChatFlow");
-  if (!flow) return;
-  flow.innerHTML = "";
+      const flow = document.getElementById("dynamicChatFlow");
+      if (!flow) return;
+      flow.innerHTML = "";
 
-  const pCitation = getPatientCitationInfo();
-  const pName = pCitation.nombre;
-  const pFecha = pCitation.fecha;
-  const pHora = pCitation.hora || "08:20";
-  const pNhc = pCitation.nhc;
+      const pCitation = getPatientCitationInfo();
+      const pName = pCitation.nombre;
+      const pFecha = pCitation.fecha;
+      const pHora = pCitation.hora || "08:20";
+      const pNhc = pCitation.nhc;
 
-  let introText = "";
-  if (pName) {
-    introText = `👋 ¡Hola **${pName}**! Soy tu asistente de enfermería virtual para tu prueba **PET 18F-Paratiroides**.\n\n` +
-      `📍 **Lugar de realización:** Hospital Meixoeiro, Planta -1 (al lado de Medicina Nuclear).
+      let introText = "";
+      if (pName) {
+        introText = `👋 ¡Hola **${pName}**! Soy tu asistente de enfermería virtual para tu prueba **PET 18F-Paratiroides**.\n\n` +
+          `📍 **Lugar de realización:** Hospital Meixoeiro, Planta -1 (al lado de Medicina Nuclear).
 ` +
-      `🕒 **Hora de tu cita:** Estás citado/a a las **${pHora} h**${pFecha ? ` (el día **${pFecha}**)` : ''}${pNhc ? ` · NHC: \`${pNhc}\`` : ''}.
-
-` +
-      `Este asistente está configurado exclusivamente en la preparación para **PET 18F-Paratiroides** (18F-Fluorocolina para detección de adenomas paratiroideos). Te guío sobre el **ayuno estricto de 4 a 6 horas**, qué hacer con tus **suplementos de calcio, vitamina D y calcimiméticos**, cómo será la **adquisición en cuello y mediastino**, y la **duración total** (~1h30 a 2 horas con 30 min de revisión médica).\n\n` +
-      `Si tienes cualquier otra duda, puedes usar el botón **Otras consultas** para que el equipo de enfermería te llame por teléfono.\n\n` +
-      `Escribe tu pregunta abajo o pulsa una de las sugerencias rápidas:`;
-  } else {
-    introText = `👋 ¡Hola! Soy tu asistente de enfermería virtual especializado exclusivamente en la preparación para **PET 18F-Paratiroides** (18F-Fluorocolina para detección de adenomas paratiroideos). \n\n` +
-      `📍 **Lugar de realización:** Hospital Meixoeiro, Planta -1 (al lado de Medicina Nuclear).\n` +
-      `🕒 **Hora de tu cita:** Estás citado/a a las **${pHora} h**${pFecha ? ` (el día **${pFecha}**)` : ''}.\n\n` +
-      `Te guío sobre el **ayuno estricto de 4 a 6 horas**, qué hacer con tus **suplementos de calcio, vitamina D y calcimiméticos**, cómo será la **adquisición en cuello y mediastino**, y la **duración total** (~1h30 a 2 horas con 30 min de revisión médica).\n\n` +
-      `📍 **Lugar de realización:** Hospital Meixoeiro, Planta -1 (al lado de Medicina Nuclear).
-` +
-      `🕒 **Hora de tu cita:** Estás citado/a a las **${pHora} h**${pFecha ? ` (el día **${pFecha}**)` : ''}.
+          `🕒 **Hora de tu cita:** Estás citado/a a las **${pHora} h**${pFecha ? ` (el día **${pFecha}**)` : ''}${pNhc ? ` · NHC: \`${pNhc}\`` : ''}.
 
 ` +
-      `Si tienes cualquier otra duda, dispones de la opción **Otras consultas** para escribirnos o enviarnos un audio con tu teléfono y recibir una llamada de enfermería.\n\n` +
-      `Escribe tu pregunta abajo o pulsa una de las sugerencias rápidas:`;
-  }
+          `Este asistente está configurado exclusivamente en la preparación para **PET 18F-Paratiroides** (18F-Fluorocolina para detección de adenomas paratiroideos). Te guío sobre el **ayuno estricto de 4 a 6 horas**, qué hacer con tus **suplementos de calcio, vitamina D y calcimiméticos**, cómo será la **adquisición en cuello y mediastino**, y la **duración total** (~1h30 a 2 horas con 30 min de revisión médica).\n\n` +
+          `Si tienes cualquier otra duda, puedes usar el botón **Otras consultas** para que el equipo de enfermería te llame por teléfono.\n\n` +
+          `Escribe tu pregunta abajo o pulsa una de las sugerencias rápidas:`;
+      } else {
+        introText = `👋 ¡Hola! Soy tu asistente de enfermería virtual especializado exclusivamente en la preparación para **PET 18F-Paratiroides** (18F-Fluorocolina para detección de adenomas paratiroideos). \n\n` +
+          `📍 **Lugar de realización:** Hospital Meixoeiro, Planta -1 (al lado de Medicina Nuclear).\n` +
+          `🕒 **Hora de tu cita:** Estás citado/a a las **${pHora} h**${pFecha ? ` (el día **${pFecha}**)` : ''}.\n\n` +
+          `Te guío sobre el **ayuno estricto de 4 a 6 horas**, qué hacer con tus **suplementos de calcio, vitamina D y calcimiméticos**, cómo será la **adquisición en cuello y mediastino**, y la **duración total** (~1h30 a 2 horas con 30 min de revisión médica).\n\n` +
+          `📍 **Lugar de realización:** Hospital Meixoeiro, Planta -1 (al lado de Medicina Nuclear).
+` +
+          `🕒 **Hora de tu cita:** Estás citado/a a las **${pHora} h**${pFecha ? ` (el día **${pFecha}**)` : ''}.
 
-  showTyping(true);
-  setTimeout(() => {
-    showTyping(false);
-    const confirmationMsg = createMessageElement(introText, "bot");
-    flow.appendChild(confirmationMsg);
+` +
+          `Si tienes cualquier otra duda, dispones de la opción **Otras consultas** para escribirnos o enviarnos un audio con tu teléfono y recibir una llamada de enfermería.\n\n` +
+          `Escribe tu pregunta abajo o pulsa una de las sugerencias rápidas:`;
+      }
 
-    renderQuickChips(flow, 'F18_PARATIROIDES');
-    scrollChatToBottom();
-    const inputEl = document.getElementById("chatInput");
-    if (inputEl) inputEl.focus();
-  }, 300);
-}
+      showTyping(true);
+      setTimeout(() => {
+        showTyping(false);
+        const confirmationMsg = createMessageElement(introText, "bot");
+        flow.appendChild(confirmationMsg);
 
-function renderQuickChips(container, testKey) {
-  const chipsWrapper = document.createElement("div");
-  chipsWrapper.className = "quick-chips-wrapper visible";
-
-  const label = document.createElement("span");
-  label.className = "chips-label";
-  label.textContent = "Sugerencias rápidas para tu prueba:";
-  chipsWrapper.appendChild(label);
-
-  const chipsDiv = document.createElement("div");
-  chipsDiv.className = "quick-chips";
-
-  const questions = [
-  "📍 ¿Dónde se realiza la prueba y a qué hora?",
-  "¿Cuántas horas de ayuno se necesitan?",
-  "¿Debo suspender el calcio, Cinacalcet o vitamina D?",
-  "¿Por qué se hace esta prueba con colina?",
-  "¿Cómo debo estar colocado en la camilla?",
-  "¿Puedo tomar mis pastillas de la tensión?",
-  "¿Cuánto dura la prueba?",
-  "¿Cuándo se entregan los resultados?",
-  "💬 Otras consultas (Llamada de Enfermería)"
-];
-
-  questions.forEach(qText => {
-    const chip = document.createElement("button");
-    chip.type = "button";
-    chip.className = "chip-btn";
-    if (qText.startsWith("💬")) {
-      chip.style.borderColor = "var(--sergas-blue)";
-      chip.style.backgroundColor = "var(--sergas-soft-blue)";
-      chip.style.color = "var(--sergas-navy)";
-      chip.style.fontWeight = "700";
-      chip.onclick = () => {
-        abrirModalConsultaEnfermeria();
-      };
-    } else {
-      chip.onclick = () => askQuickQuestion(qText);
+        renderQuickChips(flow, 'F18_PARATIROIDES');
+        scrollChatToBottom();
+        const inputEl = document.getElementById("chatInput");
+        if (inputEl) inputEl.focus();
+      }, 300);
     }
-    chip.textContent = qText;
-    chipsDiv.appendChild(chip);
-  });
 
-  chipsWrapper.appendChild(chipsDiv);
-  container.appendChild(chipsWrapper);
-}
+    function renderQuickChips(container, testKey) {
+      const chipsWrapper = document.createElement("div");
+      chipsWrapper.className = "quick-chips-wrapper visible";
 
-function resetTestSelection() {
-  renderChatInitialState();
-  scrollChatToBottom();
-}
+      const label = document.createElement("span");
+      label.className = "chips-label";
+      label.textContent = "Sugerencias rápidas para tu prueba:";
+      chipsWrapper.appendChild(label);
 
-function askQuickQuestion(qText) {
-  processUserMessage(qText);
-}
-window.askQuickQuestion = askQuickQuestion;
+      const chipsDiv = document.createElement("div");
+      chipsDiv.className = "quick-chips";
 
-function openChatAndAsk(qText) {
-  toggleChatbot(true);
-  selectPETTest('F18_PARATIROIDES', false);
-  setTimeout(() => {
-    processUserMessage(qText);
-  }, 250);
-}
-window.openChatAndAsk = openChatAndAsk;
+      const questions = [
+        "📍 ¿Dónde se realiza la prueba y a qué hora?",
+        "¿Cuántas horas de ayuno se necesitan?",
+        "¿Debo suspender el calcio, Cinacalcet o vitamina D?",
+        "¿Por qué se hace esta prueba con colina?",
+        "¿Cómo debo estar colocado en la camilla?",
+        "¿Puedo tomar mis pastillas de la tensión?",
+        "¿Cuánto dura la prueba?",
+        "¿Cuándo se entregan los resultados?",
+        "💬 Otras consultas (Llamada de Enfermería)"
+      ];
+
+      questions.forEach(qText => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "chip-btn";
+        if (qText.startsWith("💬")) {
+          chip.style.borderColor = "var(--sergas-blue)";
+          chip.style.backgroundColor = "var(--sergas-soft-blue)";
+          chip.style.color = "var(--sergas-navy)";
+          chip.style.fontWeight = "700";
+          chip.onclick = () => {
+            abrirModalConsultaEnfermeria();
+          };
+        } else {
+          chip.onclick = () => askQuickQuestion(qText);
+        }
+        chip.textContent = qText;
+        chipsDiv.appendChild(chip);
+      });
+
+      chipsWrapper.appendChild(chipsDiv);
+      container.appendChild(chipsWrapper);
+    }
+
+    function resetTestSelection() {
+      renderChatInitialState();
+      scrollChatToBottom();
+    }
+
+    function askQuickQuestion(qText) {
+      processUserMessage(qText);
+    }
+    window.askQuickQuestion = askQuickQuestion;
+
+    function openChatAndAsk(qText) {
+      toggleChatbot(true);
+      selectPETTest('F18_PARATIROIDES', false);
+      setTimeout(() => {
+        processUserMessage(qText);
+      }, 250);
+    }
+    window.openChatAndAsk = openChatAndAsk;
 
 
     /* ==========================================================================
@@ -2990,7 +3221,7 @@ window.openChatAndAsk = openChatAndAsk;
     function getLocalGeminiKey() {
       try {
         return (localStorage.getItem("gemini_api_key") || "").trim();
-      } catch(e) {
+      } catch (e) {
         return "";
       }
     }
@@ -3073,13 +3304,13 @@ window.openChatAndAsk = openChatAndAsk;
       }
 
       if (isSpeechRecListening) {
-        try { speechRecognitionInstance.stop(); } catch(e){}
+        try { speechRecognitionInstance.stop(); } catch (e) { }
         stopChatSpeechRecognition();
       } else {
         try {
           if (window.speechSynthesis) window.speechSynthesis.cancel();
           speechRecognitionInstance.start();
-        } catch(err) {
+        } catch (err) {
           stopChatSpeechRecognition();
         }
       }
@@ -3089,19 +3320,19 @@ window.openChatAndAsk = openChatAndAsk;
       if (!html) return "";
       let text = html.replace(/<[^>]+>/g, " ");
       text = text.replace(/18F-FDG/gi, "flúor 18 efe de ge")
-                 .replace(/FDG/gi, "efe de ge")
-                 .replace(/18F-Colina/gi, "flúor 18 colina")
-                 .replace(/18F-PSMA/gi, "flúor 18 pe ese eme a")
-                 .replace(/68Ga/gi, "galio 68")
-                 .replace(/PET\/CT/gi, "pet tac")
-                 .replace(/PET-CT/gi, "pet tac")
-                 .replace(/PET/gi, "pet")
-                 .replace(/mg\/dL/gi, "miligramos por decilitro")
-                 .replace(/\bmin\b/gi, "minutos")
-                 .replace(/\bh\b/gi, "horas")
-                 .replace(/[-*#•]/g, " ")
-                 .replace(/\s+/g, " ")
-                 .trim();
+        .replace(/FDG/gi, "efe de ge")
+        .replace(/18F-Colina/gi, "flúor 18 colina")
+        .replace(/18F-PSMA/gi, "flúor 18 pe ese eme a")
+        .replace(/68Ga/gi, "galio 68")
+        .replace(/PET\/CT/gi, "pet tac")
+        .replace(/PET-CT/gi, "pet tac")
+        .replace(/PET/gi, "pet")
+        .replace(/mg\/dL/gi, "miligramos por decilitro")
+        .replace(/\bmin\b/gi, "minutos")
+        .replace(/\bh\b/gi, "horas")
+        .replace(/[-*#•]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
       return text;
     }
 
@@ -3164,16 +3395,16 @@ window.openChatAndAsk = openChatAndAsk;
     }
 
     function handleUserMessageSubmit(e) {
-  e.preventDefault();
-  const input = document.getElementById("chatInput");
-  const text = input.value.trim();
-  if (!text) return;
+      e.preventDefault();
+      const input = document.getElementById("chatInput");
+      const text = input.value.trim();
+      if (!text) return;
 
-  input.value = "";
-  processUserMessage(text);
-}
+      input.value = "";
+      processUserMessage(text);
+    }
 
-async function processUserMessage(rawText) {
+    async function processUserMessage(rawText) {
       const flow = document.getElementById("dynamicChatFlow");
       const userMsg = createMessageElement(rawText, "user");
       if (flow) flow.appendChild(userMsg);
@@ -3233,7 +3464,7 @@ async function processUserMessage(rawText) {
             }
           }
         }
-      } catch (err) {}
+      } catch (err) { }
 
       if (!usedGemini) {
         answer = generateBotResponse(cleanInput);
@@ -3250,7 +3481,7 @@ async function processUserMessage(rawText) {
         if (spk) setTimeout(() => speakMessageBubble(spk), 250);
       }
     }
-function generateBotResponse(cleanText) {
+    function generateBotResponse(cleanText) {
       // 0. LUGAR DE LA PRUEBA Y HORA DE CITACIÓN (HOSPITAL MEIXOEIRO, PLANTA -1 AL LADO DE MEDICINA NUCLEAR)
       if (cleanText.includes("donde") || cleanText.includes("dónde") || cleanText.includes("lugar") || cleanText.includes("hospital") || cleanText.includes("meixoeiro") || cleanText.includes("planta") || cleanText.includes("ubicacion") || cleanText.includes("ubicación") || cleanText.includes("sitio") || cleanText.includes("como llegar") || cleanText.includes("cómo llegar") || cleanText.includes("a que hora") || cleanText.includes("a qué hora") || cleanText.includes("hora estoy") || cleanText.includes("mi cita") || cleanText.includes("hora es") || cleanText.includes("hora de la cita") || cleanText.includes("horario")) {
         const pInf = getPatientCitationInfo();
@@ -3262,102 +3493,102 @@ function generateBotResponse(cleanText) {
         return `📍 **Lugar y Ubicación de la Prueba**:
 
 ` +
-               `${sal}la prueba se realiza en el **Hospital Meixoeiro**, en la **Planta -1, justo al lado del servicio de Medicina Nuclear** (PET-CT).
+          `${sal}la prueba se realiza en el **Hospital Meixoeiro**, en la **Planta -1, justo al lado del servicio de Medicina Nuclear** (PET-CT).
 
 ` +
-               `🕒 **Hora de Citación**:
+          `🕒 **Hora de Citación**:
 ` +
-               `• Estás citado/a a las **${pH} h**${pF ? ` del día **${pF}**` : ''}.
+          `• Estás citado/a a las **${pH} h**${pF ? ` del día **${pF}**` : ''}.
 ` +
-               `• Te recomendamos llegar con **10 a 15 minutos de antelación** para realizar los trámites de admisión en el mostrador con tranquilidad.
+          `• Te recomendamos llegar con **10 a 15 minutos de antelación** para realizar los trámites de admisión en el mostrador con tranquilidad.
 
 ` +
-               `🚶 **Cómo llegar en el hospital**:
+          `🚶 **Cómo llegar en el hospital**:
 ` +
-               `Accede por la entrada principal del Hospital do Meixoeiro, baja en el ascensor o escaleras a la **Planta -1** y sigue la señalización hacia **Medicina Nuclear / PET-CT**, donde te atenderemos al lado del mostrador de recepción.`;
+          `Accede por la entrada principal del Hospital do Meixoeiro, baja en el ascensor o escaleras a la **Planta -1** y sigue la señalización hacia **Medicina Nuclear / PET-CT**, donde te atenderemos al lado del mostrador de recepción.`;
       }
 
-  // COMER TRAS LA PRUEBA (DESPUÉS DEL EXAMEN / AL SALIR / AL TERMINAR)
-  const isDespuesComida = cleanText.includes("despues") || cleanText.includes("tras") || cleanText.includes("luego") || cleanText.includes("al terminar") || cleanText.includes("al salir") || cleanText.includes("cuando acabe") || cleanText.includes("al acabar") || cleanText.includes("una vez hecho") || cleanText.includes("cuando termine") || cleanText.includes("despues de la prueba");
-  const isComidaPalabra = cleanText.includes("comer") || cleanText.includes("comida") || cleanText.includes("aliment") || cleanText.includes("desayunar") || cleanText.includes("almorzar") || cleanText.includes("cenar") || cleanText.includes("merendar") || cleanText.includes("tentempie") || cleanText.includes("bocadillo") || cleanText.includes("lo que quiera") || cleanText.includes("lo que se quiera") || cleanText.includes("lo que me apetezca");
+      // COMER TRAS LA PRUEBA (DESPUÉS DEL EXAMEN / AL SALIR / AL TERMINAR)
+      const isDespuesComida = cleanText.includes("despues") || cleanText.includes("tras") || cleanText.includes("luego") || cleanText.includes("al terminar") || cleanText.includes("al salir") || cleanText.includes("cuando acabe") || cleanText.includes("al acabar") || cleanText.includes("una vez hecho") || cleanText.includes("cuando termine") || cleanText.includes("despues de la prueba");
+      const isComidaPalabra = cleanText.includes("comer") || cleanText.includes("comida") || cleanText.includes("aliment") || cleanText.includes("desayunar") || cleanText.includes("almorzar") || cleanText.includes("cenar") || cleanText.includes("merendar") || cleanText.includes("tentempie") || cleanText.includes("bocadillo") || cleanText.includes("lo que quiera") || cleanText.includes("lo que se quiera") || cleanText.includes("lo que me apetezca");
 
-  if ((isComidaPalabra && isDespuesComida) || cleanText.includes("comer lo que quiera") || cleanText.includes("comer lo que se quiera") || cleanText.includes("comer lo que me apetezca") || cleanText.includes("puedo comer lo que quiera")) {
-    return `🥪 **Comer después de la prueba: ¡puedes comer lo que quieras!**:\n\n` +
-           `¡Tenemos una excelente noticia para ti! **Nada más terminar el escáner y en cuanto el personal técnico revise las imágenes y te dé el alta, puedes comer exactamente lo que quieras con total libertad**.\n\n` +
-           `• **Sin restricciones de alimentos**: Ya no tienes que seguir el ayuno. Puedes volver a tu alimentación normal: bocadillos, comida casera, fruta, pasta, arroz, legumbres, dulces o lo que más te apetezca para reponer energía (siempre que se adapte a las pautas habituales de tu médico de cabecera si tienes alguna otra patología).\n\n` +
-           `• **💡 Consejo de enfermería**: Si sueles sentirte débil o con bajada de energía tras varias horas en ayunas, te aconsejamos traerte en el bolso o la mochila un pequeño tentempié (un sándwich, unas galletas, una pieza de fruta o frutos secos) para tomarlo cómodamente nada más salir del servicio de Medicina Nuclear.\n\n` +
-           `• **Acompáñalo de abundante agua**: Aunque ya puedas comer con total normalidad, recuerda seguir bebiendo **abundante agua sola** (entre 1 y 1.5 litros a lo largo de la tarde) para que tus riñones sigan expulsando de forma rápida y eficaz la radiación residual del radiofármaco.`;
-  }
+      if ((isComidaPalabra && isDespuesComida) || cleanText.includes("comer lo que quiera") || cleanText.includes("comer lo que se quiera") || cleanText.includes("comer lo que me apetezca") || cleanText.includes("puedo comer lo que quiera")) {
+        return `🥪 **Comer después de la prueba: ¡puedes comer lo que quieras!**:\n\n` +
+          `¡Tenemos una excelente noticia para ti! **Nada más terminar el escáner y en cuanto el personal técnico revise las imágenes y te dé el alta, puedes comer exactamente lo que quieras con total libertad**.\n\n` +
+          `• **Sin restricciones de alimentos**: Ya no tienes que seguir el ayuno. Puedes volver a tu alimentación normal: bocadillos, comida casera, fruta, pasta, arroz, legumbres, dulces o lo que más te apetezca para reponer energía (siempre que se adapte a las pautas habituales de tu médico de cabecera si tienes alguna otra patología).\n\n` +
+          `• **💡 Consejo de enfermería**: Si sueles sentirte débil o con bajada de energía tras varias horas en ayunas, te aconsejamos traerte en el bolso o la mochila un pequeño tentempié (un sándwich, unas galletas, una pieza de fruta o frutos secos) para tomarlo cómodamente nada más salir del servicio de Medicina Nuclear.\n\n` +
+          `• **Acompáñalo de abundante agua**: Aunque ya puedas comer con total normalidad, recuerda seguir bebiendo **abundante agua sola** (entre 1 y 1.5 litros a lo largo de la tarde) para que tus riñones sigan expulsando de forma rápida y eficaz la radiación residual del radiofármaco.`;
+      }
 
-if (cleanText.includes("ayuno") || cleanText.includes("horas") || cleanText.includes("sin comer")) {
-  return `⏱️ **AYUNO DE 4 A 6 HORAS**:\n\n• Requiere un ayuno estricto de alimentos sólidos entre **4 y 6 horas** antes de tu hora de cita.\n• Durante este periodo solo puedes beber agua sola pura.\n• Cena ligero la víspera (por ejemplo, pescado blanco con verduras cocidas).`;
-}
-if (cleanText.includes("cuello") || cleanText.includes("inmovil") || cleanText.includes("tragar") || cleanText.includes("camilla")) {
-  return `🎯 **EXPLORACIÓN CENTRADA EN CUELLO Y MEDIASTINO**:\n\n• El estudio tomográfico PET-CT se realiza centrado en la región del cuello y la parte alta del tórax (mediastino superior) a los 10-20 min post-inyección.\n• **Muy importante**: Durante la estancia en la camilla (unos 15-20 min) debes permanecer completamente quieto/a, relajado/a y procurando **evitar deglutir saliva de forma repetida o hablar**, para que la imagen de las glándulas paratiroides no sufra borrosidad por movimiento.`;
-}
-if (cleanText.includes("dura") || cleanText.includes("duracion") || cleanText.includes("tiempo")) {
-  return `⏱️ **DURACIÓN TOTAL: APROXIMADAMENTE 1 HORA Y MEDIA A 2 HORAS**:\n\n• Recepción y canalización de vía (~15 min).\n• Inyección de 18F-Colina y breve espera (~15 min).\n• Adquisición en el escáner tomográfico (~20 min).\n• **Revisión médica especializada de imágenes de cuello** (~30 min).`;
-}
+      if (cleanText.includes("ayuno") || cleanText.includes("horas") || cleanText.includes("sin comer")) {
+        return `⏱️ **AYUNO DE 4 A 6 HORAS**:\n\n• Requiere un ayuno estricto de alimentos sólidos entre **4 y 6 horas** antes de tu hora de cita.\n• Durante este periodo solo puedes beber agua sola pura.\n• Cena ligero la víspera (por ejemplo, pescado blanco con verduras cocidas).`;
+      }
+      if (cleanText.includes("cuello") || cleanText.includes("inmovil") || cleanText.includes("tragar") || cleanText.includes("camilla")) {
+        return `🎯 **EXPLORACIÓN CENTRADA EN CUELLO Y MEDIASTINO**:\n\n• El estudio tomográfico PET-CT se realiza centrado en la región del cuello y la parte alta del tórax (mediastino superior) a los 10-20 min post-inyección.\n• **Muy importante**: Durante la estancia en la camilla (unos 15-20 min) debes permanecer completamente quieto/a, relajado/a y procurando **evitar deglutir saliva de forma repetida o hablar**, para que la imagen de las glándulas paratiroides no sufra borrosidad por movimiento.`;
+      }
+      if (cleanText.includes("dura") || cleanText.includes("duracion") || cleanText.includes("tiempo")) {
+        return `⏱️ **DURACIÓN TOTAL: APROXIMADAMENTE 1 HORA Y MEDIA A 2 HORAS**:\n\n• Recepción y canalización de vía (~15 min).\n• Inyección de 18F-Colina y breve espera (~15 min).\n• Adquisición en el escáner tomográfico (~20 min).\n• **Revisión médica especializada de imágenes de cuello** (~30 min).`;
+      }
 
 
-  if (cleanText.includes("hola") || cleanText.includes("buenos dias") || cleanText.includes("buenas tardes") || cleanText.includes("buenas noches") || cleanText.includes("saludos") || cleanText.includes("quien eres") || cleanText.includes("ayuda")) {
-  return `¡Hola! Soy el asistente de enfermería virtual de Medicina Nuclear especializado en preparación para **PET 18F-Paratiroides**.
+      if (cleanText.includes("hola") || cleanText.includes("buenos dias") || cleanText.includes("buenas tardes") || cleanText.includes("buenas noches") || cleanText.includes("saludos") || cleanText.includes("quien eres") || cleanText.includes("ayuda")) {
+        return `¡Hola! Soy el asistente de enfermería virtual de Medicina Nuclear especializado en preparación para **PET 18F-Paratiroides**.
 
 Puedo responderte con precisión sobre **ayuno**, **dieta previa**, **agua**, **medicación**, **ropa**, **radiación tras la prueba** o **duración**. ¿Qué te gustaría saber?`;
-}
+      }
 
-if (cleanText.includes("gracias") || cleanText.includes("muchas gracias") || cleanText.includes("perfecto") || cleanText.includes("entendido") || cleanText.includes("vale") || cleanText.includes("adios") || cleanText.includes("hasta luego")) {
-  return `¡De nada! Es un placer orientarte. Si te surge cualquier otra duda antes de tu cita, vuelve a consultarme aquí cuando lo desees. Recuerda venir bien hidratado/a y puntual a tu cita para **PET 18F-Paratiroides**.`;
-}
+      if (cleanText.includes("gracias") || cleanText.includes("muchas gracias") || cleanText.includes("perfecto") || cleanText.includes("entendido") || cleanText.includes("vale") || cleanText.includes("adios") || cleanText.includes("hasta luego")) {
+        return `¡De nada! Es un placer orientarte. Si te surge cualquier otra duda antes de tu cita, vuelve a consultarme aquí cuando lo desees. Recuerda venir bien hidratado/a y puntual a tu cita para **PET 18F-Paratiroides**.`;
+      }
 
-if (cleanText.includes("chicle") || cleanText.includes("caramelo") || cleanText.includes("golosina")) {
-  return `🚫 **EVITA MASTICAR CHICLE O TOMAR CARAMELOS**:
+      if (cleanText.includes("chicle") || cleanText.includes("caramelo") || cleanText.includes("golosina")) {
+        return `🚫 **EVITA MASTICAR CHICLE O TOMAR CARAMELOS**:
 
 • Masticar o chupar de forma repetida activa los músculos mandibulares (maseteros, pterigoideos) y la lengua, lo que puede originar artefactos de captación en cuello y cabeza.
 • Se recomienda no consumir chicles ni caramelos la mañana de la prueba.`;
-}
+      }
 
-if (cleanText.includes("cafe") || cleanText.includes("te") || cleanText.includes("infusion") || cleanText.includes("energetica")) {
-  return `☕ **CAFÉ E INFUSIONES**:
+      if (cleanText.includes("cafe") || cleanText.includes("te") || cleanText.includes("infusion") || cleanText.includes("energetica")) {
+        return `☕ **CAFÉ E INFUSIONES**:
 
 • Se aconseja no tomar café, té ni bebidas energéticas antes de la prueba para mantener la frecuencia cardíaca y la presión arterial estables y acudir en un estado de reposo psicofísico óptimo.`;
-}
+      }
 
-if (cleanText.includes("fumar") || cleanText.includes("tabaco") || cleanText.includes("vapear") || cleanText.includes("nicotina")) {
-  return `🚫 **NO FUMES NI VAPEES** la mañana de la prueba ni durante las 12 horas previas:
+      if (cleanText.includes("fumar") || cleanText.includes("tabaco") || cleanText.includes("vapear") || cleanText.includes("nicotina")) {
+        return `🚫 **NO FUMES NI VAPEES** la mañana de la prueba ni durante las 12 horas previas:
 
 • La nicotina altera el tono vascular periférico y puede perjudicar la calidad diagnóstica de las imágenes.`;
-}
+      }
 
-if (cleanText.includes("alcohol") || cleanText.includes("cerveza") || cleanText.includes("vino")) {
-  return `🚫 **EVITA EL CONSUMO DE ALCOHOL** durante al menos **24 a 48 horas antes** de tu cita para no interferir en el metabolismo ni la hidratación tisular.`;
-}
+      if (cleanText.includes("alcohol") || cleanText.includes("cerveza") || cleanText.includes("vino")) {
+        return `🚫 **EVITA EL CONSUMO DE ALCOHOL** durante al menos **24 a 48 horas antes** de tu cita para no interferir en el metabolismo ni la hidratación tisular.`;
+      }
 
-if (cleanText.includes("medicacion") || cleanText.includes("pastilla") || cleanText.includes("tension") || cleanText.includes("corazon") || cleanText.includes("tiroides") || cleanText.includes("eutirox") || cleanText.includes("sintrom")) {
-  return `💊 **MEDICACIÓN HABITUAL**:
+      if (cleanText.includes("medicacion") || cleanText.includes("pastilla") || cleanText.includes("tension") || cleanText.includes("corazon") || cleanText.includes("tiroides") || cleanText.includes("eutirox") || cleanText.includes("sintrom")) {
+        return `💊 **MEDICACIÓN HABITUAL**:
 
 • **SÍ, debes tomar tu medicación crónica habitual** (pastillas de la tensión, corazón, tiroides, protectores gástricos, analgésicos o sintrom/anticoagulantes) a tu hora acostumbrada, acompañada de un vaso de **agua sola**.
 • Trae contigo la lista escrita actualizada de tus medicamentos a la cita.`;
-}
+      }
 
-if (cleanText.includes("ropa") || cleanText.includes("vestir") || cleanText.includes("metal") || cleanText.includes("joyas") || cleanText.includes("marcapasos") || cleanText.includes("protesis")) {
-  return `👕 **ROPA Y OBJETOS METÁLICOS**:
+      if (cleanText.includes("ropa") || cleanText.includes("vestir") || cleanText.includes("metal") || cleanText.includes("joyas") || cleanText.includes("marcapasos") || cleanText.includes("protesis")) {
+        return `👕 **ROPA Y OBJETOS METÁLICOS**:
 
 • Viste **ropa cómoda, holgada y cálida**, preferiblemente sin cremalleras metálicas, remaches ni aros en el sujetador.
 • Retira antes del escáner cadenas, collares y anillos.
 • **Marcapasos y prótesis metálicas**: El PET-CT es **totalmente seguro** con prótesis y marcapasos (no es un imán como la resonancia). Solo infórmalo al técnico.`;
-}
+      }
 
-if (cleanText.includes("claustro") || cleanText.includes("miedo") || cleanText.includes("cerrado") || cleanText.includes("tubo") || cleanText.includes("ansiedad")) {
-  return `🧘 **TRANQUILIDAD ANTE EL ESCÁNER PET-CT**:
+      if (cleanText.includes("claustro") || cleanText.includes("miedo") || cleanText.includes("cerrado") || cleanText.includes("tubo") || cleanText.includes("ansiedad")) {
+        return `🧘 **TRANQUILIDAD ANTE EL ESCÁNER PET-CT**:
 
 • El equipo PET-CT **NO es un tubo largo y cerrado** como las resonancias magnéticas.
 • Es un anillo corto y amplio (más de 70 cm de apertura), totalmente abierto por delante y por detrás, iluminado y ventilado.
 • Estarás monitorizado/a por cámara e interfonía en todo momento con un pulsador en la mano.`;
-}
+      }
 
-if (cleanText.includes("radiacion") || cleanText.includes("despues") || cleanText.includes("ninos") || cleanText.includes("bebe") || cleanText.includes("embarazada") || cleanText.includes("contacto")) {
-  return `☢️ **PROTECCIÓN RADIOLÓGICA TRAS LA PRUEBA**:
+      if (cleanText.includes("radiacion") || cleanText.includes("despues") || cleanText.includes("ninos") || cleanText.includes("bebe") || cleanText.includes("embarazada") || cleanText.includes("contacto")) {
+        return `☢️ **PROTECCIÓN RADIOLÓGICA TRAS LA PRUEBA**:
 
 • El radiofármaco inyectado decae con rapidez en pocas horas.
 • **Durante las 6 a 8 horas siguientes**:
@@ -3365,26 +3596,26 @@ if (cleanText.includes("radiacion") || cleanText.includes("despues") || cleanTex
   2. Bebe agua abundante y orina con frecuencia.
   3. En el inodoro, orina sentado/a, tira dos veces de la cadena y lávate bien las manos.
 • Al día siguiente podrás hacer vida completamente normal.`;
-}
+      }
 
-if (cleanText.includes("resultado") || cleanText.includes("informe") || cleanText.includes("cuando me dan")) {
-  return `📋 **ENTREGA DE RESULTADOS**:
+      if (cleanText.includes("resultado") || cleanText.includes("informe") || cleanText.includes("cuando me dan")) {
+        return `📋 **ENTREGA DE RESULTADOS**:
 
 • Los resultados no se entregan en el acto. El equipo médico especialista analiza y fusiona minuciosamente las imágenes.
 • El informe clínico definitivo se transmitirá directamente a tu médico solicitante y estará disponible en tu portal de salud en un plazo habitual de **48 a 72 horas laborables**.`;
-}
+      }
 
-if (cleanText.includes("cancelar") || cleanText.includes("anular") || cleanText.includes("cambiar cita") || cleanText.includes("aplazar") || cleanText.includes("posponer")) {
-  return `📅 **CANCELAR O MODIFICAR TU CITA**:
+      if (cleanText.includes("cancelar") || cleanText.includes("anular") || cleanText.includes("cambiar cita") || cleanText.includes("aplazar") || cleanText.includes("posponer")) {
+        return `📅 **CANCELAR O MODIFICAR TU CITA**:
 
 • Puedes tramitar la anulación mediante la pestaña **'¿Necesitas cancelar o aplazar tu prueba PET?'** en esta misma página.
 • Se remitirá una notificación por correo a **oscarferreiradavila@gmail.com** con tus datos para liberar el hueco en agenda.
 • Puedes abrir la pestaña de cancelación pulsando aquí: [ABRIR_CANCELACION]
 • O llamando directamente a nuestra unidad: [CONFIG_TEL].`;
-}
+      }
 
-if (cleanText.includes("otra consulta") || cleanText.includes("otras consultas") || cleanText.includes("otra pregunta") || cleanText.includes("llamar") || cleanText.includes("llamada") || cleanText.includes("telefono") || cleanText.includes("contacto")) {
-  return `📞 **OTRAS CONSULTAS / LLAMADA TELEFÓNICA DE ENFERMERÍA**:
+      if (cleanText.includes("otra consulta") || cleanText.includes("otras consultas") || cleanText.includes("otra pregunta") || cleanText.includes("llamar") || cleanText.includes("llamada") || cleanText.includes("telefono") || cleanText.includes("contacto")) {
+        return `📞 **OTRAS CONSULTAS / LLAMADA TELEFÓNICA DE ENFERMERÍA**:
 
 Si tienes cualquier otra consulta no contemplada en las respuestas automáticas, o necesitas una valoración personalizada:
 
@@ -3394,9 +3625,9 @@ Si tienes cualquier otra consulta no contemplada en las respuestas automáticas,
 👉 Pulsa aquí para abrir el formulario: [CONFIRMA_UNIDAD]
 
 O si lo prefieres, llámanos al [CONFIG_TEL].`;
-}
+      }
 
-return `No he identificado con certeza tu duda. Como asistente virtual de Enfermería para **PET 18F-Paratiroides** puedo informarte sobre:
+      return `No he identificado con certeza tu duda. Como asistente virtual de Enfermería para **PET 18F-Paratiroides** puedo informarte sobre:
 
 • **Ayuno e ingesta de agua**
 • **Dieta y recomendaciones específicas de PET 18F-Paratiroides**
@@ -3407,12 +3638,12 @@ return `No he identificado con certeza tu duda. Como asistente virtual de Enferm
 
 Si tienes **otras consultas** o necesitas que el equipo de enfermería te llame por teléfono para resolver tu duda particular, pulsa en [CONFIRMA_UNIDAD] para escribir tu consulta o enviar un audio junto a tu número de teléfono.`;
 
-}
+    }
 
     function createMessageElement(text, type) {
       const div = document.createElement("div");
       div.className = `message message-${type}`;
-      
+
       if (type === "user") {
         div.textContent = text;
       } else {
@@ -3424,7 +3655,7 @@ Si tienes **otras consultas** o necesitas que el equipo de enfermería te llame 
           .replace(/\[CONFIRMA_UNIDAD\]/g, '<a href="#" onclick="abrirModalConsultaEnfermeria(); return false;" class="nursing-consult-link" style="color: var(--sergas-blue); font-weight: 700; text-decoration: underline; cursor: pointer;">consulta directa con enfermería</a>')
           .replace(/\[ABRIR_CANCELACION\]/g, '<a href="#cancelHeaderTrigger" onclick="toggleCancelAccordion(true); return false;" style="display: inline-block; margin-top: 6px; background: rgba(220, 38, 38, 0.08); color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.3); padding: 5px 12px; border-radius: 6px; font-weight: 700; text-decoration: none; cursor: pointer;">🚫 Abrir pestaña de cancelación</a>')
           .replace(/\[CONFIG_TEL\]/g, `<a href="tel:${CONFIG.TELEFONO.replace(/\\s+/g, '')}" style="color: var(--sergas-blue); font-weight: 700;">${CONFIG.TELEFONO}</a>`);
-        
+
         if (type === "bot") {
           div.innerHTML = `
             <div class="bot-author-tag">
@@ -3541,7 +3772,7 @@ Si tienes **otras consultas** o necesitas que el equipo de enfermería te llame 
       if (mediaRecorder && mediaRecorder.state === "recording") {
         mediaRecorder.stop();
         if (speechRecognizer) {
-          try { speechRecognizer.stop(); } catch(e){}
+          try { speechRecognizer.stop(); } catch (e) { }
         }
         btn.style.backgroundColor = "var(--danger)";
         btn.textContent = "🔴 Volver a grabar nota de voz";
@@ -3575,7 +3806,7 @@ Si tienes **otras consultas** o necesitas que el equipo de enfermería te llame 
           mediaRecorder.start();
 
           if (speechRecognizer) {
-            try { speechRecognizer.start(); } catch(e){}
+            try { speechRecognizer.start(); } catch (e) { }
           }
 
           btn.style.backgroundColor = "#475569";
@@ -3592,7 +3823,7 @@ Si tienes **otras consultas** o necesitas que el equipo de enfermería te llame 
             timerSpan.textContent = `${mins}:${secs}`;
           }, 1000);
 
-        } catch(err) {
+        } catch (err) {
           console.error("Permiso de micrófono denegado:", err);
           alert("No se pudo acceder al micrófono. Por favor, concede permiso de audio o utiliza el mensaje escrito.");
         }
@@ -3603,7 +3834,7 @@ Si tienes **otras consultas** o necesitas que el equipo de enfermería te llame 
       if (mediaRecorder && mediaRecorder.state === "recording") {
         mediaRecorder.stop();
         if (speechRecognizer) {
-          try { speechRecognizer.stop(); } catch(e){}
+          try { speechRecognizer.stop(); } catch (e) { }
         }
         clearInterval(recordingInterval);
       }
@@ -3699,41 +3930,57 @@ Si tienes **otras consultas** o necesitas que el equipo de enfermería te llame 
   </script>
 
   <!-- MODAL DE CONFIGURACIÓN DE IA GEMINI -->
-  <div class="modal-backdrop" id="geminiConfigModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(8,41,61,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99999;padding:1rem;box-sizing:border-box;">
-    <div class="modal-box" style="background:#ffffff;width:100%;max-width:460px;border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;box-sizing:border-box;border-top:4px solid #007eb4;font-family:inherit;">
+  <div class="modal-backdrop" id="geminiConfigModal"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(8,41,61,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99999;padding:1rem;box-sizing:border-box;">
+    <div class="modal-box"
+      style="background:#ffffff;width:100%;max-width:460px;border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;box-sizing:border-box;border-top:4px solid #007eb4;font-family:inherit;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
         <h3 style="margin:0;font-size:1.1rem;font-weight:800;color:#004868;display:flex;align-items:center;gap:6px;">
           <span>✨</span> Inteligencia Artificial Gemini
         </h3>
-        <button type="button" onclick="toggleChatConfigModal(false)" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#64748b;">✕</button>
+        <button type="button" onclick="toggleChatConfigModal(false)"
+          style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#64748b;">✕</button>
       </div>
       <p style="font-size:0.82rem;color:#64748b;margin-bottom:1rem;line-height:1.45;">
-        Conecta el modelo <strong>Google Gemini</strong> para comprensión total del lenguaje natural médico, empatía clínica y respuestas conversacionales adaptadas. Si no se introduce clave, el asistente utilizará el <strong>motor clínico offline SERGAS</strong>.
+        Conecta el modelo <strong>Google Gemini</strong> para comprensión total del lenguaje natural médico, empatía
+        clínica y respuestas conversacionales adaptadas. Si no se introduce clave, el asistente utilizará el
+        <strong>motor clínico offline SERGAS</strong>.
       </p>
-      
+
       <div style="margin-bottom:0.85rem;">
-        <label for="geminiApiKeyInput" style="display:block;font-size:0.82rem;font-weight:700;color:#004868;margin-bottom:0.35rem;">API Key de Google Gemini:</label>
+        <label for="geminiApiKeyInput"
+          style="display:block;font-size:0.82rem;font-weight:700;color:#004868;margin-bottom:0.35rem;">API Key de Google
+          Gemini:</label>
         <div style="position:relative;display:flex;align-items:center;">
-          <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." style="width:100%;padding:0.65rem 2.4rem 0.65rem 0.9rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.88rem;font-family:monospace;box-sizing:border-box;">
-          <button type="button" onclick="toggleShowApiKey()" style="position:absolute;right:8px;background:none;border:none;font-size:0.95rem;color:#64748b;cursor:pointer;" title="Mostrar u ocultar clave">👁️</button>
+          <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..."
+            style="width:100%;padding:0.65rem 2.4rem 0.65rem 0.9rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.88rem;font-family:monospace;box-sizing:border-box;">
+          <button type="button" onclick="toggleShowApiKey()"
+            style="position:absolute;right:8px;background:none;border:none;font-size:0.95rem;color:#64748b;cursor:pointer;"
+            title="Mostrar u ocultar clave">👁️</button>
         </div>
         <div style="margin-top:6px;">
-          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size:0.76rem;color:#007eb4;text-decoration:none;font-weight:600;">🔗 Obtener clave gratuita en Google AI Studio (aistudio.google.com)</a>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener"
+            style="font-size:0.76rem;color:#007eb4;text-decoration:none;font-weight:600;">🔗 Obtener clave gratuita en
+            Google AI Studio (aistudio.google.com)</a>
         </div>
       </div>
 
-      <div id="geminiKeyStatus" style="font-size:0.78rem;padding:8px 12px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:1rem;line-height:1.4;color:#334155;">
+      <div id="geminiKeyStatus"
+        style="font-size:0.78rem;padding:8px 12px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:1rem;line-height:1.4;color:#334155;">
         Comprobando estado del motor...
       </div>
 
       <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
-        <button type="button" onclick="toggleChatConfigModal(false)" style="background:#e2e8f0;color:#334155;border:none;font-size:0.85rem;padding:0.55rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;">Cerrar</button>
-        <button type="button" onclick="saveGeminiApiKey()" style="background:#007eb4;color:#ffffff;border:none;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:700;">Guardar y Activar</button>
+        <button type="button" onclick="toggleChatConfigModal(false)"
+          style="background:#e2e8f0;color:#334155;border:none;font-size:0.85rem;padding:0.55rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;">Cerrar</button>
+        <button type="button" onclick="saveGeminiApiKey()"
+          style="background:#007eb4;color:#ffffff;border:none;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:700;">Guardar
+          y Activar</button>
       </div>
     </div>
   </div>
 
-  <script src="assets/pet_glucose_sync.js"></script>
   <script src="assets/pet_chat_human_stream.js"></script>
 </body>
+
 </html>

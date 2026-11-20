@@ -325,6 +325,7 @@ server.mount_proc '/api/sync-database' do |req, res|
   })
 end
 
+# Endpoint para registros y consultas de enfermería desde las audioguías
 # -------------------------------------------------------------
 # BASE DE DATOS Y CONEXIÓN CON ENFERMERÍA (SQLITE Y AUDIOGUÍAS)
 # -------------------------------------------------------------
@@ -366,6 +367,8 @@ server.mount_proc '/api/enfermeria/base_datos' do |req, res|
     next
   end
 
+  res.status = 201
+  res.body = JSON.generate({ status: 'ok', message: 'Consulta registrada correctamente en enfermería' })
   begin
     data = JSON.parse(req.body.to_s) rescue {}
     db = get_enf_db

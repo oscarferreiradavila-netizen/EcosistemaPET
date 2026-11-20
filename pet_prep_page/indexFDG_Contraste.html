@@ -1,29 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Audioguía oficial de preparación para PET FDG con contraste yodado intravenoso administrado en máquina para TAC con contraste: función renal, ayuno de 6 horas, alergias al yodo, premedicación y asistente virtual de enfermería de Galaria - SERGAS.">
+  <meta name="description"
+    content="Audioguía oficial de preparación para PET FDG con contraste yodado intravenoso administrado en máquina para TAC con contraste: función renal, ayuno de 6 horas, alergias al yodo, premedicación y asistente virtual de enfermería de Galaria - SERGAS.">
   <title>PET FDG con Contraste | Audioguía Oficial de Preparación y Asistente Virtual</title>
-  
+
   <!-- Fuente Google Fonts: Open Sans (Identidad Corporativa Galaria / SERGAS) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <style>
     /* ==========================================================================
        VARIABLES Y SISTEMA DE DISEÑO GALARIA - SERGAS (SERVIZO GALEGO DE SAÚDE)
        ========================================================================== */
     :root {
-      --sergas-blue: #007eb4;             /* Azul principal Galaria / Sergas */
-      --sergas-blue-hover: #005b82;       /* Azul interacción */
-      --sergas-navy: #004868;            /* Azul escuro corporativo titulares */
-      --sergas-dark: #08293d;            /* Azul profundo institucional */
-      --sergas-soft-blue: #e6f4fa;       /* Azul pastel fondos e etiquetas */
-      --sergas-subtle: #f0f7fb;          /* Fondo suave destacados */
-      
-      --contrast-amber: #b45309;         /* Tono advertencia contraste */
+      --sergas-blue: #007eb4;
+      /* Azul principal Galaria / Sergas */
+      --sergas-blue-hover: #005b82;
+      /* Azul interacción */
+      --sergas-navy: #004868;
+      /* Azul escuro corporativo titulares */
+      --sergas-dark: #08293d;
+      /* Azul profundo institucional */
+      --sergas-soft-blue: #e6f4fa;
+      /* Azul pastel fondos e etiquetas */
+      --sergas-subtle: #f0f7fb;
+      /* Fondo suave destacados */
+
+      --contrast-amber: #b45309;
+      /* Tono advertencia contraste */
       --contrast-soft-amber: #fffbeb;
       --contrast-border: #fcd34d;
 
@@ -31,35 +41,44 @@
       --primary-hover: #005b82;
       --primary-dark: #004868;
       --accent-cyan: #0284c7;
-      
-      --bg-page: #f4f7f9;                /* Fondo limpo sanitario */
-      --bg-card: #ffffff;                /* Tarxetas e paneis brancos */
+
+      --bg-page: #f4f7f9;
+      /* Fondo limpo sanitario */
+      --bg-card: #ffffff;
+      /* Tarxetas e paneis brancos */
       --bg-card-hover: #f8fafc;
-      --bg-elevated: #e2e8f0;            /* Bordes institucionais */
+      --bg-elevated: #e2e8f0;
+      /* Bordes institucionais */
       --border-subtle: #d6e2e9;
-      
-      --danger: #dc2626;                 /* Alertas e cancelación */
+
+      --danger: #dc2626;
+      /* Alertas e cancelación */
       --danger-hover: #b91c1c;
       --danger-bg: #fef2f2;
       --danger-border: #fca5a5;
-      
-      --warning: #d97706;                /* Avisos precaución */
+
+      --warning: #d97706;
+      /* Avisos precaución */
       --warning-bg: #fffbeb;
       --warning-border: #fde68a;
-      
-      --success: #16a34a;                /* Verificación clínica */
+
+      --success: #16a34a;
+      /* Verificación clínica */
       --success-bg: #f0fdf4;
       --success-border: #86efac;
 
-      --text-main: #1e293b;              /* Texto principal de alta lexibilidade */
-      --text-muted: #526071;             /* Texto secundario */
-      --text-dim: #718096;               /* Notas ao pé e marcas */
-      
+      --text-main: #1e293b;
+      /* Texto principal de alta lexibilidade */
+      --text-muted: #526071;
+      /* Texto secundario */
+      --text-dim: #718096;
+      /* Notas ao pé e marcas */
+
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 14px;
       --radius-full: 9999px;
-      
+
       --transition-fast: 0.2s ease;
       --transition-normal: 0.3s ease;
       --shadow-sm: 0 1px 3px rgba(0, 40, 70, 0.06);
@@ -68,7 +87,9 @@
       --shadow-blue: 0 4px 16px rgba(0, 126, 180, 0.25);
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -113,7 +134,7 @@
       color: #ffffff;
       font-size: 0.8rem;
       padding: 0.45rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .sergas-top-container {
@@ -306,9 +327,17 @@
     }
 
     @keyframes pulseDot {
-      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
-      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
     }
 
     .patient-study-tag {
@@ -424,7 +453,8 @@
     .video-container {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      padding-top: 56.25%;
+      /* 16:9 Aspect Ratio */
       background: #09131d;
       border-radius: var(--radius-md);
       overflow: hidden;
@@ -440,11 +470,11 @@
       border: 0;
     }
 
-    
 
-    
 
-    
+
+
+
 
     /* ==========================================================================
        RESUMEN EN 3 TARJETAS VISUALES
@@ -607,7 +637,9 @@
       color: var(--sergas-navy);
     }
 
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
       padding: 0.65rem 0.85rem;
       border-radius: var(--radius-sm);
       border: 1.5px solid #cbd5e1;
@@ -619,7 +651,9 @@
       outline: none;
     }
 
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
       border-color: var(--sergas-blue);
       box-shadow: 0 0 0 3px rgba(0, 126, 180, 0.15);
     }
@@ -703,7 +737,8 @@
       transition: var(--transition-fast);
     }
 
-    .reason-menu-btn:hover, .reason-menu-btn.active {
+    .reason-menu-btn:hover,
+    .reason-menu-btn.active {
       border-color: var(--danger);
       background: #fef2f2;
       color: var(--danger);
@@ -826,8 +861,15 @@
     }
 
     @keyframes chatFadeIn {
-      from { opacity: 0; transform: translateY(12px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .chat-header {
@@ -999,8 +1041,15 @@
     }
 
     @keyframes blinkCursor {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
+
+      0%,
+      100% {
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
     }
 
     .chat-chips-area {
@@ -1096,8 +1145,15 @@
     }
 
     @keyframes modalSlide {
-      from { transform: translateY(16px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateY(16px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     .modal-header {
@@ -1133,8 +1189,14 @@
     }
 
     @media (max-width: 768px) {
-      .hero-banner h1 { font-size: 1.5rem; }
-      .summary-grid { grid-template-columns: 1fr; }
+      .hero-banner h1 {
+        font-size: 1.5rem;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
       .chat-window {
         right: 0.75rem;
         left: 0.75rem;
@@ -1143,7 +1205,7 @@
         height: 70vh;
       }
     }
-  
+
     /* ==========================================================================
        CHATBOT INTERACTIVO CON VOZ Y GEMINI IA (SERGAS)
        ========================================================================== */
@@ -1236,9 +1298,20 @@
     }
 
     @keyframes pulseMic {
-      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); }
-      70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); transform: scale(1.08); }
-      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+        transform: scale(1);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+        transform: scale(1.08);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+        transform: scale(1);
+      }
     }
 
     .bot-speak-btn {
@@ -1271,8 +1344,17 @@
     }
 
     @keyframes pulseVoice {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(1.03); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.7;
+        transform: scale(1.03);
+      }
     }
 
     .chat-msg-actions {
@@ -1286,197 +1368,222 @@
       border-color: #dc2626 !important;
       background: #fff5f5 !important;
     }
-
   </style>
 </head>
+
 <body>
-<!-- ==============================================================================
+  <!-- ==============================================================================
      BARRA FIXA SUPERIOR: REVISOR OFICIAL DE AUDIOGUÍAS (13 PROTOCOLOS)
      ============================================================================== -->
-<style id="audioguia-switcher-styles">
-.audioguia-official-topbar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(135deg, #00364e 0%, #004868 60%, #00608a 100%);
-  color: #ffffff;
-  padding: 0.5rem 1.25rem;
-  z-index: 999999;
-  box-shadow: 0 4px 18px rgba(0, 30, 50, 0.4);
-  border-bottom: 2px solid #007eb4;
-  font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
-  box-sizing: border-box;
-}
-.audioguia-official-topbar * {
-  box-sizing: border-box;
-}
-.topbar-wrapper {
-  max-width: 1320px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-}
-.topbar-left-box {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.btn-return-portal {
-  background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 5px 11px;
-  border-radius: 7px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-.btn-return-portal:hover {
-  background: #ffffff;
-  color: #004868;
-  transform: translateY(-1px);
-}
-.topbar-label-tag {
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  color: #bae6fd;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.topbar-nav-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  flex-wrap: wrap;
-}
-.btn-topbar-nav {
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  padding: 5px 12px;
-  border-radius: 7px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-.btn-topbar-nav:hover {
-  background: #ffffff;
-  color: #004868;
-  transform: translateY(-1px);
-}
-.topbar-dropdown-select {
-  background: #ffffff;
-  color: #00364e;
-  font-weight: 700;
-  font-size: 0.82rem;
-  padding: 5px 10px;
-  border-radius: 7px;
-  border: 2px solid #007eb4;
-  outline: none;
-  cursor: pointer;
-  max-width: 380px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
-.topbar-right-box {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-.topbar-supplier-pill {
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 3px 9px;
-  border-radius: 6px;
-  background: #0284c7; color: #fff;
-  white-space: nowrap;
-}
-.topbar-counter-pill {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  font-weight: 800;
-  background: rgba(0, 0, 0, 0.3);
-  color: #38bdf8;
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  white-space: nowrap;
-}
-@media (max-width: 900px) {
-  .topbar-wrapper {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .topbar-nav-controls {
-    justify-content: space-between;
-  }
-  .topbar-dropdown-select {
-    max-width: 100%;
-    flex: 1;
-  }
-}
-</style>
+  <style id="audioguia-switcher-styles">
+    .audioguia-official-topbar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #00364e 0%, #004868 60%, #00608a 100%);
+      color: #ffffff;
+      padding: 0.5rem 1.25rem;
+      z-index: 999999;
+      box-shadow: 0 4px 18px rgba(0, 30, 50, 0.4);
+      border-bottom: 2px solid #007eb4;
+      font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+      box-sizing: border-box;
+    }
 
-<div class="audioguia-official-topbar">
-  <div class="topbar-wrapper">
-    <div class="topbar-left-box">
-      <a href="/index.html#seccion-audioguias" class="btn-return-portal" title="Volver ao Enlace Maestro e ver todas as audioguías">
-        🏛️ <strong>Enlace Maestro</strong>
-      </a>
-      <span class="topbar-label-tag">
-        🎧 REVISOR OFICIAL (03/13)
-      </span>
-      <span class="topbar-supplier-pill">🏢 Ciclotrón</span>
-    </div>
+    .audioguia-official-topbar * {
+      box-sizing: border-box;
+    }
 
-    <div class="topbar-nav-controls">
-      <a href="indexFDG.html" class="btn-topbar-nav" title="Ir á anterior: 18F-FDG Oncolóxico (Diabéticos · Con envío de glicemia)">
-        ⬅️ Anterior
-      </a>
-      <select class="topbar-dropdown-select" onchange="window.location.href = this.value;" title="Cambiar a calquera das 12 audioguías">
-        <option value="indexFDG_NoDiabetico.html" >[01/12] 18F-FDG Oncolóxico (Non Diabéticos · Sen glicemia) (Ciclotrón)</option>
-        <option value="indexFDG.html" >[02/12] 18F-FDG Oncolóxico (Diabéticos · Con envío de glicemia) (Ciclotrón)</option>
-        <option value="indexFDG_Contraste.html" selected>[03/12] 18F-FDG con Contraste Iodado IV (Ciclotrón)</option>
-        <option value="indexFDG_Endocarditis.html" >[04/12] 18F-FDG Endocarditis Infecciosa (Ciclotrón)</option>
-        <option value="indexFDG_Vasculitis.html" >[05/12] 18F-FDG Vasculitis Grandes Vasos (Ciclotrón)</option>
-        <option value="indexFDG_Neurologico.html" >[06/12] 18F-FDG Neurolóxico / Demencias (Ciclotrón)</option>
-        <option value="indexFDG_Neurofisioneurologia.html" >[07/12] 18F-FDG Neurofisioneuroloxía / EEG (Ciclotrón)</option>
-        <option value="indexga68PSMA.html" >[08/12] 68Ga-PSMA Próstata (Radiofarmacia)</option>
-        <option value="indexga68DOTATOC.html" >[09/12] 68Ga-DOTATOC / Neuroendócrinos (Radiofarmacia)</option>
-        <option value="indexf18PSMA.html" >[10/12] 18F-PSMA Próstata (Curium Madrid)</option>
-        <option value="indexf18Colina.html" >[11/12] 18F-Colina Próstata (Ciclotrón)</option>
-        <option value="indexColinaParatiroides.html" >[12/12] 18F-Colina Paratiroides (Ciclotrón)</option>
-      </select>
-      <a href="indexFDG_Endocarditis.html" class="btn-topbar-nav" title="Ir á seguinte: 18F-FDG Endocarditis Infecciosa">
-        Seguinte ➡️
-      </a>
-    </div>
+    .topbar-wrapper {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
 
-    <div class="topbar-right-box">
-      <span class="topbar-counter-pill">03 / 12</span>
-      <a href="/index.html#seccion-audioguias" class="btn-return-portal" style="background: rgba(2, 132, 199, 0.3); border-color: #38bdf8;">
-        📋 Catálogo das 12
-      </a>
+    .topbar-left-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-return-portal {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 7px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-return-portal:hover {
+      background: #ffffff;
+      color: #004868;
+      transform: translateY(-1px);
+    }
+
+    .topbar-label-tag {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: #bae6fd;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .topbar-nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-topbar-nav {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 5px 12px;
+      border-radius: 7px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-topbar-nav:hover {
+      background: #ffffff;
+      color: #004868;
+      transform: translateY(-1px);
+    }
+
+    .topbar-dropdown-select {
+      background: #ffffff;
+      color: #00364e;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 5px 10px;
+      border-radius: 7px;
+      border: 2px solid #007eb4;
+      outline: none;
+      cursor: pointer;
+      max-width: 380px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .topbar-right-box {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .topbar-supplier-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: #0284c7;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .topbar-counter-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 800;
+      background: rgba(0, 0, 0, 0.3);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .topbar-nav-controls {
+        justify-content: space-between;
+      }
+
+      .topbar-dropdown-select {
+        max-width: 100%;
+        flex: 1;
+      }
+    }
+  </style>
+
+  <div class="audioguia-official-topbar">
+    <div class="topbar-wrapper">
+      <div class="topbar-left-box">
+        <a href="/index.html#seccion-audioguias" class="btn-return-portal"
+          title="Volver ao Enlace Maestro e ver todas as audioguías">
+          🏛️ <strong>Enlace Maestro</strong>
+        </a>
+        <span class="topbar-label-tag">
+          🎧 REVISOR OFICIAL (03/13)
+        </span>
+        <span class="topbar-supplier-pill">🏢 Ciclotrón</span>
+      </div>
+
+      <div class="topbar-nav-controls">
+        <a href="indexFDG.html" class="btn-topbar-nav"
+          title="Ir á anterior: 18F-FDG Oncolóxico (Diabéticos · Con envío de glicemia)">
+          ⬅️ Anterior
+        </a>
+        <select class="topbar-dropdown-select" onchange="window.location.href = this.value;"
+          title="Cambiar a calquera das 12 audioguías">
+          <option value="indexFDG_NoDiabetico.html">[01/12] 18F-FDG Oncolóxico (Non Diabéticos · Sen glicemia)
+            (Ciclotrón)</option>
+          <option value="indexFDG.html">[02/12] 18F-FDG Oncolóxico (Diabéticos · Con envío de glicemia) (Ciclotrón)
+          </option>
+          <option value="indexFDG_Contraste.html" selected>[03/12] 18F-FDG con Contraste Iodado IV (Ciclotrón)</option>
+          <option value="indexFDG_Endocarditis.html">[04/12] 18F-FDG Endocarditis Infecciosa (Ciclotrón)</option>
+          <option value="indexFDG_Vasculitis.html">[05/12] 18F-FDG Vasculitis Grandes Vasos (Ciclotrón)</option>
+          <option value="indexFDG_Neurologico.html">[06/12] 18F-FDG Neurolóxico / Demencias (Ciclotrón)</option>
+          <option value="indexFDG_Neurofisioneurologia.html">[07/12] 18F-FDG Neurofisioneuroloxía / EEG (Ciclotrón)
+          </option>
+          <option value="indexga68PSMA.html">[08/12] 68Ga-PSMA Próstata (Radiofarmacia)</option>
+          <option value="indexga68DOTATOC.html">[09/12] 68Ga-DOTATOC / Neuroendócrinos (Radiofarmacia)</option>
+          <option value="indexf18PSMA.html">[10/12] 18F-PSMA Próstata (Curium Madrid)</option>
+          <option value="indexf18Colina.html">[11/12] 18F-Colina Próstata (Ciclotrón)</option>
+          <option value="indexColinaParatiroides.html">[12/12] 18F-Colina Paratiroides (Ciclotrón)</option>
+        </select>
+        <a href="indexFDG_Endocarditis.html" class="btn-topbar-nav"
+          title="Ir á seguinte: 18F-FDG Endocarditis Infecciosa">
+          Seguinte ➡️
+        </a>
+      </div>
+
+      <div class="topbar-right-box">
+        <span class="topbar-counter-pill">03 / 12</span>
+        <a href="/index.html#seccion-audioguias" class="btn-return-portal"
+          style="background: rgba(2, 132, 199, 0.3); border-color: #38bdf8;">
+          📋 Catálogo das 12
+        </a>
+      </div>
     </div>
   </div>
-</div>
-<!-- FIN BARRA FIXA REVISOR -->
+  <!-- FIN BARRA FIXA REVISOR -->
 
 
 
@@ -1501,7 +1608,8 @@
   <header class="galaria-main-header">
     <div class="container brand-row">
       <div class="brand-logo-area">
-        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="galaria-brand-logo" id="galariaLogoHeader">
+        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="galaria-brand-logo"
+          id="galariaLogoHeader">
       </div>
       <div class="hospital-unit-info">
         <span class="unit-tag">UNIDADE DE MEDICINA NUCLEAR E DIAGNÓSTICO MOLECULAR</span>
@@ -1514,11 +1622,15 @@
   <section class="hero-banner">
     <div class="container">
       <div class="header-badge">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v4h4v2h-4v4h-2v-4H7v-2h4V7z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v4h4v2h-4v4h-2v-4H7v-2h4V7z" />
+        </svg>
         <span>PROTOCOLO OFICIAL: PET FDG CON CONTRASTE YODADO</span>
       </div>
       <h1>Audioguía Oficial: PET FDG con Contraste</h1>
-      <p class="subtitle">Instrucciones asistenciales de preparación para pacientes citados a exploración PET/CT metabólica (¹⁸F-FDG) con administración endovenosa de contraste yodado en máquina para el TAC con contraste.</p>
+      <p class="subtitle">Instrucciones asistenciales de preparación para pacientes citados a exploración PET/CT
+        metabólica (¹⁸F-FDG) con administración endovenosa de contraste yodado en máquina para el TAC con contraste.</p>
 
       <!-- TARJETA OFICIAL DEL PACIENTE CITADO -->
       <div id="patient-card-container" class="patient-card-container">
@@ -1544,11 +1656,14 @@
           </div>
           <div class="patient-data-item">
             <span class="p-label">📍 LUGAR Y SALA:</span>
-            <span class="p-value" style="font-size: 0.92rem; font-weight: 700; color: var(--sergas-navy);">Hospital Meixoeiro · Planta -1 (sala de espera de Medicina Nuclear – PET)</span>
+            <span class="p-value" style="font-size: 0.92rem; font-weight: 700; color: var(--sergas-navy);">Hospital
+              Meixoeiro · Planta -1 (sala de espera de Medicina Nuclear – PET)</span>
           </div>
         </div>
-        <div style="margin-top: 0.5rem; padding: 0.5rem 1rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end;">
-          <button type="button" onclick="toggleCancelAccordion(true)" style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.3); color: #dc2626; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
+        <div
+          style="margin-top: 0.5rem; padding: 0.5rem 1rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end;">
+          <button type="button" onclick="toggleCancelAccordion(true)"
+            style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.3); color: #dc2626; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
             ⚠️ ¿No puedes asistir a tu cita? Cancelar o aplazar prueba
           </button>
         </div>
@@ -1556,12 +1671,20 @@
 
       <!-- ALERTA CLÍNICA PRINCIPAL: AYUNO DE 6H, FUNCIÓN RENAL Y ALERGIAS AL YODO -->
       <div class="alert-banner-contraste" role="alert">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+        </svg>
         <div>
           <strong>📋 PROTOCOLO ASISTENCIAL: PET FDG CON CONTRASTE YODADO EN MÁQUINA</strong><br>
-          • <strong>Ayuno estricto de 6 horas</strong> de alimentos sólidos (básico para el metabolismo de FDG y para prevenir náuseas durante la inyección de contraste en la máquina).<br>
-          • <strong>Función renal:</strong> Es necesario disponer de analítica reciente con <em>Creatinina y Filtrado Glomerular (FG)</em>.<br>
-          • ⚠️ <strong>ALERGIAS AL CONTRASTE YODADO:</strong> Se administra una <strong>cantidad pequeña de contraste yodado</strong> para minimizar posibles alergias. No obstante, el contraste <strong>puede provocar reacciones alérgicas</strong>. Si eres alérgico al yodo o tuviste alguna reacción previa en un TAC o contraste, <strong>debes avisarlo inmediatamente</strong> a la unidad para recibir <strong>premedicación antialérgica con corticoides y antihistamínicos (12h y 2h antes)</strong>.
+          • <strong>Ayuno estricto de 6 horas</strong> de alimentos sólidos (básico para el metabolismo de FDG y para
+          prevenir náuseas durante la inyección de contraste en la máquina).<br>
+          • <strong>Función renal:</strong> Es necesario disponer de analítica reciente con <em>Creatinina y Filtrado
+            Glomerular (FG)</em>.<br>
+          • ⚠️ <strong>ALERGIAS AL CONTRASTE YODADO:</strong> Se administra una <strong>cantidad pequeña de contraste
+            yodado</strong> para minimizar posibles alergias. No obstante, el contraste <strong>puede provocar
+            reacciones alérgicas</strong>. Si eres alérgico al yodo o tuviste alguna reacción previa en un TAC o
+          contraste, <strong>debes avisarlo inmediatamente</strong> a la unidad para recibir <strong>premedicación
+            antialérgica con corticoides y antihistamínicos (12h y 2h antes)</strong>.
         </div>
       </div>
     </div>
@@ -1574,14 +1697,18 @@
     <section class="video-section" aria-labelledby="video-heading">
       <div class="video-header-info">
         <h2 id="video-heading" class="video-title">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--primary-hover)" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          Vídeo Explicativo: <span id="videoTestTitle" style="color: var(--sergas-blue); font-weight: 800;">Preparación para PET FDG con Contraste</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--primary-hover)" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          Vídeo Explicativo: <span id="videoTestTitle" style="color: var(--sergas-blue); font-weight: 800;">Preparación
+            para PET FDG con Contraste</span>
         </h2>
         <span class="video-duration">Duración: 4 min</span>
       </div>
 
       <div class="video-container">
-        <video id="petVideo" controls poster="galaria_logo.jpg" preload="metadata" title="Vídeo de instrucción para paciente de PET FDG con Contraste">
+        <video id="petVideo" controls poster="galaria_logo.jpg" preload="metadata"
+          title="Vídeo de instrucción para paciente de PET FDG con Contraste">
           <source id="videoSource" src="../pet_prep_page/Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
           <source src="../Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
           <source src="Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
@@ -1592,15 +1719,20 @@
 
     <!-- RESUMEN EN 3 TARJETAS VISUALES -->
     <section class="summary-grid" aria-label="Instrucciones esenciales de PET FDG con Contraste">
-      
+
       <!-- TARJETA 1: AYUNO Y FUNCIÓN RENAL -->
       <article class="card card-blue">
         <div class="card-icon blue">⏱️</div>
         <h3 class="card-title">1. Ayuno de 6h y Función Renal</h3>
         <ul class="card-list">
-          <li><strong>Ayuno estricto de 6 horas:</strong> No tomes alimentos sólidos ni bebidas azucaradas durante las 6 horas previas a la prueba. Esto asegura una glucosa baja para el trazador FDG y previene mareos o náuseas con el contraste.</li>
-          <li><strong>Hidratación con agua:</strong> Bebe abundante agua sola (1 litro) antes y después para proteger los riñones y acelerar la eliminación urinaria del contraste.</li>
-          <li><strong>Analítica con función renal:</strong> Se requiere analítica de sangre reciente con <em>Creatinina y Filtrado Glomerular</em>. Si tomas <em>Metformina</em> y tu riñón está afectado, debe suspenderse 48h tras la prueba.</li>
+          <li><strong>Ayuno estricto de 6 horas:</strong> No tomes alimentos sólidos ni bebidas azucaradas durante las 6
+            horas previas a la prueba. Esto asegura una glucosa baja para el trazador FDG y previene mareos o náuseas
+            con el contraste.</li>
+          <li><strong>Hidratación con agua:</strong> Bebe abundante agua sola (1 litro) antes y después para proteger
+            los riñones y acelerar la eliminación urinaria del contraste.</li>
+          <li><strong>Analítica con función renal:</strong> Se requiere analítica de sangre reciente con <em>Creatinina
+              y Filtrado Glomerular</em>. Si tomas <em>Metformina</em> y tu riñón está afectado, debe suspenderse 48h
+            tras la prueba.</li>
         </ul>
       </article>
 
@@ -1609,10 +1741,18 @@
         <div class="card-icon amber">💉</div>
         <h3 class="card-title">2. Inyección en Máquina y Alergias</h3>
         <ul class="card-list">
-          <li><strong>Inyección en la máquina:</strong> El contraste yodado se inyecta directamente mientras estás tumbado/a en la camilla del PET/CT mediante un inyector automático al realizar el TAC. Permite delimitar con precisión arterias, venas y órganos.</li>
-          <li><strong>Cantidad pequeña de contraste:</strong> Se administra únicamente una <strong>cantidad pequeña de contraste yodado</strong> (la dosis mínima estrictamente necesaria), precisamente por seguridad para <strong>minimizar al máximo el riesgo de alergias</strong> o intolerancias.</li>
-          <li>⚠️ <strong>Riesgo de reacciones alérgicas:</strong> A pesar de la dosis reducida, el contraste yodado <strong>puede provocar alergias</strong> (picor, ronchas en piel, hinchazón de cara/labios o dificultad para respirar).</li>
-          <li><strong>Premedicación obligatoria:</strong> Si eres alérgico/a al yodo o tuviste una reacción previa, <strong>avísanos antes</strong>: deberás tomar una pauta antialérgica con corticoides y antihistamínicos <strong>12 horas y 2 horas antes de tu cita</strong>.</li>
+          <li><strong>Inyección en la máquina:</strong> El contraste yodado se inyecta directamente mientras estás
+            tumbado/a en la camilla del PET/CT mediante un inyector automático al realizar el TAC. Permite delimitar con
+            precisión arterias, venas y órganos.</li>
+          <li><strong>Cantidad pequeña de contraste:</strong> Se administra únicamente una <strong>cantidad pequeña de
+              contraste yodado</strong> (la dosis mínima estrictamente necesaria), precisamente por seguridad para
+            <strong>minimizar al máximo el riesgo de alergias</strong> o intolerancias.</li>
+          <li>⚠️ <strong>Riesgo de reacciones alérgicas:</strong> A pesar de la dosis reducida, el contraste yodado
+            <strong>puede provocar alergias</strong> (picor, ronchas en piel, hinchazón de cara/labios o dificultad para
+            respirar).</li>
+          <li><strong>Premedicación obligatoria:</strong> Si eres alérgico/a al yodo o tuviste una reacción previa,
+            <strong>avísanos antes</strong>: deberás tomar una pauta antialérgica con corticoides y antihistamínicos
+            <strong>12 horas y 2 horas antes de tu cita</strong>.</li>
         </ul>
       </article>
 
@@ -1621,9 +1761,13 @@
         <div class="card-icon navy">🔥</div>
         <h3 class="card-title">3. Calor en Máquina y Radioprotección</h3>
         <ul class="card-list">
-          <li><strong>Sensación de calor pasajera:</strong> Al entrar el contraste sentirás una intensa ola de calor desde el cuello por todo el cuerpo, sabor metálico en la boca y una falsa sensación de orinar. Es completamente normal, no es alergia, y desaparece sola en 20-30 segundos.</li>
-          <li><strong>Ropa cómoda:</strong> Viste prendas holgadas sin cremalleras metálicas, broches ni aros en el pecho. Retira cadenas y joyas.</li>
-          <li><strong>Radioprotección en casa:</strong> Durante las 6 a 8 horas siguientes, mantén 1-2 metros de distancia con niños pequeños y embarazadas, y bebe abundante agua.</li>
+          <li><strong>Sensación de calor pasajera:</strong> Al entrar el contraste sentirás una intensa ola de calor
+            desde el cuello por todo el cuerpo, sabor metálico en la boca y una falsa sensación de orinar. Es
+            completamente normal, no es alergia, y desaparece sola en 20-30 segundos.</li>
+          <li><strong>Ropa cómoda:</strong> Viste prendas holgadas sin cremalleras metálicas, broches ni aros en el
+            pecho. Retira cadenas y joyas.</li>
+          <li><strong>Radioprotección en casa:</strong> Durante las 6 a 8 horas siguientes, mantén 1-2 metros de
+            distancia con niños pequeños y embarazadas, y bebe abundante agua.</li>
         </ul>
       </article>
 
@@ -1631,53 +1775,84 @@
 
     <!-- SECCIÓN ASISTENTE ON-PAGE CHATBOT -->
     <section class="assistant-card-section" aria-labelledby="assistant-card-title">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
         <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 52px; height: 52px; border-radius: 12px; background: #ffffff; padding: 4px; border: 1.5px solid #d0e3ef; box-shadow: 0 4px 10px rgba(0, 48, 76, 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
-            <img src="galaria_logo.jpg" alt="Galaria Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
-            <span style="position: absolute; bottom: -3px; right: -3px; width: 12px; height: 12px; background-color: #22c55e; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px #22c55e;"></span>
+          <div
+            style="width: 52px; height: 52px; border-radius: 12px; background: #ffffff; padding: 4px; border: 1.5px solid #d0e3ef; box-shadow: 0 4px 10px rgba(0, 48, 76, 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
+            <img src="galaria_logo.jpg" alt="Galaria Logo"
+              style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            <span
+              style="position: absolute; bottom: -3px; right: -3px; width: 12px; height: 12px; background-color: #22c55e; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px #22c55e;"></span>
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-              <h3 id="assistant-card-title" style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--sergas-navy);">Asistente Virtual de Enfermería — PET FDG con Contraste</h3>
-              <span style="font-size: 0.72rem; background: rgba(0, 126, 180, 0.1); color: var(--sergas-blue); border: 1px solid rgba(0, 126, 180, 0.25); padding: 2px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
+              <h3 id="assistant-card-title"
+                style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--sergas-navy);">Asistente Virtual de
+                Enfermería — PET FDG con Contraste</h3>
+              <span
+                style="font-size: 0.72rem; background: rgba(0, 126, 180, 0.1); color: var(--sergas-blue); border: 1px solid rgba(0, 126, 180, 0.25); padding: 2px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
                 GALARIA · SERGAS
               </span>
-              <span style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700;">
+              <span
+                style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700;">
                 🟢 Asistencia Activa en Directo
               </span>
             </div>
             <p style="margin: 0.35rem 0 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
-              Consulta tus dudas en tiempo real sobre la inyección de contraste en máquina, alergias al yodo, premedicación, ayuno o pulsa sobre las preguntas rápidas:
+              Consulta tus dudas en tiempo real sobre la inyección de contraste en máquina, alergias al yodo,
+              premedicación, ayuno o pulsa sobre las preguntas rápidas:
             </p>
           </div>
         </div>
-        <button type="button" onclick="toggleChatbot(true)" class="btn" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; font-weight: 700; font-size: 0.92rem; padding: 0.7rem 1.4rem; border-radius: 30px; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(0, 126, 180, 0.28); cursor: pointer; transition: all 0.2s ease;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+        <button type="button" onclick="toggleChatbot(true)" class="btn"
+          style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; font-weight: 700; font-size: 0.92rem; padding: 0.7rem 1.4rem; border-radius: 30px; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(0, 126, 180, 0.28); cursor: pointer; transition: all 0.2s ease;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+          </svg>
           Abrir Chatbot de Enfermería
         </button>
       </div>
 
       <!-- Formulario para escribir una duda directamente desde la página -->
-      <form onsubmit="event.preventDefault(); const val=document.getElementById('pageChatInput').value.trim(); if(val){ openChatAndAsk(val); document.getElementById('pageChatInput').value=''; }" style="display: flex; gap: 0.6rem; margin-bottom: 1.15rem; flex-wrap: wrap;">
-        <input type="text" id="pageChatInput" placeholder="Escribe tu duda (ej. ¿Cómo se pone el contraste en máquina?, ¿y si tengo alergia al yodo?, ¿horas de ayuno?)..." style="flex: 1; min-width: 280px; padding: 0.8rem 1.25rem; border-radius: 30px; border: 1.5px solid #d0e3ef; background: #ffffff; color: var(--text-main); font-size: 0.95rem; box-shadow: 0 2px 6px rgba(0, 48, 76, 0.04); outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" onfocus="this.style.borderColor='var(--sergas-blue)'; this.style.boxShadow='0 0 0 3px rgba(0, 126, 180, 0.15)';" onblur="this.style.borderColor='#d0e3ef'; this.style.boxShadow='0 2px 6px rgba(0, 48, 76, 0.04)';">
-        <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; border-radius: 30px; padding: 0.8rem 1.6rem; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 126, 180, 0.2);">
+      <form
+        onsubmit="event.preventDefault(); const val=document.getElementById('pageChatInput').value.trim(); if(val){ openChatAndAsk(val); document.getElementById('pageChatInput').value=''; }"
+        style="display: flex; gap: 0.6rem; margin-bottom: 1.15rem; flex-wrap: wrap;">
+        <input type="text" id="pageChatInput"
+          placeholder="Escribe tu duda (ej. ¿Cómo se pone el contraste en máquina?, ¿y si tengo alergia al yodo?, ¿horas de ayuno?)..."
+          style="flex: 1; min-width: 280px; padding: 0.8rem 1.25rem; border-radius: 30px; border: 1.5px solid #d0e3ef; background: #ffffff; color: var(--text-main); font-size: 0.95rem; box-shadow: 0 2px 6px rgba(0, 48, 76, 0.04); outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;"
+          onfocus="this.style.borderColor='var(--sergas-blue)'; this.style.boxShadow='0 0 0 3px rgba(0, 126, 180, 0.15)';"
+          onblur="this.style.borderColor='#d0e3ef'; this.style.boxShadow='0 2px 6px rgba(0, 48, 76, 0.04)';">
+        <button type="submit" class="btn"
+          style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; border-radius: 30px; padding: 0.8rem 1.6rem; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 126, 180, 0.2);">
           Consultar al Asistente 💬
         </button>
       </form>
-      
+
       <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Cómo se pone el contraste en la máquina?')">💉 Contraste en máquina</button>
-        <button type="button" class="chip-btn" style="border-color: #d97706; color: #b45309; background: #fffbeb;" onclick="openChatAndAsk('¿El contraste puede dar alergias?')">⚠️ ¿El contraste puede dar alergias?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué es la premedicación antialérgica?')">💊 Premedicación antialérgica</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Cómo se pone el contraste en la máquina?')">💉
+          Contraste en máquina</button>
+        <button type="button" class="chip-btn" style="border-color: #d97706; color: #b45309; background: #fffbeb;"
+          onclick="openChatAndAsk('¿El contraste puede dar alergias?')">⚠️ ¿El contraste puede dar alergias?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué es la premedicación antialérgica?')">💊
+          Premedicación antialérgica</button>
         <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Horas de ayuno?')">⏱️ ¿Horas de ayuno?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Por qué siento calor y sabor metálico?')">🔥 Sabor metálico y calor</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Función renal y Creatinina?')">🩸 Función renal y Creatinina</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Dónde es la prueba?')">📍 ¿Dónde es la prueba?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Tomo Metformina para la diabetes?')">💊 Metformina y diabetes</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo beber agua?')">💧 ¿Puedo beber agua?</button>
-        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Radioprotección y niños?')">☢️ Radioprotección en casa</button>
-        <button type="button" class="chip-btn" style="border-color: var(--sergas-blue); background-color: var(--sergas-soft-blue); color: var(--sergas-navy); font-weight: 700;" onclick="abrirModalConsultaEnfermeria()">💬 Otras consultas (Enfermería)</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Por qué siento calor y sabor metálico?')">🔥
+          Sabor metálico y calor</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Función renal y Creatinina?')">🩸 Función renal
+          y Creatinina</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Dónde es la prueba?')">📍 ¿Dónde es la
+          prueba?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Tomo Metformina para la diabetes?')">💊
+          Metformina y diabetes</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo beber agua?')">💧 ¿Puedo beber
+          agua?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Radioprotección y niños?')">☢️ Radioprotección
+          en casa</button>
+        <button type="button" class="chip-btn"
+          style="border-color: var(--sergas-blue); background-color: var(--sergas-soft-blue); color: var(--sergas-navy); font-weight: 700;"
+          onclick="abrirModalConsultaEnfermeria()">💬 Otras consultas (Enfermería)</button>
       </div>
     </section>
 
@@ -1688,7 +1863,8 @@
         <div>
           <h2 id="diabetes-heading" class="diabetes-title">Pacientes Diabéticos: Semáforo Metabólico en Domicilio</h2>
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
-            Al utilizar 18F-FDG (análogo de la glucosa), el control de azúcar en ayunas es clave para evitar que compita con el radiofármaco.
+            Al utilizar 18F-FDG (análogo de la glucosa), el control de azúcar en ayunas es clave para evitar que compita
+            con el radiofármaco.
           </p>
         </div>
       </div>
@@ -1727,8 +1903,10 @@
       <div class="cancel-trigger-header" id="cancelHeaderTrigger" onclick="toggleCancelAccordion()">
         <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
           <span style="font-size: 1.25rem;">⚠️</span>
-          <span id="cancel-heading" style="font-weight: 800; color: #991b1b; font-size: 1.02rem;">¿Necesitas cancelar o aplazar tu prueba PET?</span>
-          <span style="background: rgba(239, 68, 68, 0.12); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.35); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">
+          <span id="cancel-heading" style="font-weight: 800; color: #991b1b; font-size: 1.02rem;">¿Necesitas cancelar o
+            aplazar tu prueba PET?</span>
+          <span
+            style="background: rgba(239, 68, 68, 0.12); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.35); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">
             Cancelación oficial en 2 pasos
           </span>
         </div>
@@ -1737,17 +1915,21 @@
 
       <div class="cancel-accordion-content" id="cancelAccordionContent">
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.45;">
-          La dosis de radiofármaco FDG y la preparación del inyector de contraste se planifican de manera individualizada. Si no puedes asistir, notifícalo con antelación para que el Servicio de Medicina Nuclear asigne el turno a otro paciente en lista de espera y reprograme tu cita.
+          La dosis de radiofármaco FDG y la preparación del inyector de contraste se planifican de manera
+          individualizada. Si no puedes asistir, notifícalo con antelación para que el Servicio de Medicina Nuclear
+          asigne el turno a otro paciente en lista de espera y reprograme tu cita.
         </p>
 
         <form id="cancellationForm" onsubmit="event.preventDefault(); triggerModalConfirmation();">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; margin-bottom: 1rem;">
+          <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; margin-bottom: 1rem;">
             <div class="form-group">
               <label for="cancelPatientName">Nombre y Apellidos <span style="color: var(--danger)">*</span></label>
               <input type="text" id="cancelPatientName" placeholder="Nombre completo" required>
             </div>
             <div class="form-group">
-              <label for="cancelPatientNhc">Nº Historia Clínica (NHC) <span style="color: var(--danger)">*</span></label>
+              <label for="cancelPatientNhc">Nº Historia Clínica (NHC) <span
+                  style="color: var(--danger)">*</span></label>
               <input type="text" id="cancelPatientNhc" placeholder="Ej. 1234567" required>
             </div>
             <div class="form-group">
@@ -1758,24 +1940,35 @@
 
           <div class="form-group">
             <label>Selecciona el motivo de la cancelación <span style="color: var(--danger)">*</span></label>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.5rem; margin-bottom: 0.5rem;">
-              <button type="button" class="reason-menu-btn" data-reason="enfermedad" onclick="selectReasonFromMenu('enfermedad')">🤒 Enfermedad, fiebre o infección</button>
-              <button type="button" class="reason-menu-btn" data-reason="imprevisto" onclick="selectReasonFromMenu('imprevisto')">📅 Imprevisto personal o laboral</button>
-              <button type="button" class="reason-menu-btn" data-reason="transporte" onclick="selectReasonFromMenu('transporte')">🚗 Problemas de transporte o viaje</button>
-              <button type="button" class="reason-menu-btn" data-reason="ayuno_no_cumplido" onclick="selectReasonFromMenu('ayuno_no_cumplido')">🍽️ Ayuno de 6h no cumplido</button>
-              <button type="button" class="reason-menu-btn" data-reason="alergia_contraste" onclick="selectReasonFromMenu('alergia_contraste')">⚠️ Alergia previa al yodo sin premedicación</button>
-              <button type="button" class="reason-menu-btn" data-reason="otro" onclick="selectReasonFromMenu('otro')">✍️ Otro motivo asistencial</button>
+            <div
+              style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.5rem; margin-bottom: 0.5rem;">
+              <button type="button" class="reason-menu-btn" data-reason="enfermedad"
+                onclick="selectReasonFromMenu('enfermedad')">🤒 Enfermedad, fiebre o infección</button>
+              <button type="button" class="reason-menu-btn" data-reason="imprevisto"
+                onclick="selectReasonFromMenu('imprevisto')">📅 Imprevisto personal o laboral</button>
+              <button type="button" class="reason-menu-btn" data-reason="transporte"
+                onclick="selectReasonFromMenu('transporte')">🚗 Problemas de transporte o viaje</button>
+              <button type="button" class="reason-menu-btn" data-reason="ayuno_no_cumplido"
+                onclick="selectReasonFromMenu('ayuno_no_cumplido')">🍽️ Ayuno de 6h no cumplido</button>
+              <button type="button" class="reason-menu-btn" data-reason="alergia_contraste"
+                onclick="selectReasonFromMenu('alergia_contraste')">⚠️ Alergia previa al yodo sin premedicación</button>
+              <button type="button" class="reason-menu-btn" data-reason="otro" onclick="selectReasonFromMenu('otro')">✍️
+                Otro motivo asistencial</button>
             </div>
             <input type="hidden" id="cancelReason" value="enfermedad">
           </div>
 
           <div class="form-group">
-            <label for="cancelReasonExplanation">Detalle de la incidencia <span style="color: var(--danger)">*</span></label>
-            <textarea id="cancelReasonExplanation" rows="2" placeholder="Describe brevemente la causa para que el médico especialista lo valore al gestionar la nueva fecha..." required></textarea>
+            <label for="cancelReasonExplanation">Detalle de la incidencia <span
+                style="color: var(--danger)">*</span></label>
+            <textarea id="cancelReasonExplanation" rows="2"
+              placeholder="Describe brevemente la causa para que el médico especialista lo valore al gestionar la nueva fecha..."
+              required></textarea>
           </div>
 
           <div class="cancel-actions">
-            <button type="button" class="btn btn-secondary" onclick="toggleCancelAccordion(false)">Cerrar sin cancelar</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleCancelAccordion(false)">Cerrar sin
+              cancelar</button>
             <button type="submit" class="btn btn-danger">Confirmar Cancelación y Notificar</button>
           </div>
         </form>
@@ -1786,7 +1979,10 @@
 
   <!-- BOTÓN FLOTANTE CHATBOT -->
   <button type="button" class="chat-toggle-btn" onclick="toggleChatbot()" aria-label="Abrir Asistente Virtual">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path
+        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+    </svg>
     <span>Dudas sobre Contraste y Alergias</span>
   </button>
 
@@ -1805,30 +2001,41 @@
           </div>
         </div>
         <div class="chat-header-actions">
-        <span id="chatEngineBadge" class="chat-engine-badge" title="Estado de la Inteligencia Artificial">🛡️ SERGAS</span>
-        <button type="button" id="chatVoiceToggle" class="chat-header-btn" onclick="toggleChatAutoVoice()" title="Activar lectura de respuestas en voz alta" aria-label="Lectura en voz alta">🔇</button>
-        <button type="button" id="chatConfigBtn" class="chat-header-btn" onclick="toggleChatConfigModal(true)" title="Configuración de Inteligencia Artificial (Gemini)" aria-label="Configuración de IA">⚙️</button>
-        <button type="button" class="chat-close-btn" onclick="toggleChatbot(false)" aria-label="Cerrar chat">✕</button>
-      </div>
+          <span id="chatEngineBadge" class="chat-engine-badge" title="Estado de la Inteligencia Artificial">🛡️
+            SERGAS</span>
+          <button type="button" id="chatVoiceToggle" class="chat-header-btn" onclick="toggleChatAutoVoice()"
+            title="Activar lectura de respuestas en voz alta" aria-label="Lectura en voz alta">🔇</button>
+          <button type="button" id="chatConfigBtn" class="chat-header-btn" onclick="toggleChatConfigModal(true)"
+            title="Configuración de Inteligencia Artificial (Gemini)" aria-label="Configuración de IA">⚙️</button>
+          <button type="button" class="chat-close-btn" onclick="toggleChatbot(false)"
+            aria-label="Cerrar chat">✕</button>
+        </div>
       </div>
     </div>
 
     <div class="chat-messages" id="chatMessages">
       <div class="disclaimer-banner">
-        ℹ️ <strong>Asistente Oficial de Preparación:</strong> Respuestas protocolizadas sobre administración de contraste yodado en máquina para TAC, posibles alergias, ayuno y función renal.
+        ℹ️ <strong>Asistente Oficial de Preparación:</strong> Respuestas protocolizadas sobre administración de
+        contraste yodado en máquina para TAC, posibles alergias, ayuno y función renal.
       </div>
 
       <div class="message message-bot">
         <div class="bot-author-tag">
-          <img src="galaria_logo.jpg" alt="Galaria" style="width: 14px; height: 14px; border-radius: 50%; display: inline-block;">
+          <img src="galaria_logo.jpg" alt="Galaria"
+            style="width: 14px; height: 14px; border-radius: 50%; display: inline-block;">
           <span>Enfermería Galaria · SERGAS (PET FDG + Contraste)</span>
         </div>
         <div class="bot-content">
           ¡Hola! Soy tu asistente de Enfermería para <strong>PET FDG con Contraste</strong>.<br><br>
-          📍 <strong>Lugar de la prueba:</strong> Hospital Meixoeiro, <strong>Planta -1</strong> (al lado de Medicina Nuclear).<br>
-          🕒 <strong>Hora de tu cita:</strong> Estás citado/a a las <strong id="chatPatientHoraGreeting">08:20 h</strong>.<br><br>
-          En este estudio combinamos el trazador metabólico FDG con un <strong>contraste yodado inyectado directamente en la máquina</strong> durante la fase del TAC.<br><br>
-          ⚠️ Recuerda: <strong>El contraste yodado puede provocar reacciones alérgicas</strong>. Si eres alérgico/a al yodo o tuviste reacciones en pruebas anteriores, debes avisarlo para recibir <strong>premedicación antialérgica</strong>.<br><br>
+          📍 <strong>Lugar de la prueba:</strong> Hospital Meixoeiro, <strong>Planta -1</strong> (al lado de Medicina
+          Nuclear).<br>
+          🕒 <strong>Hora de tu cita:</strong> Estás citado/a a las <strong id="chatPatientHoraGreeting">08:20
+            h</strong>.<br><br>
+          En este estudio combinamos el trazador metabólico FDG con un <strong>contraste yodado inyectado directamente
+            en la máquina</strong> durante la fase del TAC.<br><br>
+          ⚠️ Recuerda: <strong>El contraste yodado puede provocar reacciones alérgicas</strong>. Si eres alérgico/a al
+          yodo o tuviste reacciones en pruebas anteriores, debes avisarlo para recibir <strong>premedicación
+            antialérgica</strong>.<br><br>
           ¿Qué duda puedo resolverte?
         </div>
       </div>
@@ -1842,23 +2049,33 @@
 
     <!-- CHIPS DE CONSULTA RÁPIDA -->
     <div class="chat-chips-area">
-      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Cómo se pone el contraste en la máquina?')">💉 Contraste en máquina</button>
-      <button type="button" class="chip-btn" style="border-color: #d97706; color: #b45309;" onclick="openChatAndAsk('¿El contraste puede dar alergias?')">⚠️ ¿Da alergias?</button>
-      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué es la premedicación antialérgica?')">💊 Premedicación</button>
-      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Por qué siento calor y sabor metálico?')">🔥 Calor y sabor metálico</button>
+      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Cómo se pone el contraste en la máquina?')">💉
+        Contraste en máquina</button>
+      <button type="button" class="chip-btn" style="border-color: #d97706; color: #b45309;"
+        onclick="openChatAndAsk('¿El contraste puede dar alergias?')">⚠️ ¿Da alergias?</button>
+      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué es la premedicación antialérgica?')">💊
+        Premedicación</button>
+      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Por qué siento calor y sabor metálico?')">🔥
+        Calor y sabor metálico</button>
       <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Horas de ayuno?')">⏱️ Horas de ayuno</button>
       <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Dónde es la prueba?')">📍 ¿Dónde es?</button>
-      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Función renal y Creatinina?')">🩸 Creatinina</button>
+      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Función renal y Creatinina?')">🩸
+        Creatinina</button>
       <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo beber agua?')">💧 Agua</button>
-      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Radioprotección y niños?')">☢️ Radioprotección</button>
+      <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Radioprotección y niños?')">☢️
+        Radioprotección</button>
     </div>
 
     <!-- FORMULARIO DE ENVÍO DEL CHATBOT -->
     <form class="chat-input-form" onsubmit="handleUserMessageSubmit(event)">
-      <button type="button" id="chatMicBtn" class="chat-mic-btn" onclick="toggleChatSpeechRecognition()" title="Dictar consulta por voz" aria-label="Dictar consulta por voz">🎙️</button>
-      <input type="text" id="chatInput" placeholder="Escribe tu duda sobre el contraste, alergias, ayuno..." autocomplete="off">
+      <button type="button" id="chatMicBtn" class="chat-mic-btn" onclick="toggleChatSpeechRecognition()"
+        title="Dictar consulta por voz" aria-label="Dictar consulta por voz">🎙️</button>
+      <input type="text" id="chatInput" placeholder="Escribe tu duda sobre el contraste, alergias, ayuno..."
+        autocomplete="off">
       <button type="submit" class="chat-send-btn" aria-label="Enviar mensaje">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+        </svg>
       </button>
     </form>
   </aside>
@@ -1867,14 +2084,17 @@
   <div id="nursingModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalNursingTitle">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 id="modalNursingTitle" style="margin: 0; font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+        <h3 id="modalNursingTitle"
+          style="margin: 0; font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
           📞 Consulta Directa con Enfermería
         </h3>
-        <button type="button" onclick="cerrarModalConsultaEnfermeria()" style="background:none; border:none; color:#ffffff; font-size:1.2rem; cursor:pointer;">✕</button>
+        <button type="button" onclick="cerrarModalConsultaEnfermeria()"
+          style="background:none; border:none; color:#ffffff; font-size:1.2rem; cursor:pointer;">✕</button>
       </div>
       <div class="modal-body">
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.45;">
-          Indícanos tu duda clínica o antecedentes de alergia al contraste. El equipo de Enfermería de Medicina Nuclear revisará tu ficha y te llamará por teléfono.
+          Indícanos tu duda clínica o antecedentes de alergia al contraste. El equipo de Enfermería de Medicina Nuclear
+          revisará tu ficha y te llamará por teléfono.
         </p>
         <form onsubmit="enviarConsultaEnfermeria(event)">
           <div class="form-group">
@@ -1887,11 +2107,13 @@
           </div>
           <div class="form-group">
             <label for="nursingPatientMsg">Explica tu duda o síntoma <span style="color: var(--danger)">*</span></label>
-            <textarea id="nursingPatientMsg" rows="3" required placeholder="Detalla si tuviste alguna reacción previa en un TAC, si tomas medicación especial o tu duda..."></textarea>
+            <textarea id="nursingPatientMsg" rows="3" required
+              placeholder="Detalla si tuviste alguna reacción previa en un TAC, si tomas medicación especial o tu duda..."></textarea>
           </div>
           <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem;">
             <button type="button" class="btn btn-secondary" onclick="cerrarModalConsultaEnfermeria()">Cancelar</button>
-            <button type="submit" class="btn" style="background: var(--sergas-blue); color: #ffffff;">Enviar Consulta a Enfermería</button>
+            <button type="submit" class="btn" style="background: var(--sergas-blue); color: #ffffff;">Enviar Consulta a
+              Enfermería</button>
           </div>
         </form>
       </div>
@@ -1979,7 +2201,7 @@
       const video = document.getElementById("petVideo");
       if (video) {
         video.currentTime = seconds;
-        video.play().catch(() => {});
+        video.play().catch(() => { });
       }
     }
 
@@ -2009,7 +2231,7 @@
 
     let isBotTyping = false;
 
-    
+
     /* ==========================================================================
        GESTIÓN DE VOZ, RECONOCIMIENTO Y CHATBOT CLÍNICO (SERGAS)
        ========================================================================== */
@@ -2023,7 +2245,7 @@
     function getLocalGeminiKey() {
       try {
         return (localStorage.getItem("gemini_api_key") || "").trim();
-      } catch(e) {
+      } catch (e) {
         return "";
       }
     }
@@ -2106,13 +2328,13 @@
       }
 
       if (isSpeechRecListening) {
-        try { speechRecognitionInstance.stop(); } catch(e){}
+        try { speechRecognitionInstance.stop(); } catch (e) { }
         stopChatSpeechRecognition();
       } else {
         try {
           if (window.speechSynthesis) window.speechSynthesis.cancel();
           speechRecognitionInstance.start();
-        } catch(err) {
+        } catch (err) {
           stopChatSpeechRecognition();
         }
       }
@@ -2122,19 +2344,19 @@
       if (!html) return "";
       let text = html.replace(/<[^>]+>/g, " ");
       text = text.replace(/18F-FDG/gi, "flúor 18 efe de ge")
-                 .replace(/FDG/gi, "efe de ge")
-                 .replace(/18F-Colina/gi, "flúor 18 colina")
-                 .replace(/18F-PSMA/gi, "flúor 18 pe ese eme a")
-                 .replace(/68Ga/gi, "galio 68")
-                 .replace(/PET\/CT/gi, "pet tac")
-                 .replace(/PET-CT/gi, "pet tac")
-                 .replace(/PET/gi, "pet")
-                 .replace(/mg\/dL/gi, "miligramos por decilitro")
-                 .replace(/\bmin\b/gi, "minutos")
-                 .replace(/\bh\b/gi, "horas")
-                 .replace(/[-*#•]/g, " ")
-                 .replace(/\s+/g, " ")
-                 .trim();
+        .replace(/FDG/gi, "efe de ge")
+        .replace(/18F-Colina/gi, "flúor 18 colina")
+        .replace(/18F-PSMA/gi, "flúor 18 pe ese eme a")
+        .replace(/68Ga/gi, "galio 68")
+        .replace(/PET\/CT/gi, "pet tac")
+        .replace(/PET-CT/gi, "pet tac")
+        .replace(/PET/gi, "pet")
+        .replace(/mg\/dL/gi, "miligramos por decilitro")
+        .replace(/\bmin\b/gi, "minutos")
+        .replace(/\bh\b/gi, "horas")
+        .replace(/[-*#•]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
       return text;
     }
 
@@ -2266,7 +2488,7 @@
             }
           }
         }
-      } catch (err) {}
+      } catch (err) { }
 
       if (!usedGemini) {
         botHtml = generateFDGContrasteResponse(rawText);
@@ -2282,7 +2504,7 @@
       const flow = document.getElementById("dynamicChatFlow");
       const botMsg = document.createElement("div");
       botMsg.className = "message message-bot";
-      
+
       const author = document.createElement("div");
       author.className = "bot-author-tag";
       author.innerHTML = `<img src="galaria_logo.jpg" alt="Galaria" style="width: 14px; height: 14px; border-radius: 50%; display: inline-block;"><span>Enfermería Galaria · SERGAS (PET FDG + Contraste)</span>`;
@@ -2323,7 +2545,7 @@
           speakBtn.className = "bot-speak-btn";
           speakBtn.textContent = "🔊 Escuchar";
           speakBtn.title = "Escuchar respuesta en voz alta";
-          speakBtn.onclick = function() { speakMessageBubble(this); };
+          speakBtn.onclick = function () { speakMessageBubble(this); };
           actionsDiv.appendChild(speakBtn);
           content.appendChild(actionsDiv);
 
@@ -2346,7 +2568,7 @@
     // ==============================================================================
     // MOTOR DE RESPUESTAS DEL CHATBOT: PET FDG CON CONTRASTE YODADO
     // ==============================================================================
-    
+
     function getPatientCitationInfo() {
       let nombre = "";
       let nhc = "";
@@ -2362,7 +2584,7 @@
             hora = p.hora || "";
           }
         }
-      } catch(e){}
+      } catch (e) { }
 
       try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -2370,7 +2592,7 @@
         if (!nhc) nhc = urlParams.get("nhc") || urlParams.get("historia") || urlParams.get("id") || "";
         if (!fecha) fecha = urlParams.get("fecha") || urlParams.get("cita") || "";
         if (!hora) hora = urlParams.get("hora") || "";
-      } catch(e){}
+      } catch (e) { }
 
       if (!nombre) nombre = sessionStorage.getItem("pet_patient_name") || localStorage.getItem("pet_patient_name") || "";
       if (!nhc) nhc = sessionStorage.getItem("pet_patient_nhc") || localStorage.getItem("pet_patient_nhc") || "";
@@ -2384,7 +2606,7 @@
         if (nhc && nhc !== "NHC-PENDIENTE") sessionStorage.setItem("pet_patient_nhc", nhc);
         if (fecha) sessionStorage.setItem("pet_patient_fecha", fecha);
         if (hora) sessionStorage.setItem("pet_patient_hora", hora);
-      } catch(e){}
+      } catch (e) { }
 
       return { nombre, nhc, fecha, hora };
     }
@@ -2393,7 +2615,7 @@
       const s = input.toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-            // 0. SEGURIDAD, RIESGO VITAL Y MIEDO: ¿SE PUEDE MORIR POR EL CONTRASTE? / ¿ES PELIGROSO O MORTAL?
+      // 0. SEGURIDAD, RIESGO VITAL Y MIEDO: ¿SE PUEDE MORIR POR EL CONTRASTE? / ¿ES PELIGROSO O MORTAL?
       if (s.includes("morir") || s.includes("muerte") || s.includes("mortal") || s.includes("peligro") || s.includes("peligroso") || s.includes("seguro") || s.includes("seguridad") || s.includes("shock") || s.includes("anafilac") || s.includes("matar") || s.includes("miedo") || s.includes("asusta") || (s.includes("riesgo") && !s.includes("embaraz"))) {
         return `🛡️ <strong>SEGURIDAD Y RIESGO VITAL DEL CONTRASTE YODADO:</strong><br><br>
         • <strong>Máxima tranquilidad: El riesgo vital es extraordinariamente bajo:</strong> La posibilidad de una reacción adversa grave con riesgo de muerte es <strong>excepcional</strong> (menos de 1 caso por cada 100.000 a 170.000 pacientes, es decir, una probabilidad inferior al <strong>0,001%</strong>). Es una técnica diagnóstica rutinaria y de altísima seguridad clínica.<br><br>
@@ -2407,7 +2629,7 @@
         💬 <em>Mensaje del Equipo de Enfermería:</em> Es comprensible sentir temor o respeto ante una prueba con contraste, pero estás en un centro hospitalario de referencia con profesionales especializados cuidando de ti en todo momento. Si notas calor o sabor metálico al inyectarse, es un efecto pasajero totalmente normal.`;
       }
 
-// 1. Inyección de contraste en máquina / TAC con contraste / Bomba inyectora
+      // 1. Inyección de contraste en máquina / TAC con contraste / Bomba inyectora
       if ((s.includes("contraste") && (s.includes("maquina") || s.includes("como") || s.includes("inyec") || s.includes("bomba") || s.includes("tac") || s.includes("scanner") || s.includes("escaner") || s.includes("camilla"))) || s.includes("como se pone el contraste") || s.includes("tac con contraste")) {
         return `💉 <strong>ADMINISTRACIÓN DEL CONTRASTE YODADO EN MÁQUINA:</strong><br><br>
         • <strong>¿Cómo y cuándo se administra?:</strong> En este estudio se realizan dos administraciones diferentes:<br>
@@ -2569,14 +2791,14 @@
       // Respuesta por defecto con derivación directa a enfermería
       const cleanDuda = input.replace(/"/g, '&quot;').replace(/'/g, "\\'");
       return `No dispongo de una respuesta clínica protocolizada exacta para esa consulta específica sobre tu estudio de <strong>PET FDG con Contraste Yodado</strong>.<br><br>` +
-             `Dado que el uso de contraste yodado intravenoso requiere máxima precaución con antecedentes de alergias o función renal, <strong>lo más recomendable es enviar tu duda directamente al equipo de Enfermería de Medicina Nuclear</strong>:<br><br>` +
-             `<div style="background: var(--sergas-soft-blue); border: 1.5px dashed var(--sergas-blue); border-radius: 12px; padding: 14px; text-align: center; margin: 10px 0 6px;">` +
-             `<p style="font-size: 0.84rem; color: var(--sergas-navy); margin: 0 0 10px; font-weight: 700;">¿Quieres enviar esta duda al equipo de enfermería?</p>` +
-             `<button type="button" onclick="transferirDudaAEnfermeria('${cleanDuda}')" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; border: none; padding: 10px 20px; border-radius: 24px; font-size: 0.86rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 4px 12px rgba(0, 126, 180, 0.28); font-family: inherit;">` +
-             `📞 Enviar esta duda a Enfermería` +
-             `</button>` +
-             `<div style="font-size: 0.75rem; color: #64748b; margin-top: 7px;">Cargaremos tu pregunta en el formulario y te llamaremos por teléfono</div>` +
-             `</div>`;
+        `Dado que el uso de contraste yodado intravenoso requiere máxima precaución con antecedentes de alergias o función renal, <strong>lo más recomendable es enviar tu duda directamente al equipo de Enfermería de Medicina Nuclear</strong>:<br><br>` +
+        `<div style="background: var(--sergas-soft-blue); border: 1.5px dashed var(--sergas-blue); border-radius: 12px; padding: 14px; text-align: center; margin: 10px 0 6px;">` +
+        `<p style="font-size: 0.84rem; color: var(--sergas-navy); margin: 0 0 10px; font-weight: 700;">¿Quieres enviar esta duda al equipo de enfermería?</p>` +
+        `<button type="button" onclick="transferirDudaAEnfermeria('${cleanDuda}')" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; border: none; padding: 10px 20px; border-radius: 24px; font-size: 0.86rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 4px 12px rgba(0, 126, 180, 0.28); font-family: inherit;">` +
+        `📞 Enviar esta duda a Enfermería` +
+        `</button>` +
+        `<div style="font-size: 0.75rem; color: #64748b; margin-top: 7px;">Cargaremos tu pregunta en el formulario y te llamaremos por teléfono</div>` +
+        `</div>`;
     }
 
     // Modal Consulta Enfermería y Transferencia de Dudas
@@ -2618,7 +2840,7 @@
           mensaje_escrito: msg,
           mensaje_alerta: `Consulta PET FDG + Contraste de ${name} (Tel: ${phone}): ${msg}`
         })
-      }).catch(() => {});
+      }).catch(() => { });
 
       cerrarModalConsultaEnfermeria();
       alert("✅ Tu consulta ha sido registrada con éxito en el Servicio de Medicina Nuclear.\n\nEl equipo asistencial de enfermería te llamará por teléfono al " + phone + " para resolver tus dudas.");
@@ -2671,7 +2893,7 @@
           hora_control_capilar: time,
           mensaje_alerta: `Control capilar FDG+Contraste: ${val} mg/dL reportado por ${name}`
         })
-      }).catch(() => {});
+      }).catch(() => { });
     }
 
     // Cancelación en 2 Pasos
@@ -2722,7 +2944,7 @@
           explicacion: expl,
           estudio: 'PET FDG con Contraste'
         })
-      }).catch(() => {});
+      }).catch(() => { });
 
       alert("✅ Solicitud de cancelación enviada correctamente a la Unidad PET/CT de Galaria - SERGAS. El hueco ha sido liberado para otro paciente y nos pondremos en contacto contigo para una nueva fecha.");
       toggleCancelAccordion(false);
@@ -2730,36 +2952,52 @@
   </script>
 
   <!-- MODAL DE CONFIGURACIÓN DE IA GEMINI -->
-  <div class="modal-backdrop" id="geminiConfigModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(8,41,61,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99999;padding:1rem;box-sizing:border-box;">
-    <div class="modal-box" style="background:#ffffff;width:100%;max-width:460px;border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;box-sizing:border-box;border-top:4px solid #007eb4;font-family:inherit;">
+  <div class="modal-backdrop" id="geminiConfigModal"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(8,41,61,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99999;padding:1rem;box-sizing:border-box;">
+    <div class="modal-box"
+      style="background:#ffffff;width:100%;max-width:460px;border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;box-sizing:border-box;border-top:4px solid #007eb4;font-family:inherit;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
         <h3 style="margin:0;font-size:1.1rem;font-weight:800;color:#004868;display:flex;align-items:center;gap:6px;">
           <span>✨</span> Inteligencia Artificial Gemini
         </h3>
-        <button type="button" onclick="toggleChatConfigModal(false)" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#64748b;">✕</button>
+        <button type="button" onclick="toggleChatConfigModal(false)"
+          style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#64748b;">✕</button>
       </div>
       <p style="font-size:0.82rem;color:#64748b;margin-bottom:1rem;line-height:1.45;">
-        Conecta el modelo <strong>Google Gemini</strong> para comprensión total del lenguaje natural médico, empatía clínica y respuestas conversacionales adaptadas. Si no se introduce clave, el asistente utilizará el <strong>motor clínico offline SERGAS</strong>.
+        Conecta el modelo <strong>Google Gemini</strong> para comprensión total del lenguaje natural médico, empatía
+        clínica y respuestas conversacionales adaptadas. Si no se introduce clave, el asistente utilizará el
+        <strong>motor clínico offline SERGAS</strong>.
       </p>
-      
+
       <div style="margin-bottom:0.85rem;">
-        <label for="geminiApiKeyInput" style="display:block;font-size:0.82rem;font-weight:700;color:#004868;margin-bottom:0.35rem;">API Key de Google Gemini:</label>
+        <label for="geminiApiKeyInput"
+          style="display:block;font-size:0.82rem;font-weight:700;color:#004868;margin-bottom:0.35rem;">API Key de Google
+          Gemini:</label>
         <div style="position:relative;display:flex;align-items:center;">
-          <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." style="width:100%;padding:0.65rem 2.4rem 0.65rem 0.9rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.88rem;font-family:monospace;box-sizing:border-box;">
-          <button type="button" onclick="toggleShowApiKey()" style="position:absolute;right:8px;background:none;border:none;font-size:0.95rem;color:#64748b;cursor:pointer;" title="Mostrar u ocultar clave">👁️</button>
+          <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..."
+            style="width:100%;padding:0.65rem 2.4rem 0.65rem 0.9rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.88rem;font-family:monospace;box-sizing:border-box;">
+          <button type="button" onclick="toggleShowApiKey()"
+            style="position:absolute;right:8px;background:none;border:none;font-size:0.95rem;color:#64748b;cursor:pointer;"
+            title="Mostrar u ocultar clave">👁️</button>
         </div>
         <div style="margin-top:6px;">
-          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size:0.76rem;color:#007eb4;text-decoration:none;font-weight:600;">🔗 Obtener clave gratuita en Google AI Studio (aistudio.google.com)</a>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener"
+            style="font-size:0.76rem;color:#007eb4;text-decoration:none;font-weight:600;">🔗 Obtener clave gratuita en
+            Google AI Studio (aistudio.google.com)</a>
         </div>
       </div>
 
-      <div id="geminiKeyStatus" style="font-size:0.78rem;padding:8px 12px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:1rem;line-height:1.4;color:#334155;">
+      <div id="geminiKeyStatus"
+        style="font-size:0.78rem;padding:8px 12px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:1rem;line-height:1.4;color:#334155;">
         Comprobando estado del motor...
       </div>
 
       <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
-        <button type="button" onclick="toggleChatConfigModal(false)" style="background:#e2e8f0;color:#334155;border:none;font-size:0.85rem;padding:0.55rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;">Cerrar</button>
-        <button type="button" onclick="saveGeminiApiKey()" style="background:#007eb4;color:#ffffff;border:none;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:700;">Guardar y Activar</button>
+        <button type="button" onclick="toggleChatConfigModal(false)"
+          style="background:#e2e8f0;color:#334155;border:none;font-size:0.85rem;padding:0.55rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;">Cerrar</button>
+        <button type="button" onclick="saveGeminiApiKey()"
+          style="background:#007eb4;color:#ffffff;border:none;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:700;">Guardar
+          y Activar</button>
       </div>
     </div>
   </div>
@@ -2767,4 +3005,5 @@
   <script src="assets/pet_glucose_sync.js"></script>
   <script src="assets/pet_chat_human_stream.js"></script>
 </body>
+
 </html>

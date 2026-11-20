@@ -190,9 +190,73 @@
         </div>
         <div class="kpi-sparkline-wrap" id="sparkKpiMedicos"></div>
       </article>
+
+      <!-- KPI 8: Eficiencia y Aprovechamiento de Radiofármacos + Huecos Libres -->
+      <article class="kpi-exec-card" style="--kpi-color:#0284c7; --kpi-bg:#f0f9ff;" onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">8. Eficiencia Fármacos & Huecos</span>
+          <div class="kpi-icon-badge">💎</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiPctAprovechamientoRF" style="color:#0284c7;">91.2%</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiHuecosLibresBadge">3 huecos libres</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextAprovechamiento">Recibido: 8.420 MBq · Inyectado: 7.680 MBq</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiEficiencia"></div>
+      </article>
+
+      <!-- KPI 9: Demoras de Citación (P1/P2) y Tiempo Informe Médico (TAT) -->
+      <article class="kpi-exec-card" style="--kpi-color:#059669; --kpi-bg:#ecfdf5;" onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">9. Demoras P1/P2 & TAT Informe</span>
+          <div class="kpi-icon-badge">📅</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiDemoraP1Media" style="color:#059669;">4.6 d</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiTatInformeBadge">TAT: 18.2 h</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextDemoras">P1: 4.6d (Meta ≤7d) · P2: 10.8d · 79% &lt;24h</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiDemoras"></div>
+      </article>
+
+      <!-- KPI 10: Tiempo Permanencia en Servicio (Door-to-Door) & Ventana EARL -->
+      <article class="kpi-exec-card" style="--kpi-color:#d97706; --kpi-bg:#fffbeb;" onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">10. Permanencia & Ventana EARL</span>
+          <div class="kpi-icon-badge">⏳</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiPermanenciaServicioMedia" style="color:#d97706;">112 min</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiVentanaEarlBadge">93.1% EARL</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextPermanencia">Door-to-Door: 112m · Ventana 55-75m OK</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiPermanencia"></div>
+      </article>
+
+      <!-- KPI 11: Eficacia Audioguías, Pacientes Mal Preparados & Glucemias Altas -->
+      <article class="kpi-exec-card" style="--kpi-color:#be123c; --kpi-bg:#fff1f2;" onclick="window.jefaturaApp.cambiarTab('audioguias_calidad')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">11. Audioguías & Glucemias Box</span>
+          <div class="kpi-icon-badge">🎧</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiAdherenciaAudioguia" style="color:#be123c;">85.4%</span>
+          <span class="kpi-pill-rate badge-danger" id="kpiGlucemiasAltasBadge">5.8% ≥200</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextAudioguias">Adherencia 85% · Susp: 1.1% con vs 8.7% sin</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiAudioguias"></div>
+      </article>
     </section>
 
-    <!-- 3.2. BARRA DE PESTAÑAS DE GESTIÓN (7 ÁREAS DE DIRECCIÓN) -->
+    <!-- 3.2. BARRA DE PESTAÑAS DE GESTIÓN (ÁREAS DE DIRECCIÓN) -->
     <nav class="chief-tabs-bar">
       <button type="button" class="chief-tab-btn active" data-tab="resumen" onclick="window.jefaturaApp.cambiarTab('resumen')">
         <span>📊 1. Cuadro de Mando y Evolución</span>
@@ -218,14 +282,22 @@
         <span class="tab-count-badge" id="tabBadgeAnulaciones">0</span>
       </button>
       <button type="button" class="chief-tab-btn" data-tab="medicos" onclick="window.jefaturaApp.cambiarTab('medicos')">
-        <span>👨‍⚕️ 7. Médicos: Tardías, Espera Salida y Tiempos</span>
+        <span>👨‍⚕️ 7. Médicos: Tardías y Tiempos</span>
         <span class="tab-count-badge" id="tabBadgeMedicos">4</span>
       </button>
+      <button type="button" class="chief-tab-btn" data-tab="eficiencia_tiempos" onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <span>⏱️ 8. Eficiencia Fármacos, Demoras y Tiempos</span>
+        <span class="tab-count-badge" id="tabBadgeEficiencia" style="background:#0284c7; color:#fff;">91%</span>
+      </button>
+      <button type="button" class="chief-tab-btn" data-tab="audioguias_calidad" onclick="window.jefaturaApp.cambiarTab('audioguias_calidad')">
+        <span>🎧 9. Eficacia Audioguías, Glucemias y Preparación</span>
+        <span class="tab-count-badge" id="tabBadgeAudioguias" style="background:#be123c; color:#fff;">85%</span>
+      </button>
       <button type="button" class="chief-tab-btn" data-tab="generar_informe" onclick="window.jefaturaApp.cambiarTab('generar_informe')">
-        <span>📑 8. Crear Informe (Mensual · Trimestral · Anual)</span>
+        <span>📑 10. Crear Informe (Mensual · Trimestral · Anual)</span>
       </button>
       <button type="button" class="chief-tab-btn" data-tab="demo_informe" onclick="window.jefaturaApp.cambiarTab('demo_informe')" style="border:1.5px solid #0284c7;">
-        <span>🖨️ 9. Demo Imprimible de Informe</span>
+        <span>🖨️ 11. Demo Imprimible de Informe</span>
         <span class="tab-count-badge" id="tabBadgeTipoDemo">Mensual</span>
       </button>
     </nav>
@@ -762,7 +834,297 @@
     </section>
 
     <!-- ======================================================================
-         PESTAÑA 8: CREAR INFORME OFICIAL (MENSUAL, TRIMESTRAL Y ANUAL)
+         PESTAÑA 8: EFICIENCIA DE FÁRMACOS, DEMORAS, TAT Y TIEMPOS DE PROCESO
+         ====================================================================== -->
+    <section id="tab-eficiencia_tiempos" class="tab-panel">
+      <!-- BLOQUE 1: APROVECHAMIENTO DE RADIOFÁRMACOS Y HUECOS LIBRES -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>💎 Eficiencia Radiofarmacéutica y Huecos Libres de Agenda</h2>
+            <p>Control de actividad recibida vs inyectada, desintegración física, coste de dosis perdidas y ocupación de slots de camilla</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok" id="badgeEficienciaGlobal">91.2% Aprovechamiento Global</span>
+            <span class="status-badge badge-warn" id="badgeHuecosLibresGlobal">3 Huecos Libres / Día</span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#0369a1; text-transform:uppercase;">Actividad Recibida</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#0284c7;" id="statActividadRecibida">8.420 MBq</div>
+            <div style="font-size:0.73rem; color:#64748b;">Ciclotrón propio + Curium Madrid</div>
+          </div>
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Actividad Administrada</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#059669;" id="statActividadInyectada">7.680 MBq</div>
+            <div style="font-size:0.73rem; color:#64748b;">Dosis netas a pacientes citados</div>
+          </div>
+          <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#be123c; text-transform:uppercase;">Dosis Perdidas / Cancelación</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#e11d48;" id="statDosisPerdidasEur">485 €</div>
+            <div style="font-size:0.73rem; color:#64748b;">740 MBq decaimiento + no acuden</div>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#b45309; text-transform:uppercase;">Huecos Libres No Citados</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#d97706;" id="statHuecosLibresDia">3 / día (9.4%)</div>
+            <div style="font-size:0.73rem; color:#64748b;">Capacidad ociosa recuperable (+18 pac/sem)</div>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              📈 Aprovechamiento y Eficiencia por Radiofármaco
+            </h3>
+            <div id="chartAprovechamientoRF"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              ⏱️ Ocupación Horaria de Slots de Camilla y Huecos Vacíos
+            </h3>
+            <div id="chartOcupacionSlots"></div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Radiofármaco</th>
+                <th>Dosis Pedidas</th>
+                <th>Inyectadas con Éxito</th>
+                <th>Tasa Aprovechamiento</th>
+                <th>MBq Perdidos</th>
+                <th>Coste Estimado Desecho</th>
+                <th>Acción de Optimización</th>
+              </tr>
+            </thead>
+            <tbody id="tablaAprovechamientoFarmacos"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: DEMORAS DE CITACIÓN Y TAT DE INFORME MÉDICO -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📅 Demoras de Citación (Lead Time) y Tiempo de Informe Médico (TAT)</h2>
+            <p>Tiempos desde la solicitud médica hasta la cita por prioridad y plazo de validación final del informe por facultativo</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Demora P1 Oncológica</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#059669;" id="statDemoraP1">4.6 días</div>
+            <div style="font-size:0.73rem; color:#059669; font-weight:600;">✓ Cumple Meta SERGAS (≤ 7 días)</div>
+          </div>
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#15803d; text-transform:uppercase;">Demora P2 Ordinaria</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#16a34a;" id="statDemoraP2">10.8 días</div>
+            <div style="font-size:0.73rem; color:#16a34a; font-weight:600;">✓ Cumple Meta SERGAS (≤ 15 días)</div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#475569; text-transform:uppercase;">Demora P3 Seguimiento</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#334155;" id="statDemoraP3">24.5 días</div>
+            <div style="font-size:0.73rem; color:#64748b;">Ajustada a ventana de reevaluación</div>
+          </div>
+          <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#6d28d9; text-transform:uppercase;">TAT Medio de Informe</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#7c3aed;" id="statTatInformeMedio">18.2 horas</div>
+            <div style="font-size:0.73rem; color:#7c3aed; font-weight:600;">78.5% validados en &lt; 24h</div>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              📊 Evolución de Demoras de Citación (Días) vs Objetivos SERGAS
+            </h3>
+            <div id="chartEvolucionDemoras"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              ⏱️ Distribución del Plazo de Firma del Informe (TAT)
+            </h3>
+            <div id="chartDistribucionTAT"></div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Servicio Solicitante</th>
+                <th>Volumen P1</th>
+                <th>Demora Media P1</th>
+                <th>Volumen P2</th>
+                <th>Demora Media P2</th>
+                <th>Cumplimiento Plazos</th>
+                <th>TAT Firma Medio</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDemorasPorServicio"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: PERMANENCIA EN EL SERVICIO Y VENTANA EARL 55-75 MIN -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⏳ Tiempo de Permanencia en el Servicio (Door-to-Door) & Calidad Técnica EARL</h2>
+            <p>Duración total del paciente en el servicio desglosada por fases y cumplimiento estricto del intervalo post-inyección 55-75 min</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok" id="badgeVentanaEarlGlobal">93.1% en Ventana EARL (55-75m)</span>
+            <span class="status-badge badge-info" id="badgePermanenciaGlobal">112 min Estancia Media</span>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              ⏱️ Desglose por Fases de la Estancia (Door-to-Door Total: 112 min)
+            </h3>
+            <div id="chartFasesEstancia"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🎯 Control de Calidad Técnica: Intervalo Inyección ➔ Camilla (EARL 55-75 min)
+            </h3>
+            <div id="chartVentanaEarl"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 9: EFICACIA DE AUDIOGUÍAS, PACIENTES MAL PREPARADOS Y GLUCEMIAS
+         ====================================================================== -->
+    <section id="tab-audioguias_calidad" class="tab-panel">
+      <!-- BLOQUE 1: EFICACIA PREVENTIVA DE LAS AUDIOGUÍAS -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🎧 Medición de Eficacia de las Audioguías Digitales Oficiales</h2>
+            <p>Impacto preventivo de la preparación interactiva: adherencia del paciente, reducción de cancelaciones y soporte del chatbot</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok">85.4% Adherencia Digital</span>
+            <span class="status-badge badge-ok">-87.4% Suspensiones Evitadas</span>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#15803d; text-transform:uppercase;">Adherencia Audioguía</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#16a34a;" id="statAdherenciaPct">85.4%</div>
+            <div style="font-size:0.73rem; color:#15803d;">Pacientes que acceden antes de la cita</div>
+          </div>
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Suspensión CON Audioguía</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#059669;" id="statSuspConAudio">1.1%</div>
+            <div style="font-size:0.73rem; color:#047857; font-weight:600;">Máxima adherencia y preparación</div>
+          </div>
+          <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#be123c; text-transform:uppercase;">Suspensión SIN Audioguía</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#e11d48;" id="statSuspSinAudio">8.7%</div>
+            <div style="font-size:0.73rem; color:#be123c;">8 veces más fallos de preparación</div>
+          </div>
+          <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#0369a1; text-transform:uppercase;">Dudas Resueltas Chatbot</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#0284c7;" id="statConsultasChatbot">342</div>
+            <div style="font-size:0.73rem; color:#0369a1;">Consultas evitadas en centralita</div>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              📊 Comparativa de Tasa de Suspensión: CON vs SIN Audioguía
+            </h3>
+            <div id="chartEficaciaAudioguias"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🎧 Uso de Audioguías por Protocolo Clínico
+            </h3>
+            <div id="chartUsoPorProtocolo"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: PACIENTES MAL PREPARADOS Y GLUCEMIAS ALTAS EN BOX -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⚠️ Auditoría de Pacientes Mal Preparados y Glucemias Altas a la Llegada</h2>
+            <p>Análisis de causas específicas de mala preparación en sala y semáforo metabólico de glucemia capilar en puesto de inyección</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#b45309; text-transform:uppercase;">Mal Preparados en Box</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#d97706;" id="statTotalMalPrepBox">12 pac</div>
+            <div style="font-size:0.73rem; color:#b45309;">2.4% del total citado</div>
+          </div>
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Glucemia Verde (&lt; 160)</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#059669;" id="statGlucemiaVerdePct">76.2%</div>
+            <div style="font-size:0.73rem; color:#047857;">Paso directo a inyección</div>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#b45309; text-transform:uppercase;">Glucemia Ámbar (160-199)</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#d97706;" id="statGlucemiaAmbarPct">17.5%</div>
+            <div style="font-size:0.73rem; color:#b45309;">Hidratación oral y reposo</div>
+          </div>
+          <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#be123c; text-transform:uppercase;">Glucemia Roja (≥ 200)</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#e11d48;" id="statGlucemiaRojaPct">6.3%</div>
+            <div style="font-size:0.73rem; color:#be123c; font-weight:600;">71.4% rescatados con hidratación</div>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🍩 Desglose de Motivos de Mala Preparación en Box
+            </h3>
+            <div id="chartCausasMalPrep"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🩸 Distribución del Semáforo de Glucemia Capilar a la Llegada
+            </h3>
+            <div id="chartSemaforoGlucemia"></div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Paciente / NHC</th>
+                <th>Fecha / Hora</th>
+                <th>Protocolo</th>
+                <th>Tipo Incidencia</th>
+                <th>Cifra Glucemia</th>
+                <th>Estado Semáforo</th>
+                <th>Resolución Asistencial</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDetalleMalPrepGlucemia"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 10: CREAR INFORME OFICIAL (MENSUAL, TRIMESTRAL Y ANUAL)
          ====================================================================== -->
     <section id="tab-generar_informe" class="tab-panel">
       <div class="panel-card">
@@ -856,6 +1218,26 @@
             <label class="report-check-item">
               <input type="checkbox" id="chkRep_medicos" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
               <span>👨‍⚕️ Médicos: Tardías, Espera post-Última Imagen y Tiempo/Prueba</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_eficiencia_farmacos" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>💎 Eficiencia y Aprovechamiento de Radiofármacos + Huecos Libres</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_demoras_tat" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>📅 Demoras de Citación (P1/P2/P3) y Tiempo de Informe Médico (TAT)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_permanencia_earl" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>⏳ Tiempo Total de Permanencia (Door-to-Door) & Ventana EARL 55-75m</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_audioguias_calidad" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>🎧 Eficacia Preventiva de las Audioguías Digitales (-87% suspensiones)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_glucemias_altas" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>⚠️ Pacientes Mal Preparados y Semáforo de Glucemias Altas en Box</span>
             </label>
           </div>
         </div>
