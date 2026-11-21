@@ -1234,14 +1234,14 @@ body {
 }
 
 .planilla-cal-day {
-  min-height: 98px;
+  min-height: 120px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 0.4rem;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   cursor: pointer;
   transition: all 0.14s ease;
 }
@@ -1286,14 +1286,19 @@ body {
 }
 
 .planilla-cal-entry {
-  font-size: 0.67rem;
-  line-height: 1.25;
-  padding: 2px 4px;
+  font-size: 0.66rem;
+  line-height: 1.28;
+  padding: 3px 5px;
   border-radius: 4px;
   font-weight: 700;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.cal-shift-divider {
+  border: none;
+  border-top: 1px dashed #94a3b8;
+  margin: 3px 0;
 }
 
 .cal-entry-m { background: #e0f2fe; color: #0369a1; }

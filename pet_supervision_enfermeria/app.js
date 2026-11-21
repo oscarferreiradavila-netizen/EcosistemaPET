@@ -1424,24 +1424,41 @@
 
       let entriesHtml = '';
       if (conf && conf.categories) {
-        if (activeCat === 'resumen') {
-          entriesHtml = PLANILLA_CATEGORIES.map(c => {
+        const shortLabels = {
+          enfermeros: 'DUE',
+          tecnicos: 'TSID',
+          celadores: 'Cel',
+          tcaes: 'TCAE'
+        };
+
+        const buildShiftText = (shiftKey) => {
+          const parts = [];
+          PLANILLA_CATEGORIES.forEach(c => {
             const d = conf.categories[c.id] || { manana: [], tarde: [], noche: [] };
-            const total = d.manana.length + d.tarde.length + d.noche.length;
-            return `<div class="planilla-cal-entry cal-entry-m">${escapeHTML(c.id.toUpperCase())}: M(${d.manana.length}) T(${d.tarde.length})${c.id === 'enfermeros' ? ` N(${d.noche.length})` : ''} · ${total}</div>`;
-          }).join('');
-        } else {
-          const d = conf.categories[activeCat] || { manana: [], tarde: [], noche: [] };
-          if (d.manana.length > 0) {
-            entriesHtml += `<div class="planilla-cal-entry cal-entry-m" title="Mañana: ${escapeHTML(d.manana.join(', '))}">☀️ ${escapeHTML(d.manana.map(n => n.split(' ')[0]).join(', '))}</div>`;
-          }
-          if (d.tarde.length > 0) {
-            entriesHtml += `<div class="planilla-cal-entry cal-entry-t" title="Tarde: ${escapeHTML(d.tarde.join(', '))}">🌆 ${escapeHTML(d.tarde.map(n => n.split(' ')[0]).join(', '))}</div>`;
-          }
-          if (d.noche.length > 0) {
-            entriesHtml += `<div class="planilla-cal-entry cal-entry-n" title="Noche: ${escapeHTML(d.noche.join(', '))}">🌙 ${escapeHTML(d.noche.map(n => n.split(' ')[0]).join(', '))}</div>`;
-          }
+            const list = d[shiftKey] || [];
+            if (list.length > 0) {
+              const names = list.map(n => n.split(' ')[0]).join(', ');
+              parts.push(`${shortLabels[c.id]}: ${names}`);
+            }
+          });
+          return parts.join(' · ');
+        };
+
+        const mananaTxt = buildShiftText('manana');
+        const tardeTxt = buildShiftText('tarde');
+        const nocheTxt = buildShiftText('noche');
+
+        const blocks = [];
+        if (mananaTxt) {
+          blocks.push(`<div class="planilla-cal-entry cal-entry-m">☀️ <strong>M:</strong> ${escapeHTML(mananaTxt)}</div>`);
         }
+        if (tardeTxt) {
+          blocks.push(`<div class="planilla-cal-entry cal-entry-t">🌆 <strong>T:</strong> ${escapeHTML(tardeTxt)}</div>`);
+        }
+        if (nocheTxt) {
+          blocks.push(`<div class="planilla-cal-entry cal-entry-n">🌙 <strong>N:</strong> ${escapeHTML(nocheTxt)}</div>`);
+        }
+        entriesHtml = blocks.join('<hr class="cal-shift-divider">');
       }
 
       cellsHtml += `
@@ -1460,7 +1477,7 @@
       <div class="planilla-cal-header">
         <div>
           <h3 style="font-family:'Outfit',sans-serif; font-size:1.02rem; color:#004868; margin:0;">
-            📅 Calendario de Registro de Turnos — ${monthsES[month]} ${year} (${escapeHTML(catLabel)})
+            📅 Calendario Global de Turnos — ${monthsES[month]} ${year} (DUE · TSID · Celadores · TCAE)
           </h3>
           <p style="font-size:0.76rem; color:#475569; margin:2px 0 0 0;">
             Al pulsar "Confirmar Turnos del Día", el personal asignado queda registrado aquí. Haz clic en cualquier día para verlo o editarlo.
