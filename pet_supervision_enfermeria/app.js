@@ -1031,14 +1031,17 @@
     enfermeros: [
       { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 3, cols: [
         { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' }
+        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+        { id: 'manana_tm', title: '☀️ Mañana · Terapia Metabólica', sub: '08:00 – 15:00 h', headerBg: '#ffedd5' }
       ]},
       { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 2, cols: [
         { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-        { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' }
+        { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
+        { id: 'tarde_tm', title: '🌆 Tarde · Terapia Metabólica', sub: '15:00 – 22:00 h', headerBg: '#ffedd5' }
       ]},
       { bandId: 'noche', label: '🌙 TURNO NOCHE (22:00 – 08:00 h)', bandClass: 'planilla-band-noche', target: 1, cols: [
-        { id: 'noche', title: '🌙 Noche · Unidad', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' }
+        { id: 'noche', title: '🌙 Noche · Unidad', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' },
+        { id: 'noche_tm', title: '🌙 Noche · Terapia Metabólica', sub: '22:00 – 08:00 h', headerBg: '#ffedd5' }
       ]}
     ],
     tecnicos: [
@@ -1312,7 +1315,7 @@
         const sh = getWorkerShiftForDate(w, fecha);
         if (sh.startsWith('manana')) manana.push(w.name);
         else if (sh.startsWith('tarde')) tarde.push(w.name);
-        else if (sh === 'noche') noche.push(w.name);
+        else if (sh.startsWith('noche')) noche.push(w.name);
       });
       summaryByCat[cat.id] = { manana, tarde, noche };
     });
@@ -1346,6 +1349,7 @@
   function getAreaBadgeClass(area) {
     if (area === 'PET-CT') return 'worker-area-pet';
     if (area === 'Medicina Nuclear') return 'worker-area-mn';
+    if (area === 'Terapia Metabólica') return 'worker-area-tm';
     return 'worker-area-poli';
   }
 
