@@ -13,7 +13,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261121_PLANILLA_03">
+  <link rel="stylesheet" href="styles.css?v=20261121_PLANILLA_04">
 </head>
 
 <body>
@@ -290,6 +290,7 @@
             <option value="PET-CT">🔵 Habitual: PET-CT</option>
             <option value="Medicina Nuclear">🟢 Habitual: Medicina Nuclear</option>
             <option value="Terapia Metabólica">🟠 Habitual: Terapia Metabólica</option>
+            <option value="Orense">🩷 Habitual: Orense</option>
             <option value="Polivalente">🟣 Polivalente (MN + PET-CT + TM)</option>
           </select>
           <button type="button" class="btn-nurse btn-nurse-primary"
@@ -620,6 +621,35 @@
 
   </main>
 
+  <!-- MODAL: DUPLICAR TRABAJADOR PARA DOBLE TURNO / HORAS EXTRAS -->
+  <div id="modalDuplicarHorasExtras" class="nurse-modal-backdrop">
+    <div class="nurse-modal-box">
+      <div class="nurse-modal-header">
+        <h3>⏱️ Duplicar Trabajador — Doble Turno / Horas Extras</h3>
+        <button type="button" onclick="window.supervisionApp.cerrarModalDuplicarExtra()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="nurse-modal-body">
+        <div style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.7rem 0.9rem; font-size:0.84rem; color:#92400e;">
+            <strong>Profesional:</strong> <span id="lblWorkerDuplicarNombre">—</span>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Turno del Doble Turno / Hora Extra:</label>
+            <select id="selectTurnoDuplicarExtra" class="period-select" style="width:100%;"></select>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Horas que va a hacer (ej: 4h, 7h o 15:00-19:00):</label>
+            <input type="text" id="inputHorasExtras" class="period-select" style="width:100%;" placeholder="Ej: 4h (15:00-19:00)" value="7h">
+          </div>
+        </div>
+      </div>
+      <div class="nurse-modal-footer">
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cerrarModalDuplicarExtra()">Cancelar</button>
+        <button type="button" class="btn-nurse btn-nurse-primary" style="background:#d97706; border-color:#d97706;" onclick="window.supervisionApp.confirmarDuplicarExtra()">➕ Añadir Doble Turno</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: REGISTRAR INCIDENCIA DE VENOPUNCIÓN -->
   <div id="modalIncidenciaVenopuncion" class="nurse-modal-backdrop">
     <div class="nurse-modal-box">
@@ -796,7 +826,7 @@
 
   <!-- Semilla oficial de peticiones y lógica de supervisión -->
   <script src="../pet_ct_triage/web_app/peticiones_seed.js"></script>
-  <script src="app.js?v=20261121_PLANILLA_03"></script>
+  <script src="app.js?v=20261121_PLANILLA_04"></script>
 </body>
 
 </html>

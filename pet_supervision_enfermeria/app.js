@@ -1017,6 +1017,7 @@
   // ==========================================================================
   const PLANILLA_STORAGE_STAFF = 'PET_PLANILLA_STAFF_V2';
   const PLANILLA_STORAGE_SHIFTS = 'PET_PLANILLA_SHIFTS_V2';
+  const PLANILLA_STORAGE_EXTRAS = 'PET_PLANILLA_EXTRAS_V1';
   const PLANILLA_STORAGE_CALENDAR = 'PET_PLANILLA_CALENDAR_V1';
 
   const PLANILLA_CATEGORIES = [
@@ -1032,7 +1033,8 @@
       { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 3, cols: [
         { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
         { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-        { id: 'manana_tm', title: '☀️ Mañana · Terapia Metabólica', sub: '08:00 – 15:00 h', headerBg: '#ffedd5' }
+        { id: 'manana_tm', title: '☀️ Mañana · Terapia Metabólica', sub: '08:00 – 15:00 h', headerBg: '#ffedd5' },
+        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
       ]},
       { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 2, cols: [
         { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
@@ -1047,7 +1049,8 @@
     tecnicos: [
       { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
         { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' }
+        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
       ]},
       { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 3, cols: [
         { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
@@ -1056,7 +1059,8 @@
     ],
     celadores: [
       { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
-        { id: 'manana_pet', title: '☀️ Mañana · Unidad MN/PET', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' }
+        { id: 'manana_pet', title: '☀️ Mañana · Unidad MN/PET', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
       ]},
       { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
         { id: 'tarde_pet', title: '🌆 Tarde · Unidad MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
@@ -1065,7 +1069,8 @@
     tcaes: [
       { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 2, cols: [
         { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' }
+        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
       ]},
       { bandId: 'tarde', label: '🌆 TURNO TARDE — Algunas tardes (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
         { id: 'tarde_apoyo', title: '🌆 Tarde · Refuerzo MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
@@ -1124,6 +1129,8 @@
     draggedWorkerId: null,
     staff: [],
     shiftsByDate: {},
+    extraShiftsByDate: {},
+    pendingDupWorkerId: null,
     confirmedCalendar: {}
   };
 
@@ -1147,6 +1154,15 @@
       planillaState.shiftsByDate = {};
     }
     try {
+      const savedExtras = localStorage.getItem(PLANILLA_STORAGE_EXTRAS);
+      planillaState.extraShiftsByDate = savedExtras ? JSON.parse(savedExtras) : {};
+      if (!planillaState.extraShiftsByDate || typeof planillaState.extraShiftsByDate !== 'object') {
+        planillaState.extraShiftsByDate = {};
+      }
+    } catch (_) {
+      planillaState.extraShiftsByDate = {};
+    }
+    try {
       const savedCal = localStorage.getItem(PLANILLA_STORAGE_CALENDAR);
       planillaState.confirmedCalendar = savedCal ? JSON.parse(savedCal) : {};
       if (!planillaState.confirmedCalendar || typeof planillaState.confirmedCalendar !== 'object') {
@@ -1161,8 +1177,14 @@
     try {
       localStorage.setItem(PLANILLA_STORAGE_STAFF, JSON.stringify(planillaState.staff));
       localStorage.setItem(PLANILLA_STORAGE_SHIFTS, JSON.stringify(planillaState.shiftsByDate));
+      localStorage.setItem(PLANILLA_STORAGE_EXTRAS, JSON.stringify(planillaState.extraShiftsByDate));
       localStorage.setItem(PLANILLA_STORAGE_CALENDAR, JSON.stringify(planillaState.confirmedCalendar));
     } catch (_) {}
+  }
+
+  function getExtrasForDate(dateStr) {
+    const list = planillaState.extraShiftsByDate[dateStr];
+    return Array.isArray(list) ? list : [];
   }
 
   function getWorkerShiftForDate(worker, dateStr) {
@@ -1207,6 +1229,21 @@
 
   function movePlanillaWorkerToShift(workerId, shiftId) {
     if (!workerId || !shiftId) return;
+    const extras = getExtrasForDate(planillaState.fecha);
+    const extraObj = extras.find(x => x.id === workerId);
+    if (extraObj) {
+      extraObj.shift = shiftId;
+      const allCols = getAllColsForCategory(extraObj.category);
+      const shiftObj = allCols.find(s => s.id === shiftId);
+      planillaState.selectedWorkerId = null;
+      savePlanillaData();
+      renderPlanillaTab();
+      if (shiftObj) {
+        showToast(`✅ ${extraObj.name} (H.Extra ${extraObj.extraHours}) movido a: ${shiftObj.title}`);
+      }
+      return;
+    }
+
     if (!planillaState.shiftsByDate[planillaState.fecha]) {
       planillaState.shiftsByDate[planillaState.fecha] = {};
     }
@@ -1220,6 +1257,74 @@
     if (worker && shiftObj) {
       showToast(`✅ ${worker.name} colocado en: ${shiftObj.title}`);
     }
+  }
+
+  function abrirModalDuplicarExtra(workerId, ev) {
+    if (ev) ev.stopPropagation();
+    const worker = planillaState.staff.find(w => w.id === workerId);
+    if (!worker) return;
+    planillaState.pendingDupWorkerId = workerId;
+
+    const lbl = document.getElementById('lblWorkerDuplicarNombre');
+    if (lbl) lbl.textContent = `${worker.name} (${worker.area})`;
+
+    const sel = document.getElementById('selectTurnoDuplicarExtra');
+    if (sel) {
+      const bands = PLANILLA_BANDS_BY_CAT[worker.category] || PLANILLA_BANDS_BY_CAT.enfermeros;
+      const cols = bands.reduce((acc, b) => acc.concat(b.cols), []);
+      sel.innerHTML = cols.map(c => `<option value="${c.id}">${escapeHTML(c.title)} (${escapeHTML(c.sub)})</option>`).join('');
+      const tardeCol = cols.find(c => c.id.startsWith('tarde'));
+      if (tardeCol) sel.value = tardeCol.id;
+    }
+
+    const modal = document.getElementById('modalDuplicarHorasExtras');
+    if (modal) modal.classList.add('active');
+  }
+
+  function cerrarModalDuplicarExtra() {
+    const modal = document.getElementById('modalDuplicarHorasExtras');
+    if (modal) modal.classList.remove('active');
+    planillaState.pendingDupWorkerId = null;
+  }
+
+  function confirmarDuplicarExtra() {
+    const workerId = planillaState.pendingDupWorkerId;
+    const worker = planillaState.staff.find(w => w.id === workerId);
+    if (!worker) {
+      cerrarModalDuplicarExtra();
+      return;
+    }
+    const shiftId = document.getElementById('selectTurnoDuplicarExtra')?.value || 'tarde_pet';
+    const horas = (document.getElementById('inputHorasExtras')?.value || '').trim() || '7h';
+
+    if (!planillaState.extraShiftsByDate[planillaState.fecha]) {
+      planillaState.extraShiftsByDate[planillaState.fecha] = [];
+    }
+    planillaState.extraShiftsByDate[planillaState.fecha].push({
+      id: `extra_${worker.id}_${Date.now()}`,
+      baseWorkerId: worker.id,
+      name: worker.name,
+      category: worker.category,
+      area: worker.area,
+      shift: shiftId,
+      isExtra: true,
+      extraHours: horas
+    });
+
+    savePlanillaData();
+    cerrarModalDuplicarExtra();
+    renderPlanillaTab();
+    showToast(`⏱️ Doble turno (${horas}) añadido para ${worker.name}.`);
+  }
+
+  function eliminarExtra(extraId, ev) {
+    if (ev) ev.stopPropagation();
+    const list = getExtrasForDate(planillaState.fecha);
+    planillaState.extraShiftsByDate[planillaState.fecha] = list.filter(x => x.id !== extraId);
+    if (planillaState.selectedWorkerId === extraId) planillaState.selectedWorkerId = null;
+    savePlanillaData();
+    renderPlanillaTab();
+    showToast('🗑️ Doble turno eliminado.');
   }
 
   function handleColumnClick(shiftId) {
@@ -1308,15 +1413,20 @@
 
     PLANILLA_CATEGORIES.forEach(cat => {
       const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
+      const catExtras = getExtrasForDate(fecha).filter(x => x.category === cat.id);
       const manana = [];
       const tarde = [];
       const noche = [];
-      catWorkers.forEach(w => {
-        const sh = getWorkerShiftForDate(w, fecha);
-        if (sh.startsWith('manana')) manana.push(w.name);
-        else if (sh.startsWith('tarde')) tarde.push(w.name);
-        else if (sh.startsWith('noche')) noche.push(w.name);
-      });
+
+      const pushEntry = (label, sh) => {
+        if (sh === 'manana_orense') manana.push(`${label} (Orense)`);
+        else if (sh.startsWith('manana')) manana.push(label);
+        else if (sh.startsWith('tarde')) tarde.push(label);
+        else if (sh.startsWith('noche')) noche.push(label);
+      };
+
+      catWorkers.forEach(w => pushEntry(w.name, getWorkerShiftForDate(w, fecha)));
+      catExtras.forEach(x => pushEntry(`${x.name} [H.Extra ${x.extraHours}]`, x.shift));
       summaryByCat[cat.id] = { manana, tarde, noche };
     });
 
@@ -1350,6 +1460,7 @@
     if (area === 'PET-CT') return 'worker-area-pet';
     if (area === 'Medicina Nuclear') return 'worker-area-mn';
     if (area === 'Terapia Metabólica') return 'worker-area-tm';
+    if (area === 'Orense') return 'worker-area-orense';
     return 'worker-area-poli';
   }
 
@@ -1372,8 +1483,9 @@
             ? `<div class="planilla-empty-col">${hasSelected ? '👆 Haz clic aquí para colocar' : 'Arrastra o selecciona un trabajador'}</div>`
             : workersInShift.map(w => {
                 const isSel = planillaState.selectedWorkerId === w.id;
+                const isExtra = Boolean(w.isExtra);
                 return `
-                  <div class="worker-card ${isSel ? 'selected' : ''}"
+                  <div class="worker-card ${isSel ? 'selected' : ''} ${isExtra ? 'is-extra' : ''}"
                     draggable="true"
                     ondragstart="window.supervisionApp.onPlanillaDragStart(event, '${w.id}')"
                     onclick="event.stopPropagation(); window.supervisionApp.selectPlanillaWorker('${w.id}')">
@@ -1381,10 +1493,15 @@
                       <span class="worker-name">${escapeHTML(w.name)}</span>
                       <div class="worker-meta">
                         <span class="worker-area-pill ${getAreaBadgeClass(w.area)}">${escapeHTML(w.area)}</span>
+                        ${isExtra ? `<span class="worker-extra-pill">⏱️ H.Extra: ${escapeHTML(w.extraHours)}</span>` : ''}
                       </div>
                     </div>
-                    <button type="button" class="worker-del-btn no-print" title="Quitar de la plantilla"
-                      onclick="window.supervisionApp.eliminarTrabajadorPlanilla('${w.id}', event)">🗑️</button>
+                    <div style="display:flex; align-items:center; gap:4px;">
+                      ${!isExtra ? `<button type="button" class="worker-dup-btn no-print" title="Duplicar para doble turno / horas extras"
+                        onclick="window.supervisionApp.abrirModalDuplicarExtra('${w.id}', event)">➕ H.Extra</button>` : ''}
+                      <button type="button" class="worker-del-btn no-print" title="${isExtra ? 'Quitar doble turno' : 'Quitar de la plantilla'}"
+                        onclick="${isExtra ? `window.supervisionApp.eliminarExtra('${w.id}', event)` : `window.supervisionApp.eliminarTrabajadorPlanilla('${w.id}', event)`}">🗑️</button>
+                    </div>
                   </div>
                 `;
               }).join('')
@@ -1521,8 +1638,9 @@
 
     const selBar = document.getElementById('planillaSelectionBar');
     const selText = document.getElementById('planillaSelectionText');
+    const allDayExtras = getExtrasForDate(planillaState.fecha);
     const selectedWorker = planillaState.selectedWorkerId
-      ? planillaState.staff.find(w => w.id === planillaState.selectedWorkerId)
+      ? (planillaState.staff.find(w => w.id === planillaState.selectedWorkerId) || allDayExtras.find(x => x.id === planillaState.selectedWorkerId))
       : null;
 
     if (selBar && selText) {
@@ -1578,22 +1696,27 @@
     }
 
     const catWorkers = planillaState.staff.filter(w => w.category === planillaState.categoria);
+    const catExtras = allDayExtras.filter(x => x.category === planillaState.categoria);
     const bands = PLANILLA_BANDS_BY_CAT[planillaState.categoria] || [];
     const hasSelected = Boolean(selectedWorker);
 
+    const getWorkersForCol = (colId) => {
+      const base = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === colId);
+      const ext = catExtras.filter(x => x.shift === colId);
+      return base.concat(ext);
+    };
+
     const poolHtml = `
       <div class="planilla-pool-row">
-        ${POOL_COLS.map(col => {
-          const workersInCol = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === col.id);
-          return renderColumnBox(col, workersInCol, hasSelected);
-        }).join('')}
+        ${POOL_COLS.map(col => renderColumnBox(col, getWorkersForCol(col.id), hasSelected)).join('')}
       </div>
     `;
 
     const bandsHtml = bands.map((band, idx) => {
       const bandColIds = band.cols.map(c => c.id);
-      const countInBand = catWorkers.filter(w => bandColIds.includes(getWorkerShiftForDate(w, planillaState.fecha))).length;
-      const quotaOk = countInBand === band.target;
+      const countInBand = catWorkers.filter(w => bandColIds.includes(getWorkerShiftForDate(w, planillaState.fecha))).length +
+                          catExtras.filter(x => bandColIds.includes(x.shift)).length;
+      const quotaOk = countInBand >= band.target;
       return `
         ${idx > 0 ? '<hr class="planilla-band-divider">' : ''}
         <div class="planilla-band-section">
@@ -1604,10 +1727,7 @@
             </span>
           </div>
           <div class="planilla-band-cols">
-            ${band.cols.map(col => {
-              const workersInCol = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === col.id);
-              return renderColumnBox(col, workersInCol, hasSelected);
-            }).join('')}
+            ${band.cols.map(col => renderColumnBox(col, getWorkersForCol(col.id), hasSelected)).join('')}
           </div>
         </div>
       `;
@@ -1656,6 +1776,10 @@
       confirmarPlanillaDia,
       cambiarMesCalendario,
       seleccionarDiaCalendario,
+      abrirModalDuplicarExtra,
+      cerrarModalDuplicarExtra,
+      confirmarDuplicarExtra,
+      eliminarExtra,
       renderPlanillaTab
     };
   }
