@@ -23,3 +23,7 @@ pet_ct_triage/bin/
 .netlify_config.json
 node_modules/
 gemini_config.json
+
+# Subcarpetas clonadas auxiliares
+Ecosistema-PET/
+ecosistemaPET/
