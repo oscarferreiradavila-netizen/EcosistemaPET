@@ -2760,9 +2760,21 @@
       `;
     }
 
+<<<<<<< HEAD
     // 4. Métricas Mal Preparados en Box
     const elTotMal = document.getElementById('statTotalMalPrepBox');
     if (elTotMal) elTotMal.textContent = `${ef.totalMalPrep} pac`;
+=======
+    // 4. Métricas Mal Preparados y Glucemias Box
+    const elTotMal = document.getElementById('statTotalMalPrepBox');
+    if (elTotMal) elTotMal.textContent = `${ef.totalMalPrep} pac`;
+    const elGlucVerde = document.getElementById('statGlucemiaVerdePct');
+    if (elGlucVerde) elGlucVerde.textContent = `${ef.glucemiaVerdePct}%`;
+    const elGlucAmbar = document.getElementById('statGlucemiaAmbarPct');
+    if (elGlucAmbar) elGlucAmbar.textContent = `${ef.glucemiaAmbarPct}%`;
+    const elGlucRoja = document.getElementById('statGlucemiaRojaPct');
+    if (elGlucRoja) elGlucRoja.textContent = `${ef.glucemiaRojaPct}%`;
+>>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
 
     // 5. Gráfica Causas Mal Preparados
     const chartCausasEl = document.getElementById('chartCausasMalPrep');
@@ -2784,6 +2796,7 @@
       `;
     }
 
+<<<<<<< HEAD
     // 6. Tabla Detalle Mal Prep & Glucemias
     const tablaDetalleEl = document.getElementById('tablaDetalleMalPrepGlucemia');
     if (tablaDetalleEl) {
@@ -2793,6 +2806,47 @@
         { nombre: 'Consuelo Otero Varela', nhc: 'NHC-612409', fecha: 'Ayer · 10:15', proto: 'FDG Endocarditis', tipo: 'Incumplimiento dieta cetogénica', val: '110 mg/dL', res: 'Cena con hidratos; reprogramada con refuerzo de audioguía específica.' },
         { nombre: 'Ángel Souto Fernández', nhc: 'NHC-398244', fecha: 'Ayer · 11:00', proto: '18F-PSMA', tipo: 'Medicación no suspendida', val: 'Normal', res: 'Aclarada compatibilidad con radiofármaco por médico nuclear; realizada sin demora.' },
         { nombre: 'Mercedes Rial Castro', nhc: 'NHC-724185', fecha: '18/11 · 08:30', proto: 'FDG Diabético', tipo: 'Glucemia capilar elevada', val: '245 mg/dL', res: 'Valor confirmado en glucómetro SERGAS; reprogramada a primera hora con pauta insulina.' }
+=======
+    // 6. Gráfica Semáforo Glucemia Capilar en Box
+    const chartSemEl = document.getElementById('chartSemaforoGlucemia');
+    if (chartSemEl) {
+      chartSemEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:10px; padding:0.4rem 0;">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:#047857; font-size:0.86rem;">🟢 Glucemia Verde (&lt; 160 mg/dL)</strong>
+              <div style="font-size:0.72rem; color:#065f46;">Biodistribución óptima garantizada. Paso directo a box de inyección.</div>
+            </div>
+            <span class="status-badge badge-ok" style="font-size:0.88rem;">${ef.glucemiaVerdePct}%</span>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:#b45309; font-size:0.86rem;">🟡 Glucemia Ámbar (160 - 199 mg/dL)</strong>
+              <div style="font-size:0.72rem; color:#78350f;">Aviso a enfermería. Reposo estricto e hidratación con agua sola en box.</div>
+            </div>
+            <span class="status-badge badge-warn" style="font-size:0.88rem;">${ef.glucemiaAmbarPct}%</span>
+          </div>
+          <div style="background:#fef2f2; border:1px solid #fecdd3; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="color:#991b1b; font-size:0.86rem;">🔴 Glucemia Roja (≥ 200 mg/dL - Alerta Preferente)</strong>
+              <div style="font-size:0.72rem; color:#7f1d1d;"><strong>${ef.rescateGlucemiaPct}%</strong> rescatados tras 45 min hidratación y reposo.</div>
+            </div>
+            <span class="status-badge badge-danger" style="font-size:0.88rem;">${ef.glucemiaRojaPct}%</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // 7. Tabla Detalle Mal Prep & Glucemias
+    const tablaDetalleEl = document.getElementById('tablaDetalleMalPrepGlucemia');
+    if (tablaDetalleEl) {
+      const records = [
+        { nombre: 'Rosa María Calvo Soto', nhc: 'NHC-481920', fecha: 'Hoy · 08:45', proto: 'FDG Diabético', tipo: 'Glucemia alta en box', val: '228 mg/dL', sem: '🔴 ROJO', badge: 'badge-danger', res: 'Normalizada a 172 mg/dL tras 45 min hidratación oral; inyectada con éxito.' },
+        { nombre: 'Domingo Besteiro Prado', nhc: 'NHC-509182', fecha: 'Hoy · 09:30', proto: 'FDG Oncológico', tipo: 'Rotura ayuno involuntaria', val: '185 mg/dL', sem: '🟡 ÁMBAR', badge: 'badge-warn', res: 'Tomó café con leche a las 07:00h. Recitado prioritario para mañana 08:30h.' },
+        { nombre: 'Consuelo Otero Varela', nhc: 'NHC-612409', fecha: 'Ayer · 10:15', proto: 'FDG Endocarditis', tipo: 'Incumplimiento dieta cetogénica', val: '110 mg/dL', sem: '🟢 VERDE', badge: 'badge-ok', res: 'Cena con hidratos; reprogramada con refuerzo de audioguía específica.' },
+        { nombre: 'Ángel Souto Fernández', nhc: 'NHC-398244', fecha: 'Ayer · 11:00', proto: '18F-PSMA', tipo: 'Medicación no suspendida', val: 'Normal', sem: '🟢 N/A', badge: 'badge-info', res: 'Aclarada compatibilidad con radiofármaco por médico nuclear; realizada sin demora.' },
+        { nombre: 'Mercedes Rial Castro', nhc: 'NHC-724185', fecha: '18/11 · 08:30', proto: 'FDG Diabético', tipo: 'Glucemia capilar elevada', val: '245 mg/dL', sem: '🔴 ROJO', badge: 'badge-danger', res: 'Valor confirmado en glucómetro SERGAS; reprogramada a primera hora con pauta insulina.' }
+>>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       ];
       tablaDetalleEl.innerHTML = records.map(r => `
         <tr>
@@ -2801,6 +2855,10 @@
           <td><span class="status-badge badge-info">${escapeHTML(r.proto)}</span></td>
           <td><strong style="color:#334155; font-size:0.82rem;">${escapeHTML(r.tipo)}</strong></td>
           <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#0f172a;">${escapeHTML(r.val)}</td>
+<<<<<<< HEAD
+=======
+          <td><span class="status-badge ${r.badge}">${escapeHTML(r.sem)}</span></td>
+>>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
           <td style="font-size:0.79rem; color:#1e293b;">${escapeHTML(r.res)}</td>
         </tr>
       `).join('');
@@ -3760,7 +3818,11 @@
         elBadge.style.background = '#0d9488';
         elBadge.style.color = '#ffffff';
       }
+<<<<<<< HEAD
       if (elSub) elSub.textContent = 'Área de Cuidados y Boxes: Audioguías, Camilla, Absentismo, Vías Venosas y Extravasaciones.';
+=======
+      if (elSub) elSub.textContent = 'Área de Cuidados y Boxes: Semáforo Glucémico, Audioguías, Camilla, Absentismo, Vías Venosas y Extravasaciones.';
+>>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       if (showNotification) {
         cambiarTab('audioguias_calidad');
         showToast('🩺 Pestaña Activa: Supervisión de Enfermería (Cuidados, boxes y preparación)');
@@ -3810,6 +3872,7 @@
     });
   }
 
+<<<<<<< HEAD
   // ==========================================================================
   // 14. PLANILLA INTERACTIVA DE PERSONAL (TÉCNICOS, ENFERMEROS, CELADORES, TCAE)
   // ==========================================================================
@@ -4241,6 +4304,22 @@
     });
   }
 
+=======
+  if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadAllEcosystemData();
+      let savedTab = 'jefe';
+      try {
+        if (typeof localStorage !== 'undefined') {
+          savedTab = localStorage.getItem('pet_master_tab') || 'jefe';
+        }
+      } catch (_) {}
+      setMasterTab(savedTab, false);
+      renderAll();
+    });
+  }
+
+>>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
   if (typeof window !== 'undefined') {
     window.jefaturaApp = {
       setMasterTab,
@@ -4271,6 +4350,7 @@
       seleccionarTipoInforme,
       generarYVerDemoInforme,
       abrirEImprimirDemoInforme,
+<<<<<<< HEAD
       actualizarDemoInforme,
       setPlanillaCategoria,
       setPlanillaFecha,
@@ -4286,6 +4366,9 @@
       resetPlanillaDia,
       imprimirPlanillaPersonal,
       renderPlanillaTab
+=======
+      actualizarDemoInforme
+>>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
     };
   }
 })();
