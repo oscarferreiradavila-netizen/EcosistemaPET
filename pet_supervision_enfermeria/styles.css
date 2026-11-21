@@ -1,0 +1,1131 @@
+/* ==========================================================================
+   CONSOLA DE SUPERVISIÓN DE ENFERMERÍA Y CUIDADOS PET/CT — GALARIA · SERGAS
+   Módulo 8 del Ecosistema Digital PET/CT
+   ========================================================================== */
+
+:root {
+  --sergas-blue: #007eb4;
+  --sergas-blue-hover: #00638e;
+  --sergas-navy: #004868;
+  --sergas-dark: #002b40;
+  --sergas-soft-blue: #e6f4fa;
+  --sergas-border: #cbd5e1;
+
+  --nurse-teal: #0d9488;
+  --nurse-teal-dark: #0f766e;
+  --nurse-teal-light: #ccfbf1;
+  --nurse-teal-border: #99f6e4;
+
+  --bg-page: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-subtle: #f8fafc;
+
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --green-main: #059669;
+  --green-bg: #ecfdf5;
+  --green-border: #6ee7b7;
+
+  --amber-main: #d97706;
+  --amber-bg: #fffbeb;
+  --amber-border: #fcd34d;
+
+  --red-main: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fca5a5;
+
+  --purple-main: #7c3aed;
+  --purple-bg: #f5f3ff;
+  --purple-border: #ddd6fe;
+
+  --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* 1. BARRA SUPERIOR SERGAS */
+.sergas-top-bar {
+  background: linear-gradient(90deg, var(--sergas-dark) 0%, var(--nurse-teal-dark) 100%);
+  color: #ffffff;
+  font-size: 0.78rem;
+  padding: 0.45rem 1.5rem;
+  border-bottom: 2px solid var(--nurse-teal);
+}
+
+.sergas-top-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.sergas-top-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 600;
+}
+
+.xunta-badge {
+  background: var(--sergas-blue);
+  color: #ffffff;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.sergas-top-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.top-nav-link {
+  color: #e2e8f0;
+  text-decoration: none;
+  padding: 2px 7px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  font-size: 0.76rem;
+}
+
+.top-nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* 2. CABECERA EJECUTIVA DE ENFERMERÍA */
+.nurse-header {
+  background: #ffffff;
+  border-bottom: 3px solid var(--nurse-teal);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem 1.5rem;
+}
+
+.nurse-header-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.brand-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.brand-titles h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--sergas-navy);
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.role-pill-nurse {
+  background: var(--nurse-teal-light);
+  color: var(--nurse-teal-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--nurse-teal-border);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.brand-titles p {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.period-select {
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--sergas-border);
+  background: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.84rem;
+  color: var(--sergas-navy);
+  cursor: pointer;
+}
+
+.btn-nurse {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.83rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+  text-decoration: none;
+}
+
+.btn-nurse-primary {
+  background: var(--nurse-teal);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.28);
+}
+.btn-nurse-primary:hover {
+  background: var(--nurse-teal-dark);
+}
+
+.btn-nurse-outline {
+  background: #ffffff;
+  color: var(--sergas-navy);
+  border-color: #cbd5e1;
+}
+.btn-nurse-outline:hover {
+  background: #f1f5f9;
+  border-color: var(--nurse-teal);
+}
+
+.btn-nurse-amber {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fcd34d;
+}
+.btn-nurse-amber:hover {
+  background: #fef3c7;
+}
+
+/* 3. CONTENEDOR PRINCIPAL */
+.main-container {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 1.4rem 1.5rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* 4. TARJETAS KPI DE ENFERMERÍA */
+.kpi-nurse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  gap: 1rem;
+}
+
+.kpi-nurse-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-nurse-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--kpi-color, var(--nurse-teal));
+}
+
+.kpi-nurse-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: #cbd5e1;
+}
+
+.kpi-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.kpi-label {
+  font-size: 0.77rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.kpi-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  background: var(--kpi-bg, #ccfbf1);
+  color: var(--kpi-color, #0d9488);
+  flex-shrink: 0;
+}
+
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin: 0.45rem 0 0.35rem;
+}
+
+.kpi-big-number {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.95rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.05;
+}
+
+.kpi-pill-rate {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.kpi-subtext {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.kpi-sparkline-wrap {
+  margin-top: 0.4rem;
+  height: 36px;
+  width: 100%;
+}
+
+/* 5. NAVEGACIÓN POR PESTAÑAS */
+.nurse-tabs-bar {
+  display: flex;
+  gap: 0.55rem;
+  background: #ffffff;
+  padding: 0.5rem;
+  border-radius: 12px;
+  border: 1px solid #dbe3ec;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.nurse-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.nurse-tab-btn:hover {
+  background: #f1f5f9;
+  color: var(--nurse-teal-dark);
+}
+
+.nurse-tab-btn.active {
+  background: var(--nurse-teal-dark);
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(15, 118, 110, 0.28);
+}
+
+.tab-count-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.nurse-tab-btn.active .tab-count-badge {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* PANELES DE CONTENIDO */
+.tab-panel {
+  display: none;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.tab-panel.active {
+  display: flex;
+}
+
+.panel-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.35rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.panel-title-group h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--sergas-navy);
+  line-height: 1.25;
+}
+
+.panel-title-group p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+/* 6. MONITOR INTERACTIVO DE BOXES */
+.boxes-monitor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.2rem;
+}
+
+.box-card {
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.15rem;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.box-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.box-card.occupied {
+  border-color: #99f6e4;
+  background: #f0fdfa;
+}
+
+.box-card.available {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.box-card.alert {
+  border-color: #fecdd3;
+  background: #fff1f2;
+}
+
+.box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box-number-badge {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--sergas-navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.box-status-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.box-patient-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.box-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  background: #ffffff;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.78rem;
+}
+
+.box-meta-item strong {
+  color: var(--text-secondary);
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.box-uptake-progress {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.box-uptake-fill {
+  height: 100%;
+  background: var(--nurse-teal);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* 7. SEMÁFORO METABÓLICO DE GLUCEMIA */
+.semaforo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.35rem;
+}
+
+.semaforo-card {
+  padding: 1.1rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.semaforo-verde {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+.semaforo-ambar {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+.semaforo-rojo {
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+
+/* 8. TABLAS */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.nurse-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.82rem;
+}
+
+.nurse-table th {
+  background: #f8fafc;
+  color: var(--sergas-navy);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #cbd5e1;
+  white-space: nowrap;
+}
+
+.nurse-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.nurse-table tr:hover td {
+  background: #f0fdfa;
+}
+
+/* BADGES DE ESTADO */
+.status-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-ok {
+  background: var(--green-bg);
+  color: var(--green-main);
+  border: 1px solid var(--green-border);
+}
+
+.badge-warn {
+  background: var(--amber-bg);
+  color: var(--amber-main);
+  border: 1px solid var(--amber-border);
+}
+
+.badge-danger {
+  background: var(--red-bg);
+  color: var(--red-main);
+  border: 1px solid var(--red-border);
+}
+
+.badge-info {
+  background: var(--nurse-teal-light);
+  color: var(--nurse-teal-dark);
+  border: 1px solid var(--nurse-teal-border);
+}
+
+/* ==========================================================================
+   TURNOS Y PEDIDOS - ESTILOS ESPECÍFICOS
+   ========================================================================== */
+.shift-summary-grid,
+.orders-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.shift-summary-card,
+.orders-summary-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 1.15rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.shift-summary-card:hover,
+.orders-summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.shift-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.shift-card-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.shift-card-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+
+.shift-card-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.role-badge-due {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.role-badge-tsid {
+  background: #ede9fe;
+  color: #6d28d9;
+  border: 1px solid #ddd6fe;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.role-badge-tcae {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.dosis-meter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.dosis-bar-wrap {
+  width: 55px;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.dosis-bar-fill {
+  height: 100%;
+  background: #059669;
+  border-radius: 3px;
+}
+
+/* MODALES */
+.nurse-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.nurse-modal-backdrop.active {
+  display: flex;
+}
+
+.nurse-modal-box {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid #cbd5e1;
+}
+
+.nurse-modal-header {
+  background: linear-gradient(135deg, var(--sergas-navy) 0%, var(--nurse-teal-dark) 100%);
+  color: #ffffff;
+  padding: 1rem 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nurse-modal-header h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.nurse-modal-body {
+  padding: 1.35rem 1.4rem;
+}
+
+.nurse-modal-footer {
+  padding: 0.9rem 1.4rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* TOASTS */
+.nurse-toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nurse-toast {
+  background: var(--sergas-dark);
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  border-left: 4px solid var(--nurse-teal);
+  animation: slideInToast 0.25s ease-out;
+}
+
+@keyframes slideInToast {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* MEDIA QUERIES & IMPRESIÓN */
+@media print {
+  .no-print,
+  .sergas-top-bar,
+  .nurse-header,
+  .nurse-tabs-bar {
+    display: none !important;
+  }
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+  .main-container {
+    padding: 0;
+    max-width: 100%;
+  }
+  .panel-card {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
+
+
+/* ==========================================================================
+   PLANILLA INTERACTIVA DE PERSONAL (ENFERMEROS, TÉCNICOS, CELADORES, TCAE)
+   ========================================================================== */
+.planilla-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.planilla-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.planilla-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.planilla-cat-btn:hover {
+  border-color: #0d9488;
+  color: #0f766e;
+  background: #f0fdfa;
+}
+
+.planilla-cat-btn.active {
+  background: #0d9488;
+  border-color: #0d9488;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(13, 148, 136, 0.25);
+}
+
+.planilla-cat-count {
+  background: rgba(15, 23, 42, 0.08);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.planilla-cat-btn.active .planilla-cat-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.planilla-selection-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #eff6ff 0%, #e0f2fe 100%);
+  border: 2px solid #0284c7;
+  border-radius: 10px;
+  color: #0c4a6e;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.planilla-selection-bar.hidden {
+  display: none;
+}
+
+.planilla-add-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: #ffffff;
+  border: 1px dashed #94a3b8;
+  border-radius: 10px;
+}
+
+.planilla-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.planilla-column {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.16s ease;
+  cursor: pointer;
+}
+
+.planilla-column.drop-ready {
+  border-color: #0284c7;
+  border-style: dashed;
+  background: #f0f9ff;
+}
+
+.planilla-column.drag-over {
+  border-color: #059669;
+  background: #ecfdf5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.15);
+}
+
+.planilla-col-header {
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.planilla-col-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.planilla-col-sub {
+  font-size: 0.71rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.planilla-col-count {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+}
+
+.planilla-col-body {
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.planilla-empty-col {
+  text-align: center;
+  padding: 1.25rem 0.5rem;
+  color: #94a3b8;
+  font-size: 0.77rem;
+  font-weight: 600;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}
+
+.worker-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-left: 4px solid #0d9488;
+  border-radius: 9px;
+  padding: 0.6rem 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: grab;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.worker-card:hover {
+  border-color: #0d9488;
+  box-shadow: 0 4px 10px rgba(13, 148, 136, 0.15);
+  transform: translateY(-1px);
+}
+
+.worker-card.selected {
+  border: 2px solid #0284c7;
+  border-left: 5px solid #0284c7;
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+}
+
+.worker-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.worker-name {
+  font-size: 0.83rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.worker-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.worker-area-pill {
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+}
+
+.worker-area-pet { background: #e0f2fe; color: #0369a1; }
+.worker-area-mn { background: #f0fdf4; color: #15803d; }
+.worker-area-poli { background: #f3e8ff; color: #7e22ce; }
+
+.worker-del-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.84rem;
+  padding: 0.2rem 0.3rem;
+  border-radius: 6px;
+}
+
+.worker-del-btn:hover {
+  color: #dc2626;
+  background: #fef2f2;
+}

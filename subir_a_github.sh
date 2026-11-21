@@ -6,6 +6,11 @@
 
 cd "$(dirname "$0")" || exit
 
+# Asegurar motor Git de GitHub Desktop (sin requerir herramientas Xcode adicionales)
+if [ -d "/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin" ]; then
+  export PATH="/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin:/Applications/GitHub Desktop.app/Contents/Resources/app/git/libexec/git-core:$PATH"
+fi
+
 echo ""
 echo "========================================================"
 echo "🚀 INICIANDO SINCRONIZACIÓN CON GITHUB PAGES"

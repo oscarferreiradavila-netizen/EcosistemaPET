@@ -1,0 +1,107 @@
+    });
+  }
+
+  // ==============================================================================
+  // PROTOCOLO ASISTENCIAL SERGAS: HOSPITALIZADOS Y MOVILIDAD REDUCIDA
+  // ==============================================================================
+  function getPatientMobilityHospitalizationInfo(p) {
+    const raw = (p && p.raw) ? p.raw : (p || {});
+    const movilidad = String(raw["Movilidad / Traslado"] || raw.movilidad || p.movilidad || "").trim();
+    const ingresado = String(raw["¿El paciente está ingresado?"] || raw.ingresado || p.ingresado || "").trim();
+    const alertas = String(raw["Alertas Técnicas"] || p.alertas_tecnicas || (Array.isArray(p.alertas) ? p.alertas.map(a => a.text).join(' ') : '') || "").toUpperCase();
+    const motivo = String(p.motivo || raw["Motivo de Solicitud"] || "").toUpperCase();
+
+    const isHospitalizado = ingresado.toLowerCase() === "sí" || ingresado.toLowerCase() === "si" || ingresado.toLowerCase() === "true" || alertas.includes("INGRESADO") || motivo.includes("INGRESADO") || motivo.includes("EN PLANTA");
+    const isMovilidadReducida = movilidad.toLowerCase().includes("silla") || movilidad.toLowerCase().includes("camilla") || movilidad.toLowerCase().includes("reducida") || movilidad.toLowerCase().includes("ambulancia") || alertas.includes("SILLA") || alertas.includes("CAMILLA");
+
+    const isLateShift = isHospitalizado || isMovilidadReducida;
+    let label = "";
+    if (isHospitalizado && isMovilidadReducida) {
+      label = `Hospitalizado y Movilidad Reducida (${movilidad || 'Camilla/Silla'})`;
+    } else if (isHospitalizado) {
+      label = `Paciente Hospitalizado (Ingresado en planta/hospital)`;
+    } else if (isMovilidadReducida) {
+      label = `Movilidad Reducida (${movilidad || 'Silla de ruedas / Camilla'})`;
+    }
+
+    return {
+      isLateShift,
+      isHospitalizado,
+      isMovilidadReducida,
+      movilidad,
+      ingresado,
+      label
+    };
+  }
+
+  function isFirstSlotOfDayOrShift(dateStr, timeStr) {
+    const m = String(timeStr || '').match(/(\d{1,2}):(\d{2})/);
+    if (!m) return false;
+    const h = parseInt(m[1], 10);
+    const min = parseInt(m[2], 10);
+    const totalMin = h * 60 + min;
+
+    // Si es a primera hora de la mañana (<= 08:30 h)
+    if (totalMin <= 8 * 60 + 30) return true;
+
+    // O si coincide con los 2 primeros huecos de la agenda configurada para el día
+    if (dateStr) {
+      const dayConfig = getDayAgendaConfig(dateStr);
+      if (dayConfig && dayConfig.morning && dayConfig.morning.active) {
+        const mSlots = generateShiftSlotTimes(dayConfig.morning);
+        const slotFmt = `${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}`;
+        if (mSlots.length > 0 && (mSlots[0] === slotFmt || (mSlots[1] && mSlots[1] === slotFmt))) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function resetAllPatientCitations() {
+    if (!confirm("⚠️ ¿Estás seguro de que deseas DESAGENDAR TODOS los pacientes?\n\nTodas las citas asignadas volverán a la lista de espera de triaje (P1, P2, P3) para poder agendarlas manualmente o con el auto-relleno inteligente respetando el orden clínico.")) {
+      return;
+    }
+
+    state.peonadaAssignments = {};
+    state.confirmations = {};
+    state.freedSlots = {};
+    try {
+      localStorage.removeItem('pet_ct_peonada_assignments');
+      localStorage.removeItem('pet_ct_peonada_assignments_v5');
+      localStorage.removeItem('pet_ct_confirmations');
+      localStorage.removeItem('pet_ct_freed_slots');
+    } catch(e) {}
+
+    state.submissions.forEach(p => {
+      p.fechaCita = "SIN AGENDAR";
+      p.horaCita = "Pendiente de Triaje";
+      p.requiresProposal = true;
+      if (p.raw) {
+        p.raw["Fecha Cita Asignada"] = "";
+        p.raw["Hora Cita Asignada"] = "";
+        p.raw["Estado de Triaje"] = "Pendiente de Triaje";
+        p.raw["Estado Confirmación"] = "Pendiente";
+      }
+    });
+
+    try {
+      const rawList = state.submissions.map(s => s.raw || s);
+      localStorage.setItem('PET_DATABASE_MASTER_V5', JSON.stringify(rawList));
+      fetch('/api/sync-database', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(rawList)
+      }).catch(e => console.log('Sync reset:', e));
+    } catch(e) {}
+
+    updateProposalsLists();
+    updateKPIs();
+    renderWeeklyGrid();
+    renderConfirmationsTable();
+    renderProposalTables();
+    renderSubmissionsTable();
+    updateAgendaCapacityStats();
+
+    alert("✅ Todas las citas han sido liberadas con éxito.\nAhora todos los pacientes aparecen pendientes en el triaje.");
+  }

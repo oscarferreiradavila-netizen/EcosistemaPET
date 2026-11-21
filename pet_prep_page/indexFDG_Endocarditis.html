@@ -2548,12 +2548,26 @@
         text.textContent = "La cifra supera los 180 mg/dL y compite intensamente con el 18F-FDG. Se ha generado una alerta en la consola médica de enfermería para valorar pauta de corrección con insulina rápida.";
       }
 
-      // Notificar a la base de datos local
+      // Notificar a la base de datos local y sincronizar con Enfermería
+      const patientNameVal = (document.getElementById("glucosePatientName") ? document.getElementById("glucosePatientName").value : "") || "Paciente";
+      const glucoseTimeVal = (document.getElementById("glucoseTime") ? document.getElementById("glucoseTime").value : "") || "08:00";
+
+      if (typeof registrarGlucemiaEcosistema === "function") {
+        registrarGlucemiaEcosistema({
+          paciente_nombre: patientNameVal,
+          hora_control_capilar: glucoseTimeVal,
+          glucemia_mg_dl: val,
+          origen: "SEMÁFORO_GLUCEMIA_ENDOCARDITIS",
+          nivel: val >= 200 ? "ROJO_PREFERENTE" : (val > 180 ? "ALERTA_GLUCEMIA_ALTA" : "CONTROL_GLUCEMIA"),
+          mensaje_alerta: `Control glucemia capilar Endocarditis: ${val} mg/dL a las ${glucoseTimeVal} h (${patientNameVal})`
+        });
+      }
+
       enviarRegistroEnfermeria({
         origen: "SEMÁFORO_GLUCEMIA_ENDOCARDITIS",
-        nivel: val > 180 ? "ALERTA_GLUCEMIA_ALTA" : "CONTROL_GLUCEMIA",
-        paciente_nombre: document.getElementById("glucosePatientName").value || "Paciente",
-        hora_control_capilar: document.getElementById("glucoseTime").value || "08:00",
+        nivel: val >= 200 ? "ROJO_PREFERENTE" : (val > 180 ? "ALERTA_GLUCEMIA_ALTA" : "CONTROL_GLUCEMIA"),
+        paciente_nombre: patientNameVal,
+        hora_control_capilar: glucoseTimeVal,
         glucemia_mg_dl: val,
         mensaje_escrito: `Glucemia reportada en domicilio: ${val} mg/dL para PET FDG Endocarditis`
       });
@@ -3091,6 +3105,7 @@
     </div>
   </div>
 
+  <script src="assets/pet_glucose_sync.js"></script>
   <script src="assets/pet_chat_human_stream.js"></script>
 </body>
 </html>

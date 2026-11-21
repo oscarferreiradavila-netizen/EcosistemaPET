@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RadioRisk: Dosis & Dinero - Medicina Nuclear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- App Container -->
+  <div id="app">
+    <!-- Header / Top Bar -->
+    <header class="game-header">
+      <div class="logo-area">
+        <span class="radiation-icon">☢️</span>
+        <div>
+          <h1>RadioRisk <span class="badge-sub">Medicina Nuclear</span></h1>
+          <p class="tagline">"Cuanta más radiación, menos dinero en el bolsillo"</p>
+        </div>
+      </div>
+
+      <div class="hud-top" id="hudTop" style="display: none;">
+        <div class="hud-card player-info">
+          <span id="hudRoleIcon">🩺</span>
+          <div>
+            <div class="hud-label">Profesional</div>
+            <div class="hud-value" id="hudRoleName">Enfermero/a</div>
+          </div>
+        </div>
+
+        <div class="hud-card money-card">
+          <span class="hud-icon">💶</span>
+          <div>
+            <div class="hud-label">Dinero Actual</div>
+            <div class="hud-value highlight-green" id="hudMoney">500 €</div>
+          </div>
+        </div>
+
+        <div class="hud-card dose-card">
+          <span class="hud-icon">☢️</span>
+          <div>
+            <div class="hud-label">Dosis Acumulada</div>
+            <div class="hud-value highlight-yellow" id="hudTotalDose">0.0 µSv</div>
+          </div>
+        </div>
+
+        <div class="hud-card rate-card">
+          <span class="hud-icon">⚠️</span>
+          <div>
+            <div class="hud-label">Tasa de Dosis</div>
+            <div class="hud-value" id="hudDoseRate">0.0 µSv/h</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Screens Viewport -->
+    <main class="main-content">
+
+      <!-- SCREEN 1: START / MENU -->
+      <section id="screenMenu" class="screen active">
+        <div class="hero-card">
+          <div class="hero-badge">Simulador Radiológico & Económico</div>
+          <h2>Bienvenido al Turno de Medicina Nuclear</h2>
+          <p class="hero-desc">
+            Trabajar con isótopos radiactivos (FDG-18, Tc-99m) exige dominar la triada <strong>ALARA</strong>: 
+            <em>Distancia, Tiempo y Blindaje</em>. En este servicio, <strong>cada microSievert (µSv) te cuesta dinero de tu salario</strong>.
+            ¡Cuida al paciente, mantén la distancia adecuada, equípate bien y acaba el turno siendo el profesional más rico!
+          </p>
+
+          <div class="mode-selector-box">
+            <h3>Selecciona Modo de Juego:</h3>
+            <div class="mode-buttons">
+              <button class="btn btn-primary" id="btnSinglePlayer">
+                <span class="btn-icon">👤</span> 
+                <div>
+                  <strong>Modo Turno Individual</strong>
+                  <small>Supera la jornada con tu rol y maximiza tus ganancias</small>
+                </div>
+              </button>
+              <button class="btn btn-secondary" id="btnPassPlay">
+                <span class="btn-icon">👥</span> 
+                <div>
+                  <strong>Modo Multijugador (Pass & Play)</strong>
+                  <small>Compite contra otro colega por el mejor salario final</small>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: ROLE SELECTION -->
+      <section id="screenRole" class="screen">
+        <div class="screen-title">
+          <h2>Elige tu Perfil Profesional</h2>
+          <p>Cada rol realiza tareas específicas en Medicina Nuclear y afronta riesgos radiológicos distintos.</p>
+        </div>
+
+        <div class="roles-grid">
+          <!-- Enfermero Card -->
+          <div class="role-card" data-role="enfermero">
+            <div class="role-icon">🩺</div>
+            <h3>Enfermero / a</h3>
+            <div class="role-tag">Canalización & Inyección</div>
+            <p class="role-desc">
+              Responsable de inyectar radiofármacos vía IV a pacientes de PET-CT y Gammagrafía. Requiere gran proximidad física durante la canalización.
+            </p>
+            <ul class="role-stats">
+              <li><span>Proximidad Paciente:</span> <strong class="stat-high">Muy Alta</strong></li>
+              <li><span>Habilidad Paciente:</span> <strong>Empatía Médica (Reduce Ansiedad)</strong></li>
+              <li><span>Riesgo Radiológico:</span> <strong class="stat-high">Alto (Dosis Directa)</strong></li>
+            </ul>
+            <button class="btn btn-role-select">Elegir Enfermero/a</button>
+          </div>
+
+          <!-- Técnico Card -->
+          <div class="role-card" data-role="tecnico">
+            <div class="role-icon">⚛️</div>
+            <h3>Técnico / a TER</h3>
+            <div class="role-tag">Gammateca & Gammacámara</div>
+            <p class="role-desc">
+              Eluye generadores y fracciona dosis en celda de manipulación plomada. Posiciona al paciente inyectado en el tomógrafo PET-CT.
+            </p>
+            <ul class="role-stats">
+              <li><span>Manejo de Viales:</span> <strong class="stat-high">Muy Alto</strong></li>
+              <li><span>Habilidad Técnica:</span> <strong>Agilidad en Celda Plomada</strong></li>
+              <li><span>Riesgo Radiológico:</span> <strong>Medio-Alto (Fuentes concentradas)</strong></li>
+            </ul>
+            <button class="btn btn-role-select">Elegir Técnico/a TER</button>
+          </div>
+
+          <!-- Celador Card -->
+          <div class="role-card" data-role="celador">
+            <div class="role-icon">🛏️</div>
+            <h3>Celador / a</h3>
+            <div class="role-tag">Traslado en Zona Caliente</div>
+            <p class="role-desc">
+              Transporta a pacientes ya inyectados desde las salas de espera calientes a las salas de exploración. Expuesto a radiación móvil prolongada.
+            </p>
+            <ul class="role-stats">
+              <li><span>Movilidad:</span> <strong class="stat-high">Constante en Pasillos</strong></li>
+              <li><span>Habilidad Espacial:</span> <strong>Distancia Estratégica & Pinzas</strong></li>
+              <li><span>Riesgo Radiológico:</span> <strong>Medio (Exposición continuada)</strong></li>
+            </ul>
+            <button class="btn btn-role-select">Elegir Celador/a</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: EQUIPMENT SHOP -->
+      <section id="screenShop" class="screen">
+        <div class="screen-title">
+          <h2>Equipamiento de Protección (EPIs)</h2>
+          <p>Invierte tu dinero inteligentemente. Los EPIs reducen la tasa de radiación que absorbes, evitando grandes penalizaciones.</p>
+        </div>
+
+        <div class="shop-container">
+          <div class="shop-grid">
+            <!-- Item 1: Chaleco Plomado -->
+            <div class="shop-card" data-epi="chaleco">
+              <div class="shop-icon">🛡️</div>
+              <div class="shop-details">
+                <h3>Chaleco de Plomo (0.5 mm Pb)</h3>
+                <p>Reduce la radiación absorbida en un <strong>80%</strong> en tronco. Reduce velocidad un 10%.</p>
+                <div class="shop-price">Precio: <strong>120 €</strong></div>
+              </div>
+              <button class="btn btn-buy" data-item="chaleco">Comprar EPI</button>
+            </div>
+
+            <!-- Item 2: Protector Tiroideo -->
+            <div class="shop-card" data-epi="tiroides">
+              <div class="shop-icon">🎗️</div>
+              <div class="shop-details">
+                <h3>Protector de Tiroides Plomado</h3>
+                <p>Protección adicional del <strong>10%</strong> para cuello y glándula tiroidea.</p>
+                <div class="shop-price">Precio: <strong>50 €</strong></div>
+              </div>
+              <button class="btn btn-buy" data-item="tiroides">Comprar EPI</button>
+            </div>
+
+            <!-- Item 3: Blindaje de Jeringa -->
+            <div class="shop-card" data-epi="jeringa">
+              <div class="shop-icon">💉</div>
+              <div class="shop-details">
+                <h3>Protector de Jeringa en Tungsteno</h3>
+                <p>Crucial para inyecciones/eluciones. Reduce la radiación en extremidades un <strong>90%</strong> al manipular.</p>
+                <div class="shop-price">Precio: <strong>100 €</strong></div>
+              </div>
+              <button class="btn btn-buy" data-item="jeringa">Comprar EPI</button>
+            </div>
+
+            <!-- Item 4: Mampara Móvil Plomada -->
+            <div class="shop-card" data-epi="mampara">
+              <div class="shop-icon">🧱</div>
+              <div class="shop-details">
+                <h3>Mampara Móvil con Vidrio Plomado</h3>
+                <p>Barrera transportable. Otorga <strong>95% de sombra de radiación</strong> si te mantienes tras ella.</p>
+                <div class="shop-price">Precio: <strong>180 €</strong></div>
+              </div>
+              <button class="btn btn-buy" data-item="mampara">Comprar EPI</button>
+            </div>
+          </div>
+
+          <div class="shop-summary-card">
+            <h3>Tus EPIs Equipados</h3>
+            <div id="equippedList" class="equipped-tags">
+              <span class="tag-empty">Ningún EPI equipado (¡Riesgo total!)</span>
+            </div>
+
+            <div class="balance-line">
+              <span>Dinero disponible:</span>
+              <strong id="shopMoneyDisplay">500 €</strong>
+            </div>
+
+            <button class="btn btn-success btn-block" id="btnStartShift">
+              🚀 Iniciar Turno de Trabajo
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: INTERACTIVE SIMULATION & SCENARIOS -->
+      <section id="screenGame" class="screen">
+        <div class="game-stage-grid">
+          
+          <!-- Simulation Viewport / Canvas -->
+          <div class="sim-viewport">
+            <div class="sim-header">
+              <div class="scenario-title" id="scenarioTitle">Escenario 1: Inyección de PET-CT</div>
+              <div class="scenario-timer" id="scenarioTimer">⏱️ 00:45</div>
+            </div>
+
+            <div class="canvas-container">
+              <canvas id="simCanvas" width="700" height="420"></canvas>
+              
+              <!-- Dose Rate Overlay Badge -->
+              <div class="dose-gauge-overlay" id="doseGauge">
+                <div class="gauge-bar-bg">
+                  <div class="gauge-bar-fill" id="doseGaugeFill"></div>
+                </div>
+                <div class="gauge-text" id="gaugeText">0.0 µSv/h</div>
+              </div>
+
+              <!-- Distance Marker -->
+              <div class="distance-badge" id="distanceBadge">
+                📏 Distancia al paciente/fuente: <strong>3.0 m</strong> (Ley al Cuadrado Inverso)
+              </div>
+            </div>
+
+            <!-- Controls instruction -->
+            <div class="controls-hint">
+              🎮 <strong>Controles:</strong> Usa las flechas del teclado / W-A-S-D o Toca en la pantalla para moverte. ¡Aléjate de la fuente para reducir la radiación instantáneamente!
+            </div>
+          </div>
+
+          <!-- Interaction & Patient Panel -->
+          <div class="interaction-panel">
+            <!-- Patient Info Box -->
+            <div class="patient-card">
+              <div class="patient-avatar" id="patientAvatar">👤</div>
+              <div class="patient-info">
+                <h4 id="patientName">Paciente: D. Antonio (FDG-18 PET)</h4>
+                <div class="anxiety-level">
+                  <span>Estado del Paciente:</span>
+                  <div class="anxiety-bar">
+                    <div class="anxiety-fill" id="anxietyFill" style="width: 40%;"></div>
+                  </div>
+                  <strong id="anxietyText">Moderado</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scenario Task Objectives -->
+            <div class="task-card">
+              <h4>🎯 Objetivo de la Tarea</h4>
+              <p id="taskDescription">
+                El paciente necesita recibir la inyección de 370 MBq de 18F-FDG. Acércate solo lo necesario para canalizar la vía e inyectar, manteniendo la máxima distancia posible durante el tiempo de reposo.
+              </p>
+            </div>
+
+            <!-- Action Buttons / Dialog Options -->
+            <div class="action-card">
+              <h4>💬 Trato al Paciente & Acciones</h4>
+              <div class="action-buttons" id="actionButtons">
+                <!-- Dynamic Buttons generated by JS -->
+              </div>
+            </div>
+
+            <!-- Incident / Event Alert Box -->
+            <div id="alertBox" class="alert-box" style="display: none;">
+              <span class="alert-icon">⚠️</span>
+              <div class="alert-text" id="alertText">¡El paciente se encuentra inquieto y desea levantarse de la silla caliente!</div>
+            </div>
+
+            <!-- Complete Action / Proceed Button -->
+            <button class="btn btn-primary btn-block mt-auto" id="btnFinishScenario">
+              ✅ Completar Procedimiento
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 5: RESULTS & LEADERBOARD -->
+      <section id="screenResults" class="screen">
+        <div class="results-card">
+          <div class="results-header">
+            <span class="trophy-icon">🏆</span>
+            <h2>Resumen Financiero del Turno</h2>
+            <p id="resultSubtitle">Has completado tu jornada en el Servicio de Medicina Nuclear</p>
+          </div>
+
+          <div class="results-grid">
+            <div class="res-box">
+              <div class="res-label">Salario Base</div>
+              <div class="res-val" id="resBaseSalary">500 €</div>
+            </div>
+
+            <div class="res-box">
+              <div class="res-label">Bono Trato a Pacientes</div>
+              <div class="res-val green" id="resPatientBonus">+120 €</div>
+            </div>
+
+            <div class="res-box">
+              <div class="res-label">Inversión en EPIs</div>
+              <div class="res-val red" id="resEpiCost">-170 €</div>
+            </div>
+
+            <div class="res-box">
+              <div class="res-label">Dosis Total Recibida</div>
+              <div class="res-val yellow" id="resTotalDose">42.5 µSv</div>
+            </div>
+
+            <div class="res-box full-width penalty-box">
+              <div class="res-label">Penalización Económica por Radiación (-2 €/µSv)</div>
+              <div class="res-val red" id="resRadiationPenalty">-85 €</div>
+            </div>
+
+            <div class="res-box full-width final-balance-box">
+              <div class="res-label">DINERO FINAL ACUMULADO</div>
+              <div class="res-val big-gold" id="resFinalBalance">365 €</div>
+            </div>
+          </div>
+
+          <div class="leaderboard-section">
+            <h3>📊 Ranking de Profesionales del Hospital</h3>
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Profesional</th>
+                  <th>Rol</th>
+                  <th>Dosis (µSv)</th>
+                  <th>Ganancia Final (€)</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody">
+                <!-- Generated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="results-actions">
+            <button class="btn btn-primary" id="btnRestartGame">
+              🔄 Jugar Otro Turno
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+      <p>RadioRisk: Medicina Nuclear &copy; 2026 — Basado en Principios ALARA (As Low As Reasonably Achievable)</p>
+    </footer>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

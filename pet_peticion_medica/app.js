@@ -134,6 +134,12 @@ const INITIAL_DATABASE = [
     "Movilidad / Traslado": "Autónomo",
     "¿Tiene Diabetes Mellitus?": "No",
     "Glucemia (mg/dL)": 105,
+    "¿Tiene estudio PET previo?": "Sí",
+    "PET Previo Realizado": "Sí",
+    "Fecha PET Previo": "2026-08-14",
+    "Centro PET Previo": "SERGAS (Galaria / SIDI / PACS Galicia)",
+    "Hallazgos PET Previo": "PET basal de estadificación inicial con adenopatías supradiafragmáticas activas (SUVmax 10.4)",
+    "Detalle PET Previo": "Sí (14/08/2026, SERGAS Galaria — PET basal SUVmax 10.4)",
     "Fin Tratamiento QT/RT": "2026-09-28",
     "Alergias Conocidas": "Penicilina",
     "Contraindicación Contraste": "No",
@@ -413,39 +419,47 @@ function notifyClinicalBroadcast(record) {
         petition: record,
         timestamp: Date.now()
       });
-    } catch(e) {}
+    } catch (e) { }
   }
 }
 
 if (petClinicalBroadcast) {
   petClinicalBroadcast.onmessage = (e) => {
-    if (e.data && (e.data.type === 'TRIAGE_DATABASE_UPDATED' || e.data.type === 'PETITION_CREATED_OR_UPDATED')) {
+    if (e.data && (e.data.type === 'TRIAGE_DATABASE_UPDATED' || e.data.type === 'PETITION_CREATED_OR_UPDATED' || e.data.type === 'PETITION_DELETED')) {
+      if (e.data.type === 'PETITION_DELETED' && (e.data.id || e.data.subId)) {
+        registerDeletedPetitionId(e.data.id || e.data.subId, e.data.nhc);
+      }
       const stored = localStorage.getItem('PET_DATABASE_MASTER_V4');
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            petitions = parsed;
+          if (Array.isArray(parsed)) {
+            petitions = filterOutDeletedPetitions(parsed);
             updateKpis();
             renderPetitionsTable();
             renderDatabaseView();
           }
-        } catch(err) {}
+        } catch (err) { }
       }
     }
   };
 }
 
 window.addEventListener('storage', (e) => {
-  if (e.key === 'PET_DATABASE_MASTER_V4') {
+  if (e.key === 'PET_DATABASE_MASTER_V4' && e.newValue) {
     try {
-      petitions = JSON.parse(e.newValue);
+      petitions = filterOutDeletedPetitions(JSON.parse(e.newValue));
       updateKpis();
       renderPetitionsTable();
       renderDatabaseView();
     } catch (err) {
       console.warn("Error actualizando desde storage event:", err);
     }
+  } else if (e.key === 'PET_DELETED_PETITION_IDS_V1') {
+    petitions = filterOutDeletedPetitions(petitions);
+    updateKpis();
+    renderPetitionsTable();
+    renderDatabaseView();
   }
 });
 
@@ -475,6 +489,54 @@ function getApiBaseUrl() {
     return '';
   }
   return 'http://localhost:8000';
+}
+
+function getDeletedPetitionIds() {
+  try {
+    const raw = localStorage.getItem('PET_DELETED_PETITION_IDS_V1');
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function registerDeletedPetitionId(id, nhc = null) {
+  if (!id) return;
+  try {
+    const current = getDeletedPetitionIds();
+    const toAdd = [String(id).trim()];
+    if (nhc && String(nhc).trim()) toAdd.push(String(nhc).trim());
+    let changed = false;
+    toAdd.forEach(item => {
+      if (item && !current.some(x => String(x).toLowerCase().trim() === item.toLowerCase().trim())) {
+        current.push(item);
+        changed = true;
+      }
+    });
+    if (changed) {
+      localStorage.setItem('PET_DELETED_PETITION_IDS_V1', JSON.stringify(current));
+    }
+  } catch (e) { }
+}
+
+function filterOutDeletedPetitions(list) {
+  if (!Array.isArray(list)) return [];
+  const deletedList = getDeletedPetitionIds();
+  if (deletedList.length === 0) return list;
+  const deletedSet = new Set(deletedList.map(x => String(x).toLowerCase().trim()));
+  return list.filter(p => {
+    if (!p) return false;
+    const s1 = String(p["Submission ID"] || '').toLowerCase().trim();
+    const s2 = String(p.id || '').toLowerCase().trim();
+    const s3 = String(p.paciente_id || '').toLowerCase().trim();
+    const s4 = String(p["NHC / Historia Clínica"] || p.nhc || '').toLowerCase().trim();
+    if (s1 && deletedSet.has(s1)) return false;
+    if (s2 && deletedSet.has(s2)) return false;
+    if (s3 && deletedSet.has(s3)) return false;
+    if (s4 && deletedSet.has(s4) && (deletedSet.has(s1) || deletedSet.has(s2))) return false;
+    return true;
+  });
 }
 
 async function loadPetitionsDatabase() {
@@ -511,8 +573,8 @@ async function loadPetitionsDatabase() {
               }
             }
           }
-        } catch (eMerge) {}
-        petitions = applyOneMonthAutoPurgePetitions(merged);
+        } catch (eMerge) { }
+        petitions = filterOutDeletedPetitions(applyOneMonthAutoPurgePetitions(merged));
         localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
         updateKpis();
         renderPetitionsTable();
@@ -556,8 +618,8 @@ async function loadPetitionsDatabase() {
               }
             }
           }
-        } catch (eMerge) {}
-        petitions = applyOneMonthAutoPurgePetitions(merged);
+        } catch (eMerge) { }
+        petitions = filterOutDeletedPetitions(applyOneMonthAutoPurgePetitions(merged));
         localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
         updateKpis();
         renderPetitionsTable();
@@ -574,7 +636,7 @@ async function loadPetitionsDatabase() {
   if (stored) {
     try {
       const parsed = JSON.parse(stored);
-      petitions = applyOneMonthAutoPurgePetitions(parsed);
+      petitions = filterOutDeletedPetitions(applyOneMonthAutoPurgePetitions(parsed));
       if (petitions && petitions.length > 0) {
         updateKpis();
         renderPetitionsTable();
@@ -593,8 +655,29 @@ async function loadPetitionsDatabase() {
 }
 
 async function savePetitionsToStorage(singlePetition = null) {
-  // 1. Guardar en LocalStorage para redundancia instantánea
-  localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
+  // 1. Guardar copia ligera dedicada de peticiones creadas por el usuario (garantía GitHub Pages / sin backend)
+  if (singlePetition) {
+    try {
+      const createdRaw = localStorage.getItem('PET_USER_CREATED_PETITIONS_V1');
+      let createdList = createdRaw ? JSON.parse(createdRaw) : [];
+      if (!Array.isArray(createdList)) createdList = [];
+      const sId = singlePetition["Submission ID"] || singlePetition.id;
+      const idx = createdList.findIndex(x => (x["Submission ID"] || x.id) === sId);
+      if (idx >= 0) {
+        createdList[idx] = singlePetition;
+      } else {
+        createdList.unshift(singlePetition);
+      }
+      localStorage.setItem('PET_USER_CREATED_PETITIONS_V1', JSON.stringify(createdList));
+    } catch (e) { }
+  }
+
+  // 2. Guardar en LocalStorage maestro para redundancia instantánea
+  try {
+    localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
+  } catch (e) {
+    console.warn("Aviso guardando PET_DATABASE_MASTER_V4 en localStorage:", e);
+  }
   updateKpis();
   renderPetitionsTable();
   renderDatabaseView();
@@ -644,7 +727,7 @@ window.addEventListener('storage', (e) => {
         renderPetitionsTable();
         renderDatabaseView();
       }
-    } catch (err) {}
+    } catch (err) { }
   }
 });
 
@@ -665,7 +748,7 @@ function checkExistingSession() {
   }
   try {
     localStorage.setItem('PET_AUTH_USER', JSON.stringify(currentUser));
-  } catch (e) {}
+  } catch (e) { }
   showApp();
 }
 
@@ -724,7 +807,7 @@ function quickLogin(docId) {
   currentUser = found;
   try {
     localStorage.setItem('PET_AUTH_USER', JSON.stringify(currentUser));
-  } catch (e) {}
+  } catch (e) { }
   showApp();
   showToast(`Facultativo prescriptor activo: ${currentUser.name}`, 'success');
 }
@@ -738,7 +821,7 @@ function handleManualLogin(event) {
   currentUser = found;
   try {
     localStorage.setItem('PET_AUTH_USER', JSON.stringify(currentUser));
-  } catch (e) {}
+  } catch (e) { }
   showApp();
   showToast(`Facultativo prescriptor activo: ${currentUser.name}`, 'success');
 }
@@ -937,6 +1020,24 @@ function setDiabetesChoice(val) {
   }
 }
 
+function setPriorPetChoice(val) {
+  const hiddenInput = document.getElementById('pet-prior-pet');
+  if (hiddenInput) hiddenInput.value = val;
+  const btnNo = document.getElementById('btn-prior-pet-no');
+  const btnYes = document.getElementById('btn-prior-pet-yes');
+  const sub = document.getElementById('pet-prior-pet-subfields');
+
+  if (val === 'Sí') {
+    if (btnYes) btnYes.className = 'tally-yn-btn selected-yes-blue';
+    if (btnNo) btnNo.className = 'tally-yn-btn';
+    if (sub) sub.classList.remove('hidden');
+  } else {
+    if (btnNo) btnNo.className = 'tally-yn-btn selected-no';
+    if (btnYes) btnYes.className = 'tally-yn-btn';
+    if (sub) sub.classList.add('hidden');
+  }
+}
+
 function toggleRiskField(field, isYes) {
   tallyRiskFactors[field] = isYes;
   const btnNo = document.getElementById(`btn-${field}-no`);
@@ -968,6 +1069,54 @@ function selectPetPriority(val) {
   }
 }
 
+function mapUserPriorityCode(val) {
+  const s = String(val || '').toLowerCase();
+  if (s.includes('urgente') || s.includes('p1') || s.includes('1')) return '🔴 P1';
+  if (s.includes('preferente') || s.includes('p2') || s.includes('2')) return '🟡 P2';
+  return '🟢 P3';
+}
+
+function calculateProtocolPriority(petType, reason, diagnosis, nextVisitStr, priorityJustification) {
+  const text = `${petType} ${reason} ${diagnosis} ${priorityJustification || ''}`.toLowerCase();
+
+  // 1. Criterios de Urgencia Clínica P1 (< 7 días)
+  if (
+    text.includes('endocarditis') ||
+    text.includes('vasculitis') ||
+    text.includes('arteritis') ||
+    text.includes('takayasu') ||
+    text.includes('compresión medular') ||
+    text.includes('urgencia quirúrgica') ||
+    text.includes('bacteriemia') ||
+    text.includes('infección de injerto') ||
+    text.includes('infección activa de marcapasos') ||
+    (nextVisitStr && nextVisitStr.includes('días') && parseInt(nextVisitStr) <= 7)
+  ) {
+    return '🔴 P1';
+  }
+
+  // 2. Criterios de Ordinario P3 (< 30 días)
+  if (
+    text.includes('control evolutivo') ||
+    text.includes('control anual') ||
+    text.includes('seguimiento rutinario') ||
+    text.includes('asintomático') ||
+    text.includes('deterioro cognitivo') ||
+    text.includes('demencia') ||
+    text.includes('alzheimer') ||
+    text.includes('memoria') ||
+    text.includes('paratiroides') ||
+    text.includes('hiperparatiroidismo') ||
+    text.includes('nódulo estable') ||
+    text.includes('vigilancia')
+  ) {
+    return '🟢 P3';
+  }
+
+  // 3. Criterio por defecto en sospecha/estadificación oncológica activa: P2 (< 14 días)
+  return '🟡 P2';
+}
+
 // Envío del Formulario PET
 function handlePetSubmit(event) {
   event.preventDefault();
@@ -984,6 +1133,13 @@ function handlePetSubmit(event) {
   const inpatient = document.getElementById('pet-inpatient').value;
   const diabetes = document.getElementById('pet-diabetes').value;
   const mobility = document.getElementById('pet-patient-mobility').value;
+  const priorPet = document.getElementById('pet-prior-pet')?.value || 'No';
+  const priorPetDate = document.getElementById('pet-prior-date')?.value.trim() || '';
+  const priorPetCenter = document.getElementById('pet-prior-center')?.value || 'SERGAS (Galaria / SIDI / PACS Galicia)';
+  const priorPetFindings = document.getElementById('pet-prior-findings')?.value.trim() || '';
+  const priorPetFormatted = priorPet === 'Sí'
+    ? `Sí (${priorPetDate ? priorPetDate + ', ' : ''}${priorPetCenter ? priorPetCenter : ''}${priorPetFindings ? ' — ' + priorPetFindings : ''})`
+    : 'No (Estudio Basal / Primer PET)';
   const summary = document.getElementById('pet-summary').value.trim();
   const priority = document.querySelector('input[name="pet-priority"]:checked')?.value || 'Preferente';
   const priorityJust = document.getElementById('pet-priority-just').value.trim();
@@ -1059,6 +1215,18 @@ function handlePetSubmit(event) {
   const now = new Date();
   const dateStr = now.toISOString().split('T')[0];
 
+  const userPrioCode = mapUserPriorityCode(priority);
+  const protocolPrioCode = calculateProtocolPriority(petType, reason, diagnosis, nextVisit, priorityJust);
+  const hasDiscrepancy = (userPrioCode !== protocolPrioCode);
+
+  const isNoTriable = hasDiscrepancy;
+  const motivoNoTriable = hasDiscrepancy
+    ? `⚠️ Discrepancia de prioridades: El médico solicitante indicó prioridad ${userPrioCode} (${priority}), pero el triaje del programa calculó ${protocolPrioCode} según protocolo asistencial. Requiere triaje médico por facultativo de Medicina Nuclear.`
+    : '';
+  const sugerenciaTriaje = hasDiscrepancy
+    ? `Revisar indicación clínica en el volante para ratificar ${userPrioCode} o adecuar a ${protocolPrioCode}.`
+    : '';
+
   // Objeto Maestro compatible con el esquema de pet_ct_triage
   const newPetitionRecord = {
     "Submission ID": subId,
@@ -1077,23 +1245,37 @@ function handlePetSubmit(event) {
     "Diagnóstico Clínico": diagnosis,
     "Motivo de Solicitud": reason,
     "Tipo de Estudio PET Solicitado": petType,
-    "Carácter de la Petición": priority,
-    "Prioridad Calculada": priority === 'Urgente' ? '🔴 P1' : (priority === 'Preferente' ? '🟡 P2' : '🟢 P3'),
-    "Ventana Clínica (Días Laborables)": priority === 'Urgente' ? 7 : (priority === 'Preferente' ? 14 : 30),
+    "Carácter de la Petición": `${userPrioCode} (${priority})`,
+    "Prioridad Solicitada": `${userPrioCode} (${priority})`,
+    "Prioridad Calculada": protocolPrioCode,
+    "Prioridad Protocolo": protocolPrioCode,
+    "Ventana Clínica (Días Laborables)": protocolPrioCode.includes('P1') ? 7 : (protocolPrioCode.includes('P2') ? 14 : 30),
     "Fecha Próxima Consulta": nextVisit,
     "Fecha Cita Asignada": "",
-    "Hora Cita Asignada": "",
+    "Hora Cita Asignada": isNoTriable ? "Sin Cita / Pendiente de Triaje" : "",
     "¿El paciente está ingresado?": inpatient,
     "¿Precisa sedación?": sedation,
     "Movilidad / Traslado": mobility,
     "¿Tiene Diabetes Mellitus?": diabetes,
     "Glucemia (mg/dL)": diabetes === 'Sí' ? 140 : 100,
+    "¿Tiene estudio PET previo?": priorPet,
+    "PET Previo Realizado": priorPet,
+    "Fecha PET Previo": priorPetDate,
+    "Centro PET Previo": priorPetCenter,
+    "Hallazgos PET Previo": priorPetFindings,
+    "Detalle PET Previo": priorPetFormatted,
     "Fin Tratamiento QT/RT": tallyRiskFactors.chemo ? document.getElementById('input-chemo')?.value : "",
     "Alergias Conocidas": tallyRiskFactors.allergies ? (document.getElementById('input-allergies')?.value || 'Sí') : 'Ninguna',
     "Contraindicación Contraste": tallyRiskFactors.contrast ? 'Sí' : 'No',
     "Portador Objetos Metálicos": tallyRiskFactors.metal ? (document.getElementById('input-metal')?.value || 'Sí') : 'No',
-    "Alertas Técnicas": priority === 'Urgente' ? 'Prioridad Asistencial P1' : 'Ninguna',
-    "Estado de Triaje": "Pendiente de Triaje",
+    "Alertas Técnicas": isNoTriable ? '⚠️ No Triable - No concuerdan prioridades' : (priority === 'Urgente' ? 'Prioridad Asistencial P1' : 'Ninguna'),
+    "Estado de Triaje": isNoTriable ? "No Triable" : "Pendiente de Triaje",
+    "noTriable": isNoTriable,
+    "motivoNoTriable": motivoNoTriable,
+    "Motivo No Triable": motivoNoTriable,
+    "sugerenciaTriaje": sugerenciaTriaje,
+    "Sugerencia Triaje": sugerenciaTriaje,
+    "discrepanciaPrioridad": hasDiscrepancy,
     "Resumen Clínico": summary
   };
 
@@ -1111,7 +1293,12 @@ function handlePetSubmit(event) {
   pendingPetitionToConfirm = newPetitionRecord;
   pendingFormType = 'pet';
   openDoubleConfirmationModal(newPetitionRecord, false);
-  showToast(`✅ Paciente ${patientName} guardado en el sistema. Revise el volante e imprímalo si lo desea.`, 'success');
+
+  if (hasDiscrepancy) {
+    showToast(`⚠️ Solicitud guardada. Al existir discrepancia entre la prioridad solicitada (${userPrioCode}) y la del programa (${protocolPrioCode}), se ha enviado a la Carpeta No Triables para que el médico nuclear la trie.`, 'warning');
+  } else {
+    showToast(`✅ Paciente ${patientName} guardado en el sistema con prioridad ${userPrioCode}.`, 'success');
+  }
 }
 
 function resetPetForm() {
@@ -1122,6 +1309,9 @@ function resetPetForm() {
   setSedationChoice('No');
   setInpatientChoice('No');
   setDiabetesChoice('No');
+  setPriorPetChoice('No');
+  if (document.getElementById('pet-prior-date')) document.getElementById('pet-prior-date').value = '';
+  if (document.getElementById('pet-prior-findings')) document.getElementById('pet-prior-findings').value = '';
   selectPetPriority('Preferente');
 
   Object.keys(tallyRiskFactors).forEach(k => {
@@ -1142,8 +1332,12 @@ function loadSamplePetData() {
 
   calculatePetBmi();
   selectTallyPetType('FDG Oncológico / Inflamatorio');
+  setPriorPetChoice('Sí');
+  if (document.getElementById('pet-prior-date')) document.getElementById('pet-prior-date').value = '18/02/2026';
+  if (document.getElementById('pet-prior-center')) document.getElementById('pet-prior-center').value = 'SERGAS (Galaria / SIDI / PACS Galicia)';
+  if (document.getElementById('pet-prior-findings')) document.getElementById('pet-prior-findings').value = 'PET basal con adenopatía mediastínica activa (SUVmax 7.8).';
   selectPetPriority('Urgente');
-  showToast('Caso PET de ejemplo cargado (CPNCP para FDG Oncológico / Inflamatorio).', 'success');
+  showToast('Caso PET de ejemplo cargado (CPNCP con PET previo en SERGAS).', 'success');
 }
 
 // ==============================================================================
@@ -1194,6 +1388,18 @@ function handleConvSubmit(event) {
   const now = new Date();
   const dateStr = now.toISOString().split('T')[0];
 
+  const userPrioCode = mapUserPriorityCode(priority);
+  const protocolPrioCode = calculateProtocolPriority(studyType, studyType, diagnosis, nextVisit, '');
+  const hasDiscrepancy = (userPrioCode !== protocolPrioCode);
+
+  const isNoTriable = hasDiscrepancy;
+  const motivoNoTriable = hasDiscrepancy
+    ? `⚠️ Discrepancia de prioridades: El médico solicitante indicó prioridad ${userPrioCode} (${priority}), pero el triaje del programa calculó ${protocolPrioCode} según protocolo asistencial. Requiere triaje médico por facultativo de Medicina Nuclear.`
+    : '';
+  const sugerenciaTriaje = hasDiscrepancy
+    ? `Revisar indicación clínica en el volante para ratificar ${userPrioCode} o adecuar a ${protocolPrioCode}.`
+    : '';
+
   const newPetitionRecord = {
     "Submission ID": subId,
     "Respondent ID": respId,
@@ -1211,12 +1417,14 @@ function handleConvSubmit(event) {
     "Diagnóstico Clínico": diagnosis,
     "Motivo de Solicitud": studyType,
     "Tipo de Estudio PET Solicitado": studyType,
-    "Carácter de la Petición": priority,
-    "Prioridad Calculada": priority === 'Urgente' ? '🔴 P1' : (priority === 'Preferente' ? '🟡 P2' : '🟢 P3'),
-    "Ventana Clínica (Días Laborables)": priority === 'Urgente' ? 7 : (priority === 'Preferente' ? 14 : 30),
+    "Carácter de la Petición": `${userPrioCode} (${priority})`,
+    "Prioridad Solicitada": `${userPrioCode} (${priority})`,
+    "Prioridad Calculada": protocolPrioCode,
+    "Prioridad Protocolo": protocolPrioCode,
+    "Ventana Clínica (Días Laborables)": protocolPrioCode.includes('P1') ? 7 : (protocolPrioCode.includes('P2') ? 14 : 30),
     "Fecha Próxima Consulta": nextVisit,
     "Fecha Cita Asignada": "",
-    "Hora Cita Asignada": "",
+    "Hora Cita Asignada": isNoTriable ? "Sin Cita / Pendiente de Triaje" : "",
     "¿El paciente está ingresado?": "No",
     "¿Precisa sedación?": "No",
     "Movilidad / Traslado": mobility,
@@ -1226,8 +1434,14 @@ function handleConvSubmit(event) {
     "Alergias Conocidas": "Ninguna",
     "Contraindicación Contraste": "No",
     "Portador Objetos Metálicos": "No",
-    "Alertas Técnicas": "Medicina Nuclear Convencional",
-    "Estado de Triaje": "Pendiente de Triaje",
+    "Alertas Técnicas": isNoTriable ? '⚠️ No Triable - No concuerdan prioridades' : 'Medicina Nuclear Convencional',
+    "Estado de Triaje": isNoTriable ? "No Triable" : "Pendiente de Triaje",
+    "noTriable": isNoTriable,
+    "motivoNoTriable": motivoNoTriable,
+    "Motivo No Triable": motivoNoTriable,
+    "sugerenciaTriaje": sugerenciaTriaje,
+    "Sugerencia Triaje": sugerenciaTriaje,
+    "discrepanciaPrioridad": hasDiscrepancy,
     "Resumen Clínico": summary
   };
 
@@ -1245,7 +1459,12 @@ function handleConvSubmit(event) {
   pendingPetitionToConfirm = newPetitionRecord;
   pendingFormType = 'conv';
   openDoubleConfirmationModal(newPetitionRecord, false);
-  showToast(`✅ Paciente ${patientName} guardado en el sistema. Revise el volante e imprímalo si lo desea.`, 'success');
+
+  if (hasDiscrepancy) {
+    showToast(`⚠️ Solicitud guardada. Al existir discrepancia entre la prioridad solicitada (${userPrioCode}) y la del programa (${protocolPrioCode}), se ha enviado a la Carpeta No Triables para que el médico nuclear la trie.`, 'warning');
+  } else {
+    showToast(`✅ Paciente ${patientName} guardado en el sistema con prioridad ${userPrioCode}.`, 'success');
+  }
 }
 
 function resetConvForm() {
@@ -1403,6 +1622,9 @@ function renderPetitionsTable() {
           <button class="btn btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.78rem;" onclick="openOfficialSheetById('${id}')" title="Ver Volante Imprimible">
             🖨️ Volante
           </button>
+          <button class="btn btn-danger" style="padding: 0.35rem 0.65rem; font-size: 0.78rem; background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; font-weight: 700; margin-left: 0.35rem; cursor: pointer; border-radius: 6px;" onclick="deletePetition('${id}')" title="Borrar o anular esta solicitud">
+            🗑️ Borrar
+          </button>
         </td>
       </tr>
     `;
@@ -1499,6 +1721,14 @@ function renderDatabaseView() {
         <td>${diab}</td>
         <td>${alerg}</td>
         <td><small>${alert}</small></td>
+        <td style="text-align: right; white-space: nowrap;">
+          <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.74rem;" onclick="openOfficialSheetById('${id}')" title="Ver Volante">
+            🖨️
+          </button>
+          <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.74rem; background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; font-weight: 700; margin-left: 0.25rem; cursor: pointer; border-radius: 4px;" onclick="deletePetition('${id}')" title="Borrar solicitud">
+            🗑️
+          </button>
+        </td>
       </tr>
     `;
   }).join('');
@@ -1611,7 +1841,7 @@ function importDatabaseFromFile(event) {
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     try {
       const importedData = JSON.parse(e.target.result);
       if (Array.isArray(importedData) && importedData.length > 0) {
@@ -1718,7 +1948,7 @@ function openDoubleConfirmationModal(p, isAlreadyConfirmed = false) {
 
   const headerTitle = document.getElementById('sheet-modal-header-title');
   if (headerTitle) {
-    headerTitle.textContent = isAlreadyConfirmed 
+    headerTitle.textContent = isAlreadyConfirmed
       ? (mod === 'PET' ? '📄 Volante Registrado — PET / CT Molecular' : '📄 Volante Registrado — Medicina Nuclear Convencional')
       : (mod === 'PET' ? '📄 Doble Confirmación — Volante PET / CT' : '📄 Doble Confirmación — Volante Medicina Nuclear');
   }
@@ -1745,6 +1975,19 @@ function openDoubleConfirmationModal(p, isAlreadyConfirmed = false) {
 
   document.getElementById('sheet-study-type').textContent = p["Tipo de Estudio PET Solicitado"] || p.studyType || '--';
   document.getElementById('sheet-priority').textContent = p["Carácter de la Petición"] || p.priority || '--';
+
+  const priorPetField = document.getElementById('sheet-prior-pet');
+  if (priorPetField) {
+    const hasPrior = p["¿Tiene estudio PET previo?"] || p["PET Previo Realizado"] || (p["Detalle PET Previo"] && !p["Detalle PET Previo"].startsWith('No') ? 'Sí' : 'No');
+    const isYes = String(hasPrior).toLowerCase().includes('s') || String(hasPrior).toLowerCase().includes('si');
+    if (isYes) {
+      const det = p["Detalle PET Previo"] || (p["Fecha PET Previo"] ? `${p["Fecha PET Previo"]} (${p["Centro PET Previo"] || 'SERGAS'})` : 'Revisar comparativa en SIDI / PACS');
+      priorPetField.innerHTML = `<span style="color: #0284c7; font-weight:800;">🔵 Sí</span> <span style="font-size:0.82rem; font-weight:600; color:#334155;">(${escapeHTML(det)})</span>`;
+    } else {
+      priorPetField.innerHTML = `<span style="color: #10b981; font-weight:700;">🟢 No</span> (Estudio Basal Inicial)`;
+    }
+  }
+
   document.getElementById('sheet-diag').textContent = p["Diagnóstico Clínico"] || p.diagnosis || p["Motivo de Solicitud"] || '--';
   document.getElementById('sheet-summary').textContent = `"${p["Resumen Clínico"] || p.summary || ''}"`;
 
@@ -1787,7 +2030,17 @@ function openDoubleConfirmationModal(p, isAlreadyConfirmed = false) {
     if (btnConfirm) {
       btnConfirm.style.display = 'none';
     }
+    const btnDelete = document.getElementById('btn-sheet-delete');
+    if (btnDelete) {
+      btnDelete.style.display = 'inline-flex';
+      btnDelete.textContent = '🗑️ Anular / Borrar Petición';
+    }
   } else {
+    const btnDelete = document.getElementById('btn-sheet-delete');
+    if (btnDelete) {
+      btnDelete.style.display = 'inline-flex';
+      btnDelete.textContent = '🗑️ Descartar / Anular Solicitud';
+    }
     if (banner) {
       banner.style.background = '#FEF3C7';
       banner.style.borderColor = '#F59E0B';
@@ -1826,6 +2079,174 @@ function openOfficialSheetModal(p, isAlreadyConfirmed = false) {
   openDoubleConfirmationModal(p, isAlreadyConfirmed);
 }
 
+// ==============================================================================
+// ELIMINACIÓN Y ANULACIÓN DE PETICIONES MÉDICAS
+// ==============================================================================
+async function deletePetition(id) {
+  if (!id) return;
+  const targetId = String(id).trim();
+
+  // Buscar el paciente en petitions o en localStorage
+  let target = petitions.find(p => {
+    const s1 = String(p["Submission ID"] || '').trim();
+    const s2 = String(p.id || '').trim();
+    const s3 = String(p.paciente_id || '').trim();
+    const s4 = String(p["NHC / Historia Clínica"] || p.nhc || '').trim();
+    return s1 === targetId || s2 === targetId || s3 === targetId || (targetId.startsWith('NHC') && s4 === targetId);
+  });
+
+  if (!target) {
+    try {
+      const createdRaw = localStorage.getItem('PET_USER_CREATED_PETITIONS_V1');
+      if (createdRaw) {
+        const createdList = JSON.parse(createdRaw);
+        if (Array.isArray(createdList)) {
+          target = createdList.find(p => {
+            const s1 = String(p["Submission ID"] || '').trim();
+            const s2 = String(p.id || '').trim();
+            const s3 = String(p.paciente_id || '').trim();
+            return s1 === targetId || s2 === targetId || s3 === targetId;
+          });
+        }
+      }
+    } catch (e) { }
+  }
+
+  const patientName = target ? (target["Nombre del Paciente"] || target["Nombre y Apellidos"] || target["NHC / Historia Clínica"] || targetId) : targetId;
+  const actualSubId = target ? (target["Submission ID"] || target.id || targetId) : targetId;
+  const patientNhc = target ? (target["NHC / Historia Clínica"] || target.nhc || '') : '';
+
+  const confirmMsg = `¿Está seguro de que desea anular y eliminar la solicitud médica de:\n\n👤 Paciente: ${patientName}\n🆔 Solicitud: ${actualSubId}\n\nEsta acción borrará la petición del sistema y de la lista de triaje.`;
+  if (!confirm(confirmMsg)) return;
+
+  // 1. Registrar permanentemente en la lista de eliminados (tombstones)
+  registerDeletedPetitionId(actualSubId, patientNhc);
+  registerDeletedPetitionId(targetId);
+
+  // 2. Filtrar de la memoria local
+  const matchId = actualSubId.toLowerCase();
+  const matchTarget = targetId.toLowerCase();
+  petitions = filterOutDeletedPetitions(petitions).filter(p => {
+    const s1 = String(p["Submission ID"] || '').toLowerCase().trim();
+    const s2 = String(p.id || '').toLowerCase().trim();
+    const s3 = String(p.paciente_id || '').toLowerCase().trim();
+    return s1 !== matchId && s2 !== matchId && s3 !== matchId && s1 !== matchTarget && s2 !== matchTarget;
+  });
+
+  // 3. Eliminar de la copia dedicada en localStorage (PET_USER_CREATED_PETITIONS_V1)
+  try {
+    const createdRaw = localStorage.getItem('PET_USER_CREATED_PETITIONS_V1');
+    if (createdRaw) {
+      let createdList = JSON.parse(createdRaw);
+      if (Array.isArray(createdList)) {
+        createdList = filterOutDeletedPetitions(createdList).filter(x => {
+          const s1 = String(x["Submission ID"] || '').toLowerCase().trim();
+          const s2 = String(x.id || '').toLowerCase().trim();
+          const s3 = String(x.paciente_id || '').toLowerCase().trim();
+          return s1 !== matchId && s2 !== matchId && s3 !== matchId && s1 !== matchTarget && s2 !== matchTarget;
+        });
+        localStorage.setItem('PET_USER_CREATED_PETITIONS_V1', JSON.stringify(createdList));
+      }
+    }
+  } catch (e) { }
+
+  // 4. Eliminar de snapshots de Triaje si estuviese citado
+  try {
+    const triageRaw = localStorage.getItem('PET_TRIAGE_CITED_PATIENTS_V1');
+    if (triageRaw) {
+      let triageList = JSON.parse(triageRaw);
+      if (Array.isArray(triageList)) {
+        triageList = filterOutDeletedPetitions(triageList).filter(x => {
+          const s1 = String(x["Submission ID"] || '').toLowerCase().trim();
+          const s2 = String(x.id || '').toLowerCase().trim();
+          return s1 !== matchId && s2 !== matchId && s1 !== matchTarget && s2 !== matchTarget;
+        });
+        localStorage.setItem('PET_TRIAGE_CITED_PATIENTS_V1', JSON.stringify(triageList));
+      }
+    }
+  } catch (e) { }
+
+  try {
+    const peonadaRaw = localStorage.getItem('pet_ct_peonada_assignments');
+    if (peonadaRaw) {
+      let peonadaMap = JSON.parse(peonadaRaw);
+      if (peonadaMap && typeof peonadaMap === 'object') {
+        delete peonadaMap[actualSubId];
+        delete peonadaMap[targetId];
+        if (patientNhc) delete peonadaMap[patientNhc];
+        localStorage.setItem('pet_ct_peonada_assignments', JSON.stringify(peonadaMap));
+      }
+    }
+  } catch (e) { }
+
+  // 5. Guardar en localStorage maestro
+  try {
+    localStorage.setItem('PET_DATABASE_MASTER_V4', JSON.stringify(petitions));
+    localStorage.setItem('PET_DATABASE_SYNC_TIMESTAMP', Date.now().toString());
+  } catch (e) { }
+
+  // 6. Actualizar vistas inmediatamente
+  updateKpis();
+  renderPetitionsTable();
+  renderDatabaseView();
+
+  // 7. Notificar por BroadcastChannel
+  if (petClinicalBroadcast) {
+    try {
+      petClinicalBroadcast.postMessage({
+        type: 'PETITION_DELETED',
+        id: actualSubId,
+        subId: actualSubId,
+        nhc: patientNhc,
+        timestamp: Date.now()
+      });
+    } catch (e) { }
+  }
+
+  // 8. Notificar a backend (/api/peticiones/eliminar y /api/sync-database)
+  const baseUrl = getApiBaseUrl();
+  try {
+    await fetch(`${baseUrl}/api/peticiones/eliminar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: actualSubId, submission_id: actualSubId, nhc: patientNhc })
+    });
+  } catch (e) {
+    console.warn("Fallo en llamada /api/peticiones/eliminar:", e);
+  }
+
+  try {
+    await fetch(`${baseUrl}/api/sync-database`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(petitions)
+    });
+  } catch (e) { }
+
+  // 9. Disparar evento de almacenamiento
+  try {
+    window.dispatchEvent(new Event('storage'));
+  } catch (e) { }
+
+  showToast(`🗑️ Solicitud de ${patientName} eliminada correctamente.`, 'info');
+}
+
+function deletePetitionFromModal() {
+  const target = currentViewingPetition || pendingPetitionToConfirm;
+  if (!target) {
+    closeModal('modal-official-sheet');
+    return;
+  }
+  const id = target["Submission ID"] || target.id;
+  closeModal('modal-official-sheet');
+  pendingPetitionToConfirm = null;
+  currentViewingPetition = null;
+  deletePetition(id);
+}
+
+window.deletePetition = deletePetition;
+window.deletePetitionFromModal = deletePetitionFromModal;
+
 function executeFinalConfirmation() {
   if (!pendingPetitionToConfirm) {
     showToast('No hay ninguna petición pendiente de confirmación.', 'warning');
@@ -1854,6 +2275,7 @@ function executeFinalConfirmation() {
   const bannerBadge = document.getElementById('sheet-banner-badge');
   const btnCancel = document.getElementById('btn-sheet-cancel');
   const btnConfirm = document.getElementById('btn-final-confirm-petition');
+  const btnDelete = document.getElementById('btn-sheet-delete');
 
   if (banner) {
     banner.style.background = '#ECFDF5';
@@ -1879,6 +2301,10 @@ function executeFinalConfirmation() {
     btnConfirm.innerHTML = '✔️ Solicitud Doblemente Confirmada';
     btnConfirm.style.background = '#059669';
     btnConfirm.style.opacity = '0.9';
+  }
+  if (btnDelete) {
+    btnDelete.style.display = 'inline-flex';
+    btnDelete.textContent = '🗑️ Anular / Borrar Petición';
   }
   if (btnCancel) {
     btnCancel.textContent = 'Cerrar y Ver Mis Peticiones';

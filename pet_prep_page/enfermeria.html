@@ -3613,6 +3613,41 @@
         if (Array.isArray(storedD)) localDoubts = storedD;
       } catch (e) { }
 
+      let localUrgencias = [];
+      try {
+        const storedU = JSON.parse(localStorage.getItem('PET_SHARED_NURSING_URGENCIAS_V1') || '[]');
+        if (Array.isArray(storedU)) localUrgencias = storedU;
+      } catch (e) { }
+
+      let localCancellations = [];
+      try {
+        const rawC = JSON.parse(localStorage.getItem('PET_CANCELLED_PATIENTS') || '[]');
+        if (Array.isArray(rawC)) {
+          localCancellations = rawC.map((c, i) => ({
+            id: 'canc_' + (c.id || i),
+            origen: 'CANCELACION_WEB',
+            nivel: 'CANCELACION',
+            fecha_hora: c.fecha_hora || new Date().toLocaleString('es-ES'),
+            paciente_nombre: `${c.paciente_nombre || c.nombre || 'Paciente'} (NHC: ${c.paciente_nhc || c.nhc || 'N/D'})`,
+            paciente_telefono: c.paciente_telefono || c.tel || '600 000 000',
+            mensaje_alerta: `Cita cancelada: ${c.motivo_categoria || c.motivo || 'Motivo clínico'} - ${c.explicacion_motivo || ''}`
+          }));
+        }
+      } catch (e) { }
+
+      const mergeUniqueRecords = (baseArr, extraArr) => {
+        const res = [...baseArr];
+        const seen = new Set(baseArr.map(x => String(x.id || (x.paciente_nombre + '_' + (x.glucemia_mg_dl || '')))));
+        extraArr.forEach(item => {
+          const key = String(item.id || (item.paciente_nombre + '_' + (item.glucemia_mg_dl || '')));
+          if (!seen.has(key)) {
+            res.unshift(item);
+            seen.add(key);
+          }
+        });
+        return res;
+      };
+
       try {
         const res = await fetch("/api/enfermeria/panel");
         if (!res.ok) throw new Error("Fallo en la respuesta del servidor");
@@ -3621,8 +3656,8 @@
         const apiDudas = (data.dudas || []).filter(item =>
           item.origen === 'DUDAS_UNIDAD_ENFERMERIA' || item.nivel === 'DUDA_LLAMADA_PACIENTE'
         );
-        currentPanelData.dudas = [...localDoubts, ...apiDudas];
-        currentPanelData.urgencias = data.urgencias || [];
+        currentPanelData.dudas = mergeUniqueRecords(apiDudas, localDoubts);
+        currentPanelData.urgencias = mergeUniqueRecords(data.urgencias || [], [...localUrgencias, ...localCancellations]);
 
         // Evaluar detección de nuevas urgencias para sonido y mensaje en pantalla
         processEmergenciesDetection(currentPanelData.urgencias);
@@ -3636,18 +3671,7 @@
       } catch (err) {
         console.warn("Aviso al consultar /api/enfermeria/panel (usando contingencia local):", err.message);
         try {
-          const localCancellations = JSON.parse(localStorage.getItem('PET_CANCELLED_PATIENTS') || '[]');
-          const emergencyCancellations = localCancellations.map((c, i) => ({
-            id: 9000 + i,
-            origen: 'CANCELACION_WEB',
-            nivel: 'CANCELACION',
-            fecha_hora: c.fecha_hora || new Date().toLocaleString('es-ES'),
-            paciente_nombre: `${c.paciente_nombre || c.nombre || 'Paciente'} (NHC: ${c.paciente_nhc || c.nhc || 'N/D'})`,
-            paciente_telefono: c.paciente_telefono || c.tel || '600 000 000',
-            mensaje_alerta: `Cita cancelada: ${c.motivo_categoria || c.motivo || 'Motivo clínico'} - ${c.explicacion_motivo || ''}`
-          }));
-
-          currentPanelData.urgencias = [...emergencyCancellations];
+          currentPanelData.urgencias = mergeUniqueRecords(localUrgencias, localCancellations);
           currentPanelData.dudas = [...localDoubts];
           await cargarPacientesCitados();
           renderizarMetricas(currentPanelData.dudas.length, currentPanelData.urgencias.length);
@@ -8045,6 +8069,23 @@
         const { id, nombre, tipo } = pendingDeletionItem;
         closeDoubleConfirmModal();
 
+        // Limpiar de contingencia local
+        try {
+          let uList = JSON.parse(localStorage.getItem('PET_SHARED_NURSING_URGENCIAS_V1') || '[]');
+          uList = uList.filter(x => x.id !== id && x.paciente_nombre !== nombre);
+          localStorage.setItem('PET_SHARED_NURSING_URGENCIAS_V1', JSON.stringify(uList));
+        } catch(e){}
+        try {
+          let dList = JSON.parse(localStorage.getItem('PET_SHARED_NURSING_DOUBTS_V1') || '[]');
+          dList = dList.filter(x => x.id !== id && x.paciente_nombre !== nombre);
+          localStorage.setItem('PET_SHARED_NURSING_DOUBTS_V1', JSON.stringify(dList));
+        } catch(e){}
+        try {
+          let cList = JSON.parse(localStorage.getItem('PET_CANCELLED_PATIENTS') || '[]');
+          cList = cList.filter(x => ('canc_' + x.id) !== id && x.paciente_nombre !== nombre && x.nombre !== nombre);
+          localStorage.setItem('PET_CANCELLED_PATIENTS', JSON.stringify(cList));
+        } catch(e){}
+
         const cardEl = document.getElementById(`card-record-${id}`);
         if (cardEl) {
           cardEl.style.transition = "all 0.3s ease";
@@ -8060,18 +8101,41 @@
           });
 
           const data = await res.json();
-          if (res.ok && data.status === "ok") {
-            mostrarToast(`✅ Registro de ${nombre} completado y eliminado de la base de datos.`);
-            cargarDatosPanel();
-          } else {
-            throw new Error(data.message || "No se pudo eliminar el registro");
+          if (res.ok && (data.status === "ok" || data.status === "success")) {
+            mostrarToast(`✅ Registro de ${nombre} completado y archivado.`);
           }
         } catch (err) {
-          console.error("Error al eliminar registro:", err);
-          mostrarToast(`⚠️ Error al eliminar registro #${id}: ${err.message}`);
-          cargarDatosPanel();
+          console.log("Aviso eliminando registro remoto (procesado localmente):", err.message);
         }
+        cargarDatosPanel();
       }
+
+      // Escuchadores de eventos para sincronización en tiempo real desde las Audioguías
+      if (typeof BroadcastChannel !== 'undefined') {
+        try {
+          const clinChan = new BroadcastChannel('pet_clinical_channel');
+          clinChan.onmessage = (e) => {
+            if (e.data && (e.data.type === 'GLUCEMIA_REPORTED' || e.data.type === 'INJECTION_UPDATED' || e.data.type === 'TRIAGE_DATABASE_UPDATED')) {
+              cargarDatosPanel();
+              recargarDatosCompartidosTSID();
+            }
+          };
+          const nursChan = new BroadcastChannel('pet_nursing_channel');
+          nursChan.onmessage = (e) => {
+            if (e.data && e.data.type === 'GLUCEMIA_REPORTED') {
+              cargarDatosPanel();
+              recargarDatosCompartidosTSID();
+            }
+          };
+        } catch(e){}
+      }
+
+      window.addEventListener('storage', (e) => {
+        if (!e.key || e.key === 'PET_SHARED_INJECTIONS_AND_MOBILITY_V1' || e.key === 'PET_SHARED_NURSING_URGENCIAS_V1' || e.key === 'PET_SHARED_NURSING_DOUBTS_V1' || e.key === 'PET_DATABASE_MASTER_V4') {
+          cargarDatosPanel();
+          recargarDatosCompartidosTSID();
+        }
+      });
 
       /* --------------------------------------------------------------------------
          8. FILTRADO EN TIEMPO REAL Y UTILIDADES

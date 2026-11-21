@@ -6,6 +6,11 @@
 
 cd "$(dirname "$0")" || exit
 
+# Asegurar motor Git de GitHub Desktop (sin requerir herramientas Xcode adicionales)
+if [ -d "/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin" ]; then
+  export PATH="/Applications/GitHub Desktop.app/Contents/Resources/app/git/bin:/Applications/GitHub Desktop.app/Contents/Resources/app/git/libexec/git-core:$PATH"
+fi
+
 echo ""
 echo "========================================================"
 echo "🚀 INICIANDO SINCRONIZACIÓN CON GITHUB PAGES"
@@ -25,7 +30,11 @@ else
   echo "✅ Cambios guardados localmente."
 fi
 
-# 3. Subir a GitHub
+# 3. Sincronizar con GitHub y subir
+echo ""
+echo "⬇️ Sincronizando cambios previos de GitHub..."
+git pull --rebase --autostash origin main
+
 echo ""
 echo "⬆️ Subiendo cambios a GitHub (rama main)..."
 if git push origin main; then

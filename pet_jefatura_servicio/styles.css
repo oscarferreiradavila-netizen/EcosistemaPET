@@ -239,6 +239,135 @@ body {
   background: #fef3c7;
 }
 
+/* 2.1. DOS PESTAÑAS MAESTRAS AL ENTRAR EN JEFATURA */
+.jefatura-master-nav {
+  background: #ffffff;
+  border-bottom: 2px solid #cbd5e1;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.jefatura-master-nav-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0.65rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.15rem;
+}
+
+.jefatura-master-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 0.9rem 1.4rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  position: relative;
+}
+
+.jefatura-master-tab-btn:hover {
+  background: #ffffff;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.jefatura-master-tab-btn .master-tab-icon {
+  font-size: 2.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.jefatura-master-tab-btn .master-tab-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.jefatura-master-tab-btn .master-tab-main {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.jefatura-master-tab-btn .master-tab-desc {
+  font-size: 0.77rem;
+  color: #64748b;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.jefatura-master-tab-btn .master-tab-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #475569;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Estado activo para JEFE DE SERVICIO */
+.jefatura-master-tab-btn.active#btnMasterJefe {
+  background: linear-gradient(135deg, #004868 0%, #002b40 100%);
+  border-color: #002030;
+  box-shadow: 0 6px 20px rgba(0, 72, 104, 0.35);
+}
+.jefatura-master-tab-btn.active#btnMasterJefe .master-tab-main {
+  color: #ffffff;
+}
+.jefatura-master-tab-btn.active#btnMasterJefe .master-tab-desc {
+  color: #bae6fd;
+}
+.jefatura-master-tab-btn.active#btnMasterJefe .master-tab-badge {
+  background: #fde047;
+  color: #002b40;
+}
+
+/* Estado activo para SUPERVISIÓN DE ENFERMERÍA */
+.jefatura-master-tab-btn.active#btnMasterEnfermeria {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  border-color: #115e59;
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35);
+}
+.jefatura-master-tab-btn.active#btnMasterEnfermeria .master-tab-main {
+  color: #ffffff;
+}
+.jefatura-master-tab-btn.active#btnMasterEnfermeria .master-tab-desc {
+  color: #ccfbf1;
+}
+.jefatura-master-tab-btn.active#btnMasterEnfermeria .master-tab-badge {
+  background: #ffffff;
+  color: #0f766e;
+}
+
+/* Filtrado de elementos por Pestaña Maestra activa */
+body.mode-jefe [data-area="enfermeria"],
+body.mode-enfermeria [data-area="jefe"] {
+  display: none !important;
+}
+
+/* Acentos en cabecera según pestaña activa */
+body.mode-enfermeria .chief-header {
+  border-bottom: 3px solid #0d9488;
+}
+body.mode-jefe .chief-header {
+  border-bottom: 3px solid #004868;
+}
+
 /* 3. CONTENEDOR PRINCIPAL */
 .main-container {
   max-width: 1480px;
@@ -1119,4 +1248,279 @@ body {
     padding: 0.5cm !important;
     max-width: 100% !important;
   }
+}
+
+
+/* ==========================================================================
+   PLANILLA INTERACTIVA DE PERSONAL (TÉCNICOS, ENFERMEROS, CELADORES, TCAE)
+   ========================================================================== */
+.planilla-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.planilla-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.planilla-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.planilla-cat-btn:hover {
+  border-color: #007eb4;
+  color: #004868;
+  background: #f0f9ff;
+}
+
+.planilla-cat-btn.active {
+  background: #004868;
+  border-color: #004868;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 72, 104, 0.22);
+}
+
+.planilla-cat-count {
+  background: rgba(15, 23, 42, 0.08);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.planilla-cat-btn.active .planilla-cat-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.planilla-selection-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #eff6ff 0%, #e0f2fe 100%);
+  border: 2px solid #0284c7;
+  border-radius: 10px;
+  color: #0c4a6e;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.planilla-selection-bar.hidden {
+  display: none;
+}
+
+.planilla-add-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: #ffffff;
+  border: 1px dashed #94a3b8;
+  border-radius: 10px;
+}
+
+.planilla-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.planilla-column {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.16s ease;
+  cursor: pointer;
+}
+
+.planilla-column.drop-ready {
+  border-color: #0284c7;
+  border-style: dashed;
+  background: #f0f9ff;
+}
+
+.planilla-column.drag-over {
+  border-color: #059669;
+  background: #ecfdf5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.15);
+}
+
+.planilla-col-header {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.planilla-col-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.planilla-col-sub {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.planilla-col-count {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
+.planilla-col-body {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+}
+
+.planilla-empty-col {
+  text-align: center;
+  padding: 1.4rem 0.6rem;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}
+
+.worker-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-left: 4px solid #007eb4;
+  border-radius: 9px;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: grab;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.worker-card:hover {
+  border-color: #007eb4;
+  box-shadow: 0 4px 10px rgba(0, 126, 180, 0.12);
+  transform: translateY(-1px);
+}
+
+.worker-card.selected {
+  border: 2px solid #0284c7;
+  border-left: 5px solid #0284c7;
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+}
+
+.worker-card.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.worker-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.worker-name {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.worker-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.worker-area-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.1rem 0.42rem;
+  border-radius: 999px;
+}
+
+.worker-area-pet {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.worker-area-mn {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.worker-area-poli {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+
+.worker-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.worker-del-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.3rem;
+  border-radius: 6px;
+}
+
+.worker-del-btn:hover {
+  color: #dc2626;
+  background: #fef2f2;
 }

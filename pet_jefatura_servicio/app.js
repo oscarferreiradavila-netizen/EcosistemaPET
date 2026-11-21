@@ -25,6 +25,7 @@
 
   const state = {
     periodo: 'all', // 'all' | 'month' | 'week' | 'today'
+    activeRole: 'jefatura', // 'jefatura' | 'enfermeria' | 'global'
     activeTab: 'resumen',
     peticiones: [],
     machineEntries: [],
@@ -716,8 +717,8 @@
         prioridad: '🟢 P3',
         fechaCita: today,
         horaCita: '08:45 h',
-        costeDosisEur: 185,
-        observaciones: 'No acude a admisión ni responde a 3 llamadas telefónicas de Enfermería. Dosis FDG reasignada parcialmente.'
+        impactoAsistencial: '1 dosis FDG comprometida / slot público vacante',
+        observaciones: 'No acude a admisión ni responde a 3 llamadas telefónicas de Enfermería. Dosis FDG reasignada parcialmente a paciente de lista de espera.'
       },
       {
         noShowId: 'NOSHOW-002',
@@ -728,8 +729,8 @@
         prioridad: '🟡 P2',
         fechaCita: today,
         horaCita: '11:15 h',
-        costeDosisEur: 240,
-        observaciones: 'No se presenta sin avisar (olvido de cita). Se registra incidencia en historia electrónica.'
+        impactoAsistencial: '1 dosis Colina comprometida / slot público vacante',
+        observaciones: 'No se presenta sin avisar (olvido de cita). Se registra incidencia en historia electrónica del SERGAS.'
       }
     ];
 
@@ -1161,6 +1162,7 @@
     const rfStats = computeRadiopharmaBreakdown(petList);
     const dosimetryStats = computeDosimetryQualityStats();
     const docStats = computeDoctorAndPatientMetrics(evaluatedMachine);
+    const advancedQualityStats = computeAdvancedQualityAndOperationalStats();
 
     return {
       petList,
@@ -1190,7 +1192,108 @@
       rendimientoGlobal,
       rfStats,
       dosimetryStats,
-      docStats
+      docStats,
+      advancedQualityStats
+    };
+  }
+
+  function computeAdvancedQualityAndOperationalStats() {
+    const scale = state.periodo === 'today' ? 0.05 : (state.periodo === 'week' ? 0.25 : 1.0);
+    const recMBq = Math.round(8420 * scale);
+    const inyMBq = Math.round(7680 * scale);
+    const perdMBq = recMBq - inyMBq;
+    const dosisPerdidasEquiv = Math.max(1, Math.round(4 * scale));
+    const pctAprov = ((inyMBq / Math.max(recMBq, 1)) * 100);
+
+    // Huecos libres de camilla (gantry)
+    const totalSlotsDia = 32;
+    const ocupadosDia = 29;
+    const libresDia = 3;
+    const pctLibres = (libresDia / totalSlotsDia) * 100;
+
+    // Fármacos breakdown
+    const farmacosEfficiency = [
+      { name: '18F-FDG (Glucosa)', dosisPedidas: Math.round(180 * scale), inyectadas: Math.round(171 * scale), mbqPerd: Math.round(310 * scale), pct: 95.0, dosisPerdidas: Math.max(1, Math.round(9 * scale)), accion: 'Ajuste de calibración con Ciclotrón público según agenda confirmada' },
+      { name: '18F-PSMA (Próstata)', dosisPedidas: Math.round(45 * scale), inyectadas: Math.round(41 * scale), mbqPerd: Math.round(180 * scale), pct: 91.1, dosisPerdidas: Math.max(1, Math.round(4 * scale)), accion: 'Coordinación logística con radiofarmacia externa según demanda asistencial' },
+      { name: '18F-Colina (Próstata / Parat.)', dosisPedidas: Math.round(24 * scale), inyectadas: Math.round(21 * scale), mbqPerd: Math.round(150 * scale), pct: 87.5, dosisPerdidas: Math.max(1, Math.round(3 * scale)), accion: 'Concentración de pacientes en tandas matinales para maximizar actividad' },
+      { name: '68Ga-DOTATOC (Neuroendócrinos)', dosisPedidas: Math.round(12 * scale), inyectadas: Math.round(10 * scale), mbqPerd: Math.round(100 * scale), pct: 83.3, dosisPerdidas: Math.max(1, Math.round(2 * scale)), accion: 'Optimización de elución de generador 68Ge/68Ga in situ para lista de espera' }
+    ];
+
+    // Demoras Lead Time
+    const demoraP1 = 4.6;
+    const demoraP2 = 10.8;
+    const demoraP3 = 24.5;
+    const tatInformeHoras = 18.2;
+    const tatMenor24h = 78.5;
+    const tat24a48h = 16.2;
+    const tatMayor48h = 5.3;
+
+    // Tiempos permanencia door to door
+    const permanenciaTotalMin = 112;
+    const fasesMin = {
+      acogida: 14,
+      boxReposo: 58,
+      camilla: 18,
+      revisionAlta: 22
+    };
+    const ventanaEarlPct = 93.1;
+    const ventanaEarlPrecoz = 2.4;
+    const ventanaEarlTardia = 4.5;
+
+    // Audioguías & Calidad
+    const adherenciaAudioPct = 85.4;
+    const suspConAudioPct = 1.1;
+    const suspSinAudioPct = 8.7;
+    const consultasChatbot = Math.round(342 * scale);
+
+    // Mal preparados
+    const totalMalPrep = Math.max(1, Math.round(12 * scale));
+    const causasMalPrep = [
+      { causa: 'Rotura involuntaria de ayuno (comida/bebida calórica)', pct: 42, count: Math.round(totalMalPrep * 0.42) },
+      { causa: 'Medicación o insulina mal pautada', pct: 28, count: Math.round(totalMalPrep * 0.28) },
+      { causa: 'Ejercicio físico intenso en 24-48h previas', pct: 18, count: Math.round(totalMalPrep * 0.18) },
+      { causa: 'Incumplimiento de dieta cetogénica (Endocarditis)', pct: 12, count: Math.round(totalMalPrep * 0.12) }
+    ];
+
+    // Glucemias en Box
+    const glucemiaVerdePct = 76.2;
+    const glucemiaAmbarPct = 17.5;
+    const glucemiaRojaPct = 6.3;
+    const rescateGlucemiaPct = 71.4;
+
+    return {
+      recMBq,
+      inyMBq,
+      perdMBq,
+      dosisPerdidasEquiv,
+      pctAprov,
+      totalSlotsDia,
+      ocupadosDia,
+      libresDia,
+      pctLibres,
+      farmacosEfficiency,
+      demoraP1,
+      demoraP2,
+      demoraP3,
+      tatInformeHoras,
+      tatMenor24h,
+      tat24a48h,
+      tatMayor48h,
+      permanenciaTotalMin,
+      fasesMin,
+      ventanaEarlPct,
+      ventanaEarlPrecoz,
+      ventanaEarlTardia,
+      adherenciaAudioPct,
+      suspConAudioPct,
+      suspSinAudioPct,
+      consultasChatbot,
+      totalMalPrep,
+      causasMalPrep,
+      glucemiaVerdePct,
+      glucemiaAmbarPct,
+      glucemiaRojaPct,
+      rescateGlucemiaPct
     };
   }
 
@@ -1325,12 +1428,6 @@
 
     // 3. Semilla clínica de referencia para auditoría de calidad si hay pocos registros en vivo
     const baselineSamples = [
-      { fecha: todayStr, farmaco: 'FDG', nombre: 'Manuel Piñeiro Castro', iniciales: 'M.P.C.', nhc: 'NHC-391042', pesoKg: 76, tallaCm: 172, mciInyectados: '7.65', horaInyeccion: '08:35' },
-      { fecha: todayStr, farmaco: 'PSMA', nombre: 'Alfonso Vázquez Souto', iniciales: 'A.V.S.', nhc: 'NHC-518290', pesoKg: 82, tallaCm: 175, mciInyectados: '4.45', horaInyeccion: '09:05' },
-      { fecha: todayStr, farmaco: 'FDG', nombre: 'Carmen Domínguez Lago', iniciales: 'C.D.L.', nhc: 'NHC-602118', pesoKg: 64, tallaCm: 162, mciInyectados: '7.35', horaInyeccion: '09:35' },
-      { fecha: todayStr, farmaco: 'COLINA', nombre: 'Ramiro Estévez Pazos', iniciales: 'R.E.P.', nhc: 'NHC-449812', pesoKg: 78, tallaCm: 170, mciInyectados: '7.75', horaInyeccion: '10:10' },
-      { fecha: todayStr, farmaco: 'GA68', nombre: 'Dolores Méndez Conde', iniciales: 'D.M.C.', nhc: 'NHC-710394', pesoKg: 68, tallaCm: 160, mciInyectados: '3.40', horaInyeccion: '10:40' },
-      { fecha: todayStr, farmaco: 'FDG', nombre: 'Brais Nogueira Rial', iniciales: 'B.N.R.', nhc: 'NHC-829104', pesoKg: 85, tallaCm: 178, mciInyectados: '7.40', horaInyeccion: '11:15' }
       { fecha: todayStr, farmaco: 'FDG', nombre: 'Manuel Piñeiro Castro', iniciales: 'M.P.C.', nhc: 'NHC-391042', pesoKg: 76, tallaCm: 172, mciInyectados: '7.65', estadoInyeccion: 'correcta', horaInyeccion: '08:35' },
       { fecha: todayStr, farmaco: 'PSMA', nombre: 'Alfonso Vázquez Souto', iniciales: 'A.V.S.', nhc: 'NHC-518290', pesoKg: 82, tallaCm: 175, mciInyectados: '4.45', estadoInyeccion: 'correcta', horaInyeccion: '09:05' },
       { fecha: todayStr, farmaco: 'FDG', nombre: 'Carmen Domínguez Lago', iniciales: 'C.D.L.', nhc: 'NHC-602118', pesoKg: 64, tallaCm: 162, mciInyectados: '7.35', estadoInyeccion: 'correcta', horaInyeccion: '09:35' },
@@ -1384,7 +1481,6 @@
       extravasacionCount,
       pctIdeal: (idealCount / total) * 100,
       pctMas: (masCount / total) * 100,
-      pctMenos: (menosCount / total) * 100
       pctMenos: (menosCount / total) * 100,
       pctCorrecta: (correctaCount / total) * 100,
       pctExtravasacion: (extravasacionCount / total) * 100
@@ -1401,6 +1497,8 @@
     renderCitasTab(stats);
     renderAnulacionesTab(stats);
     renderMedicosTab(stats);
+    renderEficienciaTiemposTab(stats);
+    renderAudioguiasCalidadTab(stats);
     actualizarDemoInforme(stats);
   }
 
@@ -1456,6 +1554,47 @@
     document.getElementById('kpiTiempoMedioPruebaGlobal').textContent = `Espera post-imagen · Prueba media: ${Math.round(stats.docStats.globalTiempoMedioPrueba)} min`;
     document.getElementById('sparkKpiMedicos').innerHTML = renderSparklineSVG([14.2, 13.5, 12.4, 11.8, 11.1, Number(stats.docStats.globalEsperaPostImagen.toFixed(1))], '#7c3aed');
 
+    // KPI 8: Eficiencia y Aprovechamiento de Fármacos & Huecos Libres
+    const ef = stats.advancedQualityStats;
+    const elKpiAprov = document.getElementById('kpiPctAprovechamientoRF');
+    if (elKpiAprov) elKpiAprov.textContent = `${ef.pctAprov.toFixed(1)}%`;
+    const elKpiHuecos = document.getElementById('kpiHuecosLibresBadge');
+    if (elKpiHuecos) elKpiHuecos.textContent = `${ef.libresDia} huecos libres`;
+    const elSubAprov = document.getElementById('kpiSubtextAprovechamiento');
+    if (elSubAprov) elSubAprov.textContent = `Recibido: ${ef.recMBq.toLocaleString('es-ES')} MBq · Inyectado: ${ef.inyMBq.toLocaleString('es-ES')} MBq`;
+    const elSparkEf = document.getElementById('sparkKpiEficiencia');
+    if (elSparkEf) elSparkEf.innerHTML = renderSparklineSVG([86.2, 87.5, 88.9, 90.1, 90.8, Number(ef.pctAprov.toFixed(1))], '#0284c7');
+
+    // KPI 9: Demoras P1/P2 & TAT
+    const elKpiDemoraP1 = document.getElementById('kpiDemoraP1Media');
+    if (elKpiDemoraP1) elKpiDemoraP1.textContent = `${ef.demoraP1} d`;
+    const elKpiTat = document.getElementById('kpiTatInformeBadge');
+    if (elKpiTat) elKpiTat.textContent = `TAT: ${ef.tatInformeHoras} h`;
+    const elSubDemoras = document.getElementById('kpiSubtextDemoras');
+    if (elSubDemoras) elSubDemoras.textContent = `P1: ${ef.demoraP1}d (Meta ≤7d) · P2: ${ef.demoraP2}d · ${ef.tatMenor24h}% <24h`;
+    const elSparkDem = document.getElementById('sparkKpiDemoras');
+    if (elSparkDem) elSparkDem.innerHTML = renderSparklineSVG([6.8, 6.1, 5.5, 5.0, 4.8, ef.demoraP1], '#059669');
+
+    // KPI 10: Permanencia & Ventana EARL
+    const elKpiPerm = document.getElementById('kpiPermanenciaServicioMedia');
+    if (elKpiPerm) elKpiPerm.textContent = `${ef.permanenciaTotalMin} min`;
+    const elKpiEarl = document.getElementById('kpiVentanaEarlBadge');
+    if (elKpiEarl) elKpiEarl.textContent = `${ef.ventanaEarlPct}% EARL`;
+    const elSubPerm = document.getElementById('kpiSubtextPermanencia');
+    if (elSubPerm) elSubPerm.textContent = `Door-to-Door: ${ef.permanenciaTotalMin}m · Ventana 55-75m OK`;
+    const elSparkPerm = document.getElementById('sparkKpiPermanencia');
+    if (elSparkPerm) elSparkPerm.innerHTML = renderSparklineSVG([128, 124, 119, 116, 114, ef.permanenciaTotalMin], '#d97706');
+
+    // KPI 11: Audioguías & Glucemias Box
+    const elKpiAudio = document.getElementById('kpiAdherenciaAudioguia');
+    if (elKpiAudio) elKpiAudio.textContent = `${ef.adherenciaAudioPct}%`;
+    const elKpiGluc = document.getElementById('kpiGlucemiasAltasBadge');
+    if (elKpiGluc) elKpiGluc.textContent = `${ef.glucemiaRojaPct}% ≥200`;
+    const elSubAudio = document.getElementById('kpiSubtextAudioguias');
+    if (elSubAudio) elSubAudio.textContent = `Adherencia ${ef.adherenciaAudioPct}% · Susp: ${ef.suspConAudioPct}% con vs ${ef.suspSinAudioPct}% sin`;
+    const elSparkAud = document.getElementById('sparkKpiAudioguias');
+    if (elSparkAud) elSparkAud.innerHTML = renderSparklineSVG([62, 69, 75, 80, 83, ef.adherenciaAudioPct], '#be123c');
+
     // Badges de pestañas
     document.getElementById('tabBadgeMal').textContent = `${stats.malList.length} (${stats.pctMal.toFixed(0)}%)`;
     document.getElementById('tabBadgeRF').textContent = `${stats.rfStats.totalPruebas}`;
@@ -1463,6 +1602,10 @@
     document.getElementById('tabBadgeRecitar').textContent = `${stats.huecosDisponibles} libres`;
     document.getElementById('tabBadgeAnulaciones').textContent = `${stats.totalAnulaciones}`;
     document.getElementById('tabBadgeMedicos').textContent = `${NUCLEAR_DOCTORS.length} méd.`;
+    const elTabBadgeEf = document.getElementById('tabBadgeEficiencia');
+    if (elTabBadgeEf) elTabBadgeEf.textContent = `${ef.pctAprov.toFixed(0)}%`;
+    const elTabBadgeAud = document.getElementById('tabBadgeAudioguias');
+    if (elTabBadgeAud) elTabBadgeAud.textContent = `${ef.adherenciaAudioPct.toFixed(0)}%`;
   }
 
   // ==========================================================================
@@ -2079,7 +2222,7 @@
         </div>
 
         <div style="font-size:0.8rem; color:#450a0a; display:flex; flex-direction:column; gap:3px;">
-          <div><strong>🧪 Dosis comprometida:</strong> ${escapeHTML(ns.radiofarmaco)} (~${ns.costeDosisEur || 185} €)</div>
+          <div><strong>🧪 Recurso Público Asignado:</strong> ${escapeHTML(ns.radiofarmaco)} (1 slot de alta tecnología desaprovechado)</div>
           <div><strong>📌 Prioridad:</strong> ${escapeHTML(ns.prioridad)} · <strong>Fecha:</strong> ${escapeHTML(ns.fechaCita)}</div>
           <div><strong>📝 Incidencia:</strong> ${escapeHTML(ns.observaciones)}</div>
         </div>
@@ -2307,6 +2450,364 @@
   }
 
   // ==========================================================================
+  // 10. PESTAÑA 8: EFICIENCIA DE FÁRMACOS, DEMORAS, TAT Y TIEMPOS DE PROCESO
+  // ==========================================================================
+  function renderEficienciaTiemposTab(statsObj) {
+    const stats = statsObj || computeServiceStats();
+    const ef = stats.advancedQualityStats;
+    const xLabels = getTimeAxisLabels();
+
+    // 1. Métricas de Cabecera
+    const elRec = document.getElementById('statActividadRecibida');
+    if (elRec) elRec.textContent = `${ef.recMBq.toLocaleString('es-ES')} MBq`;
+    const elIny = document.getElementById('statActividadInyectada');
+    if (elIny) elIny.textContent = `${ef.inyMBq.toLocaleString('es-ES')} MBq`;
+    const elPerdEur = document.getElementById('statDosisPerdidasEur');
+    if (elPerdEur) elPerdEur.textContent = `${ef.dosisPerdidasEquiv} pac. equiv. (${ef.perdMBq} MBq)`;
+    const elHuecosDia = document.getElementById('statHuecosLibresDia');
+    if (elHuecosDia) elHuecosDia.textContent = `${ef.libresDia} / día (${ef.pctLibres.toFixed(1)}%)`;
+
+    const elBadgeEf = document.getElementById('badgeEficienciaGlobal');
+    if (elBadgeEf) elBadgeEf.textContent = `${ef.pctAprov.toFixed(1)}% Aprovechamiento Global`;
+    const elBadgeHuecos = document.getElementById('badgeHuecosLibresGlobal');
+    if (elBadgeHuecos) elBadgeHuecos.textContent = `${ef.libresDia} Huecos Libres / Día`;
+
+    // 2. Gráfica Evolución Aprovechamiento Radiofármacos
+    const chartAprovEl = document.getElementById('chartAprovechamientoRF');
+    if (chartAprovEl) {
+      chartAprovEl.innerHTML = renderEvolutionChartSVG({
+        title: 'Evolución de Tasa de Aprovechamiento por Isótopo (%)',
+        xLabels,
+        ySuffix: '%',
+        series: [
+          { name: '18F-FDG (Glucosa)', color: '#0284c7', data: [92, 93, 93.5, 94, 94.6, 95.0] },
+          { name: '18F-PSMA', color: '#0d9488', data: [88, 89, 89.4, 90.2, 90.7, 91.1] },
+          { name: '18F-Colina', color: '#7c3aed', data: [84, 85, 85.5, 86.2, 86.8, 87.5] }
+        ]
+      });
+    }
+
+    // 3. Gráfica Ocupación Horaria de Slots y Huecos Vacíos (SVG)
+    const chartSlotsEl = document.getElementById('chartOcupacionSlots');
+    if (chartSlotsEl) {
+      const horas = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00'];
+      const ocupados = [5, 5, 4, 5, 4, 4, 2];
+      const libres = [0, 0, 1, 0, 1, 0, 1];
+      const w = 580; const h = 190;
+      const barW = 38; const gap = 38; const startX = 50;
+      const barsHtml = horas.map((hr, idx) => {
+        const x = startX + idx * (barW + gap);
+        const tot = ocupados[idx] + libres[idx];
+        const hOcup = (ocupados[idx] / 6) * 110;
+        const hLibre = (libres[idx] / 6) * 110;
+        const yOcup = 140 - hOcup;
+        const yLibre = yOcup - hLibre;
+        return `
+          <g>
+            <rect x="${x}" y="${yOcup}" width="${barW}" height="${hOcup}" fill="#0284c7" rx="3">
+              <title>${hr}: ${ocupados[idx]} ocupados</title>
+            </rect>
+            ${libres[idx] > 0 ? `
+              <rect x="${x}" y="${yLibre}" width="${barW}" height="${hLibre}" fill="#f59e0b" rx="3">
+                <title>${hr}: ${libres[idx]} hueco libre</title>
+              </rect>
+              <text x="${x + barW/2}" y="${yLibre - 5}" text-anchor="middle" font-size="9" font-weight="800" fill="#d97706">+${libres[idx]}</text>
+            ` : ''}
+            <text x="${x + barW/2}" y="${yOcup + hOcup/2 + 3}" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">${ocupados[idx]}</text>
+            <text x="${x + barW/2}" y="160" text-anchor="middle" font-size="10" font-weight="600" fill="#475569">${hr}</text>
+          </g>
+        `;
+      }).join('');
+
+      chartSlotsEl.innerHTML = `
+        <svg viewBox="0 0 ${w} ${h}" width="100%" height="190">
+          <line x1="40" y1="140" x2="550" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+          ${barsHtml}
+          <g transform="translate(180, 180)">
+            <rect x="0" y="-8" width="12" height="10" fill="#0284c7" rx="2"/>
+            <text x="18" y="0" font-size="9.5" fill="#334155" font-weight="600">Slots Ocupados en Camilla</text>
+            <rect x="180" y="-8" width="12" height="10" fill="#f59e0b" rx="2"/>
+            <text x="198" y="0" font-size="9.5" fill="#b45309" font-weight="700">Huecos Libres No Citados</text>
+          </g>
+        </svg>
+      `;
+    }
+
+    // 4. Tabla de Aprovechamiento de Fármacos
+    const tablaFarmacosEl = document.getElementById('tablaAprovechamientoFarmacos');
+    if (tablaFarmacosEl) {
+      tablaFarmacosEl.innerHTML = ef.farmacosEfficiency.map(f => `
+        <tr>
+          <td><strong style="color:#0f172a;">${escapeHTML(f.name)}</strong></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700;">${f.dosisPedidas} dosis</td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">${f.inyectadas} inyectadas</td>
+          <td><span class="status-badge ${f.pct >= 90 ? 'badge-ok' : 'badge-warn'}">${f.pct.toFixed(1)}%</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; color:#dc2626;">${f.mbqPerd} MBq</td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#e11d48;">${f.dosisPerdidas} pac. equiv.</td>
+          <td style="font-size:0.78rem; color:#475569;">${escapeHTML(f.accion)}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 5. Demoras y TAT
+    const elDemP1 = document.getElementById('statDemoraP1');
+    if (elDemP1) elDemP1.textContent = `${ef.demoraP1} días`;
+    const elDemP2 = document.getElementById('statDemoraP2');
+    if (elDemP2) elDemP2.textContent = `${ef.demoraP2} días`;
+    const elDemP3 = document.getElementById('statDemoraP3');
+    if (elDemP3) elDemP3.textContent = `${ef.demoraP3} días`;
+    const elTatMedio = document.getElementById('statTatInformeMedio');
+    if (elTatMedio) elTatMedio.textContent = `${ef.tatInformeHoras} horas`;
+
+    // Gráfica Demoras
+    const chartDemorasEl = document.getElementById('chartEvolucionDemoras');
+    if (chartDemorasEl) {
+      chartDemorasEl.innerHTML = renderEvolutionChartSVG({
+        title: 'Evolución Demoras de Citación (Días) vs Metas SERGAS',
+        xLabels,
+        ySuffix: 'd',
+        series: [
+          { name: 'P1 Onco (Meta ≤ 7d)', color: '#059669', data: [6.8, 6.2, 5.7, 5.2, 4.9, ef.demoraP1] },
+          { name: 'P2 Ordinaria (Meta ≤ 15d)', color: '#0284c7', data: [14.1, 13.5, 12.8, 12.0, 11.4, ef.demoraP2] }
+        ]
+      });
+    }
+
+    // Gráfica Distribución TAT
+    const chartTatEl = document.getElementById('chartDistribucionTAT');
+    if (chartTatEl) {
+      const w = 560; const h = 185;
+      chartTatEl.innerHTML = `
+        <svg viewBox="0 0 ${w} ${h}" width="100%" height="185">
+          <g transform="translate(40, 20)">
+            <text x="0" y="16" font-size="11" font-weight="700" fill="#334155">&lt; 24 Horas (Meta ≥ 75%):</text>
+            <rect x="180" y="5" width="280" height="18" fill="#e2e8f0" rx="4"/>
+            <rect x="180" y="5" width="${(ef.tatMenor24h/100)*280}" height="18" fill="#059669" rx="4"/>
+            <text x="475" y="19" font-size="11" font-weight="800" fill="#047857">${ef.tatMenor24h}%</text>
+
+            <text x="0" y="60" font-size="11" font-weight="700" fill="#334155">24 a 48 Horas:</text>
+            <rect x="180" y="49" width="280" height="18" fill="#e2e8f0" rx="4"/>
+            <rect x="180" y="49" width="${(ef.tat24a48h/100)*280}" height="18" fill="#f59e0b" rx="4"/>
+            <text x="475" y="63" font-size="11" font-weight="800" fill="#b45309">${ef.tat24a48h}%</text>
+
+            <text x="0" y="104" font-size="11" font-weight="700" fill="#334155">&gt; 48 Horas (Demora):</text>
+            <rect x="180" y="93" width="280" height="18" fill="#e2e8f0" rx="4"/>
+            <rect x="180" y="93" width="${(ef.tatMayor48h/100)*280}" height="18" fill="#dc2626" rx="4"/>
+            <text x="475" y="107" font-size="11" font-weight="800" fill="#b91c1c">${ef.tatMayor48h}%</text>
+          </g>
+        </svg>
+      `;
+    }
+
+    // Tabla Demoras por Servicio
+    const tablaDemorasEl = document.getElementById('tablaDemorasPorServicio');
+    if (tablaDemorasEl) {
+      const servData = [
+        { name: 'Oncología Médica', p1: 58, demP1: 4.2, p2: 18, demP2: 9.8, cumplimiento: '98.5%', tat: '16.5 h' },
+        { name: 'Urología', p1: 22, demP1: 4.8, p2: 34, demP2: 11.2, cumplimiento: '95.0%', tat: '17.8 h' },
+        { name: 'Neumología', p1: 31, demP1: 4.5, p2: 14, demP2: 10.4, cumplimiento: '96.2%', tat: '18.1 h' },
+        { name: 'Hematología', p1: 19, demP1: 4.1, p2: 12, demP2: 9.5, cumplimiento: '100.0%', tat: '15.9 h' },
+        { name: 'Cirugía General y Digestiva', p1: 16, demP1: 5.2, p2: 19, demP2: 12.1, cumplimiento: '92.4%', tat: '19.4 h' },
+        { name: 'Neurología / Demencias', p1: 6, demP1: 6.4, p2: 24, demP2: 13.8, cumplimiento: '91.0%', tat: '22.0 h' }
+      ];
+      tablaDemorasEl.innerHTML = servData.map(s => `
+        <tr>
+          <td><strong style="color:#0f172a;">${escapeHTML(s.name)}</strong></td>
+          <td style="font-family:'JetBrains Mono',monospace;">${s.p1}</td>
+          <td><span class="status-badge badge-ok">${s.demP1} d</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;">${s.p2}</td>
+          <td><span class="status-badge badge-info">${s.demP2} d</span></td>
+          <td><span class="status-badge badge-ok">${s.cumplimiento}</span></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#4338ca;">${s.tat}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 6. Fases de Estancia & Ventana EARL
+    const chartFasesEl = document.getElementById('chartFasesEstancia');
+    if (chartFasesEl) {
+      const f = ef.fasesMin;
+      chartFasesEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:9px; padding:0.4rem 0;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>1. Acogida, Registro y Vía Venosa</span>
+              <span style="color:#0284c7;">${f.acogida} min</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#0284c7; width:${(f.acogida/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>2. Inyección y Reposo Metabólico en Box</span>
+              <span style="color:#0d9488;">${f.boxReposo} min (Meta 50-60m)</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#0d9488; width:${(f.boxReposo/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>3. Adquisición en Camilla PET-CT</span>
+              <span style="color:#7c3aed;">${f.camilla} min</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#7c3aed; width:${(f.camilla/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; margin-bottom:3px;">
+              <span>4. Revisión Médica de Imágenes y Salida</span>
+              <span style="color:#059669;">${f.revisionAlta} min</span>
+            </div>
+            <div style="background:#e2e8f0; border-radius:6px; height:11px; overflow:hidden;">
+              <div style="background:#059669; width:${(f.revisionAlta/ef.permanenciaTotalMin)*100}%; height:100%;"></div>
+            </div>
+          </div>
+          <div style="text-align:right; font-family:'Outfit',sans-serif; font-weight:800; font-size:0.95rem; color:#004868; margin-top:5px;">
+            Total Estancia Media: ${ef.permanenciaTotalMin} min (Meta ≤ 120 min)
+          </div>
+        </div>
+      `;
+    }
+
+    const chartEarlEl = document.getElementById('chartVentanaEarl');
+    if (chartEarlEl) {
+      chartEarlEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:12px; padding:0.6rem 0;">
+          <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:10px; padding:0.8rem 1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="color:#047857; font-size:0.92rem;">🟢 Ventana Óptima EARL (55 a 75 min)</strong>
+              <span class="status-badge badge-ok" style="font-size:0.88rem;">${ef.ventanaEarlPct}% Cumplimiento</span>
+            </div>
+            <div style="font-size:0.75rem; color:#065f46; margin-top:3px;">Cumple estándar europeo EANM/EARL de biodistribución radiofarmacéutica estable.</div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div style="background:#fef2f2; border:1px solid #fecdd3; border-radius:8px; padding:0.7rem 0.9rem;">
+              <div style="font-size:0.75rem; font-weight:700; color:#991b1b;">⚠️ Precoz (&lt; 55 min)</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800; color:#dc2626;">${ef.ventanaEarlPrecoz}%</div>
+              <div style="font-size:0.7rem; color:#7f1d1d;">Riesgo captación incompleta</div>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.7rem 0.9rem;">
+              <div style="font-size:0.75rem; font-weight:700; color:#92400e;">⚠️ Tardía (&gt; 75 min)</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800; color:#d97706;">${ef.ventanaEarlTardia}%</div>
+              <div style="font-size:0.7rem; color:#78350f;">Demora por máquina o vía</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // ==========================================================================
+  // 11. PESTAÑA 9: EFICACIA DE AUDIOGUÍAS, PACIENTES MAL PREPARADOS Y GLUCEMIAS
+  // ==========================================================================
+  function renderAudioguiasCalidadTab(statsObj) {
+    const stats = statsObj || computeServiceStats();
+    const ef = stats.advancedQualityStats;
+    const xLabels = getTimeAxisLabels();
+
+    // 1. Métricas Cabecera Audioguías
+    const elAdh = document.getElementById('statAdherenciaPct');
+    if (elAdh) elAdh.textContent = `${ef.adherenciaAudioPct}%`;
+    const elSuspCon = document.getElementById('statSuspConAudio');
+    if (elSuspCon) elSuspCon.textContent = `${ef.suspConAudioPct}%`;
+    const elSuspSin = document.getElementById('statSuspSinAudio');
+    if (elSuspSin) elSuspSin.textContent = `${ef.suspSinAudioPct}%`;
+    const elCons = document.getElementById('statConsultasChatbot');
+    if (elCons) elCons.textContent = `${ef.consultasChatbot}`;
+
+    // 2. Gráfica Comparativa Suspensión Con vs Sin Audioguía
+    const chartCompEl = document.getElementById('chartEficaciaAudioguias');
+    if (chartCompEl) {
+      chartCompEl.innerHTML = renderEvolutionChartSVG({
+        title: 'Tasa de Suspensión por Fallos de Preparación: CON vs SIN Audioguía (%)',
+        xLabels,
+        ySuffix: '%',
+        series: [
+          { name: 'Sin Audioguía (8.7%)', color: '#dc2626', data: [9.8, 9.4, 9.1, 8.9, 8.8, ef.suspSinAudioPct] },
+          { name: 'Con Audioguía (1.1%)', color: '#059669', data: [2.1, 1.8, 1.5, 1.3, 1.2, ef.suspConAudioPct] }
+        ]
+      });
+    }
+
+    // 3. Gráfica Uso por Protocolo
+    const chartUsoEl = document.getElementById('chartUsoPorProtocolo');
+    if (chartUsoEl) {
+      const protos = [
+        { name: '18F-FDG Oncológico', pct: 91 },
+        { name: '18F-FDG Diabético', pct: 94 },
+        { name: '18F-PSMA Próstata', pct: 88 },
+        { name: '18F-Colina', pct: 86 },
+        { name: '18F-Endocarditis', pct: 92 },
+        { name: '18F-Vasculitis', pct: 83 }
+      ];
+      chartUsoEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:8px; padding:0.4rem 0;">
+          ${protos.map(p => `
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.79rem; font-weight:700; margin-bottom:2px;">
+                <span>${escapeHTML(p.name)}</span>
+                <span style="color:#0284c7;">${p.pct}% adherencia</span>
+              </div>
+              <div style="background:#e2e8f0; border-radius:5px; height:8px; overflow:hidden;">
+                <div style="background:linear-gradient(90deg, #0284c7, #0d9488); width:${p.pct}%; height:100%;"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // 4. Métricas Mal Preparados en Box
+    const elTotMal = document.getElementById('statTotalMalPrepBox');
+    if (elTotMal) elTotMal.textContent = `${ef.totalMalPrep} pac`;
+
+    // 5. Gráfica Causas Mal Preparados
+    const chartCausasEl = document.getElementById('chartCausasMalPrep');
+    if (chartCausasEl) {
+      chartCausasEl.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:9px; padding:0.4rem 0;">
+          ${ef.causasMalPrep.map(c => `
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700; margin-bottom:3px;">
+                <span>${escapeHTML(c.causa)}</span>
+                <span style="color:#c2410c;">${c.pct}% (${c.count} pac)</span>
+              </div>
+              <div style="background:#ffedd5; border-radius:5px; height:9px; overflow:hidden;">
+                <div style="background:#ea580c; width:${c.pct}%; height:100%;"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // 6. Tabla Detalle Mal Prep & Glucemias
+    const tablaDetalleEl = document.getElementById('tablaDetalleMalPrepGlucemia');
+    if (tablaDetalleEl) {
+      const records = [
+        { nombre: 'Rosa María Calvo Soto', nhc: 'NHC-481920', fecha: 'Hoy · 08:45', proto: 'FDG Diabético', tipo: 'Glucemia alta en box', val: '228 mg/dL', res: 'Normalizada a 172 mg/dL tras 45 min hidratación oral; inyectada con éxito.' },
+        { nombre: 'Domingo Besteiro Prado', nhc: 'NHC-509182', fecha: 'Hoy · 09:30', proto: 'FDG Oncológico', tipo: 'Rotura ayuno involuntaria', val: '185 mg/dL', res: 'Tomó café con leche a las 07:00h. Recitado prioritario para mañana 08:30h.' },
+        { nombre: 'Consuelo Otero Varela', nhc: 'NHC-612409', fecha: 'Ayer · 10:15', proto: 'FDG Endocarditis', tipo: 'Incumplimiento dieta cetogénica', val: '110 mg/dL', res: 'Cena con hidratos; reprogramada con refuerzo de audioguía específica.' },
+        { nombre: 'Ángel Souto Fernández', nhc: 'NHC-398244', fecha: 'Ayer · 11:00', proto: '18F-PSMA', tipo: 'Medicación no suspendida', val: 'Normal', res: 'Aclarada compatibilidad con radiofármaco por médico nuclear; realizada sin demora.' },
+        { nombre: 'Mercedes Rial Castro', nhc: 'NHC-724185', fecha: '18/11 · 08:30', proto: 'FDG Diabético', tipo: 'Glucemia capilar elevada', val: '245 mg/dL', res: 'Valor confirmado en glucómetro SERGAS; reprogramada a primera hora con pauta insulina.' }
+      ];
+      tablaDetalleEl.innerHTML = records.map(r => `
+        <tr>
+          <td><strong style="color:#0f172a;">${escapeHTML(r.nombre)}</strong><br><span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#0284c7;">${escapeHTML(r.nhc)}</span></td>
+          <td style="font-size:0.78rem; color:#475569;">${escapeHTML(r.fecha)}</td>
+          <td><span class="status-badge badge-info">${escapeHTML(r.proto)}</span></td>
+          <td><strong style="color:#334155; font-size:0.82rem;">${escapeHTML(r.tipo)}</strong></td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#0f172a;">${escapeHTML(r.val)}</td>
+          <td style="font-size:0.79rem; color:#1e293b;">${escapeHTML(r.res)}</td>
+        </tr>
+      `).join('');
+    }
+  }
+
+  // ==========================================================================
   // 12. INTERACCIONES: RECITAR, ANULAR, REPROGRAMAR Y EXPORTAR
   // ==========================================================================
   function abrirModalRecitar(slotId) {
@@ -2460,7 +2961,7 @@
         prioridad: pat.prioridad,
         fechaCita: getTodayISO(),
         horaCita: horaSlot,
-        costeDosisEur: 195,
+        impactoAsistencial: '1 dosis comprometida / slot de alta tecnología vacante',
         observaciones: motivo || 'Paciente no acude a la cita sin previo aviso.'
       });
       showToast(`🚫 Paciente ${pat.nombre} registrado como No Presentado sin avisar (No-Show).`);
@@ -2577,6 +3078,9 @@
     document.querySelectorAll('.tab-panel').forEach(panel => {
       panel.classList.toggle('active', panel.id === `tab-${tabId}`);
     });
+    if (tabId === 'planilla_personal') {
+      renderPlanillaTab();
+    }
   }
 
   function cambiarPeriodo(val) {
@@ -2728,6 +3232,11 @@
     const incCitas = !document.getElementById('chkRep_citas') || document.getElementById('chkRep_citas').checked;
     const incAnulaciones = !document.getElementById('chkRep_anulaciones') || document.getElementById('chkRep_anulaciones').checked;
     const incMedicos = !document.getElementById('chkRep_medicos') || document.getElementById('chkRep_medicos').checked;
+    const incEficienciaFarmacos = !document.getElementById('chkRep_eficiencia_farmacos') || document.getElementById('chkRep_eficiencia_farmacos').checked;
+    const incDemorasTAT = !document.getElementById('chkRep_demoras_tat') || document.getElementById('chkRep_demoras_tat').checked;
+    const incPermanenciaEARL = !document.getElementById('chkRep_permanencia_earl') || document.getElementById('chkRep_permanencia_earl').checked;
+    const incAudioguiasCalidad = !document.getElementById('chkRep_audioguias_calidad') || document.getElementById('chkRep_audioguias_calidad').checked;
+    const incGlucemiasAltas = !document.getElementById('chkRep_glucemias_altas') || document.getElementById('chkRep_glucemias_altas').checked;
 
     const destinatario = (document.getElementById('selectDestinatarioInforme') || {}).value || 'Dirección Asistencial SERGAS & Gerencia Galaria';
     const firmante = (document.getElementById('selectFirmanteJefatura') || {}).value || 'Dr. Manuel Gómez Feijóo · Jefe de Servicio de Medicina Nuclear';
@@ -3033,7 +3542,145 @@
         </section>
       ` : ''}
 
-      <!-- 6. DICTAMEN DE JEFATURA Y FIRMA OFICIAL -->
+      ${incEficienciaFarmacos ? `
+        <!-- SECCIÓN 6: EFICIENCIA RADIOFARMACÉUTICA Y HUECOS LIBRES -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>💎 6. Eficiencia Radiofarmacéutica, Aprovechamiento y Huecos Libres de Agenda</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:8px;">
+            <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#0369a1;">APROVECHAMIENTO</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#0284c7;">${stats.advancedQualityStats.pctAprov.toFixed(1)}%</div>
+              <div style="font-size:0.65rem; color:#64748b;">${(stats.advancedQualityStats.recMBq * mult).toLocaleString('es-ES')} MBq recibidos</div>
+            </div>
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#047857;">INYECTADA NETA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#059669;">${(stats.advancedQualityStats.inyMBq * mult).toLocaleString('es-ES')} MBq</div>
+              <div style="font-size:0.65rem; color:#64748b;">Administrada en box</div>
+            </div>
+            <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#be123c;">CAPACIDAD ASISTENCIAL NO APROVECHADA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#e11d48;">${Math.round(stats.advancedQualityStats.dosisPerdidasEquiv * mult) || 4} pac. equiv.</div>
+              <div style="font-size:0.65rem; color:#64748b;">Desintegración física + absentismo</div>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#b45309;">HUECOS LIBRES</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#d97706;">${stats.advancedQualityStats.libresDia} / día</div>
+              <div style="font-size:0.65rem; color:#64748b;">9.4% slots de camilla pública no programados</div>
+            </div>
+          </div>
+          <table class="chief-table" style="font-size:0.77rem;">
+            <thead>
+              <tr>
+                <th>Radiofármaco</th>
+                <th>Dosis Pedidas</th>
+                <th>Dosis Inyectadas</th>
+                <th>Aprovechamiento (%)</th>
+                <th>MBq Desintegrados</th>
+                <th>Capacidad Asistencial Afectada</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${stats.advancedQualityStats.farmacosEfficiency.map(f => `
+                <tr>
+                  <td><strong>${escapeHTML(f.name)}</strong></td>
+                  <td style="font-family:'JetBrains Mono',monospace;">${f.dosisPedidas * mult}</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#059669;">${f.inyectadas * mult}</td>
+                  <td><span class="status-badge ${f.pct >= 90 ? 'badge-ok' : 'badge-warn'}">${f.pct.toFixed(1)}%</span></td>
+                  <td style="font-family:'JetBrains Mono',monospace; color:#dc2626;">${f.mbqPerd * mult} MBq</td>
+                  <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#be123c;">${Math.round((f.dosisPerdidas || 1) * mult)} pac. equiv.</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </section>
+      ` : ''}
+
+      ${incDemorasTAT ? `
+        <!-- SECCIÓN 7: DEMORAS DE CITACIÓN Y TAT DE INFORME -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>📅 7. Tiempos de Demora de Citación (Lead Time) y Plazo de Firma del Informe (TAT)</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:8px;">
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#047857;">DEMORA P1 ONCOLÓGICA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#059669;">${stats.advancedQualityStats.demoraP1} días</div>
+              <div style="font-size:0.65rem; color:#047857; font-weight:700;">✓ Meta SERGAS ≤ 7d</div>
+            </div>
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#15803d;">DEMORA P2 ORDINARIA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#16a34a;">${stats.advancedQualityStats.demoraP2} días</div>
+              <div style="font-size:0.65rem; color:#16a34a; font-weight:700;">✓ Meta SERGAS ≤ 15d</div>
+            </div>
+            <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#6d28d9;">TAT INFORME MÉDICO</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#7c3aed;">${stats.advancedQualityStats.tatInformeHoras} h</div>
+              <div style="font-size:0.65rem; color:#6d28d9; font-weight:700;">${stats.advancedQualityStats.tatMenor24h}% en &lt; 24h</div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#334155;">DEMORA &gt; 48H</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#334155;">${stats.advancedQualityStats.tatMayor48h}%</div>
+              <div style="font-size:0.65rem; color:#64748b;">Casos complejos / tardías</div>
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      ${incPermanenciaEARL ? `
+        <!-- SECCIÓN 8: TIEMPO DE PERMANENCIA Y CALIDAD TÉCNICA EARL -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>⏳ 8. Tiempo de Permanencia en el Servicio (Door-to-Door) & Ventana EARL 55-75 min</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:8px 12px; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:800; color:#004868; margin-bottom:6px;">
+              <span>Fases Asistenciales del Proceso (Estancia Media Total: ${stats.advancedQualityStats.permanenciaTotalMin} min · Meta ≤ 120 min)</span>
+              <span class="status-badge badge-ok">${stats.advancedQualityStats.ventanaEarlPct}% Cumplimiento Ventana EARL 55-75m</span>
+            </div>
+            <div style="font-size:0.75rem; color:#475569; line-height:1.45;">
+              • <strong>Admisión y vía venosa:</strong> ${stats.advancedQualityStats.fasesMin.acogida} min · 
+              • <strong>Reposo metabólico en box:</strong> ${stats.advancedQualityStats.fasesMin.boxReposo} min (Meta 50-60m) · 
+              • <strong>Camilla PET-CT:</strong> ${stats.advancedQualityStats.fasesMin.camilla} min · 
+              • <strong>Revisión médica y alta:</strong> ${stats.advancedQualityStats.fasesMin.revisionAlta} min
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      ${incAudioguiasCalidad ? `
+        <!-- SECCIÓN 9: EFICACIA PREVENTIVA DE LAS AUDIOGUÍAS Y GLUCEMIAS -->
+        <section class="a4-report-section">
+          <div class="a4-section-title">
+            <span>🎧 9. Eficacia de las Audioguías Digitales, Pacientes Mal Preparados y Glucemias en Box</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin-bottom:8px;">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#15803d;">ADHERENCIA AUDIOGUÍA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#16a34a;">${stats.advancedQualityStats.adherenciaAudioPct}%</div>
+              <div style="font-size:0.65rem; color:#15803d;">Acceso pre-cita</div>
+            </div>
+            <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#047857;">SUSPENSIÓN CON AUDIOGUÍA</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#059669;">${stats.advancedQualityStats.suspConAudioPct}%</div>
+              <div style="font-size:0.65rem; color:#047857; font-weight:700;">vs 8.7% sin audioguía</div>
+            </div>
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#b45309;">GLUCEMIA ÓPTIMA (&lt;160)</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#d97706;">${stats.advancedQualityStats.glucemiaVerdePct}%</div>
+              <div style="font-size:0.65rem; color:#b45309;">Paso directo a inyección</div>
+            </div>
+            <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:6px; padding:6px 9px; text-align:center;">
+              <div style="font-size:0.68rem; font-weight:800; color:#be123c;">RESCATE GLUCEMIA ≥200</div>
+              <div style="font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:800; color:#e11d48;">${stats.advancedQualityStats.rescateGlucemiaPct}%</div>
+              <div style="font-size:0.65rem; color:#be123c; font-weight:700;">Rescatados con hidratación</div>
+            </div>
+          </div>
+        </section>
+      ` : ''}
+
+      <!-- 10. DICTAMEN DE JEFATURA Y FIRMA OFICIAL -->
       <section style="background:#f8fafc; border-left:4px solid #004868; padding:0.85rem 1.1rem; border-radius:6px; font-size:0.8rem; line-height:1.5; color:#1e293b;">
         <strong style="color:#004868; display:block; margin-bottom:3px;">📌 CONCLUSIONES Y PLAN DE ACCIÓN DE JEFATURA DE SERVICIO:</strong>
         ${escapeHTML(dictamenTxt)}
@@ -3064,48 +3711,581 @@
     }, 5000);
   }
 
+  // ==========================================================================
+  // DOS PESTAÑAS MAESTRAS AL ENTRAR EN JEFATURA: JEFE DE SERVICIO Y SUPERVISIÓN DE ENFERMERÍA
+  // ==========================================================================
+  function setMasterTab(masterTab, showNotification = true) {
+    const valid = ['jefe', 'enfermeria'];
+    const chosen = valid.includes(masterTab) ? masterTab : 'jefe';
+    state.activeMasterArea = chosen;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('pet_master_tab', chosen);
+      }
+    } catch (_) {}
+
+    // 1. Clases en el body para visualización directa mediante CSS
+    if (typeof document !== 'undefined' && document.body) {
+      document.body.classList.remove('mode-jefe', 'mode-enfermeria');
+      document.body.classList.add(`mode-${chosen}`);
+    }
+
+    // 2. Estado activo de las dos pestañas maestras
+    const btnJefe = document.getElementById('btnMasterJefe');
+    const btnEnf = document.getElementById('btnMasterEnfermeria');
+    if (btnJefe) btnJefe.classList.toggle('active', chosen === 'jefe');
+    if (btnEnf) btnEnf.classList.toggle('active', chosen === 'enfermeria');
+
+    // 3. Títulos y subtítulos en la cabecera
+    const elTitle = document.getElementById('headerMainTitle');
+    const elBadge = document.getElementById('headerRoleBadge');
+    const elSub = document.getElementById('headerSubtitle');
+
+    if (chosen === 'jefe') {
+      if (elTitle) elTitle.textContent = '👑 Consola de Jefe de Servicio & Dirección Médica PET/CT';
+      if (elBadge) {
+        elBadge.textContent = 'Jefe de Servicio';
+        elBadge.style.background = '#004868';
+        elBadge.style.color = '#ffffff';
+      }
+      if (elSub) elSub.textContent = 'Cuadro de Mando Integral: Peticiones (% Mal), Radiofármacos, Demoras P1/P2, Cuadro Facultativo, TAT y Tiempos Asistenciales.';
+      if (showNotification) {
+        cambiarTab('resumen');
+        showToast('👑 Pestaña Activa: Jefe de Servicio (Todos los datos médicos y asistenciales)');
+      }
+    } else {
+      if (elTitle) elTitle.textContent = '🩺 Consola de Supervisión de Cuidados & Enfermería PET/CT';
+      if (elBadge) {
+        elBadge.textContent = 'Supervisión de Enfermería';
+        elBadge.style.background = '#0d9488';
+        elBadge.style.color = '#ffffff';
+      }
+      if (elSub) elSub.textContent = 'Área de Cuidados y Boxes: Audioguías, Camilla, Absentismo, Vías Venosas y Extravasaciones.';
+      if (showNotification) {
+        cambiarTab('audioguias_calidad');
+        showToast('🩺 Pestaña Activa: Supervisión de Enfermería (Cuidados, boxes y preparación)');
+      }
+    }
+  }
+
+  function aplicarPlantillaInforme(tipo) {
+    const checks = {
+      chkRep_peticiones: tipo === 'jefatura' || tipo === 'global',
+      chkRep_radiofarmacos: tipo === 'jefatura' || tipo === 'global',
+      chkRep_medicos: tipo === 'jefatura' || tipo === 'global',
+      chkRep_eficiencia_farmacos: tipo === 'jefatura' || tipo === 'global',
+      chkRep_demoras_tat: tipo === 'jefatura' || tipo === 'global',
+      chkRep_graficas: true,
+      chkRep_puntualidad: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_citas: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_anulaciones: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_dosimetria: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_permanencia_earl: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_audioguias_calidad: tipo === 'enfermeria' || tipo === 'global',
+      chkRep_glucemias_altas: tipo === 'enfermeria' || tipo === 'global'
+    };
+
+    Object.entries(checks).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.checked = val;
+    });
+
+    actualizarDemoInforme();
+    showToast(tipo === 'jefatura'
+      ? '📋 Plantilla de Informe de Jefatura Médica cargada.'
+      : (tipo === 'enfermeria' ? '🩺 Plantilla de Informe de Supervisión de Enfermería cargada.' : '🌐 Plantilla Completa de Dirección cargada.'));
+  }
+
   if (broadcast) {
     broadcast.onmessage = () => {
       loadAllEcosystemData().then(() => renderAll());
     };
   }
 
-  window.addEventListener('storage', (e) => {
-    if (e.key && e.key.startsWith('PET_')) {
-      loadAllEcosystemData().then(() => renderAll());
-    }
-  });
+  if (typeof window !== 'undefined') {
+    window.addEventListener('storage', (e) => {
+      if (e.key && e.key.startsWith('PET_')) {
+        loadAllEcosystemData().then(() => renderAll());
+      }
+    });
+  }
 
-  document.addEventListener('DOMContentLoaded', async () => {
-    await loadAllEcosystemData();
-    renderAll();
-  });
+  // ==========================================================================
+  // 14. PLANILLA INTERACTIVA DE PERSONAL (TÉCNICOS, ENFERMEROS, CELADORES, TCAE)
+  // ==========================================================================
+  const PLANILLA_STORAGE_STAFF = 'PET_PLANILLA_STAFF_V1';
+  const PLANILLA_STORAGE_SHIFTS = 'PET_PLANILLA_SHIFTS_V1';
 
-  window.jefaturaApp = {
-    cambiarTab,
-    cambiarPeriodo,
-    sincronizarAhora,
-    exportarCSV,
-    renderPeticionesTab,
-    renderRadiofarmacosTab,
-    renderPuntualidadTab,
-    renderAnulacionesTab,
-    renderMedicosTab,
-    reprogramarAnulacionPrioritaria,
-    abrirModalRecitar,
-    cerrarModalRecitar,
-    confirmarRecitacionEnHueco,
-    abrirModalRegistrarIncidenciaCita,
-    cerrarModalIncidenciaCita,
-    confirmarRegistroIncidenciaCita,
-    convertirNoShowEnRecitable,
-    subsanarPeticionJefatura,
-    enviarFeedbackServicio,
-    actualizarHoraRealMaquina,
-    marcarEnHoraExacta,
-    seleccionarTipoInforme,
-    generarYVerDemoInforme,
-    abrirEImprimirDemoInforme,
-    actualizarDemoInforme
+  const PLANILLA_CATEGORIES = [
+    { id: 'enfermeros', label: '🩺 Enfermeros/as (DUE)' },
+    { id: 'tecnicos', label: '☢️ Técnicos (TSID / TER)' },
+    { id: 'celadores', label: '🏥 Celadores/as' },
+    { id: 'tcaes', label: '🧤 TCAEs' }
+  ];
+
+  const PLANILLA_SHIFTS_BY_CAT = {
+    enfermeros: [
+      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
+      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
+      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
+      { id: 'noche', title: '🌙 Turno Noche', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' },
+      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+    ],
+    tecnicos: [
+      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
+      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
+      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
+      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+    ],
+    celadores: [
+      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
+      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
+      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
+      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+    ],
+    tcaes: [
+      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
+      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+      { id: 'tarde_apoyo', title: '🌆 Tarde (Algunas tardes)', sub: '15:00 – 22:00 h · Refuerzo', headerBg: '#fef3c7' },
+      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+    ]
   };
+
+  function getShiftsForCategory(cat) {
+    return PLANILLA_SHIFTS_BY_CAT[cat] || PLANILLA_SHIFTS_BY_CAT.enfermeros;
+  }
+
+  const DEFAULT_STAFF_SEED = [
+    // Enfermeros/as (DUE)
+    { id: 'enf_1', name: 'Laura Méndez Vázquez', category: 'enfermeros', area: 'PET-CT', defaultShift: 'manana_pet' },
+    { id: 'enf_2', name: 'Beatriz Lago Otero', category: 'enfermeros', area: 'PET-CT', defaultShift: 'manana_pet' },
+    { id: 'enf_3', name: 'Patricia Rial Seoane', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
+    { id: 'enf_4', name: 'Marta Domínguez Castro', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
+    { id: 'enf_5', name: 'Lucía Fernández López', category: 'enfermeros', area: 'Polivalente', defaultShift: 'tarde_pet' },
+    { id: 'enf_6', name: 'Sonia Iglesias Prado', category: 'enfermeros', area: 'Polivalente', defaultShift: 'tarde_mn' },
+    { id: 'enf_7', name: 'Raquel Alonso Rodríguez', category: 'enfermeros', area: 'PET-CT', defaultShift: 'disponible' },
+    { id: 'enf_8', name: 'Cristina Varela Souto', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'noche' },
+
+    // Técnicos (TSID / TER)
+    { id: 'tec_1', name: 'Carlos Pazos Blanco', category: 'tecnicos', area: 'PET-CT', defaultShift: 'manana_pet' },
+    { id: 'tec_2', name: 'Diego Martínez Rey', category: 'tecnicos', area: 'PET-CT', defaultShift: 'manana_pet' },
+    { id: 'tec_3', name: 'Javier Núñez García', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
+    { id: 'tec_4', name: 'Elena Suárez Pérez', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
+    { id: 'tec_5', name: 'Adrián Gómez Ferreiro', category: 'tecnicos', area: 'Polivalente', defaultShift: 'tarde_pet' },
+    { id: 'tec_6', name: 'Rubén González Arias', category: 'tecnicos', area: 'Polivalente', defaultShift: 'tarde_mn' },
+    { id: 'tec_7', name: 'Noelia Costa Bouza', category: 'tecnicos', area: 'PET-CT', defaultShift: 'disponible' },
+    { id: 'tec_8', name: 'Iván Castro Prieto', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'libre' },
+
+    // Celadores/as
+    { id: 'cel_1', name: 'Manuel Rodríguez Piñeiro', category: 'celadores', area: 'PET-CT', defaultShift: 'manana_pet' },
+    { id: 'cel_2', name: 'José Luis Pérez Conde', category: 'celadores', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
+    { id: 'cel_3', name: 'Antonio Vázquez Soto', category: 'celadores', area: 'Polivalente', defaultShift: 'tarde_pet' },
+    { id: 'cel_4', name: 'Carmen Otero Loureiro', category: 'celadores', area: 'Polivalente', defaultShift: 'tarde_mn' },
+    { id: 'cel_5', name: 'Marcos López Pereiro', category: 'celadores', area: 'Polivalente', defaultShift: 'disponible' },
+    { id: 'cel_6', name: 'Susana Barreiro Blanco', category: 'celadores', area: 'Medicina Nuclear', defaultShift: 'libre' },
+
+    // TCAEs
+    { id: 'tcae_1', name: 'María José Lorenzo Gil', category: 'tcaes', area: 'PET-CT', defaultShift: 'manana_pet' },
+    { id: 'tcae_2', name: 'Ana Belén Torres Vila', category: 'tcaes', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
+    { id: 'tcae_3', name: 'Silvia Álvarez Ramos', category: 'tcaes', area: 'Polivalente', defaultShift: 'tarde_apoyo' },
+    { id: 'tcae_4', name: 'Verónica Nogueira Cruz', category: 'tcaes', area: 'Polivalente', defaultShift: 'manana_mn' },
+    { id: 'tcae_5', name: 'Nuria Estévez Domínguez', category: 'tcaes', area: 'PET-CT', defaultShift: 'disponible' },
+    { id: 'tcae_6', name: 'Pilar Blanco Santamaría', category: 'tcaes', area: 'Medicina Nuclear', defaultShift: 'libre' }
+  ];
+
+  const planillaState = {
+    categoria: 'enfermeros',
+    fecha: getTodayISO(),
+    selectedWorkerId: null,
+    draggedWorkerId: null,
+    staff: [],
+    shiftsByDate: {}
+  };
+
+  function initPlanillaData() {
+    try {
+      const savedStaff = localStorage.getItem(PLANILLA_STORAGE_STAFF);
+      planillaState.staff = savedStaff ? JSON.parse(savedStaff) : JSON.parse(JSON.stringify(DEFAULT_STAFF_SEED));
+      if (!Array.isArray(planillaState.staff) || planillaState.staff.length === 0) {
+        planillaState.staff = JSON.parse(JSON.stringify(DEFAULT_STAFF_SEED));
+      }
+    } catch (_) {
+      planillaState.staff = JSON.parse(JSON.stringify(DEFAULT_STAFF_SEED));
+    }
+
+    try {
+      const savedShifts = localStorage.getItem(PLANILLA_STORAGE_SHIFTS);
+      planillaState.shiftsByDate = savedShifts ? JSON.parse(savedShifts) : {};
+      if (!planillaState.shiftsByDate || typeof planillaState.shiftsByDate !== 'object') {
+        planillaState.shiftsByDate = {};
+      }
+    } catch (_) {
+      planillaState.shiftsByDate = {};
+    }
+  }
+
+  function savePlanillaData() {
+    try {
+      localStorage.setItem(PLANILLA_STORAGE_STAFF, JSON.stringify(planillaState.staff));
+      localStorage.setItem(PLANILLA_STORAGE_SHIFTS, JSON.stringify(planillaState.shiftsByDate));
+    } catch (_) {}
+  }
+
+  function getWorkerShiftForDate(worker, dateStr) {
+    const dayMap = planillaState.shiftsByDate[dateStr];
+    if (dayMap && dayMap[worker.id]) return dayMap[worker.id];
+    return worker.defaultShift || 'disponible';
+  }
+
+  function setPlanillaFecha(val) {
+    if (val === 'hoy') {
+      planillaState.fecha = getTodayISO();
+    } else if (val === 'manana') {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      planillaState.fecha = d.toISOString().split('T')[0];
+    } else if (val) {
+      planillaState.fecha = val;
+    }
+    planillaState.selectedWorkerId = null;
+    renderPlanillaTab();
+  }
+
+  function setPlanillaCategoria(cat) {
+    planillaState.categoria = cat;
+    planillaState.selectedWorkerId = null;
+    renderPlanillaTab();
+  }
+
+  function selectPlanillaWorker(workerId) {
+    if (!workerId || planillaState.selectedWorkerId === workerId) {
+      planillaState.selectedWorkerId = null;
+    } else {
+      planillaState.selectedWorkerId = workerId;
+    }
+    renderPlanillaTab();
+  }
+
+  function movePlanillaWorkerToShift(workerId, shiftId) {
+    if (!workerId || !shiftId) return;
+    if (!planillaState.shiftsByDate[planillaState.fecha]) {
+      planillaState.shiftsByDate[planillaState.fecha] = {};
+    }
+    planillaState.shiftsByDate[planillaState.fecha][workerId] = shiftId;
+    const worker = planillaState.staff.find(w => w.id === workerId);
+    const catShifts = worker ? getShiftsForCategory(worker.category) : getShiftsForCategory(planillaState.categoria);
+    const shiftObj = catShifts.find(s => s.id === shiftId);
+    planillaState.selectedWorkerId = null;
+    savePlanillaData();
+    renderPlanillaTab();
+    if (worker && shiftObj) {
+      showToast(`✅ ${worker.name} colocado en: ${shiftObj.title}`);
+    }
+  }
+
+  function onPlanillaDragStart(ev, workerId) {
+    planillaState.draggedWorkerId = workerId;
+    if (ev && ev.dataTransfer) {
+      ev.dataTransfer.setData('text/plain', workerId);
+      ev.dataTransfer.effectAllowed = 'move';
+    }
+  }
+
+  function onPlanillaDragOver(ev) {
+    if (ev) {
+      ev.preventDefault();
+      if (ev.dataTransfer) ev.dataTransfer.dropEffect = 'move';
+      const col = ev.currentTarget;
+      if (col) col.classList.add('drag-over');
+    }
+  }
+
+  function onPlanillaDragLeave(ev) {
+    if (ev && ev.currentTarget) {
+      ev.currentTarget.classList.remove('drag-over');
+    }
+  }
+
+  function onPlanillaDrop(ev, shiftId) {
+    if (ev) {
+      ev.preventDefault();
+      if (ev.currentTarget) ev.currentTarget.classList.remove('drag-over');
+    }
+    const workerId = (ev && ev.dataTransfer && ev.dataTransfer.getData('text/plain')) || planillaState.draggedWorkerId;
+    planillaState.draggedWorkerId = null;
+    if (workerId) {
+      movePlanillaWorkerToShift(workerId, shiftId);
+    }
+  }
+
+  function agregarTrabajadorPlanilla() {
+    const inputNombre = document.getElementById('inputNuevoTrabajadorNombre');
+    const selectArea = document.getElementById('selectNuevoTrabajadorArea');
+    const nombre = inputNombre ? inputNombre.value.trim() : '';
+    const area = selectArea ? selectArea.value : 'Polivalente';
+
+    if (!nombre) {
+      showToast('⚠️ Escribe el nombre del trabajador antes de añadirlo.');
+      return;
+    }
+
+    const cat = planillaState.categoria === 'resumen' ? 'enfermeros' : planillaState.categoria;
+    const newWorker = {
+      id: `${cat}_${Date.now()}`,
+      name: nombre,
+      category: cat,
+      area: area,
+      defaultShift: 'disponible'
+    };
+
+    planillaState.staff.push(newWorker);
+    if (inputNombre) inputNombre.value = '';
+    savePlanillaData();
+    renderPlanillaTab();
+    showToast(`➕ ${nombre} añadido a la planilla.`);
+  }
+
+  function eliminarTrabajadorPlanilla(workerId, ev) {
+    if (ev) ev.stopPropagation();
+    const worker = planillaState.staff.find(w => w.id === workerId);
+    if (!worker) return;
+    if (!confirm(`¿Eliminar a ${worker.name} de la plantilla?`)) return;
+    planillaState.staff = planillaState.staff.filter(w => w.id !== workerId);
+    if (planillaState.selectedWorkerId === workerId) planillaState.selectedWorkerId = null;
+    savePlanillaData();
+    renderPlanillaTab();
+    showToast(`🗑️ ${worker.name} retirado de la planilla.`);
+  }
+
+  function resetPlanillaDia() {
+    if (!confirm(`¿Restablecer las asignaciones del día ${planillaState.fecha} a la distribución inicial?`)) return;
+    delete planillaState.shiftsByDate[planillaState.fecha];
+    planillaState.selectedWorkerId = null;
+    savePlanillaData();
+    renderPlanillaTab();
+    showToast('🔄 Planilla del día restablecida.');
+  }
+
+  function imprimirPlanillaPersonal() {
+    window.print();
+  }
+
+  function getAreaBadgeClass(area) {
+    if (area === 'PET-CT') return 'worker-area-pet';
+    if (area === 'Medicina Nuclear') return 'worker-area-mn';
+    return 'worker-area-poli';
+  }
+
+  function renderPlanillaTab() {
+    if (!planillaState.staff || planillaState.staff.length === 0) {
+      initPlanillaData();
+    }
+
+    const dateInput = document.getElementById('planillaFechaInput');
+    if (dateInput) dateInput.value = planillaState.fecha;
+
+    // Actualizar contadores y pestaña activa de categoría
+    PLANILLA_CATEGORIES.forEach(c => {
+      const cnt = planillaState.staff.filter(w => w.category === c.id).length;
+      const el = document.getElementById(`countPlanilla_${c.id}`);
+      if (el) el.textContent = String(cnt);
+    });
+
+    document.querySelectorAll('.planilla-cat-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.cat === planillaState.categoria);
+    });
+
+    const addBar = document.getElementById('planillaAddBar');
+    if (addBar) {
+      addBar.style.display = planillaState.categoria === 'resumen' ? 'none' : 'flex';
+    }
+
+    // Barra de selección por clic
+    const selBar = document.getElementById('planillaSelectionBar');
+    const selText = document.getElementById('planillaSelectionText');
+    const selectedWorker = planillaState.selectedWorkerId
+      ? planillaState.staff.find(w => w.id === planillaState.selectedWorkerId)
+      : null;
+
+    if (selBar && selText) {
+      if (selectedWorker) {
+        selBar.classList.remove('hidden');
+        selText.textContent = `👆 Seleccionado: ${selectedWorker.name} (${selectedWorker.area}) — Haz clic en la columna de turno donde quieras colocarlo.`;
+      } else {
+        selBar.classList.add('hidden');
+      }
+    }
+
+    const container = document.getElementById('planillaBoardContainer');
+    if (!container) return;
+
+    // Modo Resumen de las 4 planillas juntas
+    if (planillaState.categoria === 'resumen') {
+      container.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:1.2rem;">
+          ${PLANILLA_CATEGORIES.map(cat => {
+            const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
+            const activeShifts = getShiftsForCategory(cat.id).filter(s => s.id !== 'disponible');
+            return `
+              <div style="border:1.5px solid #cbd5e1; border-radius:12px; overflow:hidden; background:#ffffff;">
+                <div style="background:#004868; color:#ffffff; padding:0.65rem 1rem; display:flex; justify-content:space-between; align-items:center;">
+                  <strong style="font-family:'Outfit',sans-serif; font-size:0.95rem;">${escapeHTML(cat.label)}</strong>
+                  <span style="font-size:0.78rem; opacity:0.9;">Fecha: ${escapeHTML(planillaState.fecha)} · Total: ${catWorkers.length}</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.75rem; padding:0.85rem;">
+                  ${activeShifts.map(sh => {
+                    const assigned = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === sh.id);
+                    return `
+                      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.6rem;">
+                        <div style="font-size:0.76rem; font-weight:800; color:#0f172a; margin-bottom:0.4rem;">${escapeHTML(sh.title)} (${assigned.length})</div>
+                        ${assigned.length === 0
+                          ? '<div style="font-size:0.72rem; color:#94a3b8;">Sin asignar</div>'
+                          : assigned.map(w => `
+                              <div style="font-size:0.78rem; font-weight:700; color:#1e293b; padding:0.25rem 0.4rem; background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:4px;">
+                                ${escapeHTML(w.name)}
+                              </div>
+                            `).join('')
+                        }
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+      return;
+    }
+
+    // Modo Tablero Interactivo para la categoría activa
+    const catWorkers = planillaState.staff.filter(w => w.category === planillaState.categoria);
+    const catShifts = getShiftsForCategory(planillaState.categoria);
+    const hasSelected = Boolean(selectedWorker);
+
+    container.innerHTML = `
+      <div class="planilla-board">
+        ${catShifts.map(shift => {
+          const workersInShift = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === shift.id);
+          return `
+            <div class="planilla-column ${hasSelected ? 'drop-ready' : ''}"
+              onclick="if (window.jefaturaApp) { window.jefaturaApp.handleColumnClick('${shift.id}'); }"
+              ondragover="window.jefaturaApp.onPlanillaDragOver(event)"
+              ondragleave="window.jefaturaApp.onPlanillaDragLeave(event)"
+              ondrop="window.jefaturaApp.onPlanillaDrop(event, '${shift.id}')">
+              <div class="planilla-col-header" style="background:${shift.headerBg};">
+                <div>
+                  <div class="planilla-col-title">${escapeHTML(shift.title)}</div>
+                  <div class="planilla-col-sub">${escapeHTML(shift.sub)}</div>
+                </div>
+                <span class="planilla-col-count">${workersInShift.length}</span>
+              </div>
+              <div class="planilla-col-body">
+                ${workersInShift.length === 0
+                  ? `<div class="planilla-empty-col">${hasSelected ? '👆 Haz clic aquí para colocar' : 'Arrastra o selecciona un trabajador'}</div>`
+                  : workersInShift.map(w => {
+                      const isSel = planillaState.selectedWorkerId === w.id;
+                      return `
+                        <div class="worker-card ${isSel ? 'selected' : ''}"
+                          draggable="true"
+                          ondragstart="window.jefaturaApp.onPlanillaDragStart(event, '${w.id}')"
+                          onclick="event.stopPropagation(); window.jefaturaApp.selectPlanillaWorker('${w.id}')">
+                          <div class="worker-card-main">
+                            <span class="worker-name">${escapeHTML(w.name)}</span>
+                            <div class="worker-meta">
+                              <span class="worker-area-pill ${getAreaBadgeClass(w.area)}">${escapeHTML(w.area)}</span>
+                            </div>
+                          </div>
+                          <div class="worker-actions">
+                            <button type="button" class="worker-del-btn no-print" title="Quitar de la plantilla"
+                              onclick="window.jefaturaApp.eliminarTrabajadorPlanilla('${w.id}', event)">🗑️</button>
+                          </div>
+                        </div>
+                      `;
+                    }).join('')
+                }
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  function handleColumnClick(shiftId) {
+    if (planillaState.selectedWorkerId) {
+      movePlanillaWorkerToShift(planillaState.selectedWorkerId, shiftId);
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', async () => {
+      initPlanillaData();
+      await loadAllEcosystemData();
+      let savedTab = 'jefe';
+      try {
+        if (typeof localStorage !== 'undefined') {
+          savedTab = localStorage.getItem('pet_master_tab') || 'jefe';
+        }
+      } catch (_) {}
+      setMasterTab(savedTab, false);
+      renderAll();
+      renderPlanillaTab();
+    });
+  }
+
+  if (typeof window !== 'undefined') {
+    window.jefaturaApp = {
+      setMasterTab,
+      aplicarPlantillaInforme,
+      cambiarTab,
+      cambiarPeriodo,
+      sincronizarAhora,
+      exportarCSV,
+      renderPeticionesTab,
+      renderRadiofarmacosTab,
+      renderPuntualidadTab,
+      renderAnulacionesTab,
+      renderMedicosTab,
+      renderEficienciaTiemposTab,
+      renderAudioguiasCalidadTab,
+      reprogramarAnulacionPrioritaria,
+      abrirModalRecitar,
+      cerrarModalRecitar,
+      confirmarRecitacionEnHueco,
+      abrirModalRegistrarIncidenciaCita,
+      cerrarModalIncidenciaCita,
+      confirmarRegistroIncidenciaCita,
+      convertirNoShowEnRecitable,
+      subsanarPeticionJefatura,
+      enviarFeedbackServicio,
+      actualizarHoraRealMaquina,
+      marcarEnHoraExacta,
+      seleccionarTipoInforme,
+      generarYVerDemoInforme,
+      abrirEImprimirDemoInforme,
+      actualizarDemoInforme,
+      setPlanillaCategoria,
+      setPlanillaFecha,
+      selectPlanillaWorker,
+      movePlanillaWorkerToShift,
+      handleColumnClick,
+      onPlanillaDragStart,
+      onPlanillaDragOver,
+      onPlanillaDragLeave,
+      onPlanillaDrop,
+      agregarTrabajadorPlanilla,
+      eliminarTrabajadorPlanilla,
+      resetPlanillaDia,
+      imprimirPlanillaPersonal,
+      renderPlanillaTab
+    };
+  }
 })();
