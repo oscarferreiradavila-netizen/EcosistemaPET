@@ -486,15 +486,9 @@
   // ==========================================================================
   function renderAll() {
     renderKPIs();
-<<<<<<< HEAD
     renderPlanillaTab();
     renderTurnosTable();
     renderPedidosTable();
-=======
-    renderTurnosTable();
-    renderPedidosTable();
-    renderGlucemiasTable();
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
     renderAudioguiasSection();
     renderPuntualidadTable();
     renderVenopuncionTable();
@@ -503,13 +497,6 @@
   }
 
   function renderKPIs() {
-<<<<<<< HEAD
-=======
-    // 1. Glucemias
-    const sparkGlu = document.getElementById('sparkNurseGlucemias');
-    if (sparkGlu) sparkGlu.innerHTML = renderSparklineSVG([72, 74, 75, 76.2], '#059669');
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
     // 2. Audioguías
     const sparkAudio = document.getElementById('sparkNurseAudioguias');
     if (sparkAudio) sparkAudio.innerHTML = renderSparklineSVG([78, 81, 84, 85.4], '#0d9488');
@@ -660,36 +647,6 @@
     }
   }
 
-<<<<<<< HEAD
-=======
-  function renderGlucemiasTable() {
-    const tbody = document.getElementById('tablaGlucemiasDetalleBody');
-    if (!tbody) return;
-
-    tbody.innerHTML = state.glucemias.map(g => `
-      <tr>
-        <td><strong>${escapeHTML(g.paciente)}</strong><br><span style="font-size:0.74rem; color:#64748b; font-family:'JetBrains Mono',monospace;">${escapeHTML(g.nhc)}</span></td>
-        <td><span class="status-badge badge-info">${escapeHTML(g.box)}</span></td>
-        <td style="font-family:'JetBrains Mono',monospace;">${escapeHTML(g.hora)}</td>
-        <td><strong>${escapeHTML(g.radiofarmaco)}</strong></td>
-        <td style="font-family:'JetBrains Mono',monospace; font-weight:700; font-size:0.95rem;">
-          ${typeof g.cifraInicial === 'number' ? g.cifraInicial + ' mg/dL' : g.cifraInicial}
-        </td>
-        <td>
-          <span class="status-badge ${g.semaforo === 'verde' ? 'badge-ok' : (g.semaforo === 'ambar' ? 'badge-warn' : (g.semaforo === 'rojo' ? 'badge-danger' : 'badge-info'))}">
-            ${g.semaforo.toUpperCase()}
-          </span>
-        </td>
-        <td style="font-size:0.78rem; color:#334155;">${escapeHTML(g.intervencion)}</td>
-        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">
-          ${g.cifraPost !== 'N/A' && g.cifraPost ? g.cifraPost + ' mg/dL' : '-'}
-        </td>
-        <td style="font-size:0.78rem; color:#065f46; font-weight:600;">✓ ${escapeHTML(g.resultado)}</td>
-      </tr>
-    `).join('');
-  }
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
   function renderAudioguiasSection() {
     // 1. Gráfica comparativa Cancelación
     const chartCan = document.getElementById('chartCancelacionAudioguia');
@@ -876,51 +833,6 @@
     renderAll();
   }
 
-<<<<<<< HEAD
-=======
-  function abrirModalGlucemiaRescate() {
-    const modal = document.getElementById('modalGlucemiaRescate');
-    if (modal) modal.classList.add('active');
-  }
-
-  function cerrarModalGlucemiaRescate() {
-    const modal = document.getElementById('modalGlucemiaRescate');
-    if (modal) modal.classList.remove('active');
-  }
-
-  function guardarGlucemiaRescate() {
-    const box = document.getElementById('selectBoxGlucemia').value;
-    const cifra = parseInt(document.getElementById('inputCifraGlucemia').value, 10);
-    const intervencion = document.getElementById('selectIntervencionGlucemia').value;
-
-    if (!cifra || isNaN(cifra)) {
-      alert('Por favor, introduce una cifra válida de glucemia capilar en mg/dL.');
-      return;
-    }
-
-    const semaforo = cifra < 160 ? 'verde' : (cifra < 200 ? 'ambar' : 'rojo');
-
-    state.glucemias.unshift({
-      paciente: box + ' (Paciente en Box)',
-      nhc: 'NHC-' + Math.floor(100000 + Math.random() * 900000),
-      box,
-      hora: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) + ' h',
-      radiofarmaco: '18F-FDG',
-      cifraInicial: cifra,
-      semaforo,
-      intervencion: intervencion === 'rescate_agua' ? '500 mL agua oral + reposo 30m' : (cifra < 160 ? 'Conforme para inyección' : 'Aviso a facultativo'),
-      cifraPost: intervencion === 'rescate_agua' ? Math.round(cifra * 0.86) : 'N/A',
-      resultado: cifra < 160 ? 'Inyección autorizada' : 'Protocolo de rescate en curso'
-    });
-
-    saveNurseData();
-    cerrarModalGlucemiaRescate();
-    showToast(`🩸 Glucemia de ${cifra} mg/dL registrada en ${box} (${semaforo.toUpperCase()}).`);
-    renderAll();
-    cambiarTab('glucemias');
-  }
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
   function abrirModalIncidenciaVenopuncion() {
     const modal = document.getElementById('modalIncidenciaVenopuncion');
     if (modal) modal.classList.add('active');
@@ -1100,7 +1012,6 @@
     });
   }
 
-<<<<<<< HEAD
   // ==========================================================================
   // PLANILLA INTERACTIVA DE PERSONAL (ENFERMEROS, TÉCNICOS, CELADORES, TCAE)
   // ==========================================================================
@@ -1489,10 +1400,6 @@
   if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
       initPlanillaData();
-=======
-  if (typeof document !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', () => {
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       loadNurseData();
       renderAll();
     });
@@ -1510,17 +1417,10 @@
       cerrarModalNuevoPedido,
       guardarNuevoPedido,
       marcarPedidoEntregado,
-<<<<<<< HEAD
-=======
-      abrirModalGlucemiaRescate,
-      cerrarModalGlucemiaRescate,
-      guardarGlucemiaRescate,
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       abrirModalIncidenciaVenopuncion,
       cerrarModalIncidenciaVenopuncion,
       guardarIncidenciaVenopuncion,
       sincronizarDatos,
-<<<<<<< HEAD
       imprimirInformeCuidados,
       setPlanillaCategoria,
       setPlanillaFecha,
@@ -1534,9 +1434,6 @@
       eliminarTrabajadorPlanilla,
       resetPlanillaDia,
       renderPlanillaTab
-=======
-      imprimirInformeCuidados
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
     };
   }
 })();

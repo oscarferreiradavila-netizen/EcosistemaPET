@@ -6,11 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Supervisión de Enfermería & Cuidados PET/CT | Galaria · SERGAS</title>
   <meta name="description"
-<<<<<<< HEAD
     content="Consola Oficial de Supervisión de Enfermería y Cuidados de la Unidad PET/CT (Galaria · SERGAS): Monitor de boxes de reposo, eficacia de audioguías, calidad de venopunción, extravasaciones, puntualidad en camilla y absentismo.">
-=======
-    content="Consola Oficial de Supervisión de Enfermería y Cuidados de la Unidad PET/CT (Galaria · SERGAS): Monitor de boxes de reposo, semáforo de glucemias capilares, eficacia de audioguías, calidad de venopunción, extravasaciones, puntualidad en camilla y absentismo.">
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,11 +49,7 @@
             <span>🩺 Consola de Supervisión de Enfermería & Cuidados PET/CT</span>
             <span class="role-pill-nurse">Dirección de Cuidados</span>
           </h1>
-<<<<<<< HEAD
           <p>Control Asistencial de Boxes de Reposo, Adherencia a Audioguías, Venopunción y Sincronización Camilla</p>
-=======
-          <p>Control Asistencial de Boxes de Reposo, Semáforo Glucémico, Adherencia a Audioguías, Venopunción y Sincronización Camilla</p>
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
         </div>
       </div>
 
@@ -77,13 +69,6 @@
           📦 Tramitar Pedido
         </button>
 
-<<<<<<< HEAD
-=======
-        <button type="button" class="btn-nurse btn-nurse-amber" onclick="window.supervisionApp.abrirModalGlucemiaRescate()">
-          🩸 Registrar Glucemia
-        </button>
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
         <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.abrirModalIncidenciaVenopuncion()">
           💉 Incidencia Vía
         </button>
@@ -104,26 +89,6 @@
 
     <!-- 3.1. TARJETAS KPI DE SUPERVISIÓN DE ENFERMERÍA -->
     <section class="kpi-nurse-grid">
-<<<<<<< HEAD
-=======
-      <!-- KPI 1: Glucemias y Tasa de Rescate -->
-      <article class="kpi-nurse-card" style="--kpi-color:#059669; --kpi-bg:#ecfdf5;"
-        onclick="window.supervisionApp.cambiarTab('glucemias')">
-        <div class="kpi-top-row">
-          <span class="kpi-label">1. Semáforo Glucemias Box</span>
-          <div class="kpi-icon-badge">🩸</div>
-        </div>
-        <div class="kpi-value-row">
-          <span class="kpi-big-number" id="kpiGlucemiaVerdePct" style="color:#059669;">76.2%</span>
-          <span class="kpi-pill-rate badge-ok" id="kpiRescateGlucemiaBadge">71% rescates</span>
-        </div>
-        <div class="kpi-subtext">
-          <span id="kpiSubtextGlucemia">Verde &lt;160: 76% · Ámbar: 18% · Rojo: 6%</span>
-        </div>
-        <div class="kpi-sparkline-wrap" id="sparkNurseGlucemias"></div>
-      </article>
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       <!-- KPI 2: Eficacia y Adherencia a las Audioguías -->
       <article class="kpi-nurse-card" style="--kpi-color:#0d9488; --kpi-bg:#ccfbf1;"
         onclick="window.supervisionApp.cambiarTab('audioguias')">
@@ -224,15 +189,6 @@
         <span class="tab-count-badge" id="badgePedidosPendientes">2 En Curso</span>
       </button>
 
-<<<<<<< HEAD
-=======
-      <button type="button" class="nurse-tab-btn" data-tab="glucemias"
-        onclick="window.supervisionApp.cambiarTab('glucemias')">
-        <span>🩸 3. Semáforo Glucémico & Rescate</span>
-        <span class="tab-count-badge" id="badgeGlucemiaRescate">71% Rescate</span>
-      </button>
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       <button type="button" class="nurse-tab-btn" data-tab="audioguias"
         onclick="window.supervisionApp.cambiarTab('audioguias')">
         <span>🎧 4. Audioguías & Preparación</span>
@@ -268,7 +224,6 @@
          PESTAÑA 1: TURNOS Y CUADRANTE DE PERSONAL DE ENFERMERÍA & TSID
          ====================================================================== -->
     <section id="tab-turnos" class="tab-panel active">
-<<<<<<< HEAD
       <!-- PLANILLA INTERACTIVA DE PERSONAL (TÉCNICOS, ENFERMEROS, CELADORES, TCAE) -->
       <div class="panel-card" style="margin-bottom:1.25rem;">
         <div class="panel-header">
@@ -343,8 +298,6 @@
         <div id="planillaBoardContainer"></div>
       </div>
 
-=======
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       <div class="panel-card">
         <div class="panel-header">
           <div class="panel-title-group">
@@ -529,95 +482,6 @@
     </section>
 
     <!-- ======================================================================
-<<<<<<< HEAD
-=======
-         PESTAÑA 2: SEMÁFORO GLUCÉMICO Y PROTOCOLO DE RESCATE
-         ====================================================================== -->
-    <section id="tab-glucemias" class="tab-panel">
-      <div class="panel-card">
-        <div class="panel-header">
-          <div class="panel-title-group">
-            <h2>🩸 Semáforo Metabólico de Glucemias Capilares y Protocolo de Rescate en Box</h2>
-            <p>Clasificación protocolizada a la llegada, intervenciones de hidratación oral para rescate de cifras elevadas y trazadores exentos de glucosa</p>
-          </div>
-          <button type="button" class="btn-nurse btn-nurse-amber no-print" onclick="window.supervisionApp.abrirModalGlucemiaRescate()">
-            ➕ Registrar Nueva Medición
-          </button>
-        </div>
-
-        <div class="semaforo-grid">
-          <div class="semaforo-card semaforo-verde">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:0.95rem; color:#065f46;">🟢 VERDE: Óptimo (&lt; 160 mg/dL)</strong>
-              <span class="status-badge badge-ok">Apto Inyección Inmediata</span>
-            </div>
-            <div style="font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:#059669;" id="statGlucemiaVerdeCount">
-              76.2%
-            </div>
-            <p style="font-size:0.77rem; color:#047857;">
-              Biodistribución fisiológica normal de 18F-FDG. Sin captación muscular competitiva. Paso directo a administración.
-            </p>
-          </div>
-
-          <div class="semaforo-card semaforo-ambar">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:0.95rem; color:#92400e;">🟡 ÁMBAR: Límite (160 - 199 mg/dL)</strong>
-              <span class="status-badge badge-warn">Protocolo Rescate Hidratación</span>
-            </div>
-            <div style="font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:#d97706;" id="statGlucemiaAmbarCount">
-              17.5%
-            </div>
-            <p style="font-size:0.77rem; color:#78350f;">
-              Se administra 500 mL de agua oral, reposo estricto 30 min y reevaluación. El 71.4% de casos desciende a &lt;160 mg/dL sin retrasar gantry.
-            </p>
-          </div>
-
-          <div class="semaforo-card semaforo-rojo">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong style="font-size:0.95rem; color:#991b1b;">🔴 ROJO: Crítico (≥ 200 mg/dL)</strong>
-              <span class="status-badge badge-danger">Valoración Médica Obligatoria</span>
-            </div>
-            <div style="font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:#dc2626;" id="statGlucemiaRojaCount">
-              6.3%
-            </div>
-            <p style="font-size:0.77rem; color:#7f1d1d;">
-              Riesgo alto de degradación de imagen PET/CT por hiperglucemia. Requiere decisión de facultativo (posponer o reprogramar con insulina).
-            </p>
-          </div>
-        </div>
-
-        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:0.9rem 1.1rem; margin-bottom:1.25rem;">
-          <div style="font-size:0.84rem; font-weight:800; color:#166534; display:flex; align-items:center; gap:6px;">
-            <span>ℹ️ NOTA CLÍNICA DE ENFERMERÍA: Trazadores No Dependientes del Metabolismo Glucídico</span>
-          </div>
-          <p style="font-size:0.8rem; color:#14532d; margin-top:3px;">
-            Los estudios con <strong>18F-Fluorcolina</strong>, <strong>68Ga-PSMA</strong> y <strong>68Ga-DOTATOC</strong> no requieren control de glucemia capilar previa ni ayuno glucídico estricto, dado que sus mecanismos moleculares no emplean transportadores GLUT ni hexoquinasa.
-          </p>
-        </div>
-
-        <div class="table-responsive">
-          <table class="nurse-table">
-            <thead>
-              <tr>
-                <th>Paciente / NHC</th>
-                <th>Box Asignado</th>
-                <th>Hora Medición</th>
-                <th>Radiofármaco</th>
-                <th>Glucemia Inicial</th>
-                <th>Estado Semáforo</th>
-                <th>Intervención de Enfermería</th>
-                <th>Glucemia Post-Rescate</th>
-                <th>Resultado Final</th>
-              </tr>
-            </thead>
-            <tbody id="tablaGlucemiasDetalleBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================================
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
          PESTAÑA 3: EFICACIA DE LAS AUDIOGUÍAS Y PREPARACIÓN PREVIA
          ====================================================================== -->
     <section id="tab-audioguias" class="tab-panel">
@@ -829,48 +693,6 @@
 
   </main>
 
-<<<<<<< HEAD
-=======
-  <!-- MODAL: REGISTRAR GLUCEMIA / RESCATE -->
-  <div id="modalGlucemiaRescate" class="nurse-modal-backdrop">
-    <div class="nurse-modal-box">
-      <div class="nurse-modal-header">
-        <h3>🩸 Registrar Glucemia Capilar & Protocolo de Rescate</h3>
-        <button type="button" onclick="window.supervisionApp.cerrarModalGlucemiaRescate()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">✕</button>
-      </div>
-      <div class="nurse-modal-body">
-        <div style="display:flex; flex-direction:column; gap:0.9rem;">
-          <div>
-            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Seleccionar Box / Paciente:</label>
-            <select id="selectBoxGlucemia" class="period-select" style="width:100%;">
-              <option value="Box 1">Box 1 · Arturo Salgado Pérez (NHC-839104) · 18F-FDG</option>
-              <option value="Box 2">Box 2 · Rosa Otero Carballo (NHC-728192) · 18F-FDG</option>
-              <option value="Box 3">Box 3 · Manuel Castro Varela (NHC-481920) · 18F-FDG</option>
-              <option value="Box 4">Box 4 · Dolores Fraga Neira (NHC-910293) · 18F-FDG</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Cifra de Glucemia Capilar (mg/dL):</label>
-            <input type="number" id="inputCifraGlucemia" class="period-select" style="width:100%;" placeholder="Ej: 168" min="40" max="500">
-          </div>
-          <div>
-            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Intervención de Cuidados:</label>
-            <select id="selectIntervencionGlucemia" class="period-select" style="width:100%;">
-              <option value="optima">Conforme (&lt;160 mg/dL): Proceder a inyección según horario</option>
-              <option value="rescate_agua">Ámbar (160-199): Administrar 500 mL agua oral + 30 min reposo estricto</option>
-              <option value="aviso_medico">Rojo (≥200): Avisar a médico nuclear para valoración clínica</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="nurse-modal-footer">
-        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cerrarModalGlucemiaRescate()">Cancelar</button>
-        <button type="button" class="btn-nurse btn-nurse-primary" onclick="window.supervisionApp.guardarGlucemiaRescate()">💾 Guardar y Actualizar</button>
-      </div>
-    </div>
-  </div>
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
   <!-- MODAL: REGISTRAR INCIDENCIA DE VENOPUNCIÓN -->
   <div id="modalIncidenciaVenopuncion" class="nurse-modal-backdrop">
     <div class="nurse-modal-box">

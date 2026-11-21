@@ -2760,21 +2760,9 @@
       `;
     }
 
-<<<<<<< HEAD
     // 4. Métricas Mal Preparados en Box
     const elTotMal = document.getElementById('statTotalMalPrepBox');
     if (elTotMal) elTotMal.textContent = `${ef.totalMalPrep} pac`;
-=======
-    // 4. Métricas Mal Preparados y Glucemias Box
-    const elTotMal = document.getElementById('statTotalMalPrepBox');
-    if (elTotMal) elTotMal.textContent = `${ef.totalMalPrep} pac`;
-    const elGlucVerde = document.getElementById('statGlucemiaVerdePct');
-    if (elGlucVerde) elGlucVerde.textContent = `${ef.glucemiaVerdePct}%`;
-    const elGlucAmbar = document.getElementById('statGlucemiaAmbarPct');
-    if (elGlucAmbar) elGlucAmbar.textContent = `${ef.glucemiaAmbarPct}%`;
-    const elGlucRoja = document.getElementById('statGlucemiaRojaPct');
-    if (elGlucRoja) elGlucRoja.textContent = `${ef.glucemiaRojaPct}%`;
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
 
     // 5. Gráfica Causas Mal Preparados
     const chartCausasEl = document.getElementById('chartCausasMalPrep');
@@ -2796,7 +2784,6 @@
       `;
     }
 
-<<<<<<< HEAD
     // 6. Tabla Detalle Mal Prep & Glucemias
     const tablaDetalleEl = document.getElementById('tablaDetalleMalPrepGlucemia');
     if (tablaDetalleEl) {
@@ -2806,47 +2793,6 @@
         { nombre: 'Consuelo Otero Varela', nhc: 'NHC-612409', fecha: 'Ayer · 10:15', proto: 'FDG Endocarditis', tipo: 'Incumplimiento dieta cetogénica', val: '110 mg/dL', res: 'Cena con hidratos; reprogramada con refuerzo de audioguía específica.' },
         { nombre: 'Ángel Souto Fernández', nhc: 'NHC-398244', fecha: 'Ayer · 11:00', proto: '18F-PSMA', tipo: 'Medicación no suspendida', val: 'Normal', res: 'Aclarada compatibilidad con radiofármaco por médico nuclear; realizada sin demora.' },
         { nombre: 'Mercedes Rial Castro', nhc: 'NHC-724185', fecha: '18/11 · 08:30', proto: 'FDG Diabético', tipo: 'Glucemia capilar elevada', val: '245 mg/dL', res: 'Valor confirmado en glucómetro SERGAS; reprogramada a primera hora con pauta insulina.' }
-=======
-    // 6. Gráfica Semáforo Glucemia Capilar en Box
-    const chartSemEl = document.getElementById('chartSemaforoGlucemia');
-    if (chartSemEl) {
-      chartSemEl.innerHTML = `
-        <div style="display:flex; flex-direction:column; gap:10px; padding:0.4rem 0;">
-          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <strong style="color:#047857; font-size:0.86rem;">🟢 Glucemia Verde (&lt; 160 mg/dL)</strong>
-              <div style="font-size:0.72rem; color:#065f46;">Biodistribución óptima garantizada. Paso directo a box de inyección.</div>
-            </div>
-            <span class="status-badge badge-ok" style="font-size:0.88rem;">${ef.glucemiaVerdePct}%</span>
-          </div>
-          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <strong style="color:#b45309; font-size:0.86rem;">🟡 Glucemia Ámbar (160 - 199 mg/dL)</strong>
-              <div style="font-size:0.72rem; color:#78350f;">Aviso a enfermería. Reposo estricto e hidratación con agua sola en box.</div>
-            </div>
-            <span class="status-badge badge-warn" style="font-size:0.88rem;">${ef.glucemiaAmbarPct}%</span>
-          </div>
-          <div style="background:#fef2f2; border:1px solid #fecdd3; border-radius:8px; padding:0.65rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <strong style="color:#991b1b; font-size:0.86rem;">🔴 Glucemia Roja (≥ 200 mg/dL - Alerta Preferente)</strong>
-              <div style="font-size:0.72rem; color:#7f1d1d;"><strong>${ef.rescateGlucemiaPct}%</strong> rescatados tras 45 min hidratación y reposo.</div>
-            </div>
-            <span class="status-badge badge-danger" style="font-size:0.88rem;">${ef.glucemiaRojaPct}%</span>
-          </div>
-        </div>
-      `;
-    }
-
-    // 7. Tabla Detalle Mal Prep & Glucemias
-    const tablaDetalleEl = document.getElementById('tablaDetalleMalPrepGlucemia');
-    if (tablaDetalleEl) {
-      const records = [
-        { nombre: 'Rosa María Calvo Soto', nhc: 'NHC-481920', fecha: 'Hoy · 08:45', proto: 'FDG Diabético', tipo: 'Glucemia alta en box', val: '228 mg/dL', sem: '🔴 ROJO', badge: 'badge-danger', res: 'Normalizada a 172 mg/dL tras 45 min hidratación oral; inyectada con éxito.' },
-        { nombre: 'Domingo Besteiro Prado', nhc: 'NHC-509182', fecha: 'Hoy · 09:30', proto: 'FDG Oncológico', tipo: 'Rotura ayuno involuntaria', val: '185 mg/dL', sem: '🟡 ÁMBAR', badge: 'badge-warn', res: 'Tomó café con leche a las 07:00h. Recitado prioritario para mañana 08:30h.' },
-        { nombre: 'Consuelo Otero Varela', nhc: 'NHC-612409', fecha: 'Ayer · 10:15', proto: 'FDG Endocarditis', tipo: 'Incumplimiento dieta cetogénica', val: '110 mg/dL', sem: '🟢 VERDE', badge: 'badge-ok', res: 'Cena con hidratos; reprogramada con refuerzo de audioguía específica.' },
-        { nombre: 'Ángel Souto Fernández', nhc: 'NHC-398244', fecha: 'Ayer · 11:00', proto: '18F-PSMA', tipo: 'Medicación no suspendida', val: 'Normal', sem: '🟢 N/A', badge: 'badge-info', res: 'Aclarada compatibilidad con radiofármaco por médico nuclear; realizada sin demora.' },
-        { nombre: 'Mercedes Rial Castro', nhc: 'NHC-724185', fecha: '18/11 · 08:30', proto: 'FDG Diabético', tipo: 'Glucemia capilar elevada', val: '245 mg/dL', sem: '🔴 ROJO', badge: 'badge-danger', res: 'Valor confirmado en glucómetro SERGAS; reprogramada a primera hora con pauta insulina.' }
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       ];
       tablaDetalleEl.innerHTML = records.map(r => `
         <tr>
@@ -2855,10 +2801,6 @@
           <td><span class="status-badge badge-info">${escapeHTML(r.proto)}</span></td>
           <td><strong style="color:#334155; font-size:0.82rem;">${escapeHTML(r.tipo)}</strong></td>
           <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#0f172a;">${escapeHTML(r.val)}</td>
-<<<<<<< HEAD
-=======
-          <td><span class="status-badge ${r.badge}">${escapeHTML(r.sem)}</span></td>
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
           <td style="font-size:0.79rem; color:#1e293b;">${escapeHTML(r.res)}</td>
         </tr>
       `).join('');
@@ -3818,11 +3760,7 @@
         elBadge.style.background = '#0d9488';
         elBadge.style.color = '#ffffff';
       }
-<<<<<<< HEAD
       if (elSub) elSub.textContent = 'Área de Cuidados y Boxes: Audioguías, Camilla, Absentismo, Vías Venosas y Extravasaciones.';
-=======
-      if (elSub) elSub.textContent = 'Área de Cuidados y Boxes: Semáforo Glucémico, Audioguías, Camilla, Absentismo, Vías Venosas y Extravasaciones.';
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
       if (showNotification) {
         cambiarTab('audioguias_calidad');
         showToast('🩺 Pestaña Activa: Supervisión de Enfermería (Cuidados, boxes y preparación)');
@@ -3872,455 +3810,7 @@
     });
   }
 
-<<<<<<< HEAD
-  // ==========================================================================
-  // 14. PLANILLA INTERACTIVA DE PERSONAL (TÉCNICOS, ENFERMEROS, CELADORES, TCAE)
-  // ==========================================================================
-  const PLANILLA_STORAGE_STAFF = 'PET_PLANILLA_STAFF_V1';
-  const PLANILLA_STORAGE_SHIFTS = 'PET_PLANILLA_SHIFTS_V1';
-
-  const PLANILLA_CATEGORIES = [
-    { id: 'enfermeros', label: '🩺 Enfermeros/as (DUE)' },
-    { id: 'tecnicos', label: '☢️ Técnicos (TSID / TER)' },
-    { id: 'celadores', label: '🏥 Celadores/as' },
-    { id: 'tcaes', label: '🧤 TCAEs' }
-  ];
-
-  const PLANILLA_SHIFTS_BY_CAT = {
-    enfermeros: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
-      { id: 'noche', title: '🌙 Turno Noche', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
-    ],
-    tecnicos: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
-    ],
-    celadores: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
-    ],
-    tcaes: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_apoyo', title: '🌆 Tarde (Algunas tardes)', sub: '15:00 – 22:00 h · Refuerzo', headerBg: '#fef3c7' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
-    ]
-  };
-
-  function getShiftsForCategory(cat) {
-    return PLANILLA_SHIFTS_BY_CAT[cat] || PLANILLA_SHIFTS_BY_CAT.enfermeros;
-  }
-
-  const DEFAULT_STAFF_SEED = [
-    // Enfermeros/as (DUE)
-    { id: 'enf_1', name: 'Laura Méndez Vázquez', category: 'enfermeros', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'enf_2', name: 'Beatriz Lago Otero', category: 'enfermeros', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'enf_3', name: 'Patricia Rial Seoane', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'enf_4', name: 'Marta Domínguez Castro', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'enf_5', name: 'Lucía Fernández López', category: 'enfermeros', area: 'Polivalente', defaultShift: 'tarde_pet' },
-    { id: 'enf_6', name: 'Sonia Iglesias Prado', category: 'enfermeros', area: 'Polivalente', defaultShift: 'tarde_mn' },
-    { id: 'enf_7', name: 'Raquel Alonso Rodríguez', category: 'enfermeros', area: 'PET-CT', defaultShift: 'disponible' },
-    { id: 'enf_8', name: 'Cristina Varela Souto', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'noche' },
-
-    // Técnicos (TSID / TER)
-    { id: 'tec_1', name: 'Carlos Pazos Blanco', category: 'tecnicos', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'tec_2', name: 'Diego Martínez Rey', category: 'tecnicos', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'tec_3', name: 'Javier Núñez García', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'tec_4', name: 'Elena Suárez Pérez', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'tec_5', name: 'Adrián Gómez Ferreiro', category: 'tecnicos', area: 'Polivalente', defaultShift: 'tarde_pet' },
-    { id: 'tec_6', name: 'Rubén González Arias', category: 'tecnicos', area: 'Polivalente', defaultShift: 'tarde_mn' },
-    { id: 'tec_7', name: 'Noelia Costa Bouza', category: 'tecnicos', area: 'PET-CT', defaultShift: 'disponible' },
-    { id: 'tec_8', name: 'Iván Castro Prieto', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'libre' },
-
-    // Celadores/as
-    { id: 'cel_1', name: 'Manuel Rodríguez Piñeiro', category: 'celadores', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'cel_2', name: 'José Luis Pérez Conde', category: 'celadores', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'cel_3', name: 'Antonio Vázquez Soto', category: 'celadores', area: 'Polivalente', defaultShift: 'tarde_pet' },
-    { id: 'cel_4', name: 'Carmen Otero Loureiro', category: 'celadores', area: 'Polivalente', defaultShift: 'tarde_mn' },
-    { id: 'cel_5', name: 'Marcos López Pereiro', category: 'celadores', area: 'Polivalente', defaultShift: 'disponible' },
-    { id: 'cel_6', name: 'Susana Barreiro Blanco', category: 'celadores', area: 'Medicina Nuclear', defaultShift: 'libre' },
-
-    // TCAEs
-    { id: 'tcae_1', name: 'María José Lorenzo Gil', category: 'tcaes', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'tcae_2', name: 'Ana Belén Torres Vila', category: 'tcaes', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'tcae_3', name: 'Silvia Álvarez Ramos', category: 'tcaes', area: 'Polivalente', defaultShift: 'tarde_apoyo' },
-    { id: 'tcae_4', name: 'Verónica Nogueira Cruz', category: 'tcaes', area: 'Polivalente', defaultShift: 'manana_mn' },
-    { id: 'tcae_5', name: 'Nuria Estévez Domínguez', category: 'tcaes', area: 'PET-CT', defaultShift: 'disponible' },
-    { id: 'tcae_6', name: 'Pilar Blanco Santamaría', category: 'tcaes', area: 'Medicina Nuclear', defaultShift: 'libre' }
-  ];
-
-  const planillaState = {
-    categoria: 'enfermeros',
-    fecha: getTodayISO(),
-    selectedWorkerId: null,
-    draggedWorkerId: null,
-    staff: [],
-    shiftsByDate: {}
-  };
-
-  function initPlanillaData() {
-    try {
-      const savedStaff = localStorage.getItem(PLANILLA_STORAGE_STAFF);
-      planillaState.staff = savedStaff ? JSON.parse(savedStaff) : JSON.parse(JSON.stringify(DEFAULT_STAFF_SEED));
-      if (!Array.isArray(planillaState.staff) || planillaState.staff.length === 0) {
-        planillaState.staff = JSON.parse(JSON.stringify(DEFAULT_STAFF_SEED));
-      }
-    } catch (_) {
-      planillaState.staff = JSON.parse(JSON.stringify(DEFAULT_STAFF_SEED));
-    }
-
-    try {
-      const savedShifts = localStorage.getItem(PLANILLA_STORAGE_SHIFTS);
-      planillaState.shiftsByDate = savedShifts ? JSON.parse(savedShifts) : {};
-      if (!planillaState.shiftsByDate || typeof planillaState.shiftsByDate !== 'object') {
-        planillaState.shiftsByDate = {};
-      }
-    } catch (_) {
-      planillaState.shiftsByDate = {};
-    }
-  }
-
-  function savePlanillaData() {
-    try {
-      localStorage.setItem(PLANILLA_STORAGE_STAFF, JSON.stringify(planillaState.staff));
-      localStorage.setItem(PLANILLA_STORAGE_SHIFTS, JSON.stringify(planillaState.shiftsByDate));
-    } catch (_) {}
-  }
-
-  function getWorkerShiftForDate(worker, dateStr) {
-    const dayMap = planillaState.shiftsByDate[dateStr];
-    if (dayMap && dayMap[worker.id]) return dayMap[worker.id];
-    return worker.defaultShift || 'disponible';
-  }
-
-  function setPlanillaFecha(val) {
-    if (val === 'hoy') {
-      planillaState.fecha = getTodayISO();
-    } else if (val === 'manana') {
-      const d = new Date();
-      d.setDate(d.getDate() + 1);
-      planillaState.fecha = d.toISOString().split('T')[0];
-    } else if (val) {
-      planillaState.fecha = val;
-    }
-    planillaState.selectedWorkerId = null;
-    renderPlanillaTab();
-  }
-
-  function setPlanillaCategoria(cat) {
-    planillaState.categoria = cat;
-    planillaState.selectedWorkerId = null;
-    renderPlanillaTab();
-  }
-
-  function selectPlanillaWorker(workerId) {
-    if (!workerId || planillaState.selectedWorkerId === workerId) {
-      planillaState.selectedWorkerId = null;
-    } else {
-      planillaState.selectedWorkerId = workerId;
-    }
-    renderPlanillaTab();
-  }
-
-  function movePlanillaWorkerToShift(workerId, shiftId) {
-    if (!workerId || !shiftId) return;
-    if (!planillaState.shiftsByDate[planillaState.fecha]) {
-      planillaState.shiftsByDate[planillaState.fecha] = {};
-    }
-    planillaState.shiftsByDate[planillaState.fecha][workerId] = shiftId;
-    const worker = planillaState.staff.find(w => w.id === workerId);
-    const catShifts = worker ? getShiftsForCategory(worker.category) : getShiftsForCategory(planillaState.categoria);
-    const shiftObj = catShifts.find(s => s.id === shiftId);
-    planillaState.selectedWorkerId = null;
-    savePlanillaData();
-    renderPlanillaTab();
-    if (worker && shiftObj) {
-      showToast(`✅ ${worker.name} colocado en: ${shiftObj.title}`);
-    }
-  }
-
-  function onPlanillaDragStart(ev, workerId) {
-    planillaState.draggedWorkerId = workerId;
-    if (ev && ev.dataTransfer) {
-      ev.dataTransfer.setData('text/plain', workerId);
-      ev.dataTransfer.effectAllowed = 'move';
-    }
-  }
-
-  function onPlanillaDragOver(ev) {
-    if (ev) {
-      ev.preventDefault();
-      if (ev.dataTransfer) ev.dataTransfer.dropEffect = 'move';
-      const col = ev.currentTarget;
-      if (col) col.classList.add('drag-over');
-    }
-  }
-
-  function onPlanillaDragLeave(ev) {
-    if (ev && ev.currentTarget) {
-      ev.currentTarget.classList.remove('drag-over');
-    }
-  }
-
-  function onPlanillaDrop(ev, shiftId) {
-    if (ev) {
-      ev.preventDefault();
-      if (ev.currentTarget) ev.currentTarget.classList.remove('drag-over');
-    }
-    const workerId = (ev && ev.dataTransfer && ev.dataTransfer.getData('text/plain')) || planillaState.draggedWorkerId;
-    planillaState.draggedWorkerId = null;
-    if (workerId) {
-      movePlanillaWorkerToShift(workerId, shiftId);
-    }
-  }
-
-  function agregarTrabajadorPlanilla() {
-    const inputNombre = document.getElementById('inputNuevoTrabajadorNombre');
-    const selectArea = document.getElementById('selectNuevoTrabajadorArea');
-    const nombre = inputNombre ? inputNombre.value.trim() : '';
-    const area = selectArea ? selectArea.value : 'Polivalente';
-
-    if (!nombre) {
-      showToast('⚠️ Escribe el nombre del trabajador antes de añadirlo.');
-      return;
-    }
-
-    const cat = planillaState.categoria === 'resumen' ? 'enfermeros' : planillaState.categoria;
-    const newWorker = {
-      id: `${cat}_${Date.now()}`,
-      name: nombre,
-      category: cat,
-      area: area,
-      defaultShift: 'disponible'
-    };
-
-    planillaState.staff.push(newWorker);
-    if (inputNombre) inputNombre.value = '';
-    savePlanillaData();
-    renderPlanillaTab();
-    showToast(`➕ ${nombre} añadido a la planilla.`);
-  }
-
-  function eliminarTrabajadorPlanilla(workerId, ev) {
-    if (ev) ev.stopPropagation();
-    const worker = planillaState.staff.find(w => w.id === workerId);
-    if (!worker) return;
-    if (!confirm(`¿Eliminar a ${worker.name} de la plantilla?`)) return;
-    planillaState.staff = planillaState.staff.filter(w => w.id !== workerId);
-    if (planillaState.selectedWorkerId === workerId) planillaState.selectedWorkerId = null;
-    savePlanillaData();
-    renderPlanillaTab();
-    showToast(`🗑️ ${worker.name} retirado de la planilla.`);
-  }
-
-  function resetPlanillaDia() {
-    if (!confirm(`¿Restablecer las asignaciones del día ${planillaState.fecha} a la distribución inicial?`)) return;
-    delete planillaState.shiftsByDate[planillaState.fecha];
-    planillaState.selectedWorkerId = null;
-    savePlanillaData();
-    renderPlanillaTab();
-    showToast('🔄 Planilla del día restablecida.');
-  }
-
-  function imprimirPlanillaPersonal() {
-    window.print();
-  }
-
-  function getAreaBadgeClass(area) {
-    if (area === 'PET-CT') return 'worker-area-pet';
-    if (area === 'Medicina Nuclear') return 'worker-area-mn';
-    return 'worker-area-poli';
-  }
-
-  function renderPlanillaTab() {
-    if (!planillaState.staff || planillaState.staff.length === 0) {
-      initPlanillaData();
-    }
-
-    const dateInput = document.getElementById('planillaFechaInput');
-    if (dateInput) dateInput.value = planillaState.fecha;
-
-    // Actualizar contadores y pestaña activa de categoría
-    PLANILLA_CATEGORIES.forEach(c => {
-      const cnt = planillaState.staff.filter(w => w.category === c.id).length;
-      const el = document.getElementById(`countPlanilla_${c.id}`);
-      if (el) el.textContent = String(cnt);
-    });
-
-    document.querySelectorAll('.planilla-cat-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.cat === planillaState.categoria);
-    });
-
-    const addBar = document.getElementById('planillaAddBar');
-    if (addBar) {
-      addBar.style.display = planillaState.categoria === 'resumen' ? 'none' : 'flex';
-    }
-
-    // Barra de selección por clic
-    const selBar = document.getElementById('planillaSelectionBar');
-    const selText = document.getElementById('planillaSelectionText');
-    const selectedWorker = planillaState.selectedWorkerId
-      ? planillaState.staff.find(w => w.id === planillaState.selectedWorkerId)
-      : null;
-
-    if (selBar && selText) {
-      if (selectedWorker) {
-        selBar.classList.remove('hidden');
-        selText.textContent = `👆 Seleccionado: ${selectedWorker.name} (${selectedWorker.area}) — Haz clic en la columna de turno donde quieras colocarlo.`;
-      } else {
-        selBar.classList.add('hidden');
-      }
-    }
-
-    const container = document.getElementById('planillaBoardContainer');
-    if (!container) return;
-
-    // Modo Resumen de las 4 planillas juntas
-    if (planillaState.categoria === 'resumen') {
-      container.innerHTML = `
-        <div style="display:flex; flex-direction:column; gap:1.2rem;">
-          ${PLANILLA_CATEGORIES.map(cat => {
-            const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
-            const activeShifts = getShiftsForCategory(cat.id).filter(s => s.id !== 'disponible');
-            return `
-              <div style="border:1.5px solid #cbd5e1; border-radius:12px; overflow:hidden; background:#ffffff;">
-                <div style="background:#004868; color:#ffffff; padding:0.65rem 1rem; display:flex; justify-content:space-between; align-items:center;">
-                  <strong style="font-family:'Outfit',sans-serif; font-size:0.95rem;">${escapeHTML(cat.label)}</strong>
-                  <span style="font-size:0.78rem; opacity:0.9;">Fecha: ${escapeHTML(planillaState.fecha)} · Total: ${catWorkers.length}</span>
-                </div>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.75rem; padding:0.85rem;">
-                  ${activeShifts.map(sh => {
-                    const assigned = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === sh.id);
-                    return `
-                      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.6rem;">
-                        <div style="font-size:0.76rem; font-weight:800; color:#0f172a; margin-bottom:0.4rem;">${escapeHTML(sh.title)} (${assigned.length})</div>
-                        ${assigned.length === 0
-                          ? '<div style="font-size:0.72rem; color:#94a3b8;">Sin asignar</div>'
-                          : assigned.map(w => `
-                              <div style="font-size:0.78rem; font-weight:700; color:#1e293b; padding:0.25rem 0.4rem; background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:4px;">
-                                ${escapeHTML(w.name)}
-                              </div>
-                            `).join('')
-                        }
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
-      return;
-    }
-
-    // Modo Tablero Interactivo para la categoría activa
-    const catWorkers = planillaState.staff.filter(w => w.category === planillaState.categoria);
-    const catShifts = getShiftsForCategory(planillaState.categoria);
-    const hasSelected = Boolean(selectedWorker);
-
-    container.innerHTML = `
-      <div class="planilla-board">
-        ${catShifts.map(shift => {
-          const workersInShift = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === shift.id);
-          return `
-            <div class="planilla-column ${hasSelected ? 'drop-ready' : ''}"
-              onclick="if (window.jefaturaApp) { window.jefaturaApp.handleColumnClick('${shift.id}'); }"
-              ondragover="window.jefaturaApp.onPlanillaDragOver(event)"
-              ondragleave="window.jefaturaApp.onPlanillaDragLeave(event)"
-              ondrop="window.jefaturaApp.onPlanillaDrop(event, '${shift.id}')">
-              <div class="planilla-col-header" style="background:${shift.headerBg};">
-                <div>
-                  <div class="planilla-col-title">${escapeHTML(shift.title)}</div>
-                  <div class="planilla-col-sub">${escapeHTML(shift.sub)}</div>
-                </div>
-                <span class="planilla-col-count">${workersInShift.length}</span>
-              </div>
-              <div class="planilla-col-body">
-                ${workersInShift.length === 0
-                  ? `<div class="planilla-empty-col">${hasSelected ? '👆 Haz clic aquí para colocar' : 'Arrastra o selecciona un trabajador'}</div>`
-                  : workersInShift.map(w => {
-                      const isSel = planillaState.selectedWorkerId === w.id;
-                      return `
-                        <div class="worker-card ${isSel ? 'selected' : ''}"
-                          draggable="true"
-                          ondragstart="window.jefaturaApp.onPlanillaDragStart(event, '${w.id}')"
-                          onclick="event.stopPropagation(); window.jefaturaApp.selectPlanillaWorker('${w.id}')">
-                          <div class="worker-card-main">
-                            <span class="worker-name">${escapeHTML(w.name)}</span>
-                            <div class="worker-meta">
-                              <span class="worker-area-pill ${getAreaBadgeClass(w.area)}">${escapeHTML(w.area)}</span>
-                            </div>
-                          </div>
-                          <div class="worker-actions">
-                            <button type="button" class="worker-del-btn no-print" title="Quitar de la plantilla"
-                              onclick="window.jefaturaApp.eliminarTrabajadorPlanilla('${w.id}', event)">🗑️</button>
-                          </div>
-                        </div>
-                      `;
-                    }).join('')
-                }
-              </div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    `;
-  }
-
-  function handleColumnClick(shiftId) {
-    if (planillaState.selectedWorkerId) {
-      movePlanillaWorkerToShift(planillaState.selectedWorkerId, shiftId);
-    }
-  }
-
-  if (typeof document !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', async () => {
-      initPlanillaData();
-      await loadAllEcosystemData();
-      let savedTab = 'jefe';
-      try {
-        if (typeof localStorage !== 'undefined') {
-          savedTab = localStorage.getItem('pet_master_tab') || 'jefe';
-        }
-      } catch (_) {}
-      setMasterTab(savedTab, false);
-      renderAll();
-      renderPlanillaTab();
-    });
-  }
-
-=======
-  if (typeof document !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', async () => {
-      await loadAllEcosystemData();
-      let savedTab = 'jefe';
-      try {
-        if (typeof localStorage !== 'undefined') {
-          savedTab = localStorage.getItem('pet_master_tab') || 'jefe';
-        }
-      } catch (_) {}
-      setMasterTab(savedTab, false);
-      renderAll();
-    });
-  }
-
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
-  if (typeof window !== 'undefined') {
+  // ===================================================================  if (typeof window !== 'undefined') {
     window.jefaturaApp = {
       setMasterTab,
       aplicarPlantillaInforme,
@@ -4350,7 +3840,6 @@
       seleccionarTipoInforme,
       generarYVerDemoInforme,
       abrirEImprimirDemoInforme,
-<<<<<<< HEAD
       actualizarDemoInforme,
       setPlanillaCategoria,
       setPlanillaFecha,
@@ -4366,9 +3855,6 @@
       resetPlanillaDia,
       imprimirPlanillaPersonal,
       renderPlanillaTab
-=======
-      actualizarDemoInforme
->>>>>>> 8cbc3423b6ac9df92dd841d81c1a02103e4389eb
     };
   }
 })();
