@@ -877,5 +877,424 @@ body {
   }
 }
 
+/* ==========================================================================
+   PLANILLA INTERACTIVA DE PERSONAL (ENFERMEROS, TÉCNICOS, CELADORES, TCAE)
+   ========================================================================== */
+.planilla-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
 
-/* ===================================================================
+.planilla-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.planilla-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.planilla-cat-btn:hover {
+  border-color: #0d9488;
+  color: #0f766e;
+  background: #f0fdfa;
+}
+
+.planilla-cat-btn.active {
+  background: #0d9488;
+  border-color: #0d9488;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(13, 148, 136, 0.25);
+}
+
+.planilla-cat-count {
+  background: rgba(15, 23, 42, 0.08);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.planilla-cat-btn.active .planilla-cat-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.planilla-selection-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #eff6ff 0%, #e0f2fe 100%);
+  border: 2px solid #0284c7;
+  border-radius: 10px;
+  color: #0c4a6e;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.planilla-selection-bar.hidden {
+  display: none;
+}
+
+.planilla-add-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: #ffffff;
+  border: 1px dashed #94a3b8;
+  border-radius: 10px;
+}
+
+.planilla-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.planilla-column {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.16s ease;
+  cursor: pointer;
+}
+
+.planilla-column.drop-ready {
+  border-color: #0284c7;
+  border-style: dashed;
+  background: #f0f9ff;
+}
+
+.planilla-column.drag-over {
+  border-color: #059669;
+  background: #ecfdf5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.15);
+}
+
+.planilla-col-header {
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid #e2e8f0;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.planilla-col-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.planilla-col-sub {
+  font-size: 0.71rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.planilla-col-count {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+}
+
+.planilla-col-body {
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.planilla-empty-col {
+  text-align: center;
+  padding: 1.25rem 0.5rem;
+  color: #94a3b8;
+  font-size: 0.77rem;
+  font-weight: 600;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+}
+
+.worker-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-left: 4px solid #0d9488;
+  border-radius: 9px;
+  padding: 0.6rem 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: grab;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.worker-card:hover {
+  border-color: #0d9488;
+  box-shadow: 0 4px 10px rgba(13, 148, 136, 0.15);
+  transform: translateY(-1px);
+}
+
+.worker-card.selected {
+  border: 2px solid #0284c7;
+  border-left: 5px solid #0284c7;
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+}
+
+.worker-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.worker-name {
+  font-size: 0.83rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.worker-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.worker-area-pill {
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+}
+
+.worker-area-pet { background: #e0f2fe; color: #0369a1; }
+.worker-area-mn { background: #f0fdf4; color: #15803d; }
+.worker-area-poli { background: #f3e8ff; color: #7e22ce; }
+
+.worker-del-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.84rem;
+  padding: 0.2rem 0.3rem;
+  border-radius: 6px;
+}
+
+.worker-del-btn:hover {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+/* ==========================================================================
+   FRANJAS HORIZONTALES (MAÑANA / TARDE / NOCHE) Y CALENDARIO DE REGISTRO
+   ========================================================================== */
+.planilla-pool-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.planilla-band-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.planilla-band-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.planilla-band-manana { background: #e0f2fe; color: #0369a1; border-left: 5px solid #0284c7; }
+.planilla-band-tarde { background: #fef3c7; color: #b45309; border-left: 5px solid #d97706; }
+.planilla-band-noche { background: #dbeafe; color: #1e3a8a; border-left: 5px solid #1d4ed8; }
+
+.planilla-band-divider {
+  border: none;
+  border-top: 2px dashed #94a3b8;
+  margin: 1.15rem 0;
+}
+
+.planilla-band-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.9rem;
+}
+
+.planilla-quota-pill {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+.planilla-quota-ok { color: #059669; border-color: #6ee7b7; background: #ecfdf5; }
+.planilla-quota-warn { color: #d97706; border-color: #fcd34d; background: #fffbeb; }
+
+.planilla-confirm-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.15rem;
+  padding: 0.9rem 1.1rem;
+  background: linear-gradient(90deg, #ecfdf5 0%, #f0fdfa 100%);
+  border: 1.5px solid #10b981;
+  border-radius: 12px;
+}
+
+.planilla-calendar-card {
+  margin-top: 1.25rem;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 1.1rem;
+}
+
+.planilla-cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.planilla-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.planilla-cal-weekday {
+  text-align: center;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #475569;
+  padding: 0.35rem;
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+
+.planilla-cal-day {
+  min-height: 98px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.planilla-cal-day:hover {
+  border-color: #0284c7;
+  background: #f0f9ff;
+}
+
+.planilla-cal-day.is-selected {
+  border: 2px solid #0284c7;
+  background: #eff6ff;
+}
+
+.planilla-cal-day.is-confirmed {
+  background: #ffffff;
+  border-color: #10b981;
+}
+
+.planilla-cal-day.is-empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.planilla-cal-num {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.planilla-cal-badge-ok {
+  font-size: 0.64rem;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 1px 5px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.planilla-cal-entry {
+  font-size: 0.67rem;
+  line-height: 1.25;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cal-entry-m { background: #e0f2fe; color: #0369a1; }
+.cal-entry-t { background: #fef3c7; color: #b45309; }
+.cal-entry-n { background: #dbeafe; color: #1e3a8a; }

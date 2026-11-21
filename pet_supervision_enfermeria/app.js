@@ -1015,8 +1015,9 @@
   // ==========================================================================
   // PLANILLA INTERACTIVA DE PERSONAL (ENFERMEROS, TÉCNICOS, CELADORES, TCAE)
   // ==========================================================================
-  const PLANILLA_STORAGE_STAFF = 'PET_PLANILLA_STAFF_V1';
-  const PLANILLA_STORAGE_SHIFTS = 'PET_PLANILLA_SHIFTS_V1';
+  const PLANILLA_STORAGE_STAFF = 'PET_PLANILLA_STAFF_V2';
+  const PLANILLA_STORAGE_SHIFTS = 'PET_PLANILLA_SHIFTS_V2';
+  const PLANILLA_STORAGE_CALENDAR = 'PET_PLANILLA_CALENDAR_V1';
 
   const PLANILLA_CATEGORIES = [
     { id: 'enfermeros', label: '🩺 Enfermeros/as (DUE)' },
@@ -1025,86 +1026,102 @@
     { id: 'tcaes', label: '🧤 TCAEs' }
   ];
 
-  const PLANILLA_SHIFTS_BY_CAT = {
+  // Franjas agrupadas por Turno (Mañana / Tarde / Noche) con cupos objetivo reales
+  const PLANILLA_BANDS_BY_CAT = {
     enfermeros: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
-      { id: 'noche', title: '🌙 Turno Noche', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 3, cols: [
+        { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' }
+      ]},
+      { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 2, cols: [
+        { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
+        { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' }
+      ]},
+      { bandId: 'noche', label: '🌙 TURNO NOCHE (22:00 – 08:00 h)', bandClass: 'planilla-band-noche', target: 1, cols: [
+        { id: 'noche', title: '🌙 Noche · Unidad', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' }
+      ]}
     ],
     tecnicos: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
+        { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' }
+      ]},
+      { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 3, cols: [
+        { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
+        { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' }
+      ]}
     ],
     celadores: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-      { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
+        { id: 'manana_pet', title: '☀️ Mañana · Unidad MN/PET', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' }
+      ]},
+      { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
+        { id: 'tarde_pet', title: '🌆 Tarde · Unidad MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
+      ]}
     ],
     tcaes: [
-      { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
-      { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-      { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-      { id: 'tarde_apoyo', title: '🌆 Tarde (Algunas tardes)', sub: '15:00 – 22:00 h · Refuerzo', headerBg: '#fef3c7' },
-      { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 2, cols: [
+        { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' }
+      ]},
+      { bandId: 'tarde', label: '🌆 TURNO TARDE — Algunas tardes (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
+        { id: 'tarde_apoyo', title: '🌆 Tarde · Refuerzo MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
+      ]}
     ]
   };
 
-  function getShiftsForCategory(cat) {
-    return PLANILLA_SHIFTS_BY_CAT[cat] || PLANILLA_SHIFTS_BY_CAT.enfermeros;
+  const POOL_COLS = [
+    { id: 'disponible', title: '📋 Plantilla Disponible', sub: 'Sin asignar / Pool', headerBg: '#f1f5f9' },
+    { id: 'libre', title: '🏖️ Libre / Baja / Descanso', sub: 'Libranza / Incidencia', headerBg: '#fee2e2' }
+  ];
+
+  function getAllColsForCategory(cat) {
+    const bands = PLANILLA_BANDS_BY_CAT[cat] || PLANILLA_BANDS_BY_CAT.enfermeros;
+    const bandCols = bands.reduce((acc, b) => acc.concat(b.cols), []);
+    return POOL_COLS.concat(bandCols);
   }
 
+  // Dotación exacta:
+  // - 6 Enfermeros: 3 mañana, 2 tarde, 1 noche
+  // - 4 TSID: 1 mañana, 3 tarde
+  // - Celadores: 1 mañana, 1 tarde (1 por turno)
+  // - TCAEs: mañanas y algunas tardes
   const DEFAULT_STAFF_SEED = [
+    // 6 Enfermeros
     { id: 'enf_1', name: 'Laura Méndez Vázquez', category: 'enfermeros', area: 'PET-CT', defaultShift: 'manana_pet' },
     { id: 'enf_2', name: 'Beatriz Lago Otero', category: 'enfermeros', area: 'PET-CT', defaultShift: 'manana_pet' },
     { id: 'enf_3', name: 'Patricia Rial Seoane', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'enf_4', name: 'Marta Domínguez Castro', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'enf_5', name: 'Lucía Fernández López', category: 'enfermeros', area: 'Polivalente', defaultShift: 'tarde_pet' },
-    { id: 'enf_6', name: 'Sonia Iglesias Prado', category: 'enfermeros', area: 'Polivalente', defaultShift: 'tarde_mn' },
-    { id: 'enf_7', name: 'Raquel Alonso Rodríguez', category: 'enfermeros', area: 'PET-CT', defaultShift: 'disponible' },
-    { id: 'enf_8', name: 'Cristina Varela Souto', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'noche' },
+    { id: 'enf_4', name: 'Lucía Fernández López', category: 'enfermeros', area: 'Polivalente', defaultShift: 'tarde_pet' },
+    { id: 'enf_5', name: 'Sonia Iglesias Prado', category: 'enfermeros', area: 'Medicina Nuclear', defaultShift: 'tarde_mn' },
+    { id: 'enf_6', name: 'Cristina Varela Souto', category: 'enfermeros', area: 'Polivalente', defaultShift: 'noche' },
 
+    // 4 Técnicos TSID
     { id: 'tec_1', name: 'Carlos Pazos Blanco', category: 'tecnicos', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'tec_2', name: 'Diego Martínez Rey', category: 'tecnicos', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'tec_3', name: 'Javier Núñez García', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'tec_4', name: 'Elena Suárez Pérez', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'tec_5', name: 'Adrián Gómez Ferreiro', category: 'tecnicos', area: 'Polivalente', defaultShift: 'tarde_pet' },
-    { id: 'tec_6', name: 'Rubén González Arias', category: 'tecnicos', area: 'Polivalente', defaultShift: 'tarde_mn' },
-    { id: 'tec_7', name: 'Noelia Costa Bouza', category: 'tecnicos', area: 'PET-CT', defaultShift: 'disponible' },
-    { id: 'tec_8', name: 'Iván Castro Prieto', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'libre' },
+    { id: 'tec_2', name: 'Diego Martínez Rey', category: 'tecnicos', area: 'PET-CT', defaultShift: 'tarde_pet' },
+    { id: 'tec_3', name: 'Javier Núñez García', category: 'tecnicos', area: 'Medicina Nuclear', defaultShift: 'tarde_mn' },
+    { id: 'tec_4', name: 'Adrián Gómez Ferreiro', category: 'tecnicos', area: 'Polivalente', defaultShift: 'tarde_pet' },
 
-    { id: 'cel_1', name: 'Manuel Rodríguez Piñeiro', category: 'celadores', area: 'PET-CT', defaultShift: 'manana_pet' },
-    { id: 'cel_2', name: 'José Luis Pérez Conde', category: 'celadores', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'cel_3', name: 'Antonio Vázquez Soto', category: 'celadores', area: 'Polivalente', defaultShift: 'tarde_pet' },
-    { id: 'cel_4', name: 'Carmen Otero Loureiro', category: 'celadores', area: 'Polivalente', defaultShift: 'tarde_mn' },
-    { id: 'cel_5', name: 'Marcos López Pereiro', category: 'celadores', area: 'Polivalente', defaultShift: 'disponible' },
-    { id: 'cel_6', name: 'Susana Barreiro Blanco', category: 'celadores', area: 'Medicina Nuclear', defaultShift: 'libre' },
+    // Celadores (1 por turno)
+    { id: 'cel_1', name: 'Manuel Rodríguez Piñeiro', category: 'celadores', area: 'Polivalente', defaultShift: 'manana_pet' },
+    { id: 'cel_2', name: 'José Luis Pérez Conde', category: 'celadores', area: 'Polivalente', defaultShift: 'tarde_pet' },
 
+    // TCAEs (mañanas y algunas tardes)
     { id: 'tcae_1', name: 'María José Lorenzo Gil', category: 'tcaes', area: 'PET-CT', defaultShift: 'manana_pet' },
     { id: 'tcae_2', name: 'Ana Belén Torres Vila', category: 'tcaes', area: 'Medicina Nuclear', defaultShift: 'manana_mn' },
-    { id: 'tcae_3', name: 'Silvia Álvarez Ramos', category: 'tcaes', area: 'Polivalente', defaultShift: 'tarde_apoyo' },
-    { id: 'tcae_4', name: 'Verónica Nogueira Cruz', category: 'tcaes', area: 'Polivalente', defaultShift: 'manana_mn' },
-    { id: 'tcae_5', name: 'Nuria Estévez Domínguez', category: 'tcaes', area: 'PET-CT', defaultShift: 'disponible' },
-    { id: 'tcae_6', name: 'Pilar Blanco Santamaría', category: 'tcaes', area: 'Medicina Nuclear', defaultShift: 'libre' }
+    { id: 'tcae_3', name: 'Silvia Álvarez Ramos', category: 'tcaes', area: 'Polivalente', defaultShift: 'tarde_apoyo' }
   ];
 
+  const todayISO = new Date().toISOString().split('T')[0];
   const planillaState = {
     categoria: 'enfermeros',
-    fecha: new Date().toISOString().split('T')[0],
+    fecha: todayISO,
+    calYear: new Date().getFullYear(),
+    calMonth: new Date().getMonth(),
     selectedWorkerId: null,
     draggedWorkerId: null,
     staff: [],
-    shiftsByDate: {}
+    shiftsByDate: {},
+    confirmedCalendar: {}
   };
 
   function initPlanillaData() {
@@ -1126,12 +1143,22 @@
     } catch (_) {
       planillaState.shiftsByDate = {};
     }
+    try {
+      const savedCal = localStorage.getItem(PLANILLA_STORAGE_CALENDAR);
+      planillaState.confirmedCalendar = savedCal ? JSON.parse(savedCal) : {};
+      if (!planillaState.confirmedCalendar || typeof planillaState.confirmedCalendar !== 'object') {
+        planillaState.confirmedCalendar = {};
+      }
+    } catch (_) {
+      planillaState.confirmedCalendar = {};
+    }
   }
 
   function savePlanillaData() {
     try {
       localStorage.setItem(PLANILLA_STORAGE_STAFF, JSON.stringify(planillaState.staff));
       localStorage.setItem(PLANILLA_STORAGE_SHIFTS, JSON.stringify(planillaState.shiftsByDate));
+      localStorage.setItem(PLANILLA_STORAGE_CALENDAR, JSON.stringify(planillaState.confirmedCalendar));
     } catch (_) {}
   }
 
@@ -1150,6 +1177,11 @@
       planillaState.fecha = d.toISOString().split('T')[0];
     } else if (val) {
       planillaState.fecha = val;
+    }
+    const parts = planillaState.fecha.split('-');
+    if (parts.length === 3) {
+      planillaState.calYear = parseInt(parts[0], 10);
+      planillaState.calMonth = parseInt(parts[1], 10) - 1;
     }
     planillaState.selectedWorkerId = null;
     renderPlanillaTab();
@@ -1177,8 +1209,8 @@
     }
     planillaState.shiftsByDate[planillaState.fecha][workerId] = shiftId;
     const worker = planillaState.staff.find(w => w.id === workerId);
-    const catShifts = worker ? getShiftsForCategory(worker.category) : getShiftsForCategory(planillaState.categoria);
-    const shiftObj = catShifts.find(s => s.id === shiftId);
+    const allCols = worker ? getAllColsForCategory(worker.category) : getAllColsForCategory(planillaState.categoria);
+    const shiftObj = allCols.find(s => s.id === shiftId);
     planillaState.selectedWorkerId = null;
     savePlanillaData();
     renderPlanillaTab();
@@ -1266,10 +1298,186 @@
     showToast('🔄 Planilla del día restablecida.');
   }
 
+  // Confirmar los turnos del día y añadirlos automáticamente al calendario
+  function confirmarPlanillaDia() {
+    const fecha = planillaState.fecha;
+    const summaryByCat = {};
+
+    PLANILLA_CATEGORIES.forEach(cat => {
+      const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
+      const manana = [];
+      const tarde = [];
+      const noche = [];
+      catWorkers.forEach(w => {
+        const sh = getWorkerShiftForDate(w, fecha);
+        if (sh.startsWith('manana')) manana.push(w.name);
+        else if (sh.startsWith('tarde')) tarde.push(w.name);
+        else if (sh === 'noche') noche.push(w.name);
+      });
+      summaryByCat[cat.id] = { manana, tarde, noche };
+    });
+
+    planillaState.confirmedCalendar[fecha] = {
+      confirmedAt: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
+      categories: summaryByCat
+    };
+
+    savePlanillaData();
+    renderPlanillaTab();
+    showToast(`📅 Turnos del día ${fecha} confirmados y añadidos al calendario de registro.`);
+  }
+
+  function cambiarMesCalendario(delta) {
+    planillaState.calMonth += delta;
+    if (planillaState.calMonth < 0) {
+      planillaState.calMonth = 11;
+      planillaState.calYear -= 1;
+    } else if (planillaState.calMonth > 11) {
+      planillaState.calMonth = 0;
+      planillaState.calYear += 1;
+    }
+    renderPlanillaCalendar();
+  }
+
+  function seleccionarDiaCalendario(dateStr) {
+    setPlanillaFecha(dateStr);
+  }
+
   function getAreaBadgeClass(area) {
     if (area === 'PET-CT') return 'worker-area-pet';
     if (area === 'Medicina Nuclear') return 'worker-area-mn';
     return 'worker-area-poli';
+  }
+
+  function renderColumnBox(col, workersInShift, hasSelected) {
+    return `
+      <div class="planilla-column ${hasSelected ? 'drop-ready' : ''}"
+        onclick="window.supervisionApp.handleColumnClick('${col.id}')"
+        ondragover="window.supervisionApp.onPlanillaDragOver(event)"
+        ondragleave="window.supervisionApp.onPlanillaDragLeave(event)"
+        ondrop="window.supervisionApp.onPlanillaDrop(event, '${col.id}')">
+        <div class="planilla-col-header" style="background:${col.headerBg};">
+          <div>
+            <div class="planilla-col-title">${escapeHTML(col.title)}</div>
+            <div class="planilla-col-sub">${escapeHTML(col.sub)}</div>
+          </div>
+          <span class="planilla-col-count">${workersInShift.length}</span>
+        </div>
+        <div class="planilla-col-body">
+          ${workersInShift.length === 0
+            ? `<div class="planilla-empty-col">${hasSelected ? '👆 Haz clic aquí para colocar' : 'Arrastra o selecciona un trabajador'}</div>`
+            : workersInShift.map(w => {
+                const isSel = planillaState.selectedWorkerId === w.id;
+                return `
+                  <div class="worker-card ${isSel ? 'selected' : ''}"
+                    draggable="true"
+                    ondragstart="window.supervisionApp.onPlanillaDragStart(event, '${w.id}')"
+                    onclick="event.stopPropagation(); window.supervisionApp.selectPlanillaWorker('${w.id}')">
+                    <div class="worker-card-main">
+                      <span class="worker-name">${escapeHTML(w.name)}</span>
+                      <div class="worker-meta">
+                        <span class="worker-area-pill ${getAreaBadgeClass(w.area)}">${escapeHTML(w.area)}</span>
+                      </div>
+                    </div>
+                    <button type="button" class="worker-del-btn no-print" title="Quitar de la plantilla"
+                      onclick="window.supervisionApp.eliminarTrabajadorPlanilla('${w.id}', event)">🗑️</button>
+                  </div>
+                `;
+              }).join('')
+          }
+        </div>
+      </div>
+    `;
+  }
+
+  function renderPlanillaCalendar() {
+    const calEl = document.getElementById('planillaCalendarContainer');
+    if (!calEl) return;
+
+    const monthsES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const year = planillaState.calYear;
+    const month = planillaState.calMonth;
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const startOffset = (firstDay.getDay() + 6) % 7; // Lunes = 0
+
+    const activeCat = planillaState.categoria;
+    const catLabel = activeCat === 'resumen'
+      ? 'Todas las Categorías'
+      : (PLANILLA_CATEGORIES.find(c => c.id === activeCat)?.label || 'Personal');
+
+    let cellsHtml = '';
+    for (let i = 0; i < startOffset; i++) {
+      cellsHtml += '<div class="planilla-cal-day is-empty"></div>';
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const mm = String(month + 1).padStart(2, '0');
+      const dd = String(day).padStart(2, '0');
+      const dateStr = `${year}-${mm}-${dd}`;
+      const conf = planillaState.confirmedCalendar[dateStr];
+      const isSelected = planillaState.fecha === dateStr;
+
+      let entriesHtml = '';
+      if (conf && conf.categories) {
+        if (activeCat === 'resumen') {
+          entriesHtml = PLANILLA_CATEGORIES.map(c => {
+            const d = conf.categories[c.id] || { manana: [], tarde: [], noche: [] };
+            const total = d.manana.length + d.tarde.length + d.noche.length;
+            return `<div class="planilla-cal-entry cal-entry-m">${escapeHTML(c.id.toUpperCase())}: M(${d.manana.length}) T(${d.tarde.length})${c.id === 'enfermeros' ? ` N(${d.noche.length})` : ''} · ${total}</div>`;
+          }).join('');
+        } else {
+          const d = conf.categories[activeCat] || { manana: [], tarde: [], noche: [] };
+          if (d.manana.length > 0) {
+            entriesHtml += `<div class="planilla-cal-entry cal-entry-m" title="Mañana: ${escapeHTML(d.manana.join(', '))}">☀️ ${escapeHTML(d.manana.map(n => n.split(' ')[0]).join(', '))}</div>`;
+          }
+          if (d.tarde.length > 0) {
+            entriesHtml += `<div class="planilla-cal-entry cal-entry-t" title="Tarde: ${escapeHTML(d.tarde.join(', '))}">🌆 ${escapeHTML(d.tarde.map(n => n.split(' ')[0]).join(', '))}</div>`;
+          }
+          if (d.noche.length > 0) {
+            entriesHtml += `<div class="planilla-cal-entry cal-entry-n" title="Noche: ${escapeHTML(d.noche.join(', '))}">🌙 ${escapeHTML(d.noche.map(n => n.split(' ')[0]).join(', '))}</div>`;
+          }
+        }
+      }
+
+      cellsHtml += `
+        <div class="planilla-cal-day ${conf ? 'is-confirmed' : ''} ${isSelected ? 'is-selected' : ''}"
+          onclick="window.supervisionApp.seleccionarDiaCalendario('${dateStr}')">
+          <div class="planilla-cal-num">
+            <span>${day}</span>
+            ${conf ? '<span class="planilla-cal-badge-ok">✓</span>' : ''}
+          </div>
+          ${entriesHtml || '<div style="font-size:0.65rem; color:#94a3b8;">Sin confirmar</div>'}
+        </div>
+      `;
+    }
+
+    calEl.innerHTML = `
+      <div class="planilla-cal-header">
+        <div>
+          <h3 style="font-family:'Outfit',sans-serif; font-size:1.02rem; color:#004868; margin:0;">
+            📅 Calendario de Registro de Turnos — ${monthsES[month]} ${year} (${escapeHTML(catLabel)})
+          </h3>
+          <p style="font-size:0.76rem; color:#475569; margin:2px 0 0 0;">
+            Al pulsar "Confirmar Turnos del Día", el personal asignado queda registrado aquí. Haz clic en cualquier día para verlo o editarlo.
+          </p>
+        </div>
+        <div style="display:flex; gap:6px;" class="no-print">
+          <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cambiarMesCalendario(-1)">◀ Mes anterior</button>
+          <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cambiarMesCalendario(1)">Mes siguiente ▶</button>
+        </div>
+      </div>
+      <div class="planilla-cal-grid">
+        <div class="planilla-cal-weekday">Lun</div>
+        <div class="planilla-cal-weekday">Mar</div>
+        <div class="planilla-cal-weekday">Mié</div>
+        <div class="planilla-cal-weekday">Jue</div>
+        <div class="planilla-cal-weekday">Vie</div>
+        <div class="planilla-cal-weekday">Sáb</div>
+        <div class="planilla-cal-weekday">Dom</div>
+        ${cellsHtml}
+      </div>
+    `;
   }
 
   function renderPlanillaTab() {
@@ -1313,27 +1521,28 @@
         <div style="display:flex; flex-direction:column; gap:1.1rem;">
           ${PLANILLA_CATEGORIES.map(cat => {
             const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
-            const activeShifts = getShiftsForCategory(cat.id).filter(s => s.id !== 'disponible');
+            const bands = PLANILLA_BANDS_BY_CAT[cat.id] || [];
             return `
               <div style="border:1.5px solid #cbd5e1; border-radius:12px; overflow:hidden; background:#ffffff;">
                 <div style="background:#004868; color:#ffffff; padding:0.65rem 1rem; display:flex; justify-content:space-between; align-items:center;">
                   <strong style="font-family:'Outfit',sans-serif; font-size:0.95rem;">${escapeHTML(cat.label)}</strong>
                   <span style="font-size:0.78rem; opacity:0.9;">Fecha: ${escapeHTML(planillaState.fecha)} · Total: ${catWorkers.length}</span>
                 </div>
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(175px, 1fr)); gap:0.7rem; padding:0.8rem;">
-                  ${activeShifts.map(sh => {
-                    const assigned = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === sh.id);
+                <div style="padding:0.8rem; display:flex; flex-direction:column; gap:0.65rem;">
+                  ${bands.map(b => {
+                    const colIds = b.cols.map(c => c.id);
+                    const assigned = catWorkers.filter(w => colIds.includes(getWorkerShiftForDate(w, planillaState.fecha)));
                     return `
-                      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.6rem;">
-                        <div style="font-size:0.75rem; font-weight:800; color:#0f172a; margin-bottom:0.35rem;">${escapeHTML(sh.title)} (${assigned.length})</div>
-                        ${assigned.length === 0
-                          ? '<div style="font-size:0.71rem; color:#94a3b8;">Sin asignar</div>'
-                          : assigned.map(w => `
-                              <div style="font-size:0.77rem; font-weight:700; color:#1e293b; padding:0.25rem 0.4rem; background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:4px;">
-                                ${escapeHTML(w.name)}
-                              </div>
-                            `).join('')
-                        }
+                      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.55rem 0.75rem;">
+                        <div style="font-size:0.77rem; font-weight:800; color:#0f172a; margin-bottom:0.3rem;">
+                          ${escapeHTML(b.label)} — ${assigned.length} / ${b.target} asignados
+                        </div>
+                        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                          ${assigned.length === 0
+                            ? '<span style="font-size:0.72rem; color:#94a3b8;">Sin asignar</span>'
+                            : assigned.map(w => `<span style="font-size:0.77rem; font-weight:700; color:#1e293b; padding:0.2rem 0.55rem; background:#ffffff; border:1px solid #cbd5e1; border-radius:6px;">${escapeHTML(w.name)}</span>`).join('')
+                          }
+                        </div>
                       </div>
                     `;
                   }).join('')}
@@ -1343,58 +1552,48 @@
           }).join('')}
         </div>
       `;
+      renderPlanillaCalendar();
       return;
     }
 
     const catWorkers = planillaState.staff.filter(w => w.category === planillaState.categoria);
-    const catShifts = getShiftsForCategory(planillaState.categoria);
+    const bands = PLANILLA_BANDS_BY_CAT[planillaState.categoria] || [];
     const hasSelected = Boolean(selectedWorker);
 
-    container.innerHTML = `
-      <div class="planilla-board">
-        ${catShifts.map(shift => {
-          const workersInShift = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === shift.id);
-          return `
-            <div class="planilla-column ${hasSelected ? 'drop-ready' : ''}"
-              onclick="window.supervisionApp.handleColumnClick('${shift.id}')"
-              ondragover="window.supervisionApp.onPlanillaDragOver(event)"
-              ondragleave="window.supervisionApp.onPlanillaDragLeave(event)"
-              ondrop="window.supervisionApp.onPlanillaDrop(event, '${shift.id}')">
-              <div class="planilla-col-header" style="background:${shift.headerBg};">
-                <div>
-                  <div class="planilla-col-title">${escapeHTML(shift.title)}</div>
-                  <div class="planilla-col-sub">${escapeHTML(shift.sub)}</div>
-                </div>
-                <span class="planilla-col-count">${workersInShift.length}</span>
-              </div>
-              <div class="planilla-col-body">
-                ${workersInShift.length === 0
-                  ? `<div class="planilla-empty-col">${hasSelected ? '👆 Haz clic aquí para colocar' : 'Arrastra o selecciona un trabajador'}</div>`
-                  : workersInShift.map(w => {
-                      const isSel = planillaState.selectedWorkerId === w.id;
-                      return `
-                        <div class="worker-card ${isSel ? 'selected' : ''}"
-                          draggable="true"
-                          ondragstart="window.supervisionApp.onPlanillaDragStart(event, '${w.id}')"
-                          onclick="event.stopPropagation(); window.supervisionApp.selectPlanillaWorker('${w.id}')">
-                          <div class="worker-card-main">
-                            <span class="worker-name">${escapeHTML(w.name)}</span>
-                            <div class="worker-meta">
-                              <span class="worker-area-pill ${getAreaBadgeClass(w.area)}">${escapeHTML(w.area)}</span>
-                            </div>
-                          </div>
-                          <button type="button" class="worker-del-btn no-print" title="Quitar de la plantilla"
-                            onclick="window.supervisionApp.eliminarTrabajadorPlanilla('${w.id}', event)">🗑️</button>
-                        </div>
-                      `;
-                    }).join('')
-                }
-              </div>
-            </div>
-          `;
+    const poolHtml = `
+      <div class="planilla-pool-row">
+        ${POOL_COLS.map(col => {
+          const workersInCol = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === col.id);
+          return renderColumnBox(col, workersInCol, hasSelected);
         }).join('')}
       </div>
     `;
+
+    const bandsHtml = bands.map((band, idx) => {
+      const bandColIds = band.cols.map(c => c.id);
+      const countInBand = catWorkers.filter(w => bandColIds.includes(getWorkerShiftForDate(w, planillaState.fecha))).length;
+      const quotaOk = countInBand === band.target;
+      return `
+        ${idx > 0 ? '<hr class="planilla-band-divider">' : ''}
+        <div class="planilla-band-section">
+          <div class="planilla-band-header ${band.bandClass}">
+            <span>${escapeHTML(band.label)}</span>
+            <span class="planilla-quota-pill ${quotaOk ? 'planilla-quota-ok' : 'planilla-quota-warn'}">
+              ${countInBand} / ${band.target} ${band.target === 1 ? 'plaza' : 'plazas'}
+            </span>
+          </div>
+          <div class="planilla-band-cols">
+            ${band.cols.map(col => {
+              const workersInCol = catWorkers.filter(w => getWorkerShiftForDate(w, planillaState.fecha) === col.id);
+              return renderColumnBox(col, workersInCol, hasSelected);
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = poolHtml + '<hr class="planilla-band-divider">' + bandsHtml;
+    renderPlanillaCalendar();
   }
 
   if (typeof document !== 'undefined') {
@@ -1433,6 +1632,9 @@
       agregarTrabajadorPlanilla,
       eliminarTrabajadorPlanilla,
       resetPlanillaDia,
+      confirmarPlanillaDia,
+      cambiarMesCalendario,
+      seleccionarDiaCalendario,
       renderPlanillaTab
     };
   }

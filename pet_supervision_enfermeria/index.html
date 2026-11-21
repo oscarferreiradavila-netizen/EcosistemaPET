@@ -93,7 +93,7 @@
       <article class="kpi-nurse-card" style="--kpi-color:#0d9488; --kpi-bg:#ccfbf1;"
         onclick="window.supervisionApp.cambiarTab('audioguias')">
         <div class="kpi-top-row">
-          <span class="kpi-label">2. Adherencia a Audioguías</span>
+          <span class="kpi-label">Adherencia a Audioguías</span>
           <div class="kpi-icon-badge">🎧</div>
         </div>
         <div class="kpi-value-row">
@@ -110,7 +110,7 @@
       <article class="kpi-nurse-card" style="--kpi-color:#0284c7; --kpi-bg:#e0f2fe;"
         onclick="window.supervisionApp.cambiarTab('puntualidad')">
         <div class="kpi-top-row">
-          <span class="kpi-label">3. Ventana EARL & Camilla</span>
+          <span class="kpi-label">Ventana EARL & Camilla</span>
           <div class="kpi-icon-badge">⏱️</div>
         </div>
         <div class="kpi-value-row">
@@ -127,7 +127,7 @@
       <article class="kpi-nurse-card" style="--kpi-color:#7c3aed; --kpi-bg:#f5f3ff;"
         onclick="window.supervisionApp.cambiarTab('venopuncion')">
         <div class="kpi-top-row">
-          <span class="kpi-label">4. Vías & Extravasaciones</span>
+          <span class="kpi-label">Vías & Extravasaciones</span>
           <div class="kpi-icon-badge">💉</div>
         </div>
         <div class="kpi-value-row">
@@ -144,7 +144,7 @@
       <article class="kpi-nurse-card" style="--kpi-color:#d97706; --kpi-bg:#fffbeb;"
         onclick="window.supervisionApp.cambiarTab('absentismo')">
         <div class="kpi-top-row">
-          <span class="kpi-label">5. No-Show & Recitación</span>
+          <span class="kpi-label">No-Show & Recitación</span>
           <div class="kpi-icon-badge">🔄</div>
         </div>
         <div class="kpi-value-row">
@@ -161,7 +161,7 @@
       <article class="kpi-nurse-card" style="--kpi-color:#be123c; --kpi-bg:#fff1f2;"
         onclick="window.supervisionApp.cambiarTab('permanencia')">
         <div class="kpi-top-row">
-          <span class="kpi-label">6. Tiempo Door-to-Door</span>
+          <span class="kpi-label">Tiempo Door-to-Door</span>
           <div class="kpi-icon-badge">⏳</div>
         </div>
         <div class="kpi-value-row">
@@ -179,43 +179,43 @@
     <nav class="nurse-tabs-bar">
       <button type="button" class="nurse-tab-btn active" data-tab="turnos"
         onclick="window.supervisionApp.cambiarTab('turnos')">
-        <span>👥 1. Turnos y Cuadrante de Personal</span>
+        <span>👥 Turnos y Planilla de Personal</span>
         <span class="tab-count-badge" id="badgeTurnosPersonal">6 En Servicio</span>
       </button>
 
       <button type="button" class="nurse-tab-btn" data-tab="pedidos"
         onclick="window.supervisionApp.cambiarTab('pedidos')">
-        <span>📦 2. Pedidos y Material Sanitario</span>
+        <span>📦 Pedidos y Material Sanitario</span>
         <span class="tab-count-badge" id="badgePedidosPendientes">2 En Curso</span>
       </button>
 
       <button type="button" class="nurse-tab-btn" data-tab="audioguias"
         onclick="window.supervisionApp.cambiarTab('audioguias')">
-        <span>🎧 4. Audioguías & Preparación</span>
+        <span>🎧 Audioguías & Preparación</span>
         <span class="tab-count-badge" id="badgeAudioguiasAdh">85% Adherencia</span>
       </button>
 
       <button type="button" class="nurse-tab-btn" data-tab="puntualidad"
         onclick="window.supervisionApp.cambiarTab('puntualidad')">
-        <span>⏱️ 5. Paso a Camilla & EARL</span>
+        <span>⏱️ Paso a Camilla & EARL</span>
         <span class="tab-count-badge" id="badgeVentanaEarl">93% En Ventana</span>
       </button>
 
       <button type="button" class="nurse-tab-btn" data-tab="venopuncion"
         onclick="window.supervisionApp.cambiarTab('venopuncion')">
-        <span>💉 6. Vías & Extravasaciones</span>
+        <span>💉 Vías & Extravasaciones</span>
         <span class="tab-count-badge" id="badgeExtravasacion">0.3%</span>
       </button>
 
       <button type="button" class="nurse-tab-btn" data-tab="absentismo"
         onclick="window.supervisionApp.cambiarTab('absentismo')">
-        <span>🔄 7. Absentismo & Recitación</span>
+        <span>🔄 Absentismo & Recitación</span>
         <span class="tab-count-badge" id="badgeAbsentismoRecitar">3 Huecos Salvos</span>
       </button>
 
       <button type="button" class="nurse-tab-btn" data-tab="informe_cuidados"
         onclick="window.supervisionApp.cambiarTab('informe_cuidados')" style="border:1.5px solid var(--nurse-teal);">
-        <span>📑 8. Memoria de Cuidados</span>
+        <span>📑 Memoria de Cuidados</span>
         <span class="tab-count-badge" style="background:var(--nurse-teal); color:#fff;">Oficial</span>
       </button>
     </nav>
@@ -296,94 +296,20 @@
         </div>
 
         <div id="planillaBoardContainer"></div>
-      </div>
 
-      <div class="panel-card">
-        <div class="panel-header">
-          <div class="panel-title-group">
-            <h2>👥 Cuadrante de Turnos, Puestos Asistenciales y Control Dosimétrico</h2>
-            <p>Planificación operativa de enfermería y técnicos TSID por franjas (Mañana 07:30 - 15:00 / Tarde 14:30 - 22:00), asignación de puestos críticos y vigilancia radiológica</p>
+        <!-- Barra de Confirmación del Día -->
+        <div class="planilla-confirm-bar no-print">
+          <div style="font-size:0.84rem; color:#065f46; font-weight:700;">
+            📌 Cuando tengas colocados los turnos del día, pulsa <strong>Confirmar</strong> para registrarlos automáticamente en el calendario inferior.
           </div>
-          <div style="display:flex; gap:8px;" class="no-print">
-            <button type="button" class="btn-nurse btn-nurse-primary" onclick="window.supervisionApp.abrirModalTurno()">
-              ➕ Asignar / Cambiar Turno
-            </button>
-          </div>
+          <button type="button" class="btn-nurse btn-nurse-primary" style="background:#059669; border-color:#059669;"
+            onclick="window.supervisionApp.confirmarPlanillaDia()">
+            ✅ Confirmar Turnos del Día y Añadir al Calendario
+          </button>
         </div>
 
-        <!-- Tarjetas resumen de turnos -->
-        <div class="shift-summary-grid">
-          <div class="shift-summary-card">
-            <div class="shift-card-top">
-              <span class="shift-card-title">Turno Mañana (07:30 - 15:00)</span>
-              <span class="status-badge badge-ok">En Servicio</span>
-            </div>
-            <div class="shift-card-val" style="color:var(--sergas-navy);" id="statTurnoMananaTotal">
-              3 DUE · 2 TSID · 1 TCAE
-            </div>
-            <div class="shift-card-meta">
-              Cobertura 100% de puestos de inyección, boxes de reposo y tomógrafo
-            </div>
-          </div>
-
-          <div class="shift-summary-card">
-            <div class="shift-card-top">
-              <span class="shift-card-title">Turno Tarde (14:30 - 22:00)</span>
-              <span class="status-badge badge-info">Relevo 14:30 h</span>
-            </div>
-            <div class="shift-card-val" style="color:var(--nurse-teal-dark);" id="statTurnoTardeTotal">
-              2 DUE · 2 TSID · 1 TCAE
-            </div>
-            <div class="shift-card-meta">
-              Solape asistencial de 30 minutos programado para traspaso de información
-            </div>
-          </div>
-
-          <div class="shift-summary-card">
-            <div class="shift-card-top">
-              <span class="shift-card-title">Ratio Asistencial Boxes</span>
-              <span class="status-badge badge-ok">Estándar Galaria</span>
-            </div>
-            <div class="shift-card-val" style="color:#059669;">
-              1 DUE / 2 Boxes
-            </div>
-            <div class="shift-card-meta">
-              Garantiza monitorización continua, confort térmico y toma de glucemias
-            </div>
-          </div>
-
-          <div class="shift-summary-card">
-            <div class="shift-card-top">
-              <span class="shift-card-title">Dosimetría Operativa Media</span>
-              <span class="status-badge badge-ok">Segura (&lt; 20 mSv/a)</span>
-            </div>
-            <div class="shift-card-val" style="color:#7c3aed;">
-              0.18 mSv / mes
-            </div>
-            <div class="shift-card-meta">
-              Rotación protocolizada en cabina plomada de inyección de radiofármacos
-            </div>
-          </div>
-        </div>
-
-        <!-- Tabla de personal en turno -->
-        <div class="table-responsive">
-          <table class="nurse-table">
-            <thead>
-              <tr>
-                <th>Profesional</th>
-                <th>Categoría</th>
-                <th>Turno / Franja</th>
-                <th>Puesto Operativo Asignado</th>
-                <th>Dosimetría Mes (mSv)</th>
-                <th>Estado Asistencial</th>
-                <th>Observaciones / Relevo</th>
-                <th class="no-print">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="tablaTurnosPersonalBody"></tbody>
-          </table>
-        </div>
+        <!-- Calendario Mensual de Registro de Quién Trabajó Cada Día -->
+        <div id="planillaCalendarContainer" class="planilla-calendar-card"></div>
       </div>
     </section>
 
