@@ -764,6 +764,97 @@ body {
   border-radius: 3px;
 }
 
+/* ==========================================================================
+   CONTEO Y CÁLCULO DIARIO DE FUNGIBLES
+   ========================================================================== */
+.test-patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 0.75rem;
+}
+
+.test-patient-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s ease;
+}
+
+.test-patient-card:hover {
+  border-color: var(--nurse-teal);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
+}
+
+.test-patient-card.has-patients {
+  border-color: #99f6e4;
+  background: #f0fdfa;
+}
+
+.test-patient-name {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #004868;
+  margin-bottom: 0.45rem;
+  line-height: 1.25;
+}
+
+.test-patient-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.test-patient-input {
+  width: 58px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #004868;
+  border: 1.5px solid #94a3b8;
+  border-radius: 6px;
+  padding: 3px 4px;
+  background: #ffffff;
+}
+
+.step-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #004868;
+  transition: all 0.15s;
+}
+
+.step-btn:hover {
+  background: var(--sergas-soft-blue);
+  border-color: var(--sergas-blue);
+  color: var(--sergas-blue);
+}
+
+.breakdown-badge {
+  display: inline-block;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.72rem;
+  color: #475569;
+  font-family: 'JetBrains Mono', monospace;
+}
+
 /* MODALES */
 .nurse-modal-backdrop {
   position: fixed;

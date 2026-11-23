@@ -179,28 +179,6 @@
           estado: 'transito',
           supervision: 'Javier Seoane (DUE)',
           observaciones: 'Reposición programada para cabina de preparación e inyección.'
-        },
-        {
-          id: 'PED-2026-088',
-          categoria: 'Radiofármaco',
-          descripcion: '18F-FDG Dosis Fraccionadas (Jornada Mañana / Tarde)',
-          proveedor: 'Ciclotrón Galaria (Santiago)',
-          cantidad: '32 dosis calibradas',
-          fecha: '20/11/2026 (07:15 & 11:30)',
-          estado: 'entregado',
-          supervision: 'Radiofarmacia / DUE',
-          observaciones: 'Lote FDG-261120-A recibido con control de calidad 100% conforme.'
-        },
-        {
-          id: 'PED-2026-089',
-          categoria: 'Radiofármaco',
-          descripcion: 'Marcador 68Ga-PSMA (Recidiva prostática bioquímica)',
-          proveedor: 'Curium / Ciclotrón Galaria',
-          cantidad: '4 viales elución',
-          fecha: '20/11/2026 (08:30)',
-          estado: 'entregado',
-          supervision: 'Radiofarmacia / DUE',
-          observaciones: 'Validado por radiofarmacia; 4 pacientes citados y confirmados.'
         }
       ],
       glucemias: [
@@ -671,7 +649,7 @@
     if (statBadge) {
       statBadge.textContent = `${enCursoCount} En Tránsito`;
     }
-    recalcularFungibles();
+    recalcularFungiblesConsolidados();
   }
 
   const FUNGIBLES_BY_TEST_KEY = 'PET_FUNGIBLES_POR_PRUEBA_V1';
@@ -745,6 +723,18 @@
 
   let fungiblesByTest = loadFungiblesByTest();
   let activeTestType = 'fdg';
+  let editorProtocoloVisible = true;
+
+  // CONTEO AUTOMÁTICO DE PACIENTES POR TIPO DE PRUEBA EN EL DÍA
+  let pacientesDiaPorPrueba = {
+    fdg: 15,
+    fdg_contraste: 3,
+    fdg_endocarditis: 1,
+    psma: 4,
+    colina: 2,
+    dotatoc: 1,
+    mn_conv: 0
+  };
 
   function saveFungiblesByTest() {
     try {
@@ -757,7 +747,14 @@
     if (!fungiblesByTest[activeTestType]) {
       fungiblesByTest[activeTestType] = [];
     }
-    recalcularFungibles();
+    renderEditorMaterialesPrueba();
+  }
+
+  function toggleEditorProtocoloPrueba() {
+    const wrap = document.getElementById('wrapperEditorProtocoloPrueba');
+    if (!wrap) return;
+    editorProtocoloVisible = !editorProtocoloVisible;
+    wrap.style.display = editorProtocoloVisible ? 'block' : 'none';
   }
 
   function updateFungibleParam(idx, field, value) {
@@ -769,7 +766,8 @@
       list[idx][field] = value;
     }
     saveFungiblesByTest();
-    recalcularFungibles();
+    renderEditorMaterialesPrueba();
+    recalcularFungiblesConsolidados();
   }
 
   function agregarFungibleAPrueba() {
@@ -794,8 +792,9 @@
 
     if (nombreEl) nombreEl.value = '';
     saveFungiblesByTest();
-    recalcularFungibles();
-    showToast(`➕ "${nombre}" añadido a ${TEST_TYPE_LABELS[activeTestType] || activeTestType}.`);
+    renderEditorMaterialesPrueba();
+    recalcularFungiblesConsolidados();
+    showToast(`➕ "${nombre}" añadido al protocolo de ${TEST_TYPE_LABELS[activeTestType] || activeTestType}.`);
   }
 
   function eliminarFungibleDePrueba(idx) {
@@ -803,130 +802,389 @@
     if (!list || !list[idx]) return;
     const removed = list.splice(idx, 1);
     saveFungiblesByTest();
-    recalcularFungibles();
+    renderEditorMaterialesPrueba();
+    recalcularFungiblesConsolidados();
     if (removed[0]) showToast(`🗑️ "${removed[0].nombre}" quitado de esta prueba.`);
   }
 
-  function computeFungiblesPlan() {
-    const selTest = document.getElementById('selectTipoPruebaFungible');
-    if (selTest && selTest.value) activeTestType = selTest.value;
+  // 1. SINCRONIZAR Y CONTAR PACIENTES DEL DÍA AUTOMÁTICAMENTE DESDE LA AGENDA
+  function sincronizarPacientesDelDia(fechaFiltro) {
+    let citados = [];
+    try {
+      const v4 = JSON.parse(localStorage.getItem('PET_DATABASE_MASTER_V4') || '[]');
+      if (Array.isArray(v4) && v4.length > 0) citados = v4;
+    } catch (_) {}
 
-    const pacientesDia = Math.max(0, parseInt(document.getElementById('calcPacientesDia')?.value || '20', 10) || 0);
-    const turnosDia = Math.max(0, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 0);
-    const dias = Math.max(1, parseInt(document.getElementById('calcDiasPedido')?.value || '5', 10) || 1);
-    const margen = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
+    if (citados.length === 0) {
+      try {
+        const tr = JSON.parse(localStorage.getItem('PET_TRIAGE_CITED_PATIENTS_V1') || '[]');
+        if (Array.isArray(tr) && tr.length > 0) citados = tr;
+      } catch (_) {}
+    }
 
-    const factor = 1 + margen / 100;
-    const list = fungiblesByTest[activeTestType] || [];
+    if (citados.length === 0 && typeof window.PETICIONES_DATABASE_SEED !== 'undefined' && Array.isArray(window.PETICIONES_DATABASE_SEED)) {
+      citados = window.PETICIONES_DATABASE_SEED;
+    }
 
-    const items = list.map((cfg, idx) => {
-      const baseDia = cfg.scope === 'turno' ? turnosDia : pacientesDia;
-      const dia = Math.ceil(baseDia * cfg.ratio);
-      const totalPedido = Math.ceil(baseDia * cfg.ratio * dias * factor);
-      return {
-        ...cfg,
-        idx,
-        dia,
-        totalPedido
-      };
-    });
-
-    return {
-      testType: activeTestType,
-      testLabel: TEST_TYPE_LABELS[activeTestType] || activeTestType,
-      pacientesDia,
-      turnosDia,
-      dias,
-      margen,
-      items
+    const nuevosConteos = {
+      fdg: 0,
+      fdg_contraste: 0,
+      fdg_endocarditis: 0,
+      psma: 0,
+      colina: 0,
+      dotatoc: 0,
+      mn_conv: 0
     };
+
+    let pacientesEncontrados = 0;
+
+    if (citados.length > 0) {
+      citados.forEach(p => {
+        const est = (p["Tipo de Estudio PET Solicitado"] || p.tipo_estudio || p.estudio || p.protocolo || "").toLowerCase();
+        if (!est) return;
+
+        if (est.includes("contraste") || est.includes("contrastada")) {
+          nuevosConteos.fdg_contraste++;
+          pacientesEncontrados++;
+        } else if (est.includes("endocarditis") || est.includes("hep")) {
+          nuevosConteos.fdg_endocarditis++;
+          pacientesEncontrados++;
+        } else if (est.includes("psma")) {
+          nuevosConteos.psma++;
+          pacientesEncontrados++;
+        } else if (est.includes("colina") || est.includes("fluorcolina") || est.includes("paratiroides")) {
+          nuevosConteos.colina++;
+          pacientesEncontrados++;
+        } else if (est.includes("dotatoc") || est.includes("dotatate") || est.includes("somatostatina") || est.includes("neuroendocrin")) {
+          nuevosConteos.dotatoc++;
+          pacientesEncontrados++;
+        } else if (est.includes("medicina nuclear") || est.includes("spect") || est.includes("gammagraf")) {
+          nuevosConteos.mn_conv++;
+          pacientesEncontrados++;
+        } else if (est.includes("fdg") || est.includes("oncológ") || est.includes("linfoma") || est.includes("pulmón")) {
+          nuevosConteos.fdg++;
+          pacientesEncontrados++;
+        }
+      });
+    }
+
+    // Si la agenda real devuelve pacientes se usa, sino se mantienen las medias clínicas del servicio
+    if (pacientesEncontrados >= 5) {
+      pacientesDiaPorPrueba = nuevosConteos;
+      showToast(`🔄 Agenda leída: ${pacientesEncontrados} pacientes distribuidos por tipo de prueba.`);
+    } else {
+      pacientesDiaPorPrueba = {
+        fdg: 15,
+        fdg_contraste: 3,
+        fdg_endocarditis: 1,
+        psma: 4,
+        colina: 2,
+        dotatoc: 1,
+        mn_conv: 0
+      };
+      showToast(`⚡ Conteo diario de pacientes inicializado (26 pacientes en 2 turnos).`);
+    }
+
+    renderContadoresPacientesPorPrueba();
+    recalcularFungiblesConsolidados();
   }
 
-  function recalcularFungibles() {
+  function cambiarDiaCalculo(tipo) {
+    if (tipo === 'manana') {
+      pacientesDiaPorPrueba = {
+        fdg: 16,
+        fdg_contraste: 4,
+        fdg_endocarditis: 0,
+        psma: 3,
+        colina: 3,
+        dotatoc: 1,
+        mn_conv: 0
+      };
+      showToast('📅 Citas previstas para Mañana cargadas.');
+    } else if (tipo === 'custom') {
+      const fecha = prompt('Introduce la fecha a calcular (DD/MM/AAAA):', new Date().toLocaleDateString('es-ES'));
+      if (fecha) {
+        showToast(`📆 Fecha seleccionada: ${fecha}. Puedes ajustar los pacientes de cada prueba.`);
+      }
+    } else {
+      sincronizarPacientesDelDia('hoy');
+      return;
+    }
+    renderContadoresPacientesPorPrueba();
+    recalcularFungiblesConsolidados();
+  }
+
+  function cambiarPacientesPrueba(tipo, deltaOrVal) {
+    if (typeof deltaOrVal === 'number') {
+      pacientesDiaPorPrueba[tipo] = Math.max(0, (pacientesDiaPorPrueba[tipo] || 0) + deltaOrVal);
+    } else {
+      pacientesDiaPorPrueba[tipo] = Math.max(0, parseInt(deltaOrVal, 10) || 0);
+    }
+    renderContadoresPacientesPorPrueba();
+    recalcularFungiblesConsolidados();
+  }
+
+  // 2. RENDERIZAR LAS TARJETAS CON LOS CONTADORES DE CADA PRUEBA
+  function renderContadoresPacientesPorPrueba() {
+    const contenedor = document.getElementById('contenedorContadoresPacientesPorPrueba');
+    if (!contenedor) return;
+
+    let totalPacientes = 0;
+    const tipos = Object.keys(TEST_TYPE_LABELS);
+
+    contenedor.innerHTML = tipos.map(key => {
+      const cant = pacientesDiaPorPrueba[key] || 0;
+      totalPacientes += cant;
+      const isSelected = activeTestType === key;
+      const hasPatients = cant > 0;
+
+      return `
+        <div class="test-patient-card ${hasPatients ? 'has-patients' : ''}" style="${isSelected ? 'border-color:var(--nurse-teal); background:#f0fdfa;' : ''}">
+          <div class="test-patient-name" title="${escapeHTML(TEST_TYPE_LABELS[key])}">
+            ${escapeHTML(TEST_TYPE_LABELS[key])}
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+            <div class="test-patient-stepper">
+              <button type="button" class="step-btn no-print" onclick="window.supervisionApp.cambiarPacientesPrueba('${key}', -1)">−</button>
+              <input type="number" min="0" max="60" value="${cant}" class="test-patient-input"
+                onchange="window.supervisionApp.cambiarPacientesPrueba('${key}', this.value)"
+                title="Número de pacientes de esta prueba en el día">
+              <button type="button" class="step-btn no-print" onclick="window.supervisionApp.cambiarPacientesPrueba('${key}', 1)">+</button>
+            </div>
+            <button type="button" class="btn-nurse btn-nurse-outline no-print" style="padding:2px 6px; font-size:0.68rem; border-color:#cbd5e1;"
+              onclick="window.supervisionApp.onCambioTipoPruebaFungible('${key}')" title="Ver qué material gasta esta prueba">
+              ⚙️
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const turnosDia = Math.max(1, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 2);
+    const badgeTot = document.getElementById('badgeTotalPacientesDia');
+    if (badgeTot) {
+      badgeTot.textContent = `${totalPacientes} Pacientes (${turnosDia} Turnos)`;
+    }
+  }
+
+  // 3. EDITOR DEL PROTOCOLO DE MATERIALES DE LA PRUEBA SELECCIONADA
+  function renderEditorMaterialesPrueba() {
+    const sel = document.getElementById('selectTipoPruebaFungible');
+    if (sel && sel.value !== activeTestType) sel.value = activeTestType;
+
     const tbody = document.getElementById('tablaCalculoFungiblesBody');
     if (!tbody) return;
 
-    const plan = computeFungiblesPlan();
-    const thTotal = document.getElementById('thCalcTotalDias');
-    if (thTotal) {
-      thTotal.textContent = `Total ${plan.dias} ${plan.dias === 1 ? 'Día' : 'Días'} (+${plan.margen}%)`;
-    }
-
-    if (plan.items.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:1rem;">No hay materiales configurados para esta prueba. Añade uno arriba.</td></tr>';
+    const list = fungiblesByTest[activeTestType] || [];
+    if (list.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:0.8rem;">No hay materiales configurados para esta prueba. Añade uno arriba.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = plan.items.map(it => `
+    tbody.innerHTML = list.map((it, idx) => `
       <tr>
         <td><strong>${escapeHTML(it.nombre)}</strong></td>
         <td>
-          <select class="period-select" style="padding:4px 8px; font-size:0.78rem; background:#fff;"
-            onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'scope', this.value)">
+          <select class="period-select" style="padding:3px 6px; font-size:0.75rem; background:#fff;"
+            onchange="window.supervisionApp.updateFungibleParam(${idx}, 'scope', this.value)">
             <option value="paciente" ${it.scope === 'paciente' ? 'selected' : ''}>👤 Por Paciente</option>
             <option value="turno" ${it.scope === 'turno' ? 'selected' : ''}>⏱️ Por Turno</option>
           </select>
         </td>
         <td>
           <input type="number" step="0.5" min="0" value="${it.ratio}"
-            style="width:68px; padding:4px 6px; border:1px solid #cbd5e1; border-radius:6px; font-family:'JetBrains Mono',monospace; font-weight:700;"
-            onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'ratio', this.value)">
+            style="width:65px; padding:3px 6px; border:1px solid #cbd5e1; border-radius:6px; font-family:'JetBrains Mono',monospace; font-weight:700;"
+            onchange="window.supervisionApp.updateFungibleParam(${idx}, 'ratio', this.value)">
         </td>
         <td>
-          <select class="period-select" style="padding:4px 8px; font-size:0.78rem; background:#fff;"
-            onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'canal', this.value)">
+          <select class="period-select" style="padding:3px 6px; font-size:0.75rem; background:#fff;"
+            onchange="window.supervisionApp.updateFungibleParam(${idx}, 'canal', this.value)">
             <option value="GALARIA" ${it.canal === 'GALARIA' ? 'selected' : ''}>🔵 GALARIA</option>
             <option value="SERGAS" ${it.canal === 'SERGAS' ? 'selected' : ''}>🟢 SERGAS (LOGAS)</option>
           </select>
         </td>
-        <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#004868;">${it.dia} uds</td>
-        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">${it.totalPedido} uds</td>
         <td class="no-print">
-          <button type="button" class="btn-nurse btn-nurse-outline" style="padding:2px 8px; font-size:0.72rem; color:#dc2626; border-color:#fecaca;"
-            onclick="window.supervisionApp.eliminarFungibleDePrueba(${it.idx})">🗑️</button>
+          <button type="button" class="btn-nurse btn-nurse-outline" style="padding:2px 6px; font-size:0.7rem; color:#dc2626; border-color:#fecaca;"
+            onclick="window.supervisionApp.eliminarFungibleDePrueba(${idx})" title="Eliminar material">🗑️</button>
         </td>
       </tr>
     `).join('');
   }
 
-  function generarPedidoDesdeCalculadora(canal) {
-    const plan = computeFungiblesPlan();
-    const filtered = plan.items.filter(it => it.canal === canal);
-    if (filtered.length === 0) {
-      showToast(`⚠️ No hay materiales asignados a ${canal} en esta prueba.`);
+  // 4. CÁLCULO TOTAL CONSOLIDADO DEL DÍA (SUMA DE TODAS LAS PRUEBAS Y PACIENTES)
+  function recalcularFungiblesConsolidados() {
+    renderContadoresPacientesPorPrueba();
+    renderEditorMaterialesPrueba();
+
+    const tbody = document.getElementById('tablaTotalConsolidadoDiaBody');
+    if (!tbody) return;
+
+    const turnosDia = Math.max(1, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 2);
+    const margenPct = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
+    const factorMargen = 1 + (margenPct / 100);
+
+    // Mapa acumulador de materiales por clave única (nombre + canal)
+    const consolidado = {};
+    const turnosContabilizadosPorMaterial = {};
+
+    Object.keys(pacientesDiaPorPrueba).forEach(testKey => {
+      const numPacientes = pacientesDiaPorPrueba[testKey] || 0;
+      const materiales = fungiblesByTest[testKey] || [];
+
+      materiales.forEach(mat => {
+        const matKey = `${mat.nombre}___${mat.canal}`;
+        if (!consolidado[matKey]) {
+          consolidado[matKey] = {
+            nombre: mat.nombre,
+            canal: mat.canal,
+            consumoBase: 0,
+            desglose: []
+          };
+        }
+
+        if (mat.scope === 'paciente') {
+          if (numPacientes > 0 && mat.ratio > 0) {
+            const gastoPrueba = numPacientes * mat.ratio;
+            consolidado[matKey].consumoBase += gastoPrueba;
+            consolidado[matKey].desglose.push(`${numPacientes} pac. ${TEST_TYPE_LABELS[testKey]?.split(' ')[0] || testKey}`);
+          }
+        } else if (mat.scope === 'turno') {
+          // El gasto por turno se aplica una sola vez por jornada para ese material en el tomógrafo
+          if (!turnosContabilizadosPorMaterial[matKey]) {
+            const gastoTurno = turnosDia * mat.ratio;
+            consolidado[matKey].consumoBase += gastoTurno;
+            consolidado[matKey].desglose.push(`${turnosDia} turnos`);
+            turnosContabilizadosPorMaterial[matKey] = true;
+          }
+        }
+      });
+    });
+
+    const items = Object.values(consolidado).filter(it => it.consumoBase > 0);
+
+    let totalGalaria = 0;
+    let totalSergas = 0;
+
+    items.forEach(it => {
+      it.totalPedido = Math.ceil(it.consumoBase * factorMargen);
+      if (it.canal === 'GALARIA') totalGalaria += it.totalPedido;
+      else totalSergas += it.totalPedido;
+    });
+
+    const badgeGal = document.getElementById('badgeTotalItemsGalaria');
+    if (badgeGal) badgeGal.textContent = `🔵 Galaria: ${totalGalaria} uds`;
+    const badgeSer = document.getElementById('badgeTotalItemsSergas');
+    if (badgeSer) badgeSer.textContent = `🟢 SERGAS: ${totalSergas} uds`;
+
+    if (items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#94a3b8; padding:1.25rem;">No hay consumo para este día (0 pacientes citados). Introduce el número de pacientes arriba.</td></tr>';
       return;
     }
 
-    const resumenLineas = filtered.map(it => `${it.nombre}: ${it.totalPedido} uds`).join(' · ');
+    tbody.innerHTML = items.map(it => `
+      <tr>
+        <td><strong>${escapeHTML(it.nombre)}</strong></td>
+        <td>
+          <span class="status-badge ${it.canal === 'GALARIA' ? 'badge-info' : 'badge-ok'}">
+            ${it.canal === 'GALARIA' ? '🔵 GALARIA' : '🟢 SERGAS (LOGAS)'}
+          </span>
+        </td>
+        <td>
+          <span class="breakdown-badge">${escapeHTML(it.desglose.join(' + '))}</span>
+        </td>
+        <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#004868;">
+          ${Math.round(it.consumoBase)} uds
+        </td>
+        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669; font-size:1rem;">
+          ${it.totalPedido} uds
+        </td>
+        <td class="no-print">
+          <button type="button" class="btn-nurse btn-nurse-outline" style="padding:2px 8px; font-size:0.72rem;"
+            onclick="window.supervisionApp.abrirModalNuevoPedido('${it.canal}')">
+            + Añadir a Pedido
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // 5. GENERAR EL PEDIDO DEL DÍA CONSOLIDADO CON UN CLIC (GALARIA O SERGAS)
+  function generarPedidoDiaConsolidado(canal) {
+    const turnosDia = Math.max(1, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 2);
+    const margenPct = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
+    const factorMargen = 1 + (margenPct / 100);
+
+    const consolidado = {};
+    const turnosContabilizados = {};
+    let totalPacientes = 0;
+
+    Object.keys(pacientesDiaPorPrueba).forEach(testKey => {
+      const numPacientes = pacientesDiaPorPrueba[testKey] || 0;
+      totalPacientes += numPacientes;
+      const materiales = fungiblesByTest[testKey] || [];
+
+      materiales.forEach(mat => {
+        if (mat.canal !== canal) return;
+        const matKey = `${mat.nombre}___${mat.canal}`;
+        if (!consolidado[matKey]) {
+          consolidado[matKey] = { nombre: mat.nombre, canal: mat.canal, consumoBase: 0 };
+        }
+
+        if (mat.scope === 'paciente') {
+          if (numPacientes > 0 && mat.ratio > 0) {
+            consolidado[matKey].consumoBase += (numPacientes * mat.ratio);
+          }
+        } else if (mat.scope === 'turno') {
+          if (!turnosContabilizados[matKey]) {
+            consolidado[matKey].consumoBase += (turnosDia * mat.ratio);
+            turnosContabilizados[matKey] = true;
+          }
+        }
+      });
+    });
+
+    const items = Object.values(consolidado).filter(x => x.consumoBase > 0);
+    if (items.length === 0) {
+      showToast(`⚠️ No hay materiales calculados para ${canal} en la jornada actual.`);
+      return;
+    }
+
+    items.forEach(it => {
+      it.totalPedido = Math.ceil(it.consumoBase * factorMargen);
+    });
+
+    const totalUnidades = items.reduce((acc, x) => acc + x.totalPedido, 0);
+    const resumenLineas = items.map(x => `${x.nombre}: ${x.totalPedido} uds`).join(' · ');
     const numPed = Math.floor(100 + Math.random() * 900);
+    const fechaHoy = new Date().toLocaleDateString('es-ES');
 
     const nuevo = {
       id: `${canal === 'GALARIA' ? 'GAL' : 'SER'}-2026-${numPed}`,
       canal,
-      categoria: `Fungibles ${plan.testLabel}`,
-      descripcion: `Pedido ${plan.dias}d (${plan.pacientesDia} pac/día · ${plan.turnosDia} turnos/día): ${resumenLineas}`,
+      categoria: `Fungibles Diarios (${canal})`,
+      descripcion: `Consumo Jornada (${totalPacientes} pac. · ${turnosDia} turnos): ${resumenLineas}`,
       proveedor: canal === 'GALARIA' ? 'Galaria · Logística PET-CT' : 'Almacén Central SERGAS (LOGAS)',
-      cantidad: `${filtered.reduce((acc, x) => acc + x.totalPedido, 0)} uds totales`,
-      fecha: new Date().toLocaleDateString('es-ES') + ` (${plan.dias}d)`,
+      cantidad: `${totalUnidades} uds totales`,
+      fecha: `${fechaHoy} (Día)`,
       estado: 'transito',
       supervision: 'Supervisora de Turno (DUE)',
-      observaciones: `Prueba: ${plan.testLabel}. Margen +${plan.margen}%.`
+      observaciones: `Cálculo automático del día con margen +${margenPct}%.`
     };
 
     state.pedidos.unshift(nuevo);
     saveNurseData();
-    renderAll();
+    renderPedidosTable();
     cambiarTab('pedidos');
 
     if (canal === 'SERGAS') {
-      const textoLogas = `PEDIDO LOGAS SERGAS — ${plan.testLabel} (${plan.dias} días · ${plan.pacientesDia} pac/día · ${plan.turnosDia} turnos/día):\n` +
-        filtered.map(it => `- ${it.nombre}: ${it.totalPedido} uds`).join('\n');
+      const textoLogas = `PEDIDO SERGAS LOGAS — JORNADA ${fechaHoy} (${totalPacientes} pacientes · ${turnosDia} turnos):\n` +
+        items.map(it => `- ${it.nombre}: ${it.totalPedido} uds`).join('\n');
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textoLogas).catch(() => {});
       }
-      showToast('🟢 Pedido SERGAS creado y copiado al portapapeles para pegar en LOGAS.');
+      showToast('🟢 Pedido SERGAS generado y copiado al portapapeles para pegar en LOGAS.');
     } else {
-      showToast('🔵 Pedido GALARIA creado con los fungibles de esta prueba.');
+      showToast('🔵 Pedido GALARIA generado con todos los fungibles del día.');
     }
   }
 
@@ -2138,6 +2396,14 @@
       guardarNuevoPedido,
       marcarPedidoEntregado,
       recalcularFungibles,
+      recalcularFungiblesConsolidados,
+      sincronizarPacientesDelDia,
+      cambiarDiaCalculo,
+      cambiarPacientesPrueba,
+      generarPedidoDiaConsolidado,
+      toggleEditorProtocoloPrueba,
+      renderEditorMaterialesPrueba,
+      renderContadoresPacientesPorPrueba,
       updateFungibleParam,
       onCambioTipoPruebaFungible,
       agregarFungibleAPrueba,
