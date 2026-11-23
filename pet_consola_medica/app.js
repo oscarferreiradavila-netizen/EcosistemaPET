@@ -108,6 +108,8 @@
     elements.inputCustomRange = document.getElementById('inputCustomRange');
     elements.inputDiureticMinutes = document.getElementById('inputDiureticMinutes');
     elements.inputContrastBoxMinutes = document.getElementById('inputContrastBoxMinutes');
+    elements.selectMedicacionPautada = document.getElementById('selectMedicacionPautada');
+    elements.inputMedicacionPautadaCustom = document.getElementById('inputMedicacionPautadaCustom');
 
     elements.txtDoctorNotes = document.getElementById('txtDoctorNotes');
     elements.selectDoctorSign = document.getElementById('selectDoctorSign');
@@ -2256,6 +2258,13 @@ setInterval(() => {
       elements.inputContrastBoxMinutes.value = existing.contrastBoxMinutes || existing.contrastPreMinutes || '15';
     }
 
+    if (elements.inputMedicacionPautadaCustom) {
+      elements.inputMedicacionPautadaCustom.value = existing.medicacionPautada || '';
+    }
+    if (elements.selectMedicacionPautada) {
+      elements.selectMedicacionPautada.value = existing.medicacionPautada || '';
+    }
+
 if (elements.txtDoctorNotes) {
   let docNotes = existing.doctorNotes || '';
   if (patient.noTriable && !docNotes.includes('INCIDENCIA DE TRIAJE')) {
@@ -2433,6 +2442,10 @@ if (elements.txtTardiaInstructions) {
     const contrastType = getSelectedRadioValue('radioContrast') || 'sin_contraste';
     const contrastBoxMinutes = elements.inputContrastBoxMinutes ? (parseInt(elements.inputContrastBoxMinutes.value, 10) || 15) : 15;
 
+    const medCustom = elements.inputMedicacionPautadaCustom ? elements.inputMedicacionPautadaCustom.value.trim() : '';
+    const medSel = elements.selectMedicacionPautada ? elements.selectMedicacionPautada.value : '';
+    const medicacionPautada = medCustom || (medSel !== 'otra' ? medSel : '');
+
 const tardia = getSelectedRadioValue('radioTardia') || 'no';
 const tardiaInstructions = elements.txtTardiaInstructions ? elements.txtTardiaInstructions.value.trim() : '';
 
@@ -2462,6 +2475,7 @@ const doctorSign = elements.selectDoctorSign ? elements.selectDoctorSign.value :
       customRangeDetails: customRangeDetails,
       hydration: hydration,
       diuretic: diuretic,
+      medicacionPautada: medicacionPautada,
       contrastType: contrastType,
       contrastBoxMinutes: contrastBoxMinutes,
       // Retrocompatibilidad con otros módulos y sistemas

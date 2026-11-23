@@ -1008,6 +1008,39 @@
               </div>
             </div>
 
+            <!-- C) OTRAS MEDICACIONES PAUTADAS POR EL MÉDICO (FARMACIA SERGAS / SUPERVISIÓN) -->
+            <div class="med-subgroup" style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:0.85rem 1rem;">
+              <div class="med-subgroup-title">
+                <span style="display:flex; align-items:center; gap:6px;">
+                  <span>💊</span>
+                  <strong>C) Medicación Pautada en Protocolo (Pasa automáticamente a Pedidos de Supervisión):</strong>
+                </span>
+                <span style="font-size:0.75rem; color:#0f766e; font-weight:700;">Farmacia Hospitalaria SERGAS</span>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.65rem; margin-top:0.4rem;">
+                <div>
+                  <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:3px;">Fármaco Predefinido:</label>
+                  <select id="selectMedicacionPautada" class="period-select" style="width:100%; background:#fff; font-size:0.8rem;"
+                    onchange="if (this.value !== 'otra' && this.value !== '') document.getElementById('inputMedicacionPautadaCustom').value = this.value;">
+                    <option value="">-- Ninguna medicación adicional --</option>
+                    <option value="Diazepam 5 mg oral (Inhibir grasa parda)">Diazepam 5 mg oral (Inhibir grasa parda)</option>
+                    <option value="Dexclorfeniramina (Polaramine) 5 mg IV (Profilaxis alérgica)">Dexclorfeniramina (Polaramine) 5 mg IV (Profilaxis)</option>
+                    <option value="Metilprednisolona (Urbason) 40 mg IV (Profilaxis alérgica)">Metilprednisolona (Urbason) 40 mg IV (Profilaxis)</option>
+                    <option value="Insulina Rápida 2-4 UI SC (Rescate glucemia)">Insulina Rápida 2-4 UI SC (Rescate glucémico)</option>
+                    <option value="Suero Glucosado 5% 250 mL (Rescate hipoglucemia)">Suero Glucosado 5% 250 mL (Rescate hipoglucemia)</option>
+                    <option value="Atropina 0.5 mg IV (Bradicardia / Síncope)">Atropina 0.5 mg IV (Bradicardia / Síncope)</option>
+                    <option value="Paracetamol 1g IV (Analgesia)">Paracetamol 1g IV (Analgesia)</option>
+                    <option value="otra">Otra medicación (escribir a la derecha)...</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:3px;">Detalle / Dosis / Vía:</label>
+                  <input type="text" id="inputMedicacionPautadaCustom" class="period-select" style="width:100%; background:#fff; font-size:0.8rem;"
+                    placeholder="Ej: Diazepam 5 mg VO 30m antes de inyección...">
+                </div>
+              </div>
+            </div>
+
             <!-- OBSERVACIONES EN TEXTO LIBRE -->
             <div style="margin-top: 0.2rem;">
               <label for="txtDoctorNotes"

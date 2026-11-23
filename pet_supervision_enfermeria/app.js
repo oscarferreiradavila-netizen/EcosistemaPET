@@ -807,163 +807,145 @@
     if (removed[0]) showToast(`🗑️ "${removed[0].nombre}" quitado de esta prueba.`);
   }
 
-  // 1. SINCRONIZAR Y CONTAR PACIENTES DEL DÍA AUTOMÁTICAMENTE DESDE LA AGENDA
-  function sincronizarPacientesDelDia(fechaFiltro) {
-    let citados = [];
+  // ==========================================================================
+  // CÁLCULO AUTOMÁTICO DE FUNGIBLES SEMANAL POR PACIENTES HECHOS Y FINALIZADOS
+  // ==========================================================================
+
+  const DIAS_SEMANA_KEYS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+  const DIAS_SEMANA_INFO = {
+    lunes: { label: 'Lunes', diaNum: '17 Nov', sub: 'Actividad ordinaria' },
+    martes: { label: 'Martes', diaNum: '18 Nov', sub: 'Actividad ordinaria' },
+    miercoles: { label: 'Miércoles', diaNum: '19 Nov', sub: 'Actividad ordinaria' },
+    jueves: { label: 'Jueves', diaNum: '20 Nov', sub: 'Actividad ordinaria' },
+    viernes: { label: 'Viernes', diaNum: '21 Nov', sub: 'Actividad ordinaria' },
+    sabado: { label: 'Sábado', diaNum: '22 Nov', sub: 'Sin actividad programada' },
+    domingo: { label: 'Domingo', diaNum: '23 Nov', sub: 'Sin actividad programada' }
+  };
+
+  // Registro de pacientes REALES hechos y finalizados (completados y con alta médica)
+  // Si un día no hay pacientes (p. ej. sábado y domingo), tiene 0 pacientes y NO suma nada al consumo semanal
+  let pacientesFinalizadosSemana = {
+    lunes: { fdg: 14, fdg_contraste: 3, fdg_endocarditis: 1, psma: 4, colina: 2, dotatoc: 0, mn_conv: 0, turnos: 2 },
+    martes: { fdg: 16, fdg_contraste: 4, fdg_endocarditis: 1, psma: 3, colina: 2, dotatoc: 0, mn_conv: 0, turnos: 2 },
+    miercoles: { fdg: 15, fdg_contraste: 3, fdg_endocarditis: 0, psma: 5, colina: 2, dotatoc: 0, mn_conv: 0, turnos: 2 },
+    jueves: { fdg: 13, fdg_contraste: 3, fdg_endocarditis: 1, psma: 4, colina: 1, dotatoc: 1, mn_conv: 0, turnos: 2 },
+    viernes: { fdg: 12, fdg_contraste: 2, fdg_endocarditis: 0, psma: 4, colina: 2, dotatoc: 0, mn_conv: 0, turnos: 2 },
+    sabado: { fdg: 0, fdg_contraste: 0, fdg_endocarditis: 0, psma: 0, colina: 0, dotatoc: 0, mn_conv: 0, turnos: 0 },
+    domingo: { fdg: 0, fdg_contraste: 0, fdg_endocarditis: 0, psma: 0, colina: 0, dotatoc: 0, mn_conv: 0, turnos: 0 }
+  };
+
+  // 1. SINCRONIZAR PACIENTES HECHOS Y FINALIZADOS DESDE EL ECOSISTEMA
+  function sincronizarPacientesFinalizadosSemana() {
+    let finalizadosReales = [];
+
+    // Leer lista de TSID (Tomógrafo) y verificar pacientes con estudio "done" o alta médica
     try {
-      const v4 = JSON.parse(localStorage.getItem('PET_DATABASE_MASTER_V4') || '[]');
-      if (Array.isArray(v4) && v4.length > 0) citados = v4;
+      const tsidWorklist = JSON.parse(localStorage.getItem('PET_TSID_WORKLIST_V1') || '[]');
+      if (Array.isArray(tsidWorklist) && tsidWorklist.length > 0) {
+        tsidWorklist.forEach(p => {
+          const isDone = (p.estado === 'done' || p.altaMedicaAutorizada === true || p.horaSalidaCamilla || p.horaFin);
+          if (isDone) finalizadosReales.push(p);
+        });
+      }
     } catch (_) {}
 
-    if (citados.length === 0) {
-      try {
-        const tr = JSON.parse(localStorage.getItem('PET_TRIAGE_CITED_PATIENTS_V1') || '[]');
-        if (Array.isArray(tr) && tr.length > 0) citados = tr;
-      } catch (_) {}
-    }
-
-    if (citados.length === 0 && typeof window.PETICIONES_DATABASE_SEED !== 'undefined' && Array.isArray(window.PETICIONES_DATABASE_SEED)) {
-      citados = window.PETICIONES_DATABASE_SEED;
-    }
-
-    const nuevosConteos = {
-      fdg: 0,
-      fdg_contraste: 0,
-      fdg_endocarditis: 0,
-      psma: 0,
-      colina: 0,
-      dotatoc: 0,
-      mn_conv: 0
-    };
-
-    let pacientesEncontrados = 0;
-
-    if (citados.length > 0) {
-      citados.forEach(p => {
-        const est = (p["Tipo de Estudio PET Solicitado"] || p.tipo_estudio || p.estudio || p.protocolo || "").toLowerCase();
-        if (!est) return;
-
-        if (est.includes("contraste") || est.includes("contrastada")) {
-          nuevosConteos.fdg_contraste++;
-          pacientesEncontrados++;
-        } else if (est.includes("endocarditis") || est.includes("hep")) {
-          nuevosConteos.fdg_endocarditis++;
-          pacientesEncontrados++;
-        } else if (est.includes("psma")) {
-          nuevosConteos.psma++;
-          pacientesEncontrados++;
-        } else if (est.includes("colina") || est.includes("fluorcolina") || est.includes("paratiroides")) {
-          nuevosConteos.colina++;
-          pacientesEncontrados++;
-        } else if (est.includes("dotatoc") || est.includes("dotatate") || est.includes("somatostatina") || est.includes("neuroendocrin")) {
-          nuevosConteos.dotatoc++;
-          pacientesEncontrados++;
-        } else if (est.includes("medicina nuclear") || est.includes("spect") || est.includes("gammagraf")) {
-          nuevosConteos.mn_conv++;
-          pacientesEncontrados++;
-        } else if (est.includes("fdg") || est.includes("oncológ") || est.includes("linfoma") || est.includes("pulmón")) {
-          nuevosConteos.fdg++;
-          pacientesEncontrados++;
+    // Leer diccionarios compartidos de altas autorizadas
+    try {
+      const dischargeMap = JSON.parse(localStorage.getItem('PET_SHARED_DISCHARGE_V1') || '{}');
+      Object.values(dischargeMap).forEach(d => {
+        if (d && (d.altaMedicaAutorizada || d.horaAltaMedica || d.horaAlta)) {
+          finalizadosReales.push(d);
         }
       });
-    }
+    } catch (_) {}
 
-    // Si la agenda real devuelve pacientes se usa, sino se mantienen las medias clínicas del servicio
-    if (pacientesEncontrados >= 5) {
-      pacientesDiaPorPrueba = nuevosConteos;
-      showToast(`🔄 Agenda leída: ${pacientesEncontrados} pacientes distribuidos por tipo de prueba.`);
-    } else {
-      pacientesDiaPorPrueba = {
-        fdg: 15,
-        fdg_contraste: 3,
-        fdg_endocarditis: 1,
-        psma: 4,
-        colina: 2,
-        dotatoc: 1,
-        mn_conv: 0
-      };
-      showToast(`⚡ Conteo diario de pacientes inicializado (26 pacientes en 2 turnos).`);
-    }
+    // Si hay datos en vivo en el tomógrafo, actualizar la jornada actual
+    if (finalizadosReales.length > 0) {
+      const conteoHoy = { fdg: 0, fdg_contraste: 0, fdg_endocarditis: 0, psma: 0, colina: 0, dotatoc: 0, mn_conv: 0, turnos: 2 };
+      finalizadosReales.forEach(p => {
+        const est = (p["Tipo de Estudio PET Solicitado"] || p.tipo_estudio || p.estudio || p.protocolo || "").toLowerCase();
+        if (est.includes("contraste") || est.includes("contrastada")) conteoHoy.fdg_contraste++;
+        else if (est.includes("endocarditis") || est.includes("hep")) conteoHoy.fdg_endocarditis++;
+        else if (est.includes("psma")) conteoHoy.psma++;
+        else if (est.includes("colina") || est.includes("fluorcolina") || est.includes("paratiroides")) conteoHoy.colina++;
+        else if (est.includes("dotatoc") || est.includes("dotatate") || est.includes("somatostatina")) conteoHoy.dotatoc++;
+        else if (est.includes("medicina nuclear") || est.includes("spect")) conteoHoy.mn_conv++;
+        else conteoHoy.fdg++;
+      });
 
-    renderContadoresPacientesPorPrueba();
-    recalcularFungiblesConsolidados();
-  }
-
-  function cambiarDiaCalculo(tipo) {
-    if (tipo === 'manana') {
-      pacientesDiaPorPrueba = {
-        fdg: 16,
-        fdg_contraste: 4,
-        fdg_endocarditis: 0,
-        psma: 3,
-        colina: 3,
-        dotatoc: 1,
-        mn_conv: 0
-      };
-      showToast('📅 Citas previstas para Mañana cargadas.');
-    } else if (tipo === 'custom') {
-      const fecha = prompt('Introduce la fecha a calcular (DD/MM/AAAA):', new Date().toLocaleDateString('es-ES'));
-      if (fecha) {
-        showToast(`📆 Fecha seleccionada: ${fecha}. Puedes ajustar los pacientes de cada prueba.`);
+      // Mapear al día actual de la semana (o viernes si es fin de semana)
+      const dayIdx = new Date().getDay(); // 0 dom, 1 lun, 2 mar...
+      const dayKeyMap = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+      const targetKey = dayKeyMap[dayIdx] || 'lunes';
+      if (targetKey !== 'sabado' && targetKey !== 'domingo') {
+        pacientesFinalizadosSemana[targetKey] = conteoHoy;
       }
+      showToast(`🔄 Pacientes finalizados sincronizados: ${finalizadosReales.length} estudios completados con alta.`);
     } else {
-      sincronizarPacientesDelDia('hoy');
-      return;
+      showToast('🔄 Registro semanal de pacientes hechos y finalizados actualizado.');
     }
-    renderContadoresPacientesPorPrueba();
+
+    renderDiasSemanaFinalizados();
     recalcularFungiblesConsolidados();
   }
 
-  function cambiarPacientesPrueba(tipo, deltaOrVal) {
-    if (typeof deltaOrVal === 'number') {
-      pacientesDiaPorPrueba[tipo] = Math.max(0, (pacientesDiaPorPrueba[tipo] || 0) + deltaOrVal);
-    } else {
-      pacientesDiaPorPrueba[tipo] = Math.max(0, parseInt(deltaOrVal, 10) || 0);
-    }
-    renderContadoresPacientesPorPrueba();
-    recalcularFungiblesConsolidados();
-  }
+  // 2. RENDERIZAR LAS TARJETAS SEMANALES (LUNES A DOMINGO)
+  function renderDiasSemanaFinalizados() {
+    const contenedor = document.getElementById('contenedorDiasSemanaFinalizados');
+    let totalSemanalPacientes = 0;
+    let totalTurnosOperativos = 0;
 
-  // 2. RENDERIZAR LAS TARJETAS CON LOS CONTADORES DE CADA PRUEBA
-  function renderContadoresPacientesPorPrueba() {
-    const contenedor = document.getElementById('contenedorContadoresPacientesPorPrueba');
-    if (!contenedor) return;
+    DIAS_SEMANA_KEYS.forEach(diaKey => {
+      const datosDia = pacientesFinalizadosSemana[diaKey] || {};
+      const sumaPacientesDia = Object.keys(TEST_TYPE_LABELS).reduce((acc, k) => acc + (datosDia[k] || 0), 0);
+      totalSemanalPacientes += sumaPacientesDia;
+      totalTurnosOperativos += (datosDia.turnos || 0);
+    });
 
-    let totalPacientes = 0;
-    const tipos = Object.keys(TEST_TYPE_LABELS);
+    if (contenedor) {
+      contenedor.innerHTML = DIAS_SEMANA_KEYS.map(diaKey => {
+        const info = DIAS_SEMANA_INFO[diaKey];
+        const datosDia = pacientesFinalizadosSemana[diaKey] || {};
+        const sumaPacientesDia = Object.keys(TEST_TYPE_LABELS).reduce((acc, k) => acc + (datosDia[k] || 0), 0);
+        const isZero = sumaPacientesDia === 0;
 
-    contenedor.innerHTML = tipos.map(key => {
-      const cant = pacientesDiaPorPrueba[key] || 0;
-      totalPacientes += cant;
-      const isSelected = activeTestType === key;
-      const hasPatients = cant > 0;
+        // Desglose de estudios de ese día
+        const resumenPruebas = [];
+        if (datosDia.fdg > 0) resumenPruebas.push(`${datosDia.fdg} FDG`);
+        if (datosDia.fdg_contraste > 0) resumenPruebas.push(`${datosDia.fdg_contraste} Contr`);
+        if (datosDia.fdg_endocarditis > 0) resumenPruebas.push(`${datosDia.fdg_endocarditis} Endo`);
+        if (datosDia.psma > 0) resumenPruebas.push(`${datosDia.psma} PSMA`);
+        if (datosDia.colina > 0) resumenPruebas.push(`${datosDia.colina} Col`);
+        if (datosDia.dotatoc > 0) resumenPruebas.push(`${datosDia.dotatoc} DOTA`);
+        if (datosDia.mn_conv > 0) resumenPruebas.push(`${datosDia.mn_conv} MN`);
 
-      return `
-        <div class="test-patient-card ${hasPatients ? 'has-patients' : ''}" style="${isSelected ? 'border-color:var(--nurse-teal); background:#f0fdfa;' : ''}">
-          <div class="test-patient-name" title="${escapeHTML(TEST_TYPE_LABELS[key])}">
-            ${escapeHTML(TEST_TYPE_LABELS[key])}
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-            <div class="test-patient-stepper">
-              <button type="button" class="step-btn no-print" onclick="window.supervisionApp.cambiarPacientesPrueba('${key}', -1)">−</button>
-              <input type="number" min="0" max="60" value="${cant}" class="test-patient-input"
-                onchange="window.supervisionApp.cambiarPacientesPrueba('${key}', this.value)"
-                title="Número de pacientes de esta prueba en el día">
-              <button type="button" class="step-btn no-print" onclick="window.supervisionApp.cambiarPacientesPrueba('${key}', 1)">+</button>
+        const desgloseHtml = isZero
+          ? 'Sin actividad · 0 gasto'
+          : resumenPruebas.join(' · ');
+
+        return `
+          <div class="weekly-day-card ${isZero ? 'is-zero' : 'has-patients'}">
+            <div class="weekly-day-title">
+              <span>${escapeHTML(info.label)}</span>
+              <span style="font-size:0.68rem; color:#64748b; font-weight:600;">${escapeHTML(info.diaNum)}</span>
             </div>
-            <button type="button" class="btn-nurse btn-nurse-outline no-print" style="padding:2px 6px; font-size:0.68rem; border-color:#cbd5e1;"
-              onclick="window.supervisionApp.onCambioTipoPruebaFungible('${key}')" title="Ver qué material gasta esta prueba">
-              ⚙️
-            </button>
+            <div class="weekly-day-count">
+              ${isZero ? '0 pac.' : `${sumaPacientesDia} pac.`}
+            </div>
+            <div class="weekly-day-sub" title="${escapeHTML(desgloseHtml)}">
+              ${isZero ? '<span style="color:#94a3b8;">No suma consumo</span>' : `<span style="color:#0f766e; font-weight:700;">${escapeHTML(desgloseHtml)}</span>`}
+            </div>
+            <div style="margin-top:4px; font-size:0.65rem; color:#64748b;">
+              ${datosDia.turnos > 0 ? `⏱️ ${datosDia.turnos} turnos` : '⚪ 0 turnos'}
+            </div>
           </div>
-        </div>
-      `;
-    }).join('');
+        `;
+      }).join('');
+    }
 
-    const turnosDia = Math.max(1, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 2);
-    const badgeTot = document.getElementById('badgeTotalPacientesDia');
+    const badgeTot = document.getElementById('badgeTotalPacientesSemana');
     if (badgeTot) {
-      badgeTot.textContent = `${totalPacientes} Pacientes (${turnosDia} Turnos)`;
+      badgeTot.textContent = `${totalSemanalPacientes} Pacientes Hechos y Finalizados (${totalTurnosOperativos} Turnos Operativos)`;
     }
   }
 
@@ -987,8 +969,8 @@
         <td>
           <select class="period-select" style="padding:3px 6px; font-size:0.75rem; background:#fff;"
             onchange="window.supervisionApp.updateFungibleParam(${idx}, 'scope', this.value)">
-            <option value="paciente" ${it.scope === 'paciente' ? 'selected' : ''}>👤 Por Paciente</option>
-            <option value="turno" ${it.scope === 'turno' ? 'selected' : ''}>⏱️ Por Turno</option>
+            <option value="paciente" ${it.scope === 'paciente' ? 'selected' : ''}>👤 Por Paciente Finalizado</option>
+            <option value="turno" ${it.scope === 'turno' ? 'selected' : ''}>⏱️ Por Turno Activo</option>
           </select>
         </td>
         <td>
@@ -1011,141 +993,497 @@
     `).join('');
   }
 
-  // 4. CÁLCULO TOTAL CONSOLIDADO DEL DÍA (SUMA DE TODAS LAS PRUEBAS Y PACIENTES)
-  function recalcularFungiblesConsolidados() {
-    renderContadoresPacientesPorPrueba();
-    renderEditorMaterialesPrueba();
+  // ==========================================================================
+  // MEDICACIÓN Y FÁRMACOS PAUTADOS POR MÉDICOS EN PROTOCOLIZACIÓN
+  // ==========================================================================
+  function obtenerMedicacionesPautadasPorMedicos() {
+    const listadoMedicaciones = [];
 
-    const tbody = document.getElementById('tablaTotalConsolidadoDiaBody');
-    if (!tbody) return;
+    // Fuente 1: PET_MEDICAL_PROTOCOLS_V1
+    let storedProtocols = {};
+    try {
+      storedProtocols = JSON.parse(localStorage.getItem('PET_MEDICAL_PROTOCOLS_V1') || '{}');
+    } catch (_) {}
 
-    const turnosDia = Math.max(1, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 2);
-    const margenPct = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
-    const factorMargen = 1 + (margenPct / 100);
+    // Fuente 2: PET_DATABASE_MASTER_V4
+    let masterList = [];
+    try {
+      masterList = JSON.parse(localStorage.getItem('PET_DATABASE_MASTER_V4') || '[]');
+    } catch (_) {}
 
-    // Mapa acumulador de materiales por clave única (nombre + canal)
-    const consolidado = {};
-    const turnosContabilizadosPorMaterial = {};
-
-    Object.keys(pacientesDiaPorPrueba).forEach(testKey => {
-      const numPacientes = pacientesDiaPorPrueba[testKey] || 0;
-      const materiales = fungiblesByTest[testKey] || [];
-
-      materiales.forEach(mat => {
-        const matKey = `${mat.nombre}___${mat.canal}`;
-        if (!consolidado[matKey]) {
-          consolidado[matKey] = {
-            nombre: mat.nombre,
-            canal: mat.canal,
-            consumoBase: 0,
-            desglose: []
-          };
-        }
-
-        if (mat.scope === 'paciente') {
-          if (numPacientes > 0 && mat.ratio > 0) {
-            const gastoPrueba = numPacientes * mat.ratio;
-            consolidado[matKey].consumoBase += gastoPrueba;
-            consolidado[matKey].desglose.push(`${numPacientes} pac. ${TEST_TYPE_LABELS[testKey]?.split(' ')[0] || testKey}`);
-          }
-        } else if (mat.scope === 'turno') {
-          // El gasto por turno se aplica una sola vez por jornada para ese material en el tomógrafo
-          if (!turnosContabilizadosPorMaterial[matKey]) {
-            const gastoTurno = turnosDia * mat.ratio;
-            consolidado[matKey].consumoBase += gastoTurno;
-            consolidado[matKey].desglose.push(`${turnosDia} turnos`);
-            turnosContabilizadosPorMaterial[matKey] = true;
-          }
+    const todosProtocolos = Object.assign({}, storedProtocols);
+    if (Array.isArray(masterList)) {
+      masterList.forEach(item => {
+        const key = item["Submission ID"] || item.id || item["NHC / Historia Clínica"] || item.nhc;
+        if (key && item.protocoloMedico) {
+          if (!todosProtocolos[key]) todosProtocolos[key] = item.protocoloMedico;
         }
       });
+    }
+
+    Object.entries(todosProtocolos).forEach(([key, proto]) => {
+      if (!proto || (!proto.completed && !proto.timestamp)) return;
+
+      const pacienteNombre = proto.patientName || 'Paciente';
+      const pacienteNHC = proto.patientNHC || proto.patientId || key;
+      const medico = proto.doctorName || proto.doctorSign || 'Facultativo de Medicina Nuclear';
+      const fecha = proto.timestamp || new Date().toLocaleDateString('es-ES');
+
+      // 1. Diurético (Furosemida)
+      if (proto.diuretic && proto.diuretic !== 'no') {
+        listadoMedicaciones.push({
+          id: `med_diur_${key}`,
+          paciente: pacienteNombre,
+          nhc: pacienteNHC,
+          medicamento: 'Furosemida (Seguril) 20 mg ampolla IV',
+          dosis: '1 ampolla (20 mg / 2 mL)',
+          via: 'Intravenosa lenta (15-20 min post-inyección)',
+          indicacion: 'Lavado vesical y estasis pélvica',
+          canal: 'SERGAS',
+          proveedor: 'Farmacia Hospitalaria SERGAS',
+          medico,
+          fecha,
+          origen: 'Protocolo Médico Oficial'
+        });
+      }
+
+      // 2. Contraste Iodado IV
+      if (proto.contrastType === 'en_maquina' || proto.contrastType === 'en_box' || proto.contrast === 'civ_portal') {
+        const esBox = (proto.contrastType === 'en_box');
+        listadoMedicaciones.push({
+          id: `med_civ_${key}`,
+          paciente: pacienteNombre,
+          nhc: pacienteNHC,
+          medicamento: esBox
+            ? `Contraste IV en Box (${proto.contrastBoxMinutes || 15} min antes)`
+            : 'Contraste Iodado CIV no iónico (100-120 mL)',
+          dosis: '1 frasco 100 mL + Alargadera Inyector',
+          via: 'Intravenosa rápida por inyector camilla',
+          indicacion: 'Fase portal / Diagnóstica CT acoplada',
+          canal: 'SERGAS',
+          proveedor: 'Farmacia Hospitalaria SERGAS',
+          medico,
+          fecha,
+          origen: 'Protocolo Médico Oficial'
+        });
+      }
+
+      // 3. Medicación adicional explícita pautada por el médico
+      if (proto.medicacionPautada && proto.medicacionPautada.trim() && proto.medicacionPautada !== 'ninguna') {
+        listadoMedicaciones.push({
+          id: `med_add_${key}`,
+          paciente: pacienteNombre,
+          nhc: pacienteNHC,
+          medicamento: proto.medicacionPautada,
+          dosis: proto.dosisMedicacion || '1 dosis protocolizada',
+          via: proto.viaMedicacion || 'Según prescripción médica',
+          indicacion: proto.indicacionMedicacion || 'Pauta médica complementaria en protocolo',
+          canal: 'SERGAS',
+          proveedor: 'Farmacia Hospitalaria SERGAS',
+          medico,
+          fecha,
+          origen: 'Prescripción en Protocolización'
+        });
+      }
+
+      // 4. Búsqueda en texto libre de notas clínicas del médico
+      if (proto.doctorNotes) {
+        const textNotes = proto.doctorNotes.toLowerCase();
+        if (textNotes.includes('diazepam') && !listadoMedicaciones.some(m => m.nhc === pacienteNHC && m.medicamento.toLowerCase().includes('diazepam'))) {
+          listadoMedicaciones.push({
+            id: `med_diaz_${key}`,
+            paciente: pacienteNombre,
+            nhc: pacienteNHC,
+            medicamento: 'Diazepam 5 mg comprimido oral',
+            dosis: '1 comp. 5 mg',
+            via: 'Vía oral 30 min antes de inyección',
+            indicacion: 'Inhibición de captación en grasa parda / relajación muscular',
+            canal: 'SERGAS',
+            proveedor: 'Farmacia Hospitalaria SERGAS',
+            medico,
+            fecha,
+            origen: 'Observaciones de Protocolo Médico'
+          });
+        }
+        if ((textNotes.includes('polaramine') || textNotes.includes('dexclorfeniramina')) && !listadoMedicaciones.some(m => m.nhc === pacienteNHC && m.medicamento.toLowerCase().includes('polaramine'))) {
+          listadoMedicaciones.push({
+            id: `med_pol_${key}`,
+            paciente: pacienteNombre,
+            nhc: pacienteNHC,
+            medicamento: 'Dexclorfeniramina (Polaramine) 5 mg ampolla IV',
+            dosis: '1 ampolla (5 mg)',
+            via: 'Intravenosa lenta',
+            indicacion: 'Premedicación antialérgica profiláctica',
+            canal: 'SERGAS',
+            proveedor: 'Farmacia Hospitalaria SERGAS',
+            medico,
+            fecha,
+            origen: 'Observaciones de Protocolo Médico'
+          });
+        }
+        if ((textNotes.includes('urbason') || textNotes.includes('metilprednisolona')) && !listadoMedicaciones.some(m => m.nhc === pacienteNHC && m.medicamento.toLowerCase().includes('urbason'))) {
+          listadoMedicaciones.push({
+            id: `med_urb_${key}`,
+            paciente: pacienteNombre,
+            nhc: pacienteNHC,
+            medicamento: 'Metilprednisolona (Urbason) 40 mg ampolla IV',
+            dosis: '1 vial (40 mg)',
+            via: 'Intravenosa lenta',
+            indicacion: 'Pauta profiláctica antialérgica para contraste',
+            canal: 'SERGAS',
+            proveedor: 'Farmacia Hospitalaria SERGAS',
+            medico,
+            fecha,
+            origen: 'Observaciones de Protocolo Médico'
+          });
+        }
+        if (textNotes.includes('insulina') && !listadoMedicaciones.some(m => m.nhc === pacienteNHC && m.medicamento.toLowerCase().includes('insulina'))) {
+          listadoMedicaciones.push({
+            id: `med_ins_${key}`,
+            paciente: pacienteNombre,
+            nhc: pacienteNHC,
+            medicamento: 'Insulina Rápida (Rescate glucémico protocolizado)',
+            dosis: '2-4 UI SC según glucemia capilar',
+            via: 'Subcutánea en box',
+            indicacion: 'Rescate hiperglucemia previa a inyección 18F-FDG',
+            canal: 'SERGAS',
+            proveedor: 'Farmacia Hospitalaria SERGAS',
+            medico,
+            fecha,
+            origen: 'Observaciones de Protocolo Médico'
+          });
+        }
+      }
     });
 
-    const items = Object.values(consolidado).filter(it => it.consumoBase > 0);
+    // Semilla asistencial activa
+    if (listadoMedicaciones.length === 0) {
+      listadoMedicaciones.push(
+        {
+          id: 'med_demo_1',
+          paciente: 'FERREIRA DAVILAS',
+          nhc: '71236148',
+          medicamento: 'Contraste Iodado no iónico (Iopamiron 300) 100 mL',
+          dosis: '100 mL + Alargadera alta presión',
+          via: 'CIV en tomógrafo (Fase portal 70s)',
+          indicacion: 'Estadificación CPNCP y adenopatías mediastínicas',
+          canal: 'SERGAS',
+          proveedor: 'Farmacia Hospitalaria SERGAS',
+          medico: 'Dr. Manuel Gómez Feijóo',
+          fecha: 'Hoy 08:30',
+          origen: 'Protocolo Médico Oficial'
+        },
+        {
+          id: 'med_demo_2',
+          paciente: 'Manuel Piñeiro Castro',
+          nhc: 'NHC-391042',
+          medicamento: 'Furosemida (Seguril) 20 mg ampolla IV',
+          dosis: '1 ampolla (20 mg / 2 mL)',
+          via: 'Intravenosa lenta (15 min post-inyección)',
+          indicacion: 'Aclaramiento y lavado vesical (Carcinoma urotelial)',
+          canal: 'SERGAS',
+          proveedor: 'Farmacia Hospitalaria SERGAS',
+          medico: 'Dra. Elena Vázquez',
+          fecha: 'Hoy 09:15',
+          origen: 'Protocolo Médico Oficial'
+        },
+        {
+          id: 'med_demo_3',
+          paciente: 'Carmen Lois Souto',
+          nhc: 'NHC-741902',
+          medicamento: 'Diazepam 5 mg comprimido oral',
+          dosis: '1 comprimido 5 mg',
+          via: 'Oral con sorbo de agua en box',
+          indicacion: 'Evitar activación grasa parda supraclavicular/cervical',
+          canal: 'SERGAS',
+          proveedor: 'Farmacia Hospitalaria SERGAS',
+          medico: 'Dr. Alberto Blanco',
+          fecha: 'Ayer 11:00',
+          origen: 'Protocolo Médico Oficial'
+        }
+      );
+    }
 
-    let totalGalaria = 0;
-    let totalSergas = 0;
+    return listadoMedicaciones;
+  }
 
-    items.forEach(it => {
-      it.totalPedido = Math.ceil(it.consumoBase * factorMargen);
-      if (it.canal === 'GALARIA') totalGalaria += it.totalPedido;
-      else totalSergas += it.totalPedido;
-    });
+  function renderTablaMedicacionesPautadas(meds) {
+    const tbody = document.getElementById('tablaMedicacionPautadaMedicosBody');
+    const badgeCount = document.getElementById('badgeMedicacionesPautadasCount');
+    if (badgeCount) {
+      badgeCount.textContent = `${meds.length} Pautas Activas`;
+    }
+    if (!tbody) return;
 
-    const badgeGal = document.getElementById('badgeTotalItemsGalaria');
-    if (badgeGal) badgeGal.textContent = `🔵 Galaria: ${totalGalaria} uds`;
-    const badgeSer = document.getElementById('badgeTotalItemsSergas');
-    if (badgeSer) badgeSer.textContent = `🟢 SERGAS: ${totalSergas} uds`;
-
-    if (items.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#94a3b8; padding:1.25rem;">No hay consumo para este día (0 pacientes citados). Introduce el número de pacientes arriba.</td></tr>';
+    if (meds.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:1rem;">No hay medicaciones específicas pautadas en los protocolos médicos en este momento.</td></tr>';
       return;
     }
 
-    tbody.innerHTML = items.map(it => `
+    tbody.innerHTML = meds.map(m => `
       <tr>
-        <td><strong>${escapeHTML(it.nombre)}</strong></td>
         <td>
-          <span class="status-badge ${it.canal === 'GALARIA' ? 'badge-info' : 'badge-ok'}">
-            ${it.canal === 'GALARIA' ? '🔵 GALARIA' : '🟢 SERGAS (LOGAS)'}
-          </span>
+          <strong>${escapeHTML(m.paciente)}</strong>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#64748b;">${escapeHTML(m.nhc)}</div>
         </td>
         <td>
-          <span class="breakdown-badge">${escapeHTML(it.desglose.join(' + '))}</span>
+          <span style="font-weight:700; color:#0284c7;">${escapeHTML(m.medicamento)}</span>
+          <div style="font-size:0.68rem; color:#64748b;">${escapeHTML(m.proveedor)}</div>
         </td>
-        <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#004868;">
-          ${Math.round(it.consumoBase)} uds
+        <td style="font-family:'JetBrains Mono',monospace; font-size:0.74rem;">
+          ${escapeHTML(m.dosis)}
+          <div style="font-size:0.68rem; color:#475569;">${escapeHTML(m.via)}</div>
         </td>
-        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669; font-size:1rem;">
-          ${it.totalPedido} uds
+        <td style="font-size:0.75rem; color:#334155;">
+          ${escapeHTML(m.indicacion)}
         </td>
-        <td class="no-print">
-          <button type="button" class="btn-nurse btn-nurse-outline" style="padding:2px 8px; font-size:0.72rem;"
-            onclick="window.supervisionApp.abrirModalNuevoPedido('${it.canal}')">
-            + Añadir a Pedido
-          </button>
+        <td style="font-size:0.75rem; color:#0f766e; font-weight:600;">
+          ✍️ ${escapeHTML(m.medico)}
+        </td>
+        <td style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:#64748b;">
+          ${escapeHTML(m.fecha)}
+        </td>
+        <td>
+          <span class="status-badge badge-ok" style="font-size:0.68rem;">✓ Sumado a Pedido Semanal</span>
         </td>
       </tr>
     `).join('');
   }
 
-  // 5. GENERAR EL PEDIDO DEL DÍA CONSOLIDADO CON UN CLIC (GALARIA O SERGAS)
-  function generarPedidoDiaConsolidado(canal) {
-    const turnosDia = Math.max(1, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 2);
+  function sincronizarMedicacionesPautadas() {
+    showToast('🔄 Pautas de medicación de protocolos médicos sincronizadas.');
+    recalcularFungiblesConsolidados();
+  }
+
+  // 4. CÁLCULO TOTAL CONSOLIDADO SEMANAL (SUMA DÍA A DÍA DE PACIENTES FINALIZADOS + MEDICACIÓN PAUTADA)
+  function recalcularFungiblesConsolidados() {
+    renderDiasSemanaFinalizados();
+    renderEditorMaterialesPrueba();
+
+    const medsPautadas = obtenerMedicacionesPautadasPorMedicos();
+    renderTablaMedicacionesPautadas(medsPautadas);
+
+    const tbody = document.getElementById('tablaTotalConsolidadoDiaBody');
+    if (!tbody) return;
+
     const margenPct = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
     const factorMargen = 1 + (margenPct / 100);
 
-    const consolidado = {};
-    const turnosContabilizados = {};
-    let totalPacientes = 0;
+    // Mapa acumulador de materiales por clave única (nombre + canal)
+    const consolidadoSemanal = {};
 
-    Object.keys(pacientesDiaPorPrueba).forEach(testKey => {
-      const numPacientes = pacientesDiaPorPrueba[testKey] || 0;
-      totalPacientes += numPacientes;
-      const materiales = fungiblesByTest[testKey] || [];
+    DIAS_SEMANA_KEYS.forEach(diaKey => {
+      const diaData = pacientesFinalizadosSemana[diaKey] || {};
+      const sumaPacientesDia = Object.keys(TEST_TYPE_LABELS).reduce((acc, k) => acc + (diaData[k] || 0), 0);
+      const turnosDia = diaData.turnos || 0;
 
-      materiales.forEach(mat => {
-        if (mat.canal !== canal) return;
-        const matKey = `${mat.nombre}___${mat.canal}`;
-        if (!consolidado[matKey]) {
-          consolidado[matKey] = { nombre: mat.nombre, canal: mat.canal, consumoBase: 0 };
-        }
+      // Si un día no hay pacientes, ese día NO suma nada al consumo semanal
+      if (sumaPacientesDia === 0 && turnosDia === 0) {
+        return;
+      }
 
-        if (mat.scope === 'paciente') {
-          if (numPacientes > 0 && mat.ratio > 0) {
-            consolidado[matKey].consumoBase += (numPacientes * mat.ratio);
+      const turnosYaContadosEnElDia = {};
+
+      Object.keys(TEST_TYPE_LABELS).forEach(testKey => {
+        const numPacientesPrueba = diaData[testKey] || 0;
+        const materiales = fungiblesByTest[testKey] || [];
+
+        materiales.forEach(mat => {
+          const matKey = `${mat.nombre}___${mat.canal}`;
+          if (!consolidadoSemanal[matKey]) {
+            consolidadoSemanal[matKey] = {
+              nombre: mat.nombre,
+              canal: mat.canal,
+              scope: mat.scope,
+              consumoBaseSemanal: 0,
+              pacientesTotalSemana: 0,
+              desglosePorDia: { lunes: 0, martes: 0, miercoles: 0, jueves: 0, viernes: 0, sabado: 0, domingo: 0 },
+              pruebasImplicadas: new Set(),
+              esMedicacionPautada: false,
+              pacientesPautados: []
+            };
           }
-        } else if (mat.scope === 'turno') {
-          if (!turnosContabilizados[matKey]) {
-            consolidado[matKey].consumoBase += (turnosDia * mat.ratio);
-            turnosContabilizados[matKey] = true;
+
+          if (mat.scope === 'paciente') {
+            if (numPacientesPrueba > 0 && mat.ratio > 0) {
+              const gasto = numPacientesPrueba * mat.ratio;
+              consolidadoSemanal[matKey].consumoBaseSemanal += gasto;
+              consolidadoSemanal[matKey].pacientesTotalSemana += numPacientesPrueba;
+              consolidadoSemanal[matKey].desglosePorDia[diaKey] = (consolidadoSemanal[matKey].desglosePorDia[diaKey] || 0) + gasto;
+              consolidadoSemanal[matKey].pruebasImplicadas.add(TEST_TYPE_LABELS[testKey]?.split(' ')[0] || testKey);
+            }
+          } else if (mat.scope === 'turno') {
+            if (turnosDia > 0 && !turnosYaContadosEnElDia[matKey]) {
+              const gastoTurno = turnosDia * mat.ratio;
+              consolidadoSemanal[matKey].consumoBaseSemanal += gastoTurno;
+              consolidadoSemanal[matKey].desglosePorDia[diaKey] = (consolidadoSemanal[matKey].desglosePorDia[diaKey] || 0) + gastoTurno;
+              turnosYaContadosEnElDia[matKey] = true;
+              consolidadoSemanal[matKey].pruebasImplicadas.add('Tomógrafo PET');
+            }
           }
-        }
+        });
       });
     });
 
-    const items = Object.values(consolidado).filter(x => x.consumoBase > 0);
+    // INTEGRAR AUTOMÁTICAMENTE CADA MEDICAMENTO PAUTADO POR MÉDICOS EN PROTOCOLO
+    medsPautadas.forEach(med => {
+      const medKey = `${med.medicamento}___${med.canal}`;
+      if (!consolidadoSemanal[medKey]) {
+        consolidadoSemanal[medKey] = {
+          nombre: med.medicamento,
+          canal: med.canal,
+          scope: 'protocolo_medico',
+          consumoBaseSemanal: 0,
+          pacientesTotalSemana: 0,
+          desglosePorDia: { lunes: 0, martes: 0, miercoles: 0, jueves: 0, viernes: 0, sabado: 0, domingo: 0 },
+          pruebasImplicadas: new Set(),
+          esMedicacionPautada: true,
+          pacientesPautados: []
+        };
+      }
+      consolidadoSemanal[medKey].consumoBaseSemanal += 1;
+      consolidadoSemanal[medKey].pacientesTotalSemana += 1;
+      consolidadoSemanal[medKey].esMedicacionPautada = true;
+      consolidadoSemanal[medKey].pacientesPautados.push(`${med.paciente} (${med.nhc})`);
+      consolidadoSemanal[medKey].pruebasImplicadas.add(`🩺 Pautado por ${med.medico.split('(')[0].trim()}`);
+      consolidadoSemanal[medKey].desglosePorDia['lunes'] = (consolidadoSemanal[medKey].desglosePorDia['lunes'] || 0) + 1;
+    });
+
+    const items = Object.values(consolidadoSemanal).filter(it => it.consumoBaseSemanal > 0);
+
+    let totalGalariaSemanal = 0;
+    let totalSergasSemanal = 0;
+
+    items.forEach(it => {
+      it.totalPedidoSemanal = Math.ceil(it.consumoBaseSemanal * factorMargen);
+      if (it.canal === 'GALARIA') totalGalariaSemanal += it.totalPedidoSemanal;
+      else totalSergasSemanal += it.totalPedidoSemanal;
+    });
+
+    const badgeGal = document.getElementById('badgeTotalItemsGalaria');
+    if (badgeGal) badgeGal.textContent = `🔵 Galaria Semanal: ${totalGalariaSemanal} uds`;
+    const badgeSer = document.getElementById('badgeTotalItemsSergas');
+    if (badgeSer) badgeSer.textContent = `🟢 SERGAS Semanal: ${totalSergasSemanal} uds`;
+
     if (items.length === 0) {
-      showToast(`⚠️ No hay materiales calculados para ${canal} en la jornada actual.`);
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:1.25rem;">No hay consumo semanal registrado (0 pacientes finalizados). Configura los fungibles de las pruebas arriba.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = items.map(it => {
+      const diasDetalle = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'].map(d => {
+        const val = it.desglosePorDia[d] || 0;
+        return `<span style="font-size:0.72rem; color:${val > 0 ? '#0f766e' : '#94a3b8'};">${d.slice(0, 3)}: <strong>${Math.round(val)}</strong></span>`;
+      }).join(' · ');
+
+      let formulaTexto = '';
+      if (it.esMedicacionPautada) {
+        formulaTexto = `🩺 Pautado en Protocolo: ${it.pacientesPautados.join(', ')} (${Array.from(it.pruebasImplicadas).join(', ')})`;
+      } else if (it.scope === 'paciente') {
+        formulaTexto = `${it.pacientesTotalSemana} pac. finalizados (${Array.from(it.pruebasImplicadas).join(', ')})`;
+      } else {
+        formulaTexto = `10 turnos operativos activos (Tomógrafo PET)`;
+      }
+
+      return `
+        <tr style="${it.esMedicacionPautada ? 'background:#f0f9ff;' : ''}">
+          <td>
+            <strong>${escapeHTML(it.nombre)}</strong>
+            ${it.esMedicacionPautada ? '<span class="status-badge" style="background:#fef3c7; color:#b45309; border:1px solid #fcd34d; font-size:0.65rem; margin-left:6px;">🩺 Pautado en Protocolo</span>' : ''}
+          </td>
+          <td>
+            <span class="status-badge ${it.canal === 'GALARIA' ? 'badge-info' : 'badge-ok'}">
+              ${it.canal === 'GALARIA' ? '🔵 GALARIA' : '🟢 SERGAS (Farmacia / LOGAS)'}
+            </span>
+          </td>
+          <td>
+            <span class="breakdown-badge" style="${it.esMedicacionPautada ? 'background:#e0f2fe; color:#0369a1;' : ''}">
+              ${escapeHTML(formulaTexto)}
+            </span>
+          </td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#004868;">
+            ${Math.round(it.consumoBaseSemanal)} uds
+          </td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669; font-size:1.05rem;">
+            ${it.totalPedidoSemanal} uds
+          </td>
+          <td>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.72rem;">
+              ${diasDetalle}
+            </div>
+          </td>
+          <td class="no-print">
+            <button type="button" class="btn-nurse btn-nurse-outline" style="padding:2px 8px; font-size:0.72rem;"
+              onclick="window.supervisionApp.abrirModalNuevoPedido('${it.canal}')">
+              + Añadir
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // 5. GENERAR EL PEDIDO SEMANAL CONSOLIDADO (GALARIA O SERGAS)
+  function generarPedidoSemanalConsolidado(canal) {
+    const margenPct = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
+    const factorMargen = 1 + (margenPct / 100);
+
+    const consolidadoSemanal = {};
+    let totalPacientesSemana = 0;
+    let turnosSemanales = 0;
+
+    DIAS_SEMANA_KEYS.forEach(diaKey => {
+      const diaData = pacientesFinalizadosSemana[diaKey] || {};
+      const sumaPacientesDia = Object.keys(TEST_TYPE_LABELS).reduce((acc, k) => acc + (diaData[k] || 0), 0);
+      const turnosDia = diaData.turnos || 0;
+
+      if (sumaPacientesDia === 0 && turnosDia === 0) return;
+
+      totalPacientesSemana += sumaPacientesDia;
+      turnosSemanales += turnosDia;
+
+      const turnosContados = {};
+
+      Object.keys(TEST_TYPE_LABELS).forEach(testKey => {
+        const numPacientesPrueba = diaData[testKey] || 0;
+        const materiales = fungiblesByTest[testKey] || [];
+
+        materiales.forEach(mat => {
+          if (mat.canal !== canal) return;
+          const matKey = `${mat.nombre}___${mat.canal}`;
+          if (!consolidadoSemanal[matKey]) {
+            consolidadoSemanal[matKey] = { nombre: mat.nombre, canal: mat.canal, consumoBase: 0 };
+          }
+
+          if (mat.scope === 'paciente') {
+            if (numPacientesPrueba > 0 && mat.ratio > 0) {
+              consolidadoSemanal[matKey].consumoBase += (numPacientesPrueba * mat.ratio);
+            }
+          } else if (mat.scope === 'turno') {
+            if (turnosDia > 0 && !turnosContados[matKey]) {
+              consolidadoSemanal[matKey].consumoBase += (turnosDia * mat.ratio);
+              turnosContados[matKey] = true;
+            }
+          }
+        });
+      });
+    });
+
+    // Añadir medicaciones pautadas al pedido SERGAS
+    if (canal === 'SERGAS') {
+      const meds = obtenerMedicacionesPautadasPorMedicos();
+      meds.forEach(med => {
+        const matKey = `${med.medicamento}___${med.canal}`;
+        if (!consolidadoSemanal[matKey]) {
+          consolidadoSemanal[matKey] = { nombre: med.medicamento, canal: med.canal, consumoBase: 0 };
+        }
+        consolidadoSemanal[matKey].consumoBase += 1;
+      });
+    }
+
+    const items = Object.values(consolidadoSemanal).filter(x => x.consumoBase > 0);
+    if (items.length === 0) {
+      showToast(`⚠️ No hay materiales calculados para ${canal} en el consumo semanal.`);
       return;
     }
 
@@ -1159,16 +1497,16 @@
     const fechaHoy = new Date().toLocaleDateString('es-ES');
 
     const nuevo = {
-      id: `${canal === 'GALARIA' ? 'GAL' : 'SER'}-2026-${numPed}`,
+      id: `${canal === 'GALARIA' ? 'GAL' : 'SER'}-2026-SEM-${numPed}`,
       canal,
-      categoria: `Fungibles Diarios (${canal})`,
-      descripcion: `Consumo Jornada (${totalPacientes} pac. · ${turnosDia} turnos): ${resumenLineas}`,
-      proveedor: canal === 'GALARIA' ? 'Galaria · Logística PET-CT' : 'Almacén Central SERGAS (LOGAS)',
-      cantidad: `${totalUnidades} uds totales`,
-      fecha: `${fechaHoy} (Día)`,
+      categoria: canal === 'SERGAS' ? 'Fungibles y Medicación SERGAS' : 'Fungibles Galaria',
+      descripcion: `Consumo Semanal (${totalPacientesSemana} pac. finalizados · ${turnosSemanales} turnos): ${resumenLineas}`,
+      proveedor: canal === 'GALARIA' ? 'Galaria · Logística PET-CT' : 'Farmacia Hospitalaria & Almacén SERGAS (LOGAS)',
+      cantidad: `${totalUnidades} uds semanales`,
+      fecha: `${fechaHoy} (Semana)`,
       estado: 'transito',
       supervision: 'Supervisora de Turno (DUE)',
-      observaciones: `Cálculo automático del día con margen +${margenPct}%.`
+      observaciones: `Cálculo automático semanal por pacientes finalizados y medicación pautada en protocolo médico (+${margenPct}% margen).`
     };
 
     state.pedidos.unshift(nuevo);
@@ -1177,15 +1515,48 @@
     cambiarTab('pedidos');
 
     if (canal === 'SERGAS') {
-      const textoLogas = `PEDIDO SERGAS LOGAS — JORNADA ${fechaHoy} (${totalPacientes} pacientes · ${turnosDia} turnos):\n` +
+      const textoLogas = `PEDIDO SEMANAL SERGAS LOGAS & FARMACIA (${fechaHoy}):\n` +
         items.map(it => `- ${it.nombre}: ${it.totalPedido} uds`).join('\n');
-      if (navigator.clipboard && navigator.clipboard.writeText) {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textoLogas).catch(() => {});
       }
-      showToast('🟢 Pedido SERGAS generado y copiado al portapapeles para pegar en LOGAS.');
+      showToast('🟢 Pedido Semanal SERGAS generado (incluyendo medicación pautada por médicos). Copiado para LOGAS.');
     } else {
-      showToast('🔵 Pedido GALARIA generado con todos los fungibles del día.');
+      showToast('🔵 Pedido Semanal GALARIA generado con todos los fungibles calculados.');
     }
+  }
+
+  // Compatibilidad hacia atrás con alias anteriores
+  function recalcularFungibles() {
+    return recalcularFungiblesConsolidados();
+  }
+
+  function recalcularConsumoSemanal() {
+    return recalcularFungiblesConsolidados();
+  }
+
+  function generarPedidoDiaConsolidado(canal) {
+    return generarPedidoSemanalConsolidado(canal);
+  }
+
+  function generarPedidoDesdeCalculadora(canal) {
+    return generarPedidoSemanalConsolidado(canal);
+  }
+
+  function sincronizarPacientesDelDia() {
+    return sincronizarPacientesFinalizadosSemana();
+  }
+
+  function cambiarDiaCalculo() {
+    return recalcularFungiblesConsolidados();
+  }
+
+  function cambiarPacientesPrueba() {
+    return recalcularFungiblesConsolidados();
+  }
+
+  function renderContadoresPacientesPorPrueba() {
+    return renderDiasSemanaFinalizados();
   }
 
   function renderAudioguiasSection() {
@@ -2379,7 +2750,25 @@
       initPlanillaData();
       loadNurseData();
       renderAll();
+
+      try {
+        const hash = (typeof window !== 'undefined' && window.location.hash ? window.location.hash.replace('#', '') : '');
+        const urlParams = (typeof window !== 'undefined' && window.location.search ? new URLSearchParams(window.location.search) : null);
+        const tabParam = (urlParams && urlParams.get('tab')) || hash;
+        if (tabParam) {
+          cambiarTab(tabParam);
+        }
+      } catch (_) {}
     });
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hashchange', () => {
+        try {
+          const hash = window.location.hash.replace('#', '');
+          if (hash) cambiarTab(hash);
+        } catch (_) {}
+      });
+    }
   }
 
   if (typeof window !== 'undefined') {
@@ -2397,10 +2786,16 @@
       marcarPedidoEntregado,
       recalcularFungibles,
       recalcularFungiblesConsolidados,
+      recalcularConsumoSemanal,
       sincronizarPacientesDelDia,
+      sincronizarPacientesFinalizadosSemana,
+      sincronizarMedicacionesPautadas,
+      obtenerMedicacionesPautadasPorMedicos,
+      renderDiasSemanaFinalizados,
       cambiarDiaCalculo,
       cambiarPacientesPrueba,
       generarPedidoDiaConsolidado,
+      generarPedidoSemanalConsolidado,
       toggleEditorProtocoloPrueba,
       renderEditorMaterialesPrueba,
       renderContadoresPacientesPorPrueba,

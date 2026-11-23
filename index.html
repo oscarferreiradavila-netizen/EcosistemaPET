@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ecosistema Digital PET/CT & Medicina Nuclear | Galaria · SERGAS</title>
-  <meta name="description" content="Portal Maestro Oficial del Ecosistema Digital PET/CT de Galaria y Servizo Galego de Saúde (SERGAS). Prescripción médica, triaje clínico algorítmico, preparación interactiva del paciente y consola de enfermería.">
+  <meta name="description"
+    content="Portal Maestro Oficial del Ecosistema Digital PET/CT de Galaria y Servizo Galego de Saúde (SERGAS). Prescripción médica, triaje clínico algorítmico, preparación interactiva del paciente y consola de enfermería.">
 
   <!-- Tipografía Oficial Galaria / SERGAS: Open Sans & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+    rel="stylesheet">
 
   <style>
     /* ==========================================================================
@@ -17,15 +21,23 @@
        ========================================================================== */
     :root {
       /* Identidad Corporativa Oficial */
-      --sergas-blue: #007eb4;             /* Azul principal Galaria / Sergas */
-      --sergas-blue-hover: #00638e;       /* Azul interacción hover */
-      --sergas-navy: #004868;             /* Azul mariño institucional para títulos */
-      --sergas-dark-blue: #003248;        /* Azul mariño profundo */
-      --sergas-soft-blue: #e6f4fa;        /* Fondo suave de destaque */
-      --sergas-light-border: #bae6fd;     /* Borde suave azul */
+      --sergas-blue: #007eb4;
+      /* Azul principal Galaria / Sergas */
+      --sergas-blue-hover: #00638e;
+      /* Azul interacción hover */
+      --sergas-navy: #004868;
+      /* Azul mariño institucional para títulos */
+      --sergas-dark-blue: #003248;
+      /* Azul mariño profundo */
+      --sergas-soft-blue: #e6f4fa;
+      /* Fondo suave de destaque */
+      --sergas-light-border: #bae6fd;
+      /* Borde suave azul */
 
-      --bg-page: #f4f7f9;                /* Fondo limpo sanitario */
-      --bg-card: #ffffff;                /* Tarxetas e paneis brancos */
+      --bg-page: #f4f7f9;
+      /* Fondo limpo sanitario */
+      --bg-card: #ffffff;
+      /* Tarxetas e paneis brancos */
       --bg-card-subtle: #f8fafc;
       --border-subtle: #d0e4ee;
       --border-focus: #007eb4;
@@ -221,8 +233,17 @@
     }
 
     @keyframes pulseGreen {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.85);
+      }
     }
 
     .badge-secondary {
@@ -444,12 +465,36 @@
     }
 
     /* Colores por módulo */
-    .card-mod-1 { --module-accent: #007eb4; } /* Azul Sergas Prescrición */
-    .card-mod-2 { --module-accent: #6366f1; } /* Índigo Triaxe */
-    .card-mod-3 { --module-accent: #059669; } /* Esmeralda Audioguía Paciente */
-    .card-mod-4 { --module-accent: #e11d48; } /* Vermello Clínico Enfermaría */
-    .card-mod-5 { --module-accent: #0284c7; } /* Azul Océano Protocolización Médica */
-    .card-mod-6 { --module-accent: #7c3aed; } /* Púrpura Tecnolóxico Consola Técnica TSID */
+    .card-mod-1 {
+      --module-accent: #007eb4;
+    }
+
+    /* Azul Sergas Prescrición */
+    .card-mod-2 {
+      --module-accent: #6366f1;
+    }
+
+    /* Índigo Triaxe */
+    .card-mod-3 {
+      --module-accent: #059669;
+    }
+
+    /* Esmeralda Audioguía Paciente */
+    .card-mod-4 {
+      --module-accent: #e11d48;
+    }
+
+    /* Vermello Clínico Enfermaría */
+    .card-mod-5 {
+      --module-accent: #0284c7;
+    }
+
+    /* Azul Océano Protocolización Médica */
+    .card-mod-6 {
+      --module-accent: #7c3aed;
+    }
+
+    /* Púrpura Tecnolóxico Consola Técnica TSID */
 
     /* ==========================================================================
        6. SELECTOR RÁPIDO DOS 10 TRAZADORES PET
@@ -628,15 +673,17 @@
         flex-direction: column;
         align-items: flex-start;
       }
+
       .header-card {
         flex-direction: column;
         align-items: flex-start;
       }
+
       .main-wrapper {
         padding: 1rem 1rem 2.5rem;
       }
     }
-  
+
     /* ==========================================================================
        6. CATÁLOGO MAESTRO E REVISOR INTEGRADO DE AUDIOGUÍAS PET/CT
        ========================================================================== */
@@ -999,7 +1046,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .reviewer-title-box {
@@ -1146,7 +1193,7 @@
       flex-wrap: wrap;
     }
 
-    
+
     /* ==========================================================================
        MODO SIMULADOR DE TELÉFONO MÓVIL (VISTA SMARTPHONE RESPONSIVE)
        ========================================================================== */
@@ -1273,7 +1320,7 @@
       padding: 1.75rem 2rem;
       max-width: 440px;
       width: 95%;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
       text-align: center;
       position: relative;
     }
@@ -1319,10 +1366,9 @@
       margin-bottom: 1rem;
       border: 1px solid #e2e8f0;
     }
-
-
   </style>
 </head>
+
 <body>
 
   <!-- 1. BARRA SUPERIOR INSTITUCIONAL XUNTA / SERGAS -->
@@ -1350,7 +1396,10 @@
         </div>
       </div>
       <div class="header-badges">
-        <button type="button" onclick="window.petResetDemo()" class="btn-demo-reset-pill" style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; border:1px solid #93c5fd; color:#1d4ed8; font-size:0.78rem; font-weight:700; padding:6px 14px; border-radius:999px; cursor:pointer; transition:all 0.2s ease; box-shadow:0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'" title="Reinicio automático diario (24h) ou baixo demanda: citas actualizadas a hoxe e mañá, altas limpas e peticións non triables no seu cartafol">
+        <button type="button" onclick="window.petResetDemo()" class="btn-demo-reset-pill"
+          style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; border:1px solid #93c5fd; color:#1d4ed8; font-size:0.78rem; font-weight:700; padding:6px 14px; border-radius:999px; cursor:pointer; transition:all 0.2s ease; box-shadow:0 1px 3px rgba(0,0,0,0.05);"
+          onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'"
+          title="Reinicio automático diario (24h) ou baixo demanda: citas actualizadas a hoxe e mañá, altas limpas e peticións non triables no seu cartafol">
           🔄 Reiniciar Demo (24h)
         </button>
         <div class="live-status-pill">
@@ -1365,13 +1414,17 @@
       <div class="hero-badge-tag">Innovación Asistencial en Medicina Nuclear</div>
       <h2>Xestión Inteligente e Seguridade no Proceso PET/CT</h2>
       <p>
-        Interconexión en tempo real entre o facultativo prescriptor, o servizo de Medicina Nuclear, o paciente citado e a consola de enfermaría para garantir a máxima calidade asistencial e o 100% de aproveitamento dos radiofármacos.
+        Interconexión en tempo real entre o facultativo prescriptor, o servizo de Medicina Nuclear, o paciente citado e
+        a consola de enfermaría para garantir a máxima calidade asistencial e o 100% de aproveitamento dos
+        radiofármacos.
       </p>
     </section>
 
     <!-- 4. TÍTULO DE MÓDULOS -->
     <div class="programs-section-title">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
       Módulos Asistenciais Interconectados
     </div>
 
@@ -1386,7 +1439,8 @@
           </div>
           <div class="program-icon-box">🩺</div>
           <h3>Prescrición Médica</h3>
-          <p>Portal asistencial para médicos solicitantes (Oncoloxía, Neuroloxía, Uroloxía, Cirurxía) con validación dosimétrica e cálculo instantáneo de prioridade.</p>
+          <p>Portal asistencial para médicos solicitantes (Oncoloxía, Neuroloxía, Uroloxía, Cirurxía) con validación
+            dosimétrica e cálculo instantáneo de prioridade.</p>
           <ul class="program-features">
             <li>10 protocolos oficiais estandarizados</li>
             <li>Cálculo algorítmico P1 / P2 / P3</li>
@@ -1406,7 +1460,8 @@
           </div>
           <div class="program-icon-box">📊</div>
           <h3>Triaxe e Axendamento</h3>
-          <p>Motor algorítmico segundo criterios EANM/SERGAS con parrilla semanal por radiofármaco, control de vida media e xeración automática de citacións.</p>
+          <p>Motor algorítmico segundo criterios EANM/SERGAS con parrilla semanal por radiofármaco, control de vida
+            media e xeración automática de citacións.</p>
           <ul class="program-features">
             <li>Matriz semanal por isótopo (^18F / ^68Ga)</li>
             <li>Bloqueo preventivo de QT/RT (&lt;21 días)</li>
@@ -1418,7 +1473,8 @@
       </a>
 
       <!-- MÓDULO 3: AUDIOGUÍAS DO PACIENTE (CATÁLOGO COMPLETO) -->
-      <div class="program-card card-mod-3" style="cursor: pointer;" onclick="document.getElementById('seccion-audioguias').scrollIntoView({ behavior: 'smooth' });">
+      <div class="program-card card-mod-3" style="cursor: pointer;"
+        onclick="document.getElementById('seccion-audioguias').scrollIntoView({ behavior: 'smooth' });">
         <div>
           <div class="card-header-meta">
             <span class="module-num-pill" style="background:#e0f2fe; color:#0369a1;">MÓDULO 3</span>
@@ -1426,7 +1482,8 @@
           </div>
           <div class="program-icon-box" style="background:#e0f2fe; color:#0284c7;">🎧</div>
           <h3>Audioguías Paciente (12 Protocolos)</h3>
-          <p>Portal asistencial con voz interactiva en galego/castelán, cronómetros de xaxún sen hidratos e asistente virtual de dúbidas 24/7 adaptado a cada radiofármaco.</p>
+          <p>Portal asistencial con voz interactiva en galego/castelán, cronómetros de xaxún sen hidratos e asistente
+            virtual de dúbidas 24/7 adaptado a cada radiofármaco.</p>
           <ul class="program-features">
             <li><strong>12 Audioguías específicas</strong> por trazador e patoloxía</li>
             <li>Ciclotrón (18F-FDG/Colina), Radiofarmacia (68Ga) e Curium</li>
@@ -1435,10 +1492,14 @@
           </ul>
         </div>
         <div style="display: flex; gap: 0.5rem; margin-top: 1.1rem; flex-wrap: wrap;">
-          <button type="button" class="card-action-btn" onclick="event.stopPropagation(); window.openAudioguiaReviewer(0);" style="flex: 1; border: none; cursor: pointer; text-align: center; background: var(--sergas-navy); color: #fff;">
+          <button type="button" class="card-action-btn"
+            onclick="event.stopPropagation(); window.openAudioguiaReviewer(0);"
+            style="flex: 1; border: none; cursor: pointer; text-align: center; background: var(--sergas-navy); color: #fff;">
             🚀 Revisar Unha a Unha →
           </button>
-          <a href="#seccion-audioguias" class="card-action-btn" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; text-decoration: none; padding: 0.6rem 0.9rem;" title="Ver Catálogo das 12 Audioguías">
+          <a href="#seccion-audioguias" class="card-action-btn"
+            style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; text-decoration: none; padding: 0.6rem 0.9rem;"
+            title="Ver Catálogo das 12 Audioguías">
             📋 Ver Catálogo
           </a>
         </div>
@@ -1453,7 +1514,8 @@
           </div>
           <div class="program-icon-box">🏥</div>
           <h3>Consola de Enfermaría</h3>
-          <p>Monitorización pre-analítica en tempo real: vixilancia de glicemias capilares elevadas, bandexa de chamadas a pacientes e recuperación de doses.</p>
+          <p>Monitorización pre-analítica en tempo real: vixilancia de glicemias capilares elevadas, bandexa de chamadas
+            a pacientes e recuperación de doses.</p>
           <ul class="program-features">
             <li>Alertas de urxencias (Glicemia ≥ 200 mg/dL)</li>
             <li>Bandexa de dúbidas e contacto telefónico</li>
@@ -1473,7 +1535,8 @@
           </div>
           <div class="program-icon-box" style="background:#e0f2fe; color:#0284c7;">👨‍⚕️</div>
           <h3>Protocolización Médica</h3>
-          <p>Consola para facultativos de Medicina Nuclear: axenda de pacientes citados, visor de volante oficial e instrucións de adquisición a máquina.</p>
+          <p>Consola para facultativos de Medicina Nuclear: axenda de pacientes citados, visor de volante oficial e
+            instrucións de adquisición a máquina.</p>
           <ul class="program-features">
             <li>Axenda de citados con filtrado por data e isótopo</li>
             <li>Visor e descarga do volante de petición oficial</li>
@@ -1493,7 +1556,8 @@
           </div>
           <div class="program-icon-box" style="background:#f3e8ff; color:#7e22ce;">🔬</div>
           <h3>Consola Técnica TSID</h3>
-          <p>Consola de adquisición en sala de tomógrafo: citación do día, tempos de paso a máquina, esquemas visuais de posicionamento, campos de adquisición e contrastes.</p>
+          <p>Consola de adquisición en sala de tomógrafo: citación do día, tempos de paso a máquina, esquemas visuais de
+            posicionamento, campos de adquisición e contrastes.</p>
           <ul class="program-features">
             <li>Citación do día con cronómetro en vivo de paso a máquina</li>
             <li>Diagramas anatómicos vectoriais (brazos arriba/abaixo, láser e isocentro)</li>
@@ -1514,12 +1578,15 @@
           </div>
           <div class="program-icon-box" style="background:#fef3c7; color:#b45309;">📈</div>
           <h3>Jefatura de Servicio & Gestión</h3>
-          <p>Cuadro de mando integral para Dirección de Medicina Nuclear: auditoría de peticiones recibidas, puntualidad de tomógrafo, absentismo y recitación de citas.</p>
+          <p>Cuadro de mando integral para Dirección de Medicina Nuclear: auditoría de peticiones recibidas, puntualidad
+            de tomógrafo, absentismo y recitación de citas.</p>
           <ul class="program-features">
             <li>Peticiones recibidas, <strong>% que llegan mal</strong> y <strong>pruebas por radiofármaco</strong></li>
             <li><strong>Gráficas de evolución temporal</strong> en cada parámetro del servicio</li>
-            <li><strong>Paso en hora a máquina</strong>, <strong>No-Show</strong>, <strong>recitación</strong> y <strong>anulaciones (prep/RF/extrav)</strong></li>
-            <li><strong>Por médico:</strong> tardías pedidas, espera desde última imagen hasta salir y tiempo/prueba</li>
+            <li><strong>Paso en hora a máquina</strong>, <strong>No-Show</strong>, <strong>recitación</strong> y
+              <strong>anulaciones (prep/RF/extrav)</strong></li>
+            <li><strong>Por médico:</strong> tardías pedidas, espera desde última imagen hasta salir y tiempo/prueba
+            </li>
           </ul>
         </div>
         <div class="card-action-btn" style="background:#0f172a; color:#fde047;">Abrir Jefatura de Servicio →</div>
@@ -1534,12 +1601,17 @@
           </div>
           <div class="program-icon-box" style="background:#ccfbf1; color:#0d9488;">🩺</div>
           <h3>Supervisión de Enfermería & Cuidados</h3>
-          <p>Consola integral para la Supervisora de Enfermería: planilla interactiva de turnos de personal, monitor en vivo de boxes de reposo, calidad de venopunción y sincronización con camilla TSID.</p>
+          <p>Consola integral para la Supervisora de Enfermería: planilla interactiva de turnos de personal, pedidos
+            oficiales (SERGAS LOGAS y Galaria) con calculadora diaria de fungibles y memoria de cuidados.</p>
           <ul class="program-features">
-            <li><strong>Planilla interactiva de personal</strong>: turnos de enfermeros, técnicos, celadores y TCAEs en MN y PET-CT</li>
-            <li><strong>Monitor en vivo de los 6 boxes</strong>: cronómetro de captación, reposo y estado de inyección</li>
-            <li><strong>Eficacia preventiva de las audioguías</strong>: 85.4% de adherencia y -87% de suspensiones en box</li>
-            <li><strong>Calidad de venopunción</strong>: calibres 20G/22G, prevención de extravasaciones y memoria de cuidados</li>
+            <li><strong>Planilla interactiva de personal</strong>: turnos de enfermeros, técnicos, celadores y TCAEs en
+              MN y PET-CT</li>
+            <li><strong>Pedidos y fungibles por día</strong>: cálculo automático según pacientes y pruebas citadas
+              (SERGAS/LOGAS y Galaria)</li>
+            <li><strong>Eficacia preventiva de las audioguías</strong>: 85.4% de adherencia y -87% de suspensiones en
+              box</li>
+            <li><strong>Calidad de venopunción</strong>: calibres 20G/22G, prevención de extravasaciones y memoria de
+              cuidados</li>
           </ul>
         </div>
         <div class="card-action-btn" style="background:#0d9488; color:#ffffff;">Abrir Supervisión de Enfermería →</div>
@@ -1555,7 +1627,9 @@
             <span>Catálogo Maestro e Centro de Revisión de Audioguías PET/CT (12 Protocolos)</span>
           </h3>
           <p>
-            Revisa, escoita e valida de forma exhaustiva <strong>unha a unha</strong> todas as audioguías oficiais desenvolvidas para o paciente: instrucións con síntese de voz natural, cronómetros interactivos de xaxún, preparacións dietéticas especiais e asistente virtual intelixente 24/7.
+            Revisa, escoita e valida de forma exhaustiva <strong>unha a unha</strong> todas as audioguías oficiais
+            desenvolvidas para o paciente: instrucións con síntese de voz natural, cronómetros interactivos de xaxún,
+            preparacións dietéticas especiais e asistente virtual intelixente 24/7.
           </p>
         </div>
         <div class="audioguias-header-actions">
@@ -1568,24 +1642,31 @@
       <!-- Barra de Filtros e Busca Rápida -->
       <div class="audioguias-filter-toolbar">
         <div class="filter-pills-row">
-          <button type="button" class="filter-btn active" data-filter="all" onclick="window.filterAudioguias('all', this)">
+          <button type="button" class="filter-btn active" data-filter="all"
+            onclick="window.filterAudioguias('all', this)">
             🌐 Todas (12)
           </button>
-          <button type="button" class="filter-btn" data-filter="ciclotron" onclick="window.filterAudioguias('ciclotron', this)">
+          <button type="button" class="filter-btn" data-filter="ciclotron"
+            onclick="window.filterAudioguias('ciclotron', this)">
             ⚡ Ciclotrón (8)
           </button>
-          <button type="button" class="filter-btn" data-filter="radiofarmacia" onclick="window.filterAudioguias('radiofarmacia', this)">
+          <button type="button" class="filter-btn" data-filter="radiofarmacia"
+            onclick="window.filterAudioguias('radiofarmacia', this)">
             🧪 Radiofarmacia (2)
           </button>
-          <button type="button" class="filter-btn" data-filter="curium" onclick="window.filterAudioguias('curium', this)">
+          <button type="button" class="filter-btn" data-filter="curium"
+            onclick="window.filterAudioguias('curium', this)">
             🏢 Curium Madrid (1)
           </button>
-          <button type="button" class="filter-btn" data-filter="especiales" onclick="window.filterAudioguias('especiales', this)">
+          <button type="button" class="filter-btn" data-filter="especiales"
+            onclick="window.filterAudioguias('especiales', this)">
             🛡️ Pautas Especiais (3)
           </button>
         </div>
         <div>
-          <input type="text" id="audioguia-search-input" class="search-box-input" placeholder="🔍 Filtrar por radiofármaco, órgano ou preparación..." oninput="window.searchAudioguias(this.value)">
+          <input type="text" id="audioguia-search-input" class="search-box-input"
+            placeholder="🔍 Filtrar por radiofármaco, órgano ou preparación..."
+            oninput="window.searchAudioguias(this.value)">
         </div>
       </div>
 
@@ -1615,26 +1696,32 @@
 
           <!-- Controis de Navegación Anterior / Selector / Seguinte -->
           <div class="reviewer-nav-controls">
-            <button type="button" id="btn-rev-prev" class="btn-nav-step" onclick="window.prevAudioguia();" title="Ir á audioguía anterior (Frecha Esquerda)">
+            <button type="button" id="btn-rev-prev" class="btn-nav-step" onclick="window.prevAudioguia();"
+              title="Ir á audioguía anterior (Frecha Esquerda)">
               ⬅️ Anterior
             </button>
-            <select id="rev-guide-select" class="guide-select-dropdown" onchange="window.selectAudioguiaByIndex(parseInt(this.value));">
+            <select id="rev-guide-select" class="guide-select-dropdown"
+              onchange="window.selectAudioguiaByIndex(parseInt(this.value));">
               <!-- Opciones dinámicas -->
             </select>
-            <button type="button" id="btn-rev-next" class="btn-nav-step" onclick="window.nextAudioguia();" title="Ir á seguinte audioguía (Frecha Dereita)">
+            <button type="button" id="btn-rev-next" class="btn-nav-step" onclick="window.nextAudioguia();"
+              title="Ir á seguinte audioguía (Frecha Dereita)">
               Seguinte ➡️
             </button>
           </div>
 
           <!-- Botóns de saída / popout -->
           <div class="reviewer-actions-right">
-            <button type="button" id="btn-toggle-mobile" class="btn-popout" onclick="window.toggleReviewerMobileMode();" title="Alternar entre simulación de Smartphone e pantalla completa">
+            <button type="button" id="btn-toggle-mobile" class="btn-popout" onclick="window.toggleReviewerMobileMode();"
+              title="Alternar entre simulación de Smartphone e pantalla completa">
               <span id="btn-toggle-mobile-icon">📱</span> <span id="btn-toggle-mobile-text">Vista Móbil</span>
             </button>
-            <a id="btn-rev-open-tab" href="#" target="_blank" class="btn-popout" title="Abrir esta audioguía en pestana independente">
+            <a id="btn-rev-open-tab" href="#" target="_blank" class="btn-popout"
+              title="Abrir esta audioguía en pestana independente">
               <span>↗️ Nova Pestana</span>
             </a>
-            <button type="button" class="btn-close-modal" onclick="window.closeAudioguiaReviewer();" title="Pechar visor (Esc)">
+            <button type="button" class="btn-close-modal" onclick="window.closeAudioguiaReviewer();"
+              title="Pechar visor (Esc)">
               ✕
             </button>
           </div>
@@ -1646,7 +1733,8 @@
             <span id="rev-meta-num" class="audioguia-num-badge">PROT-01</span>
             <span id="rev-meta-rf" class="badge-tracer">18F-FDG</span>
             <span id="rev-meta-supplier" class="badge-supplier ciclotron">Ciclotrón</span>
-            <strong id="rev-meta-title" style="color: var(--sergas-navy); margin-left: 6px;">Título da Audioguía</strong>
+            <strong id="rev-meta-title" style="color: var(--sergas-navy); margin-left: 6px;">Título da
+              Audioguía</strong>
           </div>
           <div id="rev-meta-specs" style="color: #475569; font-size: 0.8rem;">
             ⏳ Ayuno 6h · Dieta sin hidratos · Reposo estricto
@@ -1669,7 +1757,9 @@
     <!-- 7. ESQUEMA DE FLUXO CLÍNICO INTEGRADO -->
     <section class="flow-card">
       <div class="flow-title">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>
         Arquitectura do Fluxo Asistencial Galaria · SERGAS
       </div>
       <div class="flow-steps-row">
@@ -1704,7 +1794,8 @@
         <span>SERGAS (Servizo Galego de Saúde)</span>
       </div>
       <div class="footer-links">
-        <a href="Presentacion_Sistemas_PET/DOCUMENTO_ECOSISTEMA_PET_CT.html" target="_blank">📖 Documento Técnico e Memoria</a>
+        <a href="Presentacion_Sistemas_PET/DOCUMENTO_ECOSISTEMA_PET_CT.html" target="_blank">📖 Documento Técnico e
+          Memoria</a>
         <a href="pet_prep_page/index.html">📋 Protocolos Clínicos</a>
       </div>
     </footer>
@@ -1985,7 +2076,7 @@
       }).join('');
     }
 
-    window.filterAudioguias = function(category, btnEl) {
+    window.filterAudioguias = function (category, btnEl) {
       currentFilter = category;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       if (btnEl) btnEl.classList.add('active');
@@ -1993,11 +2084,11 @@
       renderAudioguiasCards(category, searchVal);
     };
 
-    window.searchAudioguias = function(query) {
+    window.searchAudioguias = function (query) {
       renderAudioguiasCards(currentFilter, query);
     };
 
-    window.openAudioguiaReviewer = function(index = 0) {
+    window.openAudioguiaReviewer = function (index = 0) {
       currentReviewIndex = Math.max(0, Math.min(AUDIOGUIAS_DATA.length - 1, index));
       const modal = document.getElementById('modal-audioguia-reviewer');
       if (!modal) return;
@@ -2006,7 +2097,7 @@
       updateReviewerDisplay();
     };
 
-    window.closeAudioguiaReviewer = function() {
+    window.closeAudioguiaReviewer = function () {
       const modal = document.getElementById('modal-audioguia-reviewer');
       if (!modal) return;
       modal.classList.remove('active');
@@ -2015,19 +2106,19 @@
       if (iframe) iframe.src = 'about:blank';
     };
 
-    window.selectAudioguiaByIndex = function(index) {
+    window.selectAudioguiaByIndex = function (index) {
       currentReviewIndex = Math.max(0, Math.min(AUDIOGUIAS_DATA.length - 1, index));
       updateReviewerDisplay();
     };
 
-    window.prevAudioguia = function() {
+    window.prevAudioguia = function () {
       if (currentReviewIndex > 0) {
         currentReviewIndex--;
         updateReviewerDisplay();
       }
     };
 
-    window.nextAudioguia = function() {
+    window.nextAudioguia = function () {
       if (currentReviewIndex < AUDIOGUIAS_DATA.length - 1) {
         currentReviewIndex++;
         updateReviewerDisplay();
@@ -2119,4 +2210,5 @@
   <script src="pet_demo_reset.js"></script>
 
 </body>
+
 </html>
