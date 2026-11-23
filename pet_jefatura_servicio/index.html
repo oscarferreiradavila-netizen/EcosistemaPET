@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jefatura de Servicio & Gestión Clínica PET/CT | Galaria · SERGAS</title>
+  <meta name="description"
+    content="Cuadro de Mando Integral de Jefatura de Servicio de Medicina Nuclear (Galaria · SERGAS): Estadísticas y evolución temporal de peticiones, % mal formuladas, pruebas por radiofármaco, paso en hora a máquina, No-Shows, cancelaciones recitables, anulaciones y tiempos/tardías por médico.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261121_PLANILLA_01">
+</head>
+
+<body>
+
+  <!-- 1. BARRA INSTITUCIONAL SERGAS -->
+  <div class="sergas-top-bar">
+    <div class="sergas-top-inner">
+      <div class="sergas-top-left">
+        <span class="xunta-badge">XUNTA DE GALICIA</span>
+        <span>CONSELLERÍA DE SANIDADE · SERGAS · GALARIA</span>
+        <span style="opacity:0.65;">|</span>
+        <span style="color:#fde047; font-weight:800;">MÓDULO 7 · JEFATURA DE SERVICIO Y CALIDAD ASISTENCIAL</span>
+      </div>
+      <div class="sergas-top-links">
+        <a href="../index.html" class="top-nav-link">🏠 Portal Maestro</a>
+        <a href="../pet_peticion_medica/index.html" class="top-nav-link">🩺 1. Petición</a>
+        <a href="../pet_ct_triage/web_app/index.html" class="top-nav-link">📊 2. Triaje</a>
+        <a href="../pet_prep_page/enfermeria.html" class="top-nav-link">🏥 4. Enfermería</a>
+        <a href="../pet_consola_medica/index.html" class="top-nav-link">👨‍⚕️ 5. Consola Médica</a>
+        <a href="../pet_consola_tecnicos/index.html" class="top-nav-link">🔬 6. Técnicos TSID</a>
+        <a href="../pet_supervision_enfermeria/index.html" class="top-nav-link" style="color:#a7f3d0; font-weight:700;">🩺 8. Supervisión Enfermería</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CABECERA EJECUTIVA -->
+  <header class="chief-header">
+    <div class="chief-header-inner">
+      <div class="brand-group">
+        <img src="../galaria_logo.jpg" alt="Galaria SERGAS" class="brand-logo" onerror="this.style.display='none'">
+        <div class="brand-titles">
+          <h1>
+            <span id="headerMainTitle">📈 Consola de Jefatura de Servicio & Gestión PET/CT</span>
+            <span class="role-pill" id="headerRoleBadge">Jefatura Médica</span>
+          </h1>
+          <p id="headerSubtitle">Estadísticas con Evolución Temporal: Peticiones (% Mal), Pruebas por Radiofármaco, Puntualidad Máquina,
+            No-Show, Recitación, Anulaciones y Tiempos/Tardías por Médico</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <select id="selectPeriodo" class="period-select" onchange="window.jefaturaApp.cambiarPeriodo(this.value)">
+          <option value="all" selected>📅 Evolución 6 Meses + Tiempo Real Hoy</option>
+          <option value="month">📅 Últimas 6 Semanas ( Evolución Semanal )</option>
+          <option value="week">📅 Últimos 7 Días ( Evolución Diaria )</option>
+          <option value="today">⚡ Jornada Operativa Actual (Por Horas)</option>
+        </select>
+
+        <button type="button" class="btn-chief btn-chief-amber"
+          onclick="window.jefaturaApp.abrirModalRegistrarIncidenciaCita()">
+          ➕ Registrar Cancelación / Anulación / No-Show
+        </button>
+
+        <button type="button" class="btn-chief btn-chief-outline" onclick="window.jefaturaApp.sincronizarAhora()">
+          🔄 Sincronizar en Vivo
+        </button>
+
+        <button type="button" class="btn-chief btn-chief-outline" onclick="window.jefaturaApp.exportarCSV()">
+          📥 Exportar CSV
+        </button>
+
+        <button type="button" class="btn-chief btn-chief-primary"
+          onclick="window.jefaturaApp.abrirEImprimirDemoInforme()">
+          🖨️ Imprimir Demo de Informe
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- DOS PESTAÑAS MAESTRAS AL ENTRAR EN JEFATURA: JEFE DE SERVICIO Y SUPERVISIÓN DE ENFERMERÍA -->
+  <nav class="jefatura-master-nav">
+    <div class="jefatura-master-nav-inner">
+      <button type="button" class="jefatura-master-tab-btn active" id="btnMasterJefe" onclick="window.jefaturaApp.setMasterTab('jefe')">
+        <span class="master-tab-icon">👑</span>
+        <div class="master-tab-text-block">
+          <span class="master-tab-main">Jefe de Servicio</span>
+          <span class="master-tab-desc">Dirección Médica, Cartera de Radiofármacos, Demoras P1/P2, TAT de Informe y Cuadro de Mando Global</span>
+        </div>
+        <span class="master-tab-badge">Mando Médico & Global</span>
+      </button>
+
+      <button type="button" class="jefatura-master-tab-btn" id="btnMasterEnfermeria" onclick="window.jefaturaApp.setMasterTab('enfermeria')">
+        <span class="master-tab-icon">🩺</span>
+        <div class="master-tab-text-block">
+          <span class="master-tab-main">Supervisión de Enfermería</span>
+          <span class="master-tab-desc">Cuidados en Box, Audioguías, Vías Venosas, Camilla y Absentismo</span>
+        </div>
+        <span class="master-tab-badge badge-enf">Cuidados & Boxes</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 3. CONTENIDO PRINCIPAL -->
+  <main class="main-container">
+
+    <!-- 3.1. TARJETAS KPI EJECUTIVAS CON MINI-GRÁFICA DE EVOLUCIÓN TEMPORAL -->
+    <section class="kpi-executive-grid">
+      <!-- KPI 1: Peticiones que llegan [EXCLUSIVO JEFE DE SERVICIO] -->
+      <article class="kpi-exec-card" data-jefe-only="true" style="--kpi-color:#0284c7; --kpi-bg:#e0f2fe;"
+        onclick="window.jefaturaApp.cambiarTab('peticiones')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">1. Peticiones Recibidas</span>
+          <div class="kpi-icon-badge">📥</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiTotalPeticiones">0</span>
+          <span class="kpi-pill-rate badge-info" id="kpiPeticionesValidasPct">0% válidas</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiPeticionesDesglosePrio">P1: 0 · P2: 0 · P3: 0</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiPeticiones"></div>
+      </article>
+
+      <!-- KPI 2: % Peticiones que llegan mal [EXCLUSIVO JEFE DE SERVICIO] -->
+      <article class="kpi-exec-card" data-jefe-only="true" style="--kpi-color:#dc2626; --kpi-bg:#fef2f2;"
+        onclick="window.jefaturaApp.cambiarTab('peticiones')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">2. % Peticiones Mal</span>
+          <div class="kpi-icon-badge">⚠️</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiPctPeticionesMal" style="color:#dc2626;">0%</span>
+          <span class="kpi-pill-rate badge-danger" id="kpiNumPeticionesMal">0 con incidencia</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiTopCausaMal">Incompletas, QT&lt;21d, FG bajo o trazador</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiMal"></div>
+      </article>
+
+      <!-- KPI 3: Pruebas Hechas por Radiofármaco [EXCLUSIVO JEFE DE SERVICIO] -->
+      <article class="kpi-exec-card" data-jefe-only="true" style="--kpi-color:#0d9488; --kpi-bg:#ccfbf1;"
+        onclick="window.jefaturaApp.cambiarTab('radiofarmacos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">3. Radiofármacos</span>
+          <div class="kpi-icon-badge">☢️</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiTotalPruebasRF" style="color:#0f766e;">0</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiTopRadiofarmacoBadge">FDG / PSMA</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiDesgloseCortoRF">18F-FDG · 68Ga-PSMA · Colina · DOTATOC</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiRadiofarmacos"></div>
+      </article>
+
+      <!-- KPI 4: Pacientes que pasan en hora a máquina [COMÚN / ENFERMERÍA] -->
+      <article class="kpi-exec-card" style="--kpi-color:#059669; --kpi-bg:#ecfdf5;"
+        onclick="window.jefaturaApp.cambiarTab('puntualidad')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">4. Paso a Camilla</span>
+          <div class="kpi-icon-badge">⏱️</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiPctPasoEnHora" style="color:#059669;">0%</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiNumPasoEnHora">0 / 0 en hora</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiDesviacionMedia">Desviación media: ±0 min (Meta ≤10m)</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiMaquina"></div>
+      </article>
+
+      <!-- KPI 5: No Acuden sin Avisar (No-Show) y Cancelaciones Recitables [COMÚN / ENFERMERÍA] -->
+      <article class="kpi-exec-card" style="--kpi-color:#d97706; --kpi-bg:#fffbeb;"
+        onclick="window.jefaturaApp.cambiarTab('citas')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">5. No-Show & Recitación</span>
+          <div class="kpi-icon-badge">🔄</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiNumCancelaciones" style="color:#d97706;">0</span>
+          <span class="kpi-pill-rate badge-warn" id="kpiHuecosDisponibles">0 por recitar</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiRecitadosExito">0 recitados · <strong id="kpiNumNoShow" style="color:#b91c1c;">0</strong> No-Show
+            (<span id="kpiPctNoShow">0%</span>)</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiCitas"></div>
+      </article>
+
+      <!-- KPI 6: Anulaciones Clínicas y Técnicas [COMÚN / ENFERMERÍA] -->
+      <article class="kpi-exec-card" style="--kpi-color:#e11d48; --kpi-bg:#ffe4e6;"
+        onclick="window.jefaturaApp.cambiarTab('anulaciones')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">6. Anulaciones Box</span>
+          <div class="kpi-icon-badge">🛑</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiNumAnulaciones" style="color:#e11d48;">0</span>
+          <span class="kpi-pill-rate badge-danger" id="kpiPctAnulaciones">0.0% tasa</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiDesgloseAnulaciones">🍽️ Prep: 0 · ☢️ RF: 0 · 💉 Extrav: 0</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiAnulaciones"></div>
+      </article>
+
+      <!-- KPI 7: Tiempos por Médico, Tardías y Espera en Salir [EXCLUSIVO JEFE DE SERVICIO] -->
+      <article class="kpi-exec-card" data-jefe-only="true" style="--kpi-color:#7c3aed; --kpi-bg:#f5f3ff;"
+        onclick="window.jefaturaApp.cambiarTab('medicos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">7. Médicos: Tardías & TAT</span>
+          <div class="kpi-icon-badge">👨‍⚕️</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiEsperaPostImagenMedia" style="color:#7c3aed;">0 min</span>
+          <span class="kpi-pill-rate badge-purple" id="kpiTardiasTotalesBadge">0 tardías</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiTiempoMedioPruebaGlobal">Espera post-imagen y tiempo medio/prueba</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiMedicos"></div>
+      </article>
+
+      <!-- KPI 8: Eficiencia y Aprovechamiento de Radiofármacos + Huecos Libres [EXCLUSIVO JEFE DE SERVICIO] -->
+      <article class="kpi-exec-card" data-jefe-only="true" style="--kpi-color:#0284c7; --kpi-bg:#f0f9ff;"
+        onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">8. Eficiencia & Huecos</span>
+          <div class="kpi-icon-badge">💎</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiPctAprovechamientoRF" style="color:#0284c7;">91.2%</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiHuecosLibresBadge">3 huecos libres</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextAprovechamiento">Recibido: 8.420 MBq · Inyectado: 7.680 MBq</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiEficiencia"></div>
+      </article>
+
+      <!-- KPI 9: Demoras de Citación (P1/P2) y Tiempo Informe Médico (TAT) [EXCLUSIVO JEFE DE SERVICIO] -->
+      <article class="kpi-exec-card" data-jefe-only="true" style="--kpi-color:#059669; --kpi-bg:#ecfdf5;"
+        onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">9. Demoras P1/P2 & TAT</span>
+          <div class="kpi-icon-badge">📅</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiDemoraP1Media" style="color:#059669;">4.6 d</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiTatInformeBadge">TAT: 18.2 h</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextDemoras">P1: 4.6d (Meta ≤7d) · P2: 10.8d · 79% &lt;24h</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiDemoras"></div>
+      </article>
+
+      <!-- KPI 10: Tiempo Permanencia en Servicio (Door-to-Door) & Ventana EARL [COMÚN / ENFERMERÍA] -->
+      <article class="kpi-exec-card" style="--kpi-color:#d97706; --kpi-bg:#fffbeb;"
+        onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">10. Permanencia & EARL</span>
+          <div class="kpi-icon-badge">⏳</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiPermanenciaServicioMedia" style="color:#d97706;">112 min</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiVentanaEarlBadge">93.1% EARL</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextPermanencia">Door-to-Door: 112m · Ventana 55-75m OK</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiPermanencia"></div>
+      </article>
+
+      <!-- KPI 11: Eficacia Audioguías, Pacientes Mal Preparados & Glucemias Altas [COMÚN / ENFERMERÍA] -->
+      <article class="kpi-exec-card" style="--kpi-color:#be123c; --kpi-bg:#fff1f2;"
+        onclick="window.jefaturaApp.cambiarTab('audioguias_calidad')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">11. Audioguías & Glucemia</span>
+          <div class="kpi-icon-badge">🎧</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiAdherenciaAudioguia" style="color:#be123c;">85.4%</span>
+          <span class="kpi-pill-rate badge-danger" id="kpiGlucemiasAltasBadge">5.8% ≥200</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextAudioguias">Adherencia 85% · Susp: 1.1% con vs 8.7% sin</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkKpiAudioguias"></div>
+      </article>
+    </section>
+
+    <!-- 3.2. BARRA DE PESTAÑAS DE GESTIÓN -->
+    <nav class="chief-tabs-bar" id="chiefTabsBar">
+      <!-- Pestañas para Jefe de Servicio -->
+      <button type="button" class="chief-tab-btn active" data-tab="resumen" data-jefe-only="true"
+        onclick="window.jefaturaApp.cambiarTab('resumen')">
+        <span>📊 1. Cuadro de Mando y Evolución</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="peticiones" data-jefe-only="true"
+        onclick="window.jefaturaApp.cambiarTab('peticiones')">
+        <span>📋 2. Peticiones e Indicación</span>
+        <span class="tab-count-badge" id="tabBadgeMal">0</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="radiofarmacos" data-jefe-only="true"
+        onclick="window.jefaturaApp.cambiarTab('radiofarmacos')">
+        <span>☢️ 3. Cartera Radiofármacos</span>
+        <span class="tab-count-badge" id="tabBadgeRF">0</span>
+      </button>
+
+      <!-- Pestañas Operativas Comunes / Enfermería -->
+      <button type="button" class="chief-tab-btn" data-tab="audioguias_calidad"
+        onclick="window.jefaturaApp.cambiarTab('audioguias_calidad')">
+        <span>🎧 Audioguías & Glucemias Box</span>
+        <span class="tab-count-badge" id="tabBadgeAudioguias" style="background:#0d9488; color:#fff;">85%</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="puntualidad"
+        onclick="window.jefaturaApp.cambiarTab('puntualidad')">
+        <span>⏱️ Paso a Camilla & Inyección</span>
+        <span class="tab-count-badge" id="tabBadgeMaquina">0%</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="citas"
+        onclick="window.jefaturaApp.cambiarTab('citas')">
+        <span>🔄 No-Shows & Recitación</span>
+        <span class="tab-count-badge" id="tabBadgeRecitar">0</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="anulaciones"
+        onclick="window.jefaturaApp.cambiarTab('anulaciones')">
+        <span>🛑 Anulaciones (Prep / Extrav)</span>
+        <span class="tab-count-badge" id="tabBadgeAnulaciones">0</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="medicos" data-jefe-only="true"
+        onclick="window.jefaturaApp.cambiarTab('medicos')">
+        <span>👨‍⚕️ Facultativos: Tardías y TAT</span>
+        <span class="tab-count-badge" id="tabBadgeMedicos">4</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="eficiencia_tiempos"
+        onclick="window.jefaturaApp.cambiarTab('eficiencia_tiempos')">
+        <span>⏱️ Demoras, Fármacos & EARL</span>
+        <span class="tab-count-badge" id="tabBadgeEficiencia" style="background:#0284c7; color:#fff;">91%</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="planilla_personal"
+        onclick="window.jefaturaApp.cambiarTab('planilla_personal')">
+        <span>👥 Planilla de Personal (Turnos)</span>
+        <span class="tab-count-badge" id="tabBadgePlanilla" style="background:#0d9488; color:#fff;">4</span>
+      </button>
+
+      <!-- Informes Oficiales (Accesibles en ambas pestañas) -->
+      <button type="button" class="chief-tab-btn" data-tab="generar_informe"
+        onclick="window.jefaturaApp.cambiarTab('generar_informe')">
+        <span>📑 Crear Informe</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="demo_informe"
+        onclick="window.jefaturaApp.cambiarTab('demo_informe')" style="border:1.5px solid #0284c7;">
+        <span>🖨️ Demo Imprimible</span>
+        <span class="tab-count-badge" id="tabBadgeTipoDemo">Mensual</span>
+      </button>
+    </nav>
+
+    <!-- ======================================================================
+         PESTAÑA 1: CUADRO DE MANDO EJECUTIVO GLOBAL Y CURVAS DE EVOLUCIÓN
+         ====================================================================== -->
+    <section id="tab-resumen" class="tab-panel active">
+      <!-- Panel Maestro de Evolución en el Tiempo de todos los parámetros -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📈 Gráficas de Evolución en el Tiempo por Parámetro del Servicio</h2>
+            <p>Tendencia histórica y operativa de peticiones mal formuladas, pruebas por radiofármaco, paso en hora a
+              máquina, recitaciones, anulaciones y tiempos médicos</p>
+          </div>
+        </div>
+        <div class="dashboard-row-equal" id="resumenChartsGrid"></div>
+      </div>
+
+      <div class="dashboard-row-equal">
+        <!-- Bloque A: Resumen de Calidad de Peticiones y Causas de Rechazo [JEFATURA] -->
+        <div class="panel-card" data-scope="jefatura">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>⚠️ Radiografía de Peticiones que Llegan Mal vs Correctas</h2>
+              <p>Distribución de defectos de prescripción detectados a la llegada al Servicio de Medicina Nuclear</p>
+            </div>
+            <button type="button" class="btn-chief btn-chief-outline no-print"
+              onclick="window.jefaturaApp.cambiarTab('peticiones')">
+              Ver Auditoría →
+            </button>
+          </div>
+          <div id="resumenCausasPeticionesMal" class="stat-bars-list"></div>
+        </div>
+
+        <!-- Bloque B: Resumen de Pruebas Hechas por Radiofármaco [JEFATURA] -->
+        <div class="panel-card" data-scope="jefatura">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>☢️ Cantidad de Pruebas Realizadas por Radiofármaco</h2>
+              <p>Actividad acumulada e inyecciones por trazador PET (18F-FDG, 68Ga-PSMA, 18F-Colina, 68Ga-DOTATOC,
+                18F-DOPA, Amiloide)</p>
+            </div>
+            <button type="button" class="btn-chief btn-chief-outline no-print"
+              onclick="window.jefaturaApp.cambiarTab('radiofarmacos')">
+              Ver Detalle Radiofármacos →
+            </button>
+          </div>
+          <div id="resumenPruebasPorRadiofarmacoBars" class="stat-bars-list"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-row-equal">
+        <!-- Bloque C: Resumen de Puntualidad de Paso a Máquina [ENFERMERÍA] -->
+        <div class="panel-card" data-scope="enfermeria">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>⏱️ Puntualidad de Entrada a Tomógrafo PET/CT</h2>
+              <p>Comparativa entre Hora Prevista post-inyección (+60/+90m) y Hora Real de paso a máquina TSID</p>
+            </div>
+            <button type="button" class="btn-chief btn-chief-outline no-print"
+              onclick="window.jefaturaApp.cambiarTab('puntualidad')">
+              Monitor Máquina →
+            </button>
+          </div>
+          <div id="resumenPuntualidadMaquina" class="stat-bars-list"></div>
+        </div>
+
+        <!-- Bloque D: Resumen de Tardías, Espera post-Última Imagen y Tiempo/Prueba por Médico [JEFATURA] -->
+        <div class="panel-card" data-scope="jefatura">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>👨‍⚕️ Indicadores por Médico: Tardías, Espera en Salir y Tiempo/Prueba</h2>
+              <p>Tardías solicitadas, minutos que espera el paciente desde la última imagen hasta recibir el alta y
+                duración media por estudio</p>
+            </div>
+            <button type="button" class="btn-chief btn-chief-primary no-print"
+              onclick="window.jefaturaApp.cambiarTab('medicos')">
+              Ver Cuadro Médico →
+            </button>
+          </div>
+          <div id="resumenMedicosCompactBox"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-row-2col">
+        <!-- Bloque E: Ranking rápido de Servicios Peticionarios con más incidencias [JEFATURA] -->
+        <div class="panel-card" data-scope="jefatura">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>🏥 Ranking de Servicios Solicitantes (% Peticiones Mal Formuladas)</h2>
+              <p>Volumen de solicitudes recibidas por especialidad y porcentaje que requiere subsanación o triaje médico
+              </p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="chief-table">
+              <thead>
+                <tr>
+                  <th>Servicio Solicitante</th>
+                  <th>Peticiones Totales</th>
+                  <th>Correctas</th>
+                  <th>Llegan Mal</th>
+                  <th>% Peticiones Mal</th>
+                  <th>Motivo Principal</th>
+                </tr>
+              </thead>
+              <tbody id="tablaResumenServiciosBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Bloque F: Balance de Citas: Cancelaciones Recitables, No-Shows y Anulaciones [ENFERMERÍA] -->
+        <div class="panel-card" data-scope="enfermeria">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>🔄 Gestión de Huecos, No-Shows y Anulaciones en Sala</h2>
+              <p>Control de pérdidas de radiofármaco y recuperación activa de agenda mediante recitación rápida</p>
+            </div>
+            <button type="button" class="btn-chief btn-chief-primary no-print"
+              onclick="window.jefaturaApp.cambiarTab('citas')">
+              Recitar Huecos →
+            </button>
+          </div>
+          <div id="resumenBalanceCitasBox"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 2: AUDITORÍA DE PETICIONES RECIBIDAS (% QUE LLEGAN MAL)
+         ====================================================================== -->
+    <section id="tab-peticiones" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📈 Evolución en el Tiempo: Volumen de Peticiones que Llegan vs % que Llegan Mal</h2>
+            <p>Seguimiento histórico para evaluar el impacto de las guías de prescripción en los servicios clínicos
+              peticionarios</p>
+          </div>
+        </div>
+        <div id="chartEvolucionPeticiones"></div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📋 Estadística Por Servicio Solicitante y Calidad de Prescripción</h2>
+            <p>Identificación de servicios con mayor tasa de peticiones mal cumplimentadas para planes de mejora
+              conjunta</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+            <select id="filtroServicioPeticiones" class="period-select"
+              onchange="window.jefaturaApp.renderPeticionesTab()">
+              <option value="all">🏥 Todos los Servicios Solicitantes</option>
+            </select>
+            <select id="filtroEstadoCalidadPeticion" class="period-select"
+              onchange="window.jefaturaApp.renderPeticionesTab()">
+              <option value="bad" selected>⚠️ Solo Peticiones que Llegan Mal (Con Incidencia)</option>
+              <option value="all">📋 Todas las Peticiones (Correctas + Mal)</option>
+              <option value="ok">✅ Solo Peticiones Correctas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Servicio Peticionario</th>
+                <th>Total Recibidas</th>
+                <th>Válidas a la 1ª</th>
+                <th>Llegan Mal (Incidencia)</th>
+                <th>% Error Prescripción</th>
+                <th>Fallo Más Frecuente</th>
+                <th class="no-print">Acción Jefatura</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDetalleServiciosCalidad"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🔍 Listado Nominal de Peticiones Auditadas (Defectos de Solicitud / No Triables)</h2>
+            <p>Detalle clínico de cada petición defectuosa: motivo por el que llega mal y acción correctora desde
+              Jefatura</p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Fecha / ID</th>
+                <th>Paciente (NHC)</th>
+                <th>Servicio / Médico Solicitante</th>
+                <th>Estudio / Prioridad</th>
+                <th>Estado de Calidad</th>
+                <th>Motivo por el que Llega Mal</th>
+                <th class="no-print">Resolución</th>
+              </tr>
+            </thead>
+            <tbody id="tablaNominalPeticionesMal"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 3: CANTIDAD DE PRUEBAS HECHAS POR RADIOFÁRMACO Y EVOLUCIÓN
+         ====================================================================== -->
+    <section id="tab-radiofarmacos" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📈 Evolución en el Tiempo de Pruebas Realizadas por Radiofármaco</h2>
+            <p>Curva comparativa de actividad por trazador (18F-FDG, 68Ga-PSMA-11, 18F-Colina, 68Ga-DOTATOC, 18F-DOPA y
+              Amiloide)</p>
+          </div>
+        </div>
+        <div id="chartEvolucionRadiofarmacos"></div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>☢️ Desglose Detallado de Pruebas Realizadas por Radiofármaco e Isótopo</h2>
+            <p>Volumen de estudios completados, cuota sobre el total del servicio, tiempo medio de captación/máquina y
+              aprovechamiento de dosis</p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Radiofármaco / Trazador PET</th>
+                <th>Isótopo / Origen</th>
+                <th>Pruebas Realizadas</th>
+                <th>% Sobre Total</th>
+                <th>Dosis Aprovechadas (%)</th>
+                <th>Tiempo Captación / Máquina</th>
+                <th>Evolución Reciente</th>
+              </tr>
+            </thead>
+            <tbody id="tablaRadiofarmacosDetalleBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel-card" id="panelCalidadDosimetricaRF">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⚖️ Auditoría de Calidad Dosimétrica según Peso y Talla (Dosis Ideal vs. Más o Menos)</h2>
+            <p>Sincronizado en tiempo real con Consola de Enfermería: verifica si se está inyectando el radiofármaco
+              ideal calculado por Peso (kg) y Talla (cm), o si se inyecta más (&gt;+10%) o menos (&lt;-10%)</p>
+          </div>
+        </div>
+        <div id="resumenKpisCalidadDosimetrica"
+          style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:0.85rem; margin-bottom:1rem;">
+        </div>
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Fármaco</th>
+                <th>Paciente (Iniciales · NHC)</th>
+                <th>Peso / Talla (IMC)</th>
+                <th>🎯 Dosis Ideal Calculada</th>
+                <th>💉 mCi Inyectados</th>
+                <th>Desviación (%)</th>
+                <th>Evaluación Calidad Dosis</th>
+                <th>Estado Inyección (Vía)</th>
+                <th>Hora Inyección</th>
+              </tr>
+            </thead>
+            <tbody id="tablaCalidadDosimetricaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 4: PUNTUALIDAD DE PASO A MÁQUINA (TOMÓGRAFO)
+         ====================================================================== -->
+    <section id="tab-puntualidad" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📈 Evolución en el Tiempo: % de Pacientes que Pasan en Hora a Máquina y Desviación Media</h2>
+            <p>Seguimiento de la puntualidad de entrada a sala de tomógrafo respecto al minuto exacto de fin de
+              captación</p>
+          </div>
+        </div>
+        <div id="chartEvolucionPuntualidad"></div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⏱️ Control de Pacientes que Pasan en Hora a Máquina (Box ➔ Tomógrafo PET/CT)</h2>
+            <p>Seguimiento del cumplimiento estricto de la ventana de captación metabólica (60 min FDG / 90 min
+              Endocarditis / 55 min PSMA)</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+            <select id="filtroPuntualidadEstado" class="period-select"
+              onchange="window.jefaturaApp.renderPuntualidadTab()">
+              <option value="all">📊 Todos los Pacientes Monitorizados</option>
+              <option value="ontime">🟢 Pasan en Hora (≤ ±10 min)</option>
+              <option value="mild">🟡 Demora Leve (+11 a +20 min)</option>
+              <option value="late">🔴 Fuera de Hora (&gt; +20 min)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Paciente / NHC</th>
+                <th>Radiofármaco / Box</th>
+                <th>Hora Cita</th>
+                <th>Hora Inyección</th>
+                <th>Hora Prevista Máquina</th>
+                <th>Hora Real Máquina</th>
+                <th>Desviación (Δ min)</th>
+                <th>Estado Puntualidad</th>
+                <th>Causa / Observación</th>
+                <th class="no-print">Ajustar / Auditar</th>
+              </tr>
+            </thead>
+            <tbody id="tablaPuntualidadMaquinaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 5: NO-SHOWS SIN AVISAR vs CANCELACIONES Y RECITACIÓN DE HUECOS
+         ====================================================================== -->
+    <section id="tab-citas" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📈 Evolución en el Tiempo: Cancelaciones Recitadas vs No-Shows sin Avisar</h2>
+            <p>Comparativa histórica entre citas recuperadas gracias al preaviso y ausencias imprevistas</p>
+          </div>
+        </div>
+        <div id="chartEvolucionCitas"></div>
+      </div>
+
+      <!-- Subpanel A: Cancelaciones con Aviso (SE PUEDEN RECITAR) -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🔄 Pacientes que Cancelan Cita con Aviso — Bolsa de Huecos Recitables</h2>
+            <p>Citas canceladas por teléfono, enfermería o chatbot que liberan hueco de tomógrafo y dosis para recitar a
+              otro paciente en espera</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <button type="button" class="btn-chief btn-chief-amber"
+              onclick="window.jefaturaApp.abrirModalRegistrarIncidenciaCita('cancelacion')">
+              ➕ Registrar Cancelación Recitable
+            </button>
+          </div>
+        </div>
+
+        <div id="gridHuecosRecitables" class="slot-cards-grid"></div>
+      </div>
+
+      <!-- Subpanel B: Pacientes que NO Acuden sin Avisar (NO-SHOW) -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🚫 Pacientes que NO Acuden sin Avisar (Absentismo / No-Show)</h2>
+            <p>Pacientes citados que no se presentan en admisión sin preaviso, impidiendo recitar el hueco a tiempo</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <button type="button" class="btn-chief btn-chief-outline" style="border-color:#fca5a5; color:#b91c1c;"
+              onclick="window.jefaturaApp.abrirModalRegistrarIncidenciaCita('noshow')">
+              🚫 Registrar Paciente No Presentado (No-Show)
+            </button>
+          </div>
+        </div>
+
+        <div id="gridPacientesNoShow" class="slot-cards-grid"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 6: ANULACIONES (MAL PREPARADOS, FALLO RADIOFÁRMACO Y EXTRAVASACIONES)
+         ====================================================================== -->
+    <section id="tab-anulaciones" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📈 Evolución en el Tiempo de Anulaciones: Mal Preparados, Fallo de Radiofármaco y Extravasaciones</h2>
+            <p>Seguimiento temporal de las 3 causas operativas de anulación o repetición de pruebas en la unidad</p>
+          </div>
+        </div>
+        <div id="chartEvolucionAnulaciones"></div>
+      </div>
+
+      <!-- 3 Tarjetas de Desglose por Tipo de Anulación -->
+      <div class="kpi-executive-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <article class="kpi-exec-card" style="--kpi-color:#ea580c; --kpi-bg:#ffedd5;">
+          <div class="kpi-top-row">
+            <span class="kpi-label">🍽️ Anulaciones por Paciente Mal Preparado</span>
+            <div class="kpi-icon-badge">🍽️</div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-big-number" id="anulCountMalPrep" style="color:#ea580c;">0</span>
+            <span class="kpi-pill-rate badge-warn" id="anulPctMalPrep">0% del total</span>
+          </div>
+          <div class="kpi-subtext">
+            <span>Rotura de ayuno, dieta endocarditis incumplida, glucemia ≥200 mg/dL o insulina &lt;4h</span>
+          </div>
+        </article>
+
+        <article class="kpi-exec-card" style="--kpi-color:#7c3aed; --kpi-bg:#f3e8ff;">
+          <div class="kpi-top-row">
+            <span class="kpi-label">☢️ Anulaciones por Fallo de Producción de Radiofármaco</span>
+            <div class="kpi-icon-badge">☢️</div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-big-number" id="anulCountFalloRF" style="color:#7c3aed;">0</span>
+            <span class="kpi-pill-rate badge-purple" id="anulPctFalloRF">0% del total</span>
+          </div>
+          <div class="kpi-subtext">
+            <span>Avería en síntesis de ciclotrón, fallo en control de calidad (QC), generador 68Ga o transporte</span>
+          </div>
+        </article>
+
+        <article class="kpi-exec-card" style="--kpi-color:#e11d48; --kpi-bg:#ffe4e6;">
+          <div class="kpi-top-row">
+            <span class="kpi-label">💉 Anulaciones / Repeticiones por Extravasación</span>
+            <div class="kpi-icon-badge">💉</div>
+          </div>
+          <div class="kpi-value-row">
+            <span class="kpi-big-number" id="anulCountExtrav" style="color:#e11d48;">0</span>
+            <span class="kpi-pill-rate badge-danger" id="anulPctExtrav">0% del total</span>
+          </div>
+          <div class="kpi-subtext">
+            <span>Infiltración paravenosa en punto de inyección que invalida SUV o requiere repetir estudio</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Panel de Gestión y Registro de Anulaciones -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🛑 Registro Clínico y Técnico de Anulaciones de Pruebas PET/CT</h2>
+            <p>Auditoría detallada de exploraciones anuladas o repetidas por mala preparación del paciente, incidencia
+              en radiofarmacia o extravasación en box</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+            <select id="filtroTipoAnulacion" class="period-select" onchange="window.jefaturaApp.renderAnulacionesTab()">
+              <option value="all">🛑 Todas las Anulaciones (Mal Prep + Radiofármaco + Extravasación)</option>
+              <option value="mal_preparado">🍽️ Solo Pacientes Mal Preparados</option>
+              <option value="fallo_radiofarmaco">☢️ Solo Fallos de Producción de Radiofármaco</option>
+              <option value="extravasacion">💉 Solo Extravasaciones de Dosis</option>
+            </select>
+            <button type="button" class="btn-chief btn-chief-amber"
+              onclick="window.jefaturaApp.abrirModalRegistrarIncidenciaCita('mal_preparado')">
+              🍽️ + Mal Preparado
+            </button>
+            <button type="button" class="btn-chief btn-chief-outline" style="border-color:#c084fc; color:#6b21a8;"
+              onclick="window.jefaturaApp.abrirModalRegistrarIncidenciaCita('fallo_radiofarmaco')">
+              ☢️ + Fallo Radiofármaco
+            </button>
+            <button type="button" class="btn-chief btn-chief-outline" style="border-color:#fda4af; color:#be123c;"
+              onclick="window.jefaturaApp.abrirModalRegistrarIncidenciaCita('extravasacion')">
+              💉 + Extravasación
+            </button>
+          </div>
+        </div>
+
+        <div id="gridAnulacionesOperativas" class="slot-cards-grid"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 7: ESTADÍSTICA POR MÉDICO NUCLEAR (TARDÍAS, ESPERA SALIDA Y TIEMPO/PRUEBA)
+         ====================================================================== -->
+    <section id="tab-medicos" class="tab-panel">
+      <!-- Gráficas de Evolución Temporal por Médico -->
+      <div class="dashboard-row-equal">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>📈 Evolución en el Tiempo: Tardías Pedidas por Médico Nuclear</h2>
+              <p>Porcentaje y volumen de adquisiciones tardías solicitadas tras revisar el estudio basal en SIDI</p>
+            </div>
+          </div>
+          <div id="chartEvolucionMedicosTardias"></div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h2>📈 Evolución: Espera en Salir desde Última Imagen y Tiempo Medio por Prueba</h2>
+              <p>Minutos desde el fin de la última imagen en máquina hasta el Alta Médica ("Puede Irse") y duración
+                media por paciente</p>
+            </div>
+          </div>
+          <div id="chartEvolucionMedicosTiempos"></div>
+        </div>
+      </div>
+
+      <!-- Tarjetas Comparativas de los 4 Facultativos de Medicina Nuclear -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>👨‍⚕️ Cuadro Comparativo por Facultativo de Medicina Nuclear (Galaria · SERGAS)</h2>
+            <p>1) Tardías pedidas por médico · 2) Tiempo de espera del paciente en salir desde la última imagen · 3)
+              Tiempo medio por prueba</p>
+          </div>
+        </div>
+        <div id="gridTarjetasMedicosNucleares" class="doctor-cards-grid"></div>
+      </div>
+
+      <!-- Tabla Nominal de Tiempos por Prueba, por Paciente y por Médico -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⏱️ Listado Detallado de Tiempos por Prueba, por Paciente y por Médico Responsable</h2>
+            <p>Trazabilidad completa desde la inyección, tiempo de máquina, fin de última imagen, solicitud de tardía y
+              tiempo de espera hasta salir de la unidad</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+            <select id="filtroMedicoNuclearTiempos" class="period-select"
+              onchange="window.jefaturaApp.renderMedicosTab()">
+              <option value="all">👨‍⚕️ Todos los Facultativos de Medicina Nuclear</option>
+              <option value="Dr. Manuel Gómez Feijóo">Dr. Manuel Gómez Feijóo</option>
+              <option value="Dra. Elena Rial Vázquez">Dra. Elena Rial Vázquez</option>
+              <option value="Dr. Alberto Silva Pousa">Dr. Alberto Silva Pousa</option>
+              <option value="Dra. Carmen Montes Rey">Dra. Carmen Montes Rey</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Paciente / NHC</th>
+                <th>Médico Nuclear Responsable</th>
+                <th>Radiofármaco / Protocolo</th>
+                <th>Hora Inyección</th>
+                <th>Entrada Máquina</th>
+                <th>Fin Última Imagen</th>
+                <th>¿Tardía Pedida?</th>
+                <th>Hora Salida ("Puede Irse")</th>
+                <th>⏳ Espera desde Última Imagen</th>
+                <th>⏱️ Tiempo Máquina</th>
+                <th>⏱️ Tiempo Total Prueba</th>
+              </tr>
+            </thead>
+            <tbody id="tablaTiemposPorPacienteMedico"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 8: EFICIENCIA DE FÁRMACOS, DEMORAS, TAT Y TIEMPOS DE PROCESO
+         ====================================================================== -->
+    <section id="tab-eficiencia_tiempos" class="tab-panel">
+      <!-- BLOQUE 1: APROVECHAMIENTO DE RADIOFÁRMACOS Y HUECOS LIBRES -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>💎 Eficiencia Radiofarmacéutica y Optimización de Capacidad Asistencial Pública</h2>
+            <p>Control de actividad recibida vs inyectada, desintegración física, capacidad diagnóstica no aprovechada y
+              aprovechamiento de slots de alta tecnología SERGAS</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok" id="badgeEficienciaGlobal">91.2% Aprovechamiento Global</span>
+            <span class="status-badge badge-warn" id="badgeHuecosLibresGlobal">3 Huecos Libres / Día</span>
+          </div>
+        </div>
+
+        <div
+          style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#0369a1; text-transform:uppercase;">Actividad Recibida
+            </div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#0284c7;"
+              id="statActividadRecibida">8.420 MBq</div>
+            <div style="font-size:0.73rem; color:#64748b;">Ciclotrón público Galaria + logística concertada</div>
+          </div>
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Actividad
+              Administrada</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#059669;"
+              id="statActividadInyectada">7.680 MBq</div>
+            <div style="font-size:0.73rem; color:#64748b;">Dosis diagnósticas netas a pacientes citados</div>
+          </div>
+          <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#be123c; text-transform:uppercase;">Capacidad No
+              Aprovechada</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#e11d48;"
+              id="statDosisPerdidasEur">4 pac. equiv.</div>
+            <div style="font-size:0.73rem; color:#64748b;">740 MBq desintegración física + absentismo</div>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#b45309; text-transform:uppercase;">Huecos Libres en
+              Agenda Pública</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#d97706;"
+              id="statHuecosLibresDia">3 / día (9.4%)</div>
+            <div style="font-size:0.73rem; color:#64748b;">Capacidad asistencial pública recuperable (+18 pac/sem)</div>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              📈 Aprovechamiento y Eficiencia por Radiofármaco
+            </h3>
+            <div id="chartAprovechamientoRF"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              ⏱️ Ocupación Horaria de Slots de Camilla Pública y Huecos Vacíos
+            </h3>
+            <div id="chartOcupacionSlots"></div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Radiofármaco</th>
+                <th>Dosis Pedidas</th>
+                <th>Inyectadas con Éxito</th>
+                <th>Tasa Aprovechamiento</th>
+                <th>MBq Desintegrados</th>
+                <th>Capacidad Asistencial Afectada</th>
+                <th>Acción de Optimización Pública</th>
+              </tr>
+            </thead>
+            <tbody id="tablaAprovechamientoFarmacos"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: DEMORAS DE CITACIÓN Y TAT DE INFORME MÉDICO -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📅 Demoras de Citación (Lead Time) y Tiempo de Informe Médico (TAT)</h2>
+            <p>Tiempos desde la solicitud médica hasta la cita por prioridad y plazo de validación final del informe por
+              facultativo</p>
+          </div>
+        </div>
+
+        <div
+          style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Demora P1
+              Oncológica</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#059669;"
+              id="statDemoraP1">4.6 días</div>
+            <div style="font-size:0.73rem; color:#059669; font-weight:600;">✓ Cumple Meta SERGAS (≤ 7 días)</div>
+          </div>
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#15803d; text-transform:uppercase;">Demora P2
+              Ordinaria</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#16a34a;"
+              id="statDemoraP2">10.8 días</div>
+            <div style="font-size:0.73rem; color:#16a34a; font-weight:600;">✓ Cumple Meta SERGAS (≤ 15 días)</div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#475569; text-transform:uppercase;">Demora P3
+              Seguimiento</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#334155;"
+              id="statDemoraP3">24.5 días</div>
+            <div style="font-size:0.73rem; color:#64748b;">Ajustada a ventana de reevaluación</div>
+          </div>
+          <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#6d28d9; text-transform:uppercase;">TAT Medio de
+              Informe</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#7c3aed;"
+              id="statTatInformeMedio">18.2 horas</div>
+            <div style="font-size:0.73rem; color:#7c3aed; font-weight:600;">78.5% validados en &lt; 24h</div>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              📊 Evolución de Demoras de Citación (Días) vs Objetivos SERGAS
+            </h3>
+            <div id="chartEvolucionDemoras"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              ⏱️ Distribución del Plazo de Firma del Informe (TAT)
+            </h3>
+            <div id="chartDistribucionTAT"></div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Servicio Solicitante</th>
+                <th>Volumen P1</th>
+                <th>Demora Media P1</th>
+                <th>Volumen P2</th>
+                <th>Demora Media P2</th>
+                <th>Cumplimiento Plazos</th>
+                <th>TAT Firma Medio</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDemorasPorServicio"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: PERMANENCIA EN EL SERVICIO Y VENTANA EARL 55-75 MIN -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⏳ Tiempo de Permanencia en el Servicio (Door-to-Door) & Calidad Técnica EARL</h2>
+            <p>Duración total del paciente en el servicio desglosada por fases y cumplimiento estricto del intervalo
+              post-inyección 55-75 min</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok" id="badgeVentanaEarlGlobal">93.1% en Ventana EARL (55-75m)</span>
+            <span class="status-badge badge-info" id="badgePermanenciaGlobal">112 min Estancia Media</span>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              ⏱️ Desglose por Fases de la Estancia (Door-to-Door Total: 112 min)
+            </h3>
+            <div id="chartFasesEstancia"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🎯 Control de Calidad Técnica: Intervalo Inyección ➔ Camilla (EARL 55-75 min)
+            </h3>
+            <div id="chartVentanaEarl"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 9: EFICACIA DE AUDIOGUÍAS, PACIENTES MAL PREPARADOS Y GLUCEMIAS
+         ====================================================================== -->
+    <section id="tab-audioguias_calidad" class="tab-panel">
+      <!-- BLOQUE 1: EFICACIA PREVENTIVA DE LAS AUDIOGUÍAS -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🎧 Medición de Eficacia de las Audioguías Digitales Oficiales</h2>
+            <p>Impacto preventivo de la preparación interactiva: adherencia del paciente, reducción de cancelaciones y
+              soporte del chatbot</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok">85.4% Adherencia Digital</span>
+            <span class="status-badge badge-ok">-87.4% Suspensiones Evitadas</span>
+          </div>
+        </div>
+
+        <div
+          style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#15803d; text-transform:uppercase;">Adherencia
+              Audioguía</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#16a34a;"
+              id="statAdherenciaPct">85.4%</div>
+            <div style="font-size:0.73rem; color:#15803d;">Pacientes que acceden antes de la cita</div>
+          </div>
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Suspensión CON
+              Audioguía</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#059669;"
+              id="statSuspConAudio">1.1%</div>
+            <div style="font-size:0.73rem; color:#047857; font-weight:600;">Máxima adherencia y preparación</div>
+          </div>
+          <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#be123c; text-transform:uppercase;">Suspensión SIN
+              Audioguía</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#e11d48;"
+              id="statSuspSinAudio">8.7%</div>
+            <div style="font-size:0.73rem; color:#be123c;">8 veces más fallos de preparación</div>
+          </div>
+          <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#0369a1; text-transform:uppercase;">Dudas Resueltas
+              Chatbot</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#0284c7;"
+              id="statConsultasChatbot">342</div>
+            <div style="font-size:0.73rem; color:#0369a1;">Consultas evitadas en centralita</div>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              📊 Comparativa de Tasa de Suspensión: CON vs SIN Audioguía
+            </h3>
+            <div id="chartEficaciaAudioguias"></div>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🎧 Uso de Audioguías por Protocolo Clínico
+            </h3>
+            <div id="chartUsoPorProtocolo"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: PACIENTES MAL PREPARADOS EN BOX -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⚠️ Auditoría de Pacientes Mal Preparados a la Llegada</h2>
+            <p>Análisis de causas específicas de mala preparación en sala</p>
+          </div>
+        </div>
+
+        <div
+          style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#b45309; text-transform:uppercase;">Mal Preparados en
+              Box</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:800; color:#d97706;"
+              id="statTotalMalPrepBox">12 pac</div>
+            <div style="font-size:0.73rem; color:#b45309;">2.4% del total citado</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🍩 Desglose de Motivos de Mala Preparación en Box
+            </h3>
+            <div id="chartCausasMalPrep"></div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Paciente / NHC</th>
+                <th>Fecha / Hora</th>
+                <th>Protocolo</th>
+                <th>Tipo Incidencia</th>
+                <th>Cifra Glucemia</th>
+                <th>Resolución Asistencial</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDetalleMalPrepGlucemia"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 10: CREAR INFORME OFICIAL (MENSUAL, TRIMESTRAL Y ANUAL)
+         ====================================================================== -->
+    <section id="tab-generar_informe" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📑 Configurador de Informes Oficiales de Jefatura de Servicio (Mensual · Trimestral · Anual)</h2>
+            <p>Selecciona la periodicidad, las secciones estadísticas a incluir y genera al instante la vista previa
+              lista para imprimir en la pestaña contigua</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn-chief btn-chief-primary"
+              onclick="window.jefaturaApp.generarYVerDemoInforme()">
+              ✨ Generar y Ver en Pestaña Demo Imprimible →
+            </button>
+          </div>
+        </div>
+
+        <!-- Paso 1: Elegir Mensual, Trimestral o Anual -->
+        <div>
+          <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.65rem;">
+            1. Selecciona el Tipo y Periodicidad del Informe:
+          </h3>
+          <div class="report-type-selector-grid">
+            <div class="report-type-card selected" id="cardRepType_mensual"
+              onclick="window.jefaturaApp.seleccionarTipoInforme('mensual')">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="status-badge badge-info">📅 INFORME MENSUAL</span>
+                <span style="font-size:1.3rem;">🗓️</span>
+              </div>
+              <strong style="font-family:'Outfit',sans-serif; font-size:1.05rem; color:#0f172a;">Informe Mensual
+                Operativo (Noviembre 2026)</strong>
+              <p style="font-size:0.79rem; color:#475569;">
+                Balance detallado de los últimos 30 días: peticiones recibidas vs mal formuladas, actividad por
+                radiofármaco, puntualidad diaria en máquina, recitaciones y tiempos por médico.
+              </p>
+            </div>
+
+            <div class="report-type-card" id="cardRepType_trimestral"
+              onclick="window.jefaturaApp.seleccionarTipoInforme('trimestral')">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="status-badge badge-warn">📊 INFORME TRIMESTRAL</span>
+                <span style="font-size:1.3rem;">📈</span>
+              </div>
+              <strong style="font-family:'Outfit',sans-serif; font-size:1.05rem; color:#0f172a;">Informe Trimestral de
+                Gestión (4º Trimestre · T4 2026)</strong>
+              <p style="font-size:0.79rem; color:#475569;">
+                Comparativa evolutiva de los 3 meses del trimestre (Sep–Oct–Nov): evolución de calidad de prescripción
+                por servicios, curva de aprovechamiento de radiofarmacia y reducción de demoras.
+              </p>
+            </div>
+
+            <div class="report-type-card" id="cardRepType_anual"
+              onclick="window.jefaturaApp.seleccionarTipoInforme('anual')">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="status-badge badge-purple">🏆 MEMORIA ANUAL</span>
+                <span style="font-size:1.3rem;">🏛️</span>
+              </div>
+              <strong style="font-family:'Outfit',sans-serif; font-size:1.05rem; color:#0f172a;">Memoria Anual del
+                Servicio PET/CT (Ejercicio 2026)</strong>
+              <p style="font-size:0.79rem; color:#475569;">
+                Memoria ejecutiva de 12 meses para Dirección Asistencial SERGAS / Galaria: volumen anual por isótopo,
+                cumplimiento de objetivos P1/P2, ahorro en dosis salvadas y cuadro médico anual.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paso 2: Selección por Perfil o Checkboxes Personalizados -->
+        <div style="margin-top:0.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:0.65rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin:0;">
+              2. Indicadores y Apartados a Incluir en el Documento Oficial:
+            </h3>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button type="button" class="btn-chief btn-chief-outline" style="font-size:0.75rem; padding:3px 8px;"
+                onclick="window.jefaturaApp.aplicarPlantillaInforme('jefatura')">
+                👑 Cargar Plantilla Jefatura Médica
+              </button>
+              <button type="button" class="btn-chief btn-chief-outline" style="font-size:0.75rem; padding:3px 8px;"
+                onclick="window.jefaturaApp.aplicarPlantillaInforme('enfermeria')">
+                🩺 Cargar Plantilla Supervisión Enfermería
+              </button>
+              <button type="button" class="btn-chief btn-chief-outline" style="font-size:0.75rem; padding:3px 8px;"
+                onclick="window.jefaturaApp.aplicarPlantillaInforme('global')">
+                🌐 Cargar Todas las Secciones
+              </button>
+            </div>
+          </div>
+          <div class="report-check-grid">
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_peticiones" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>📥 Peticiones Recibidas y % que Llegan Mal (por Servicio)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_radiofarmacos" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>☢️ Cantidad de Pruebas Realizadas por Radiofármaco</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_dosimetria" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>⚖️ Calidad Dosimétrica (Peso/Talla: Dosis Ideal vs Más o Menos)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_graficas" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>📈 Gráficas Vectoriales de Evolución en el Tiempo</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_puntualidad" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>⏱️ Pacientes que Pasan en Hora a Máquina (Δ min)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_citas" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>🔄 No-Shows sin Avisar vs Cancelaciones y Recitaciones</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_anulaciones" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>🛑 Anulaciones (Mal Preparados · Fallo RF · Extravasaciones)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_medicos" checked onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>👨‍⚕️ Médicos: Tardías, Espera post-Última Imagen y Tiempo/Prueba</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_eficiencia_farmacos" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>💎 Eficiencia y Aprovechamiento de Radiofármacos + Huecos Libres</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_demoras_tat" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>📅 Demoras de Citación (P1/P2/P3) y Tiempo de Informe Médico (TAT)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_permanencia_earl" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>⏳ Tiempo Total de Permanencia (Door-to-Door) & Ventana EARL 55-75m</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_audioguias_calidad" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>🎧 Eficacia Preventiva de las Audioguías Digitales (-87% suspensiones)</span>
+            </label>
+            <label class="report-check-item">
+              <input type="checkbox" id="chkRep_glucemias_altas" checked
+                onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <span>⚠️ Pacientes Mal Preparados en Box</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Paso 3: Destinatario y Conclusiones -->
+        <div class="dashboard-row-equal" style="margin-top:0.4rem;">
+          <div>
+            <label style="font-size:0.82rem; font-weight:800; color:#004868; display:block; margin-bottom:5px;">3.
+              Órgano Destinatario del Informe:</label>
+            <select id="selectDestinatarioInforme" class="period-select" style="width:100%; background:#ffffff;"
+              onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <option value="Dirección Asistencial SERGAS & Gerencia Galaria">🏛️ Dirección Asistencial SERGAS &
+                Gerencia Galaria</option>
+              <option value="Gerencia del Área Sanitaria de Vigo (H. Álvaro Cunqueiro)">🏥 Gerencia del Área Sanitaria
+                de Vigo (H. Álvaro Cunqueiro)</option>
+              <option value="Comisión Central de Calidad y Seguridad Clínica">🛡️ Comisión Central de Calidad y
+                Seguridad Clínica</option>
+              <option value="Comité de Dirección de Medicina Nuclear y Radiofarmacia">🔬 Comité de Dirección de Medicina
+                Nuclear y Radiofarmacia</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.82rem; font-weight:800; color:#004868; display:block; margin-bottom:5px;">4.
+              Firmante de Jefatura de Servicio:</label>
+            <select id="selectFirmanteJefatura" class="period-select" style="width:100%; background:#ffffff;"
+              onchange="window.jefaturaApp.actualizarDemoInforme()">
+              <option value="Dr. Manuel Gómez Feijóo · Jefe de Servicio de Medicina Nuclear (Col. 36/08421)">👨‍⚕️ Dr.
+                Manuel Gómez Feijóo · Jefe de Servicio de Medicina Nuclear</option>
+              <option value="Dra. Elena Rial Vázquez · Coordinadora de Calidad PET/CT (Col. 36/09144)">👩‍⚕️ Dra. Elena
+                Rial Vázquez · Coordinadora de Calidad PET/CT</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:0.82rem; font-weight:800; color:#004868; display:block; margin-bottom:5px;">5.
+            Dictamen Ejecutivo y Conclusiones de Jefatura (Editable):</label>
+          <textarea id="txtObservacionesInforme" rows="3" class="period-select"
+            style="width:100%; background:#ffffff; font-family:'Open Sans',sans-serif; font-weight:500; line-height:1.45;"
+            oninput="window.jefaturaApp.actualizarDemoInforme()"></textarea>
+        </div>
+
+        <div
+          style="display:flex; justify-content:flex-end; gap:10px; padding-top:0.5rem; border-top:1px solid #e2e8f0;">
+          <button type="button" class="btn-chief btn-chief-outline"
+            onclick="window.jefaturaApp.abrirEImprimirDemoInforme()">
+            🖨️ Imprimir Directamente
+          </button>
+          <button type="button" class="btn-chief btn-chief-primary"
+            onclick="window.jefaturaApp.generarYVerDemoInforme()">
+            👁️ Pasar a la Pestaña "Demo Imprimible" →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 9 (CONTIGUA): DEMO IMPRIMIBLE DE CÓMO QUEDA CADA INFORME
+         ====================================================================== -->
+    <section id="tab-demo_informe" class="tab-panel">
+      <!-- Barra de control no imprimible para alternar entre Demo Mensual, Trimestral y Anual -->
+      <div class="demo-toolbar-bar no-print">
+        <div>
+          <div style="font-family:'Outfit',sans-serif; font-size:1.06rem; font-weight:800; color:#fde047;">
+            🖨️ Previsualización Oficial Imprimible del Informe (Formato Folio A4 SERGAS · Galaria)
+          </div>
+          <div style="font-size:0.8rem; color:#e0f2fe; margin-top:2px;">
+            Alterna entre las 3 demos (Mensual, Trimestral y Anual) para ver cómo queda maquetado cada informe antes de
+            imprimirlo o guardarlo en PDF:
+          </div>
+        </div>
+
+        <div class="demo-switch-pills">
+          <button type="button" class="demo-pill-btn active" id="btnDemoSwitch_mensual"
+            onclick="window.jefaturaApp.seleccionarTipoInforme('mensual')">
+            📅 Ver Demo MENSUAL
+          </button>
+          <button type="button" class="demo-pill-btn" id="btnDemoSwitch_trimestral"
+            onclick="window.jefaturaApp.seleccionarTipoInforme('trimestral')">
+            📊 Ver Demo TRIMESTRAL
+          </button>
+          <button type="button" class="demo-pill-btn" id="btnDemoSwitch_anual"
+            onclick="window.jefaturaApp.seleccionarTipoInforme('anual')">
+            🏆 Ver Demo ANUAL
+          </button>
+          <button type="button" class="btn-chief btn-chief-primary"
+            style="background:#10b981; border-color:#059669; font-size:0.88rem; padding:0.55rem 1.15rem;"
+            onclick="window.print()">
+            🖨️ Imprimir / Guardar PDF de esta Demo
+          </button>
+        </div>
+      </div>
+
+      <!-- Contenedor del Documento Oficial A4 -->
+      <div class="a4-report-wrapper">
+        <article id="printableReportSheet" class="a4-official-sheet"></article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA: PLANILLA INTERACTIVA DE PERSONAL (TÉCNICOS, ENFERMEROS, CELADORES, TCAE)
+         ====================================================================== -->
+    <section id="tab-planilla_personal" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>👥 Planilla Interactiva de Personal — Medicina Nuclear &amp; PET-CT</h2>
+            <p>Selecciona cualquier trabajador (o arrástralo directamente) para moverlo y asignarlo al turno correspondiente en PET-CT o Medicina Nuclear.</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;" class="no-print">
+            <label style="font-size:0.78rem; font-weight:800; color:#004868;">📅 Fecha:</label>
+            <input type="date" id="planillaFechaInput" class="period-select"
+              onchange="window.jefaturaApp.setPlanillaFecha(this.value)">
+            <button type="button" class="btn-chief btn-chief-outline"
+              onclick="window.jefaturaApp.setPlanillaFecha('hoy')">Hoy</button>
+            <button type="button" class="btn-chief btn-chief-outline"
+              onclick="window.jefaturaApp.setPlanillaFecha('manana')">Mañana</button>
+            <button type="button" class="btn-chief btn-chief-primary"
+              onclick="window.jefaturaApp.imprimirPlanillaPersonal()">🖨️ Imprimir Planilla</button>
+            <button type="button" class="btn-chief btn-chief-outline" style="color:#b91c1c; border-color:#fecaca;"
+              onclick="window.jefaturaApp.resetPlanillaDia()">🔄 Restablecer Día</button>
+          </div>
+        </div>
+
+        <!-- Selector de las 4 Planillas por Categoría -->
+        <div class="planilla-controls-row no-print">
+          <div class="planilla-subtabs" id="planillaSubtabs">
+            <button type="button" class="planilla-cat-btn active" data-cat="enfermeros"
+              onclick="window.jefaturaApp.setPlanillaCategoria('enfermeros')">
+              <span>🩺 Enfermeros/as</span>
+              <span class="planilla-cat-count" id="countPlanilla_enfermeros">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="tecnicos"
+              onclick="window.jefaturaApp.setPlanillaCategoria('tecnicos')">
+              <span>☢️ Técnicos (TSID)</span>
+              <span class="planilla-cat-count" id="countPlanilla_tecnicos">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="celadores"
+              onclick="window.jefaturaApp.setPlanillaCategoria('celadores')">
+              <span>🏥 Celadores/as</span>
+              <span class="planilla-cat-count" id="countPlanilla_celadores">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="tcaes"
+              onclick="window.jefaturaApp.setPlanillaCategoria('tcaes')">
+              <span>🧤 TCAEs</span>
+              <span class="planilla-cat-count" id="countPlanilla_tcaes">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="resumen"
+              onclick="window.jefaturaApp.setPlanillaCategoria('resumen')"
+              style="border-color:#0d9488; color:#0f766e;">
+              <span>📊 Resumen 4 Planillas</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de estado cuando hay un trabajador seleccionado -->
+        <div id="planillaSelectionBar" class="planilla-selection-bar hidden no-print">
+          <span id="planillaSelectionText">👆 Trabajador seleccionado: — Haz clic en la columna de turno destino para moverlo.</span>
+          <button type="button" class="btn-chief btn-chief-outline"
+            onclick="window.jefaturaApp.selectPlanillaWorker(null)">✕ Cancelar selección</button>
+        </div>
+
+        <!-- Añadir nuevo trabajador a la planilla activa -->
+        <div id="planillaAddBar" class="planilla-add-bar no-print">
+          <span style="font-size:0.8rem; font-weight:800; color:#004868;">➕ Añadir trabajador a esta planilla:</span>
+          <input type="text" id="inputNuevoTrabajadorNombre" class="period-select" style="min-width:220px; background:#fff;"
+            placeholder="Nombre y Apellidos...">
+          <select id="selectNuevoTrabajadorArea" class="period-select" style="background:#fff;">
+            <option value="PET-CT">🔵 Habitual: PET-CT</option>
+            <option value="Medicina Nuclear">🟢 Habitual: Medicina Nuclear</option>
+            <option value="Polivalente">🟣 Polivalente (MN + PET-CT)</option>
+          </select>
+          <button type="button" class="btn-chief btn-chief-primary"
+            onclick="window.jefaturaApp.agregarTrabajadorPlanilla()">+ Añadir a Plantilla</button>
+        </div>
+
+        <!-- Tablero de Columnas de Turnos (o Resumen Global de las 4 Planillas) -->
+        <div id="planillaBoardContainer"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL 1: MOTOR INTELIGENTE PARA RECITAR UN HUECO CANCELADO EN 1 CLIC
+       ======================================================================== -->
+  <div id="modalRecitarHueco" class="chief-modal-backdrop">
+    <div class="chief-modal">
+      <div class="chief-modal-header">
+        <h3>🔄 Recitar Hueco Liberado y Salvar Dosis de Radiofármaco</h3>
+        <button type="button" onclick="window.jefaturaApp.cerrarModalRecitar()"
+          style="background:none; border:none; color:#ffffff; font-size:1.25rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="chief-modal-body">
+        <div id="infoHuecoLiberadoModal"
+          style="background:#fffbeb; border:1.5px solid #f59e0b; border-radius:10px; padding:0.9rem 1.1rem; font-size:0.85rem; color:#78350f;">
+        </div>
+
+        <div>
+          <h4 style="font-family:'Outfit',sans-serif; font-size:0.96rem; color:#004868; margin-bottom:0.5rem;">
+            🎯 Candidatos Compatibles en Lista de Espera (Mismo Radiofármaco · Prioridad P1/P2):
+          </h4>
+          <div id="listaCandidatosRecitar" style="display:flex; flex-direction:column; gap:0.65rem;"></div>
+        </div>
+      </div>
+      <div class="chief-modal-footer">
+        <button type="button" class="btn-chief btn-chief-outline"
+          onclick="window.jefaturaApp.cerrarModalRecitar()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: REGISTRAR NUEVA CANCELACIÓN, ANULACIÓN O NO-SHOW
+       ======================================================================== -->
+  <div id="modalRegistrarIncidenciaCita" class="chief-modal-backdrop">
+    <div class="chief-modal" style="max-width:600px;">
+      <div class="chief-modal-header">
+        <h3 id="tituloModalIncidenciaCita">➕ Registrar Cancelación, Anulación o No-Show</h3>
+        <button type="button" onclick="window.jefaturaApp.cerrarModalIncidenciaCita()"
+          style="background:none; border:none; color:#ffffff; font-size:1.25rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="chief-modal-body">
+        <div style="display:flex; flex-direction:column; gap:0.85rem;">
+          <div>
+            <label style="font-size:0.8rem; font-weight:800; color:#004868; display:block; margin-bottom:4px;">1. Tipo
+              de Incidencia / Anulación en la Cita:</label>
+            <select id="selectTipoIncidenciaCita" class="period-select" style="width:100%;">
+              <option value="cancelacion">🔄 Cancelación con Aviso (Deja Hueco Libre para Recitar)</option>
+              <option value="noshow">🚫 No Acude sin Avisar (No-Show / Absentismo)</option>
+              <option value="mal_preparado">🍽️ Anulación: Paciente Mal Preparado (Ayuno / Dieta / Glucemia / Insulina)
+              </option>
+              <option value="fallo_radiofarmaco">☢️ Anulación: Fallo de Producción de Radiofármaco (Ciclotrón / QC /
+                Generador)</option>
+              <option value="extravasacion">💉 Anulación / Repetición: Extravasación de Radiofármaco en Inyección
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size:0.8rem; font-weight:800; color:#004868; display:block; margin-bottom:4px;">2.
+              Seleccionar Paciente Citado:</label>
+            <select id="selectPacienteIncidenciaCita" class="period-select" style="width:100%;"></select>
+          </div>
+
+          <div>
+            <label style="font-size:0.8rem; font-weight:800; color:#004868; display:block; margin-bottom:4px;">3. Motivo
+              Clínico / Técnico Detallado:</label>
+            <input type="text" id="inputMotivoIncidenciaCita" class="period-select"
+              style="width:100%; background:#ffffff;"
+              placeholder="Ej: Glucemia 230 mg/dL, rotura de ayuno, extravasación en fosa antecubital...">
+          </div>
+        </div>
+      </div>
+      <div class="chief-modal-footer">
+        <button type="button" class="btn-chief btn-chief-outline"
+          onclick="window.jefaturaApp.cerrarModalIncidenciaCita()">Cancelar</button>
+        <button type="button" class="btn-chief btn-chief-primary"
+          onclick="window.jefaturaApp.confirmarRegistroIncidenciaCita()">💾 Guardar y Actualizar Estadística</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="chiefToastContainer" class="chief-toast-container"></div>
+
+  <!-- Semilla oficial de peticiones para disponibilidad 100% instantánea -->
+  <script src="../pet_ct_triage/web_app/peticiones_seed.js"></script>
+  <script src="app.js?v=20261121_PLANILLA_01"></script>
+</body>
+
+</html>

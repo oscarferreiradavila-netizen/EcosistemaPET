@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Audioguía oficial de preparación para PET FDG Endocarditis de Galaria - SERGAS: dieta de carne y grasa el día anterior (cero carbohidratos), ayuno estricto de 16 horas, administración de heparina 15 minutos antes del radiofármaco y paso a máquina a los 90 minutos.">
+  <title>PET FDG Endocarditis | Audioguía Oficial de Preparación y Asistente Virtual</title>
+  
+  <!-- Fuente Google Fonts: Open Sans & Outfit (Identidad Corporativa Galaria / SERGAS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES Y SISTEMA DE DISEÑO GALARIA - SERGAS (SERVIZO GALEGO DE SAÚDE)
+       ESPECIALIDAD: PET FDG ENDOCARDITIS (SUPRESIÓN METABÓLICA CARDÍACA)
+       ========================================================================== */
+    :root {
+      --sergas-blue: #007eb4;             /* Azul principal Galaria / Sergas */
+      --sergas-blue-hover: #005b82;       /* Azul interacción */
+      --sergas-navy: #004868;            /* Azul corporativo titulares */
+      --sergas-dark: #08293d;            /* Azul profundo institucional */
+      --sergas-soft-blue: #e6f4fa;       /* Azul pastel fondos */
+      --sergas-subtle: #f0f7fb;          /* Fondo suave */
+
+      /* Acentos Cardíacos / Endocarditis */
+      --cardiac-red: #dc2626;            /* Rojo cardíaco / vascular */
+      --cardiac-dark-red: #991b1b;
+      --cardiac-soft-red: #fef2f2;
+      --cardiac-border: #fca5a5;
+
+      --cardiac-purple: #7c3aed;         /* Heparina / Bioquímica */
+      --cardiac-soft-purple: #f5f3ff;
+      --cardiac-border-purple: #ddd6fe;
+
+      --contrast-amber: #b45309;         /* Advertencias clínicas */
+      --contrast-soft-amber: #fffbeb;
+      --contrast-border: #fcd34d;
+
+      --primary: #007eb4;
+      --primary-hover: #005b82;
+      --primary-dark: #004868;
+      --accent-cyan: #0284c7;
+
+      --bg-page: #f4f7f9;                /* Fondo limpio sanitario */
+      --bg-card: #ffffff;                /* Tarjetas blancas */
+      --bg-card-hover: #f8fafc;
+      --bg-elevated: #e2e8f0;
+      --border-subtle: #d6e2e9;
+
+      --danger: #dc2626;
+      --danger-hover: #b91c1c;
+      --danger-bg: #fef2f2;
+      --danger-border: #fca5a5;
+
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --success-border: #86efac;
+
+      --text-main: #1e293b;
+      --text-muted: #526071;
+      --text-dim: #718096;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --radius-full: 9999px;
+
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+      --shadow-sm: 0 1px 3px rgba(0, 40, 70, 0.06);
+      --shadow-md: 0 4px 14px rgba(0, 60, 100, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 60, 100, 0.12);
+      --shadow-cardiac: 0 8px 24px rgba(220, 38, 38, 0.15);
+      --shadow-blue: 0 4px 16px rgba(0, 126, 180, 0.25);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--sergas-blue);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1020px;
+      padding: 0 1.25rem;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       BARRA INSTITUCIONAL SUPERIOR (SERGAS / XUNTA)
+       ========================================================================== */
+    .sergas-top-bar {
+      width: 100%;
+      background: #004868;
+      color: #ffffff;
+      font-size: 0.8rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .sergas-top-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .sergas-gov-text {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .xunta-pill {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .sergas-sub {
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    .sergas-portal-id {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+    }
+
+    .lang-pill {
+      background: rgba(0, 126, 180, 0.4);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* CABECERA PRINCIPAL GALARIA */
+    .galaria-main-header {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 3px solid var(--sergas-blue);
+      padding: 0.85rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .galaria-brand-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .hospital-unit-info {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+    }
+
+    .unit-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      letter-spacing: 0.05em;
+    }
+
+    .unit-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* HERO BANNER: PROTOCOLO ENDOCARDITIS */
+    .hero-banner {
+      width: 100%;
+      background: linear-gradient(135deg, #00364f 0%, #004d70 50%, #002233 100%);
+      color: #ffffff;
+      padding: 2.25rem 0 2rem 0;
+      position: relative;
+      border-bottom: 4px solid var(--cardiac-red);
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(220, 38, 38, 0.25);
+      border: 1px solid rgba(252, 165, 165, 0.5);
+      color: #fee2e2;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      box-shadow: 0 0 14px rgba(220, 38, 38, 0.35);
+    }
+
+    .header-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: #fca5a5;
+    }
+
+    .hero-banner h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-banner .subtitle {
+      font-size: 1.02rem;
+      color: #dbeafe;
+      max-width: 860px;
+      line-height: 1.5;
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+    }
+
+    /* TARJETA OFICIAL DEL PACIENTE CITADO */
+    .patient-card-container {
+      background: rgba(255, 255, 255, 0.98);
+      color: var(--text-main);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.35rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      border-left: 6px solid var(--cardiac-red);
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .patient-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .patient-card-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      letter-spacing: 0.03em;
+    }
+
+    .live-pulse {
+      width: 10px;
+      height: 10px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulse 1.8s infinite;
+    }
+
+    .live-pulse.red {
+      background: #ef4444;
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+
+    .patient-study-tag {
+      background: var(--cardiac-soft-red);
+      color: var(--cardiac-dark-red);
+      border: 1px solid var(--cardiac-border);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .patient-card-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem 1.25rem;
+    }
+
+    .patient-data-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .p-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .p-value {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .p-value.p-nhc {
+      font-family: monospace;
+      color: var(--sergas-navy);
+      font-size: 1.05rem;
+    }
+
+    .p-value.p-date {
+      color: var(--cardiac-red);
+    }
+
+    /* 4 PILARES CLÍNICOS DEL PROTOCOLO ENDOCARDITIS (ALERTA DESTACADA) */
+    .alert-banner-endocarditis {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 2px solid var(--cardiac-border);
+      border-left: 6px solid var(--cardiac-red);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.35rem;
+      box-shadow: 0 4px 16px rgba(220, 38, 38, 0.12);
+      margin-top: 1rem;
+    }
+
+    .endocarditis-grid-pills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+
+    .endocarditis-pill {
+      background: var(--cardiac-soft-red);
+      border: 1.5px solid var(--cardiac-border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.9rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .endocarditis-pill.purple {
+      background: var(--cardiac-soft-purple);
+      border-color: var(--cardiac-border-purple);
+    }
+
+    .endocarditis-pill.amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .endocarditis-pill.blue {
+      background: var(--sergas-soft-blue);
+      border-color: #bae6fd;
+    }
+
+    .pill-icon {
+      font-size: 1.35rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .pill-content h4 {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
+      line-height: 1.25;
+    }
+
+    .pill-content p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    /* SECCIÓN DE VÍDEO EXPLICATIVO */
+    .video-section {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .video-header-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .video-duration {
+      font-size: 0.78rem;
+      background: var(--sergas-soft-blue);
+      color: var(--sergas-blue);
+      border: 1px solid var(--border-subtle);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #000000;
+      box-shadow: var(--shadow-md);
+      aspect-ratio: 16 / 9;
+      max-height: 480px;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    
+
+    
+
+    
+
+    
+
+    /* GRID DE 3 TARJETAS EXPLICATIVAS */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all var(--transition-normal);
+      border-top: 4px solid var(--sergas-blue);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card.card-red {
+      border-top-color: var(--cardiac-red);
+    }
+
+    .card.card-amber {
+      border-top-color: var(--warning);
+    }
+
+    .card.card-purple {
+      border-top-color: var(--cardiac-purple);
+    }
+
+    .card-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-circle.red {
+      background: var(--cardiac-soft-red);
+      color: var(--cardiac-red);
+      border: 1px solid var(--cardiac-border);
+    }
+
+    .card-icon-circle.amber {
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
+    }
+
+    .card-icon-circle.purple {
+      background: var(--cardiac-soft-purple);
+      color: var(--cardiac-purple);
+      border: 1px solid var(--cardiac-border-purple);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      margin-bottom: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .card-list li {
+      position: relative;
+      padding-left: 1.4rem;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0.25rem;
+      color: var(--sergas-blue);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .card.card-red .card-list li::before {
+      color: var(--cardiac-red);
+    }
+
+    .card.card-purple .card-list li::before {
+      color: var(--cardiac-purple);
+    }
+
+    /* TIMELINE HORARIO Y PROTOCOLO PASO A PASO */
+    .timeline-section {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 1.75rem;
+      margin-top: 2rem;
+    }
+
+    .timeline-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-header h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .timeline-header p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      position: relative;
+    }
+
+    .t-step {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      position: relative;
+      border-left: 4px solid var(--sergas-blue);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .t-step.highlight-red {
+      background: var(--cardiac-soft-red);
+      border-color: var(--cardiac-border);
+      border-left-color: var(--cardiac-red);
+    }
+
+    .t-step.highlight-purple {
+      background: var(--cardiac-soft-purple);
+      border-color: var(--cardiac-border-purple);
+      border-left-color: var(--cardiac-purple);
+    }
+
+    .t-step.highlight-amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #d97706;
+    }
+
+    .t-step-time {
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--sergas-blue);
+    }
+
+    .t-step.highlight-red .t-step-time {
+      color: var(--cardiac-dark-red);
+    }
+
+    .t-step.highlight-purple .t-step-time {
+      color: var(--cardiac-purple);
+    }
+
+    .t-step-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .t-step-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* SECCIÓN ASISTENTE CHATBOT EN PÁGINA */
+    .assistant-card-section {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border: 1.5px solid #d0e3ef;
+      border-top: 4px solid var(--cardiac-red);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-top: 2rem;
+      box-shadow: 0 8px 24px rgba(0, 48, 76, 0.08);
+    }
+
+    .chip-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 6px 13px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--sergas-navy);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .chip-btn:hover {
+      background: var(--sergas-soft-blue);
+      border-color: var(--sergas-blue);
+      color: var(--sergas-blue);
+      transform: translateY(-1px);
+    }
+
+    /* SECCIÓN GLUCEMIA Y METABOLISMO */
+    .diabetes-wrapper {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .diabetes-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .diabetes-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+    }
+
+    .diabetes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      color: var(--text-main);
+      background: #ffffff;
+      font-family: inherit;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--sergas-blue);
+      box-shadow: 0 0 0 3px rgba(0, 126, 180, 0.15);
+    }
+
+    .glucose-result-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      display: none;
+    }
+
+    .glucose-result-box.green {
+      display: block;
+      background: #ecfdf5;
+      border: 1.5px solid #6ee7b7;
+      color: #065f46;
+    }
+
+    .glucose-result-box.amber {
+      display: block;
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      color: #92400e;
+    }
+
+    .glucose-result-box.red {
+      display: block;
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+      color: #991b1b;
+    }
+
+    /* SECCIÓN CANCELACIÓN EN 2 PASOS */
+    .cancellation-wrapper {
+      background: #ffffff;
+      border: 1px solid #fca5a5;
+      border-radius: var(--radius-lg);
+      margin-top: 2rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cancel-trigger-header {
+      background: #fef2f2;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      transition: background var(--transition-fast);
+    }
+
+    .cancel-trigger-header:hover {
+      background: #fee2e2;
+    }
+
+    .cancel-accordion-content {
+      padding: 1.5rem;
+      display: none;
+      border-top: 1px solid #fca5a5;
+      background: #ffffff;
+    }
+
+    .cancel-accordion-content.open {
+      display: block;
+    }
+
+    /* BOTONES */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .btn-cardiac {
+      background: linear-gradient(135deg, var(--cardiac-red) 0%, #991b1b 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+    }
+
+    .btn-cardiac:hover {
+      background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+      transform: translateY(-1px);
+    }
+
+    /* CHATBOT FLOTANTE Y VENTANA */
+    .floating-chat-trigger {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: linear-gradient(135deg, var(--cardiac-red) 0%, #991b1b 100%);
+      color: #ffffff;
+      border-radius: 50px;
+      padding: 0.85rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.4);
+      cursor: pointer;
+      z-index: 1000;
+      border: 2px solid #ffffff;
+      transition: all var(--transition-fast);
+    }
+
+    .floating-chat-trigger:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(220, 38, 38, 0.5);
+    }
+
+    .chat-window {
+      position: fixed;
+      bottom: 5.5rem;
+      right: 1.5rem;
+      width: 410px;
+      max-width: calc(100vw - 2rem);
+      height: 600px;
+      max-height: calc(100vh - 7rem);
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 18px 45px rgba(0, 48, 76, 0.28);
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+      overflow: hidden;
+      border: 1.5px solid #d0e3ef;
+      border-top: 5px solid var(--cardiac-red);
+    }
+
+    .chat-window.open {
+      display: flex;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #004868 0%, #002f45 100%);
+      color: #ffffff;
+      padding: 0.9rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .chat-header-title h4 {
+      font-size: 0.96rem;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .chat-header-title p {
+      font-size: 0.72rem;
+      color: #bae6fd;
+      margin: 0;
+    }
+
+    .chat-close-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+
+    .chat-close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: #f8fafc;
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 0.7rem 0.95rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .chat-msg.bot {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid #e2e8f0;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .chat-msg.user {
+      background: var(--sergas-blue);
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-msg.alert {
+      background: var(--cardiac-soft-red);
+      color: var(--cardiac-dark-red);
+      border: 1px solid var(--cardiac-border);
+      align-self: center;
+      width: 100%;
+      max-width: 100%;
+      font-weight: 700;
+    }
+
+    .chat-typing {
+      display: none;
+      align-self: flex-start;
+      background: #ffffff;
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-md);
+      border: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .chat-input-bar {
+      padding: 0.75rem;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      padding: 0.65rem 0.9rem;
+      border: 1.5px solid #d0e3ef;
+      border-radius: 25px;
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .chat-input-bar input:focus {
+      border-color: var(--sergas-blue);
+    }
+
+    .chat-send-btn {
+      background: var(--sergas-blue);
+      color: #ffffff;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .chat-send-btn:hover {
+      background: var(--sergas-blue-hover);
+    }
+
+    /* MODAL DE CONSULTA DIRECTA Y NOTA DE VOZ */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(8, 41, 61, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 520px;
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border-top: 5px solid var(--cardiac-red);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.45;
+    }
+
+    /* GRABADORA DE AUDIO */
+    .voice-recorder-box {
+      background: #f8fafc;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .mic-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%);
+      color: #ffffff;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 126, 180, 0.3);
+      transition: all 0.2s;
+    }
+
+    .mic-btn.recording {
+      background: #ef4444;
+      animation: pulse 1.2s infinite;
+    }
+
+    /* FOOTER */
+    footer {
+      width: 100%;
+      background: #ffffff;
+      border-top: 3px solid var(--sergas-blue);
+      padding: 2.25rem 0 1.5rem 0;
+      margin-top: 3.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero-banner h1 { font-size: 1.7rem; }
+      .endocarditis-grid-pills { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .timeline-steps { grid-template-columns: 1fr; }
+      .chat-window {
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        bottom: 5.5rem;
+        height: 70vh;
+      }
+    }
+  
+    /* ==========================================================================
+       CHATBOT INTERACTIVO CON VOZ Y GEMINI IA (SERGAS)
+       ========================================================================== */
+    .chat-engine-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 0.68rem !important;
+      padding: 2px 7px !important;
+      border-radius: 10px !important;
+      font-weight: 700 !important;
+      background: rgba(255, 255, 255, 0.18) !important;
+      color: #e0f2fe !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      letter-spacing: 0.2px !important;
+      transition: all 0.3s ease !important;
+      white-space: nowrap !important;
+    }
+
+    .chat-engine-badge.gemini {
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%) !important;
+      color: #ffffff !important;
+      border-color: #a5b4fc !important;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5) !important;
+    }
+
+    .chat-header-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      margin-left: auto !important;
+    }
+
+    .chat-header-btn {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 50% !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.95rem !important;
+      transition: all 0.2s ease !important;
+      padding: 0 !important;
+    }
+
+    .chat-header-btn:hover {
+      background: rgba(255, 255, 255, 0.28) !important;
+      transform: scale(1.05) !important;
+    }
+
+    .chat-header-btn.active {
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      border-color: #7dd3fc !important;
+      box-shadow: 0 0 8px rgba(14, 165, 233, 0.6) !important;
+    }
+
+    .chat-mic-btn {
+      background: #f1f5f9 !important;
+      color: #334155 !important;
+      border: 1.5px solid #cbd5e1 !important;
+      width: 38px !important;
+      height: 38px !important;
+      border-radius: 50% !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      transition: all 0.2s ease !important;
+      font-size: 1.05rem !important;
+      padding: 0 !important;
+      margin-right: 4px !important;
+    }
+
+    .chat-mic-btn:hover {
+      background: #e2e8f0 !important;
+      border-color: #94a3b8 !important;
+    }
+
+    .chat-mic-btn.listening {
+      background: #dc2626 !important;
+      color: #ffffff !important;
+      border-color: #ef4444 !important;
+      animation: pulseMic 1.4s infinite !important;
+    }
+
+    @keyframes pulseMic {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); }
+      70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); transform: scale(1.08); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
+    }
+
+    .bot-speak-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      padding: 3px 8px !important;
+      border-radius: 12px !important;
+      background: #f1f5f9 !important;
+      border: 1px solid #e2e8f0 !important;
+      color: #475569 !important;
+      font-size: 0.73rem !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      font-family: inherit !important;
+      margin-top: 6px !important;
+    }
+
+    .bot-speak-btn:hover {
+      background: #e2e8f0 !important;
+      color: #007eb4 !important;
+    }
+
+    .bot-speak-btn.speaking {
+      background: #dbeafe !important;
+      color: #1d4ed8 !important;
+      border-color: #93c5fd !important;
+      animation: pulseVoice 1.2s infinite ease-in-out !important;
+    }
+
+    @keyframes pulseVoice {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.03); }
+    }
+
+    .chat-msg-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin-top: 6px !important;
+    }
+
+    input.recording-active {
+      border-color: #dc2626 !important;
+      background: #fff5f5 !important;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- 1. BARRA SUPERIOR INSTITUCIONAL XUNTA / SERGAS -->
+  <div class="sergas-top-bar">
+    <div class="container sergas-top-container">
+      <div class="sergas-gov-text">
+        <span class="xunta-pill">XUNTA DE GALICIA</span>
+        <span class="sergas-sub">CONSELLERÍA DE SANIDADE · SERGAS</span>
+      </div>
+      <div class="sergas-portal-id">
+        <span>Portal Asistencial ao Paciente</span>
+        <span class="lang-pill">GAL | ES</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CABECERA PRINCIPAL GALARIA -->
+  <header class="galaria-main-header">
+    <div class="container brand-row">
+      <div class="brand-logo-area">
+        <img src="galaria_logo.jpg" alt="Galaria Empresa Pública de Servizos Sanitarios" class="galaria-brand-logo">
+      </div>
+      <div class="hospital-unit-info">
+        <span class="unit-tag">UNIDADE DE MEDICINA NUCLEAR E DIAGNÓSTICO MOLECULAR</span>
+        <span class="unit-sub">Rede Pública PET-CT de Galicia · Galaria · SERGAS</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. HERO BANNER: PROTOCOLO CARDÍACO PET FDG ENDOCARDITIS -->
+  <section class="hero-banner">
+    <div class="container">
+      <div class="header-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span>PROTOCOLO CLÍNICO ESPECIALIZADO: SUPRESIÓN MIOCÁRDICA</span>
+      </div>
+
+      <h1>PET FDG Endocarditis</h1>
+      <p class="subtitle">
+        Audioguía oficial de preparación cardíaca para la detección de endocarditis infecciosa, prótesis valvulares y cables de marcapasos o DAI. Supresión metabólica miocárdica mediante dieta de carne y grasa, ayuno de 16 horas, heparina previa y 90 minutos de captación.
+      </p>
+
+      <!-- TARJETA OFICIAL DEL PACIENTE CITADO -->
+      <div class="patient-card-container">
+        <div class="patient-card-header">
+          <div class="patient-card-status">
+            <span class="live-pulse red"></span>
+            <span>PACIENTE CITADO OFICIAL</span>
+          </div>
+          <span class="patient-study-tag">ESTUDIO: PET FDG ENDOCARDITIS / PROTOCOLO CARDIAC HEP</span>
+        </div>
+        <div class="patient-card-body">
+          <div class="patient-data-item">
+            <span class="p-label">👤 Nombre del Paciente:</span>
+            <span class="p-value" id="display-patient-name">Cargando paciente...</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">📋 Historia Clínica (NHC):</span>
+            <span class="p-value p-nhc" id="display-patient-nhc">Consultar en Citaciones</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">📅 Fecha y Hora de Cita:</span>
+            <span class="p-value p-date" id="display-patient-cita">Asignada en Agenda</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">📍 Centro Asistencial:</span>
+            <span class="p-value" style="font-size: 0.92rem; font-weight: 700; color: var(--sergas-navy);">Hospital Meixoeiro · Planta -1 (Medicina Nuclear)</span>
+          </div>
+        </div>
+        <div style="margin-top: 0.75rem; padding: 0.5rem 0.5rem 0; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end;">
+          <button type="button" onclick="toggleCancelAccordion(true)" style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.3); color: #dc2626; font-size: 0.85rem; font-weight: 700; padding: 6px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+            ⚠️ ¿No puedes asistir? Cancelar o aplazar cita
+          </button>
+        </div>
+      </div></div>
+  </section>
+
+  <!-- 4. CONTENIDO PRINCIPAL -->
+  <main class="container" style="margin-top: 1.5rem;">
+
+    <!-- SECCIÓN VÍDEO EXPLICATIVO -->
+    <section class="video-section" aria-labelledby="video-heading">
+      <div class="video-header-info">
+        <h2 id="video-heading" class="video-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--cardiac-red)"><path d="M8 5v14l11-7z"/></svg>
+          Vídeo Explicativo: <span style="color: var(--cardiac-red); font-weight: 800;">Preparación para PET FDG Endocarditis</span>
+        </h2>
+        <span class="video-duration">Protocolo Especial Cardíaco · 4 min</span>
+      </div>
+
+      <div class="video-container">
+        <video id="petVideo" controls poster="galaria_logo.jpg" preload="metadata" title="Vídeo de instrucción para paciente de PET FDG Endocarditis">
+          <source id="videoSource" src="../pet_prep_page/Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
+          <source src="../Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
+          <source src="Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
+          Tu navegador no soporta el reproductor de vídeo HTML5.
+        </video>
+      </div>
+    </section>
+
+    <!-- RESUMEN EN 3 TARJETAS CLÍNICAS VISUALES -->
+    <section class="summary-grid" aria-label="Instrucciones esenciales de preparación">
+      
+      <!-- TARJETA 1: DIETA DE CARNE Y GRASA -->
+      <article class="card card-red">
+        <div class="card-icon-circle red">🥩</div>
+        <h3 class="card-title">1. Dieta de Carne y Grasa (Día anterior)</h3>
+        <ul class="card-list">
+          <li><strong>Come carne y grasa durante las 24 horas previas:</strong> Carnes rojas y blancas, jamón serrano, bacon, huevos fritos o cocidos, quesos curados, salmón, atún, sardinas, mantequilla y aceite de oliva virgen.</li>
+          <li><strong>CERO carbohidratos (estrictamente prohibidos):</strong> Prohibido comer pan, tostadas, galletas, cereales, arroz, pasta, patatas, legumbres, fruta, leche, yogures, azúcar ni refrescos.</li>
+          <li><strong>¿Por qué?:</strong> El corazón cambia su combustible habitual (glucosa) a ácidos grasos libres, evitando captar la glucosa radiactiva.</li>
+        </ul>
+      </article>
+
+      <!-- TARJETA 2: AYUNO DE 16 HORAS -->
+      <article class="card card-amber">
+        <div class="card-icon-circle amber">⏳</div>
+        <h3 class="card-title">2. Ayuno Prolongado de 16 Horas</h3>
+        <ul class="card-list">
+          <li><strong>Ayuno estricto de 16 horas:</strong> En el estudio de endocarditis no bastan las 6 horas de un PET normal. Se requieren <strong>16 horas exactas de ayuno absoluto</strong> antes de la hora de tu cita.</li>
+          <li><strong>Solo agua sola:</strong> Durante todas las 16 horas de ayuno únicamente está permitido beber <strong>agua sola pura</strong> (sin azúcar, sin gas, sin zumos ni infusiones).</li>
+          <li><strong>Ejemplo de horario:</strong> Si tu cita es a las 09:00 de la mañana, debes haber finalizado tu cena grasa antes de las 17:00 h de la tarde anterior.</li>
+        </ul>
+      </article>
+
+      <!-- TARJETA 3: HEPARINA Y PASO A MÁQUINA A LOS 90 MIN -->
+      <article class="card card-purple">
+        <div class="card-icon-circle purple">💉</div>
+        <h3 class="card-title">3. Heparina y Paso a Máquina a los 90 min</h3>
+        <ul class="card-list">
+          <li><strong>Heparina 15 minutos antes:</strong> En la unidad médica se te administrará una dosis baja de <strong>heparina intravenosa exactamente 15 minutos antes</strong> de inyectar el radiofármaco. Esto activa la lipasa y maximiza la supresión miocárdica.</li>
+          <li><strong>Paso a máquina a los 90 minutos:</strong> Tras inyectarte el 18F-FDG, reposarás en un sillón individual en penumbra y silencio durante <strong>90 minutos</strong> (en lugar de los 60 min de otros estudios) antes de pasar a la máquina PET-CT.</li>
+          <li><strong>Duración en el tomógrafo:</strong> ~25 a 30 minutos de escaneo sincronizado con electrocardiograma (Gated-PET).</li>
+        </ul>
+      </article>
+
+    </section>
+
+<!-- ASISTENTE CHATBOT ON-PAGE -->
+    <section class="assistant-card-section" aria-labelledby="assistant-card-title">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 52px; height: 52px; border-radius: 12px; background: #ffffff; padding: 4px; border: 1.5px solid #d0e3ef; box-shadow: 0 4px 10px rgba(0, 48, 76, 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
+            <img src="galaria_logo.jpg" alt="Galaria Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            <span style="position: absolute; bottom: -3px; right: -3px; width: 12px; height: 12px; background-color: #22c55e; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px #22c55e;"></span>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <h3 id="assistant-card-title" style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--sergas-navy);">
+                Asistente Virtual de Enfermería — PET FDG Endocarditis
+              </h3>
+              <span style="font-size: 0.72rem; background: rgba(220, 38, 38, 0.1); color: var(--cardiac-red); border: 1px solid rgba(220, 38, 38, 0.3); padding: 2px 8px; border-radius: 6px; font-weight: 800;">
+                PROTOCOLOS SERGAS · GALARIA
+              </span>
+              <span style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700;">
+                🟢 Guardia Activa
+              </span>
+            </div>
+            <p style="margin: 0.35rem 0 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
+              Pregúntame cualquier duda sobre el ayuno de 16 horas, dieta de carne y grasa, heparina previa o el paso a máquina a los 90 minutos:
+            </p>
+          </div>
+        </div>
+        <button type="button" onclick="toggleChatbot(true)" class="btn btn-cardiac">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          Abrir Chat de Enfermería
+        </button>
+      </div>
+
+      <!-- Buscador de dudas directo -->
+      <form onsubmit="event.preventDefault(); const val=document.getElementById('pageChatInput').value.trim(); if(val){ openChatAndAsk(val); document.getElementById('pageChatInput').value=''; }" style="display: flex; gap: 0.6rem; margin-bottom: 1.15rem; flex-wrap: wrap;">
+        <input type="text" id="pageChatInput" placeholder="Escribe tu consulta (ej. ¿Por qué 16 horas de ayuno?, ¿qué carne comer?, ¿para qué sirve la heparina?, ¿por qué 90 min?)..." style="flex: 1; min-width: 280px; padding: 0.8rem 1.25rem; border-radius: 30px; border: 1.5px solid #d0e3ef; background: #ffffff; color: var(--text-main); font-size: 0.95rem; outline: none;">
+        <button type="submit" class="btn btn-cardiac" style="border-radius: 30px; padding: 0.8rem 1.6rem;">
+          Consultar al Asistente 💬
+        </button>
+      </form>
+      
+      <!-- Chips rápidos con las preguntas del usuario -->
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <button type="button" class="chip-btn" style="border-color: #fca5a5; background: #fef2f2; color: #991b1b; font-weight: 700;" onclick="openChatAndAsk('¿Por qué el tiempo en pasar a máquina es a los 90 minutos?')">⏱️ ¿Por qué pasar a máquina a los 90 minutos?</button>
+        <button type="button" class="chip-btn" style="border-color: #fde68a; background: #fffbeb; color: #b45309; font-weight: 700;" onclick="openChatAndAsk('¿Por qué el ayuno es de 16 horas?')">⏳ ¿Por qué ayuno de 16 horas?</button>
+        <button type="button" class="chip-btn" style="border-color: #fca5a5; background: #fef2f2; color: #991b1b; font-weight: 700;" onclick="openChatAndAsk('¿Qué carne y grasa comer el día anterior?')">🥩 ¿Qué carne y grasa comer el día anterior?</button>
+        <button type="button" class="chip-btn" style="border-color: #ddd6fe; background: #f5f3ff; color: #6d28d9; font-weight: 700;" onclick="openChatAndAsk('¿Por qué se pone heparina 15 minutos antes de inyectar el radiofármaco?')">💉 ¿Por qué heparina 15 min antes?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué es la endocarditis y qué busca el PET?')">❤️ ¿Qué es la endocarditis?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo tomar Sintrom o mis pastillas del corazón?')">💊 Medicación cardíaca y Sintrom</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo beber agua durante las 16 horas de ayuno?')">💧 ¿Puedo beber agua?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Dónde es la prueba en Vigo?')">📍 ¿Dónde se realiza?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Tengo marcapasos o prótesis valvular, hay peligro?')">⚡ Marcapasos y prótesis</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Radioprotección con mi familia?')">☢️ Radioprotección en casa</button>
+        <button type="button" class="chip-btn" style="border-color: var(--sergas-blue); background-color: var(--sergas-soft-blue); color: var(--sergas-navy); font-weight: 700;" onclick="abrirModalConsultaEnfermeria()">📞 Hablar con Enfermería (Llamada / Audio)</button>
+      </div>
+    </section>
+
+    <!-- CONTROL DE GLUCEMIA Y METABOLISMO EN DOMICILIO -->
+    <section class="diabetes-wrapper" aria-labelledby="diabetes-heading">
+      <div class="diabetes-header">
+        <div class="card-icon-circle red" style="width: 44px; height: 44px; margin-bottom: 0;">🩸</div>
+        <div>
+          <h2 id="diabetes-heading" class="diabetes-title">Control de Glucemia Capilar y Semáforo Metabólico</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+            En el protocolo de endocarditis es crítico que no haya glucosa circulante alta. Registra tu medición en ayunas antes de salir de casa.
+          </p>
+        </div>
+      </div>
+
+      <form id="glucoseForm" onsubmit="event.preventDefault(); evaluarGlucemiaDiabetica();">
+        <div class="diabetes-grid">
+          <div class="form-group">
+            <label for="glucosePatientName">Nombre del Paciente <span style="color: var(--danger)">*</span></label>
+            <input type="text" id="glucosePatientName" placeholder="Nombre y apellidos" required>
+          </div>
+          <div class="form-group">
+            <label for="glucoseTime">Hora del control capilar <span style="color: var(--danger)">*</span></label>
+            <input type="time" id="glucoseTime" required>
+          </div>
+          <div class="form-group">
+            <label for="glucoseValue">Glucemia Capilar (mg/dL) <span style="color: var(--danger)">*</span></label>
+            <input type="number" id="glucoseValue" min="30" max="600" placeholder="Ej. 95" required>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; text-align: right;">
+          <button type="submit" class="btn btn-cardiac">
+            🩺 Validar Glucemia y Registrar en Consola de Enfermería
+          </button>
+        </div>
+      </form>
+
+      <div id="glucoseResultBox" class="glucose-result-box" role="status" aria-live="assertive">
+        <div id="glucoseBadge" style="font-weight: 800; font-size: 1.05rem; margin-bottom: 0.35rem;"></div>
+        <p id="glucoseActionText" style="font-size: 0.92rem; line-height: 1.45;"></p>
+      </div>
+    </section>
+
+    <!-- CANCELACIÓN O REPROGRAMACIÓN DE CITA EN 2 PASOS -->
+    <section class="cancellation-wrapper" aria-labelledby="cancel-heading">
+      <div class="cancel-trigger-header" id="cancelHeaderTrigger" onclick="toggleCancelAccordion()">
+        <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+          <span style="font-size: 1.25rem;">⚠️</span>
+          <span id="cancel-heading" style="font-weight: 800; color: #991b1b; font-size: 1.02rem;">
+            ¿Necesitas cancelar o reprogramar tu prueba de Endocarditis?
+          </span>
+          <span style="background: rgba(239, 68, 68, 0.12); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.35); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">
+            Procedimiento Oficial
+          </span>
+        </div>
+        <span style="color: #b91c1c; font-size: 0.85rem; font-weight: 700;">Desplegar formulario ▼</span>
+      </div>
+
+      <div class="cancel-accordion-content" id="cancelAccordionContent">
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.45;">
+          El radiofármaco 18F-FDG se sintetiza y transporta en ciclotrón con calibración horaria exacta para ti, y el hueco de 90 minutos de reposo se reserva de forma exclusiva. Si no puedes acudir, comunícalo para reasignar la dosis a otro paciente y agendarte una nueva fecha.
+        </p>
+
+        <form id="cancellationForm" onsubmit="event.preventDefault(); triggerModalConfirmation();">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label for="cancelPatientName">Nombre y Apellidos <span style="color: var(--danger)">*</span></label>
+              <input type="text" id="cancelPatientName" placeholder="Nombre completo" required>
+            </div>
+            <div class="form-group">
+              <label for="cancelPatientNhc">Nº Historia Clínica (NHC) <span style="color: var(--danger)">*</span></label>
+              <input type="text" id="cancelPatientNhc" placeholder="Ej. NHC-131362" required>
+            </div>
+            <div class="form-group">
+              <label for="cancelPatientPhone">Teléfono de Contacto <span style="color: var(--danger)">*</span></label>
+              <input type="tel" id="cancelPatientPhone" placeholder="Ej. 600 000 000" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="cancelReason">Motivo de la cancelación o aplazamiento <span style="color: var(--danger)">*</span></label>
+            <select id="cancelReason" required>
+              <option value="" disabled selected>Selecciona el motivo principal...</option>
+              <option value="imposibilidad_ayuno_16h">No pude cumplir las 16 horas de ayuno estricto</option>
+              <option value="ingesta_hidratos">Comí pan, azúcar o hidratos el día anterior</option>
+              <option value="fiebre_empeoramiento">Empeoramiento clínico o fiebre</option>
+              <option value="ingreso_hospitalario">Ingreso hospitalario sobrevenido</option>
+              <option value="problema_transporte">Problema sobrevenido de transporte / traslado</option>
+              <option value="otro">Otro motivo justificado</option>
+            </select>
+          </div>
+
+          <div style="text-align: right;">
+            <button type="submit" class="btn" style="background-color: var(--danger); color: #ffffff;">
+              ⚠️ Confirmar Cancelación y Notificar a Medicina Nuclear
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 5. BOTÓN FLOTANTE Y VENTANA DE CHATBOT -->
+  <button type="button" class="floating-chat-trigger" onclick="toggleChatbot()" aria-label="Abrir Asistente Virtual">
+    <span style="font-size: 1.3rem;">💬</span>
+    <span style="font-weight: 700; font-size: 0.92rem;">Enfermería Endocarditis</span>
+  </button>
+
+  <aside class="chat-window" id="chatWindow" aria-label="Ventana de Chatbot">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <div style="width: 34px; height: 34px; border-radius: 50%; background: #ffffff; padding: 2px; display: flex; align-items: center; justify-content: center;">
+          <img src="galaria_logo.jpg" alt="Galaria" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
+        </div>
+        <div>
+          <h4>Enfermería PET Endocarditis</h4>
+          <p>Galaria · SERGAS · Guardias Activas</p>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <span id="chatEngineBadge" class="chat-engine-badge" title="Estado de la Inteligencia Artificial">🛡️ SERGAS</span>
+        <button type="button" id="chatVoiceToggle" class="chat-header-btn" onclick="toggleChatAutoVoice()" title="Activar lectura de respuestas en voz alta" aria-label="Lectura en voz alta">🔇</button>
+        <button type="button" id="chatConfigBtn" class="chat-header-btn" onclick="toggleChatConfigModal(true)" title="Configuración de Inteligencia Artificial (Gemini)" aria-label="Configuración de IA">⚙️</button>
+        <button type="button" class="chat-close-btn" onclick="toggleChatbot(false)" aria-label="Cerrar chat">✕</button>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        ¡Hola! Soy el asistente virtual de Enfermería para <strong>PET FDG Endocarditis</strong>.<br><br>
+        Recuerda los 4 pilares clave:<br>
+        1. 🥩 <strong>Comer carne y grasa</strong> el día anterior (cero hidratos).<br>
+        2. ⏳ <strong>Ayuno estricto de 16 horas</strong> (solo agua).<br>
+        3. 💉 <strong>Heparina 15 minutos antes</strong> del radiofármaco.<br>
+        4. ⏱️ <strong>Paso a máquina a los 90 minutos</strong> de reposo.<br><br>
+        ¿Qué duda te gustaría resolver?
+      </div>
+    </div>
+
+    <div class="chat-typing" id="chatTyping">Enfermería está escribiendo...</div>
+
+    <form class="chat-input-bar" onsubmit="event.preventDefault(); handleSendChatMessage();">
+      <button type="button" id="chatMicBtn" class="chat-mic-btn" onclick="toggleChatSpeechRecognition()" title="Dictar consulta por voz" aria-label="Dictar consulta por voz">🎙️</button>
+      <input type="text" id="chatInput" placeholder="Escribe tu duda aquí..." autocomplete="off">
+      <button type="submit" class="chat-send-btn" aria-label="Enviar duda">➤</button>
+    </form>
+  </aside>
+
+  <!-- 6. MODAL DE CONSULTA DIRECTA A ENFERMERÍA CON NOTA DE VOZ -->
+  <div class="modal-backdrop" id="nursingModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+        <h3 class="modal-title">
+          <span>📞</span> Consulta Directa con Enfermería
+        </h3>
+        <button type="button" onclick="cerrarModalConsultaEnfermeria()" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-muted);">✕</button>
+      </div>
+
+      <p class="modal-desc">
+        Si tienes una situación clínica específica o dudas sobre tu preparación, déjanos tu consulta escrita o <strong>graba una nota de voz</strong>. Nuestro equipo asistencial te llamará por teléfono.
+      </p>
+
+      <form id="nursingDirectForm" onsubmit="event.preventDefault(); enviarConsultaEnfermeria();">
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label for="nursingPatientName">Nombre y Apellidos <span style="color: var(--danger)">*</span></label>
+          <input type="text" id="nursingPatientName" placeholder="Tu nombre completo" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label for="nursingPatientPhone">Teléfono de contacto para la llamada <span style="color: var(--danger)">*</span></label>
+          <input type="tel" id="nursingPatientPhone" placeholder="Ej. 654 987 321" required>
+        </div>
+
+        <!-- Grabadora de Audio / Micrófono -->
+        <div class="voice-recorder-box">
+          <p style="font-size: 0.85rem; font-weight: 700; color: var(--sergas-navy); margin-bottom: 0.6rem;">
+            🎙️ Grabar Nota de Voz con tu duda (Opcional):
+          </p>
+          <button type="button" class="mic-btn" id="micBtn" onclick="toggleAudioRecording()">
+            🎤
+          </button>
+          <div id="recordingStatus" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Pulsa el micrófono para hablar
+          </div>
+          <audio id="audioPreview" controls style="display: none; width: 100%; margin-top: 0.75rem;"></audio>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label for="nursingTextQuery">O escribe tu mensaje detallado:</label>
+          <textarea id="nursingTextQuery" rows="3" placeholder="Describe brevemente tus dudas o antecedentes..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button type="button" class="btn" onclick="cerrarModalConsultaEnfermeria()" style="background: #e2e8f0; color: var(--text-main);">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-cardiac">
+            Enviar a Enfermería y Solicitar Llamada
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. MODAL DE CONFIRMACIÓN DE CANCELACIÓN EN 2 PASOS -->
+  <div class="modal-backdrop" id="confirmCancelModal">
+    <div class="modal-box" style="border-top-color: var(--danger);">
+      <h3 class="modal-title" style="color: var(--danger);">
+        ⚠️ ¿Confirmar cancelación definitiva de la cita?
+      </h3>
+      <p class="modal-desc" id="confirmCancelText">
+        Estás a punto de cancelar tu cita para PET FDG Endocarditis. Se liberará la dosis de radiofármaco y el turno de 90 minutos de máquina.
+      </p>
+
+      <div style="background: #fef2f2; border: 1px solid #fca5a5; padding: 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.85rem; color: #991b1b;">
+        Se enviará una notificación oficial urgente al Servicio de Medicina Nuclear (<strong>oscarferreiradavila@gmail.com</strong>) con tus datos clínicos.
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button type="button" class="btn" onclick="cerrarModalConfirmacionCancelacion()" style="background: #e2e8f0; color: var(--text-main);">
+          No, mantener mi cita
+        </button>
+        <button type="button" class="btn" onclick="ejecutarCancelacionDefinitiva()" style="background: var(--danger); color: #ffffff;">
+          Sí, cancelar cita oficialmente
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. FOOTER INSTITUCIONAL -->
+  <footer>
+    <div class="container footer-container">
+      <img src="galaria_logo.jpg" alt="Galaria Empresa Pública" style="height: 38px; width: auto; object-fit: contain;">
+      <p style="font-weight: 700; color: var(--sergas-navy); margin: 0;">
+        © Galaria - Empresa Pública de Servizos Sanitarios, S.A. | Servizo Galego de Saúde (SERGAS)
+      </p>
+      <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">
+        Unidade de Medicina Nuclear e Imaxe Molecular · Centro Hospitalario Universitario de Vigo
+      </p>
+      <p style="margin: 0; font-size: 0.78rem; color: #94a3b8;">
+        Protocolo asistencial validado para Endocarditis Infecciosa y Supresión Metabólica Miocárdica.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       LÓGICA JAVASCRIPT DEL PROGRAMA: PET FDG ENDOCARDITIS
+       ========================================================================== -->
+  <script>
+    const CONFIG = {
+      NOMBRE_CENTRO: "Galaria - SERGAS · Hospital Meixoeiro",
+      TELEFONO: "986 811 111",
+      EMAIL_NOTIFICACION_CANCELACION: "oscarferreiradavila@gmail.com",
+      DATABASE_API_URL: "/api/enfermeria/base_datos",
+      CANCEL_ENDPOINT: "/api/citas/cancelar"
+    };
+
+    /* INICIALIZACIÓN */
+    document.addEventListener("DOMContentLoaded", () => {
+      initPatientData();
+    });
+
+    /* 1. LECTURA Y SINCRONIZACIÓN DEL PACIENTE */
+    function initPatientData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let nombre = urlParams.get('nombre') || urlParams.get('name') || sessionStorage.getItem('pet_patient_name') || localStorage.getItem('pet_patient_name') || "Manuel Gómez Suárez";
+      let nhc = urlParams.get('nhc') || urlParams.get('historia') || sessionStorage.getItem('pet_patient_nhc') || localStorage.getItem('pet_patient_nhc') || "NHC-131362";
+      let fecha = urlParams.get('fecha') || urlParams.get('cita') || sessionStorage.getItem('pet_patient_fecha') || "2026-11-12";
+      let hora = urlParams.get('hora') || sessionStorage.getItem('pet_patient_hora') || "08:30";
+
+      document.getElementById("display-patient-name").textContent = nombre;
+      document.getElementById("display-patient-nhc").textContent = nhc;
+      document.getElementById("display-patient-cita").textContent = `${fecha} a las ${hora} h`;
+
+      // Autocompletar formularios
+      const cancelName = document.getElementById("cancelPatientName");
+      if (cancelName) cancelName.value = nombre;
+      const cancelNhc = document.getElementById("cancelPatientNhc");
+      if (cancelNhc) cancelNhc.value = nhc;
+      const glucName = document.getElementById("glucosePatientName");
+      if (glucName) glucName.value = nombre;
+      const nursName = document.getElementById("nursingPatientName");
+      if (nursName) nursName.value = nombre;
+    }
+
+    /* 2. CONTROL DEL REPRODUCTOR DE VÍDEO */
+    function seekVideo(seconds) {
+      const vid = document.getElementById("petVideo");
+      if (vid) {
+        vid.currentTime = seconds;
+        vid.play().catch(() => {});
+      }
+    }
+
+    /* 3. ASISTENTE CHATBOT VIRTUAL DE ENFERMERÍA (MOTOR CLÍNICO DE RESPUESTA) */
+    function toggleChatbot(forceOpen) {
+      const win = document.getElementById("chatWindow");
+      if (!win) return;
+      if (forceOpen === true) {
+        win.classList.add("open");
+      } else if (forceOpen === false) {
+        win.classList.remove("open");
+      } else {
+        win.classList.toggle("open");
+      }
+    }
+
+    function openChatAndAsk(question) {
+      toggleChatbot(true);
+      const chatInput = document.getElementById("chatInput");
+      if (chatInput) {
+        chatInput.value = question;
+        handleSendChatMessage();
+      }
+    }
+
+        function typeBotMessage(formattedHtml, suggestions) {
+      const container = document.getElementById("chatMessages");
+      const msg = document.createElement("div");
+      msg.className = "chat-msg bot";
+      msg.innerHTML = formattedHtml;
+
+      const actionsDiv = document.createElement("div");
+      actionsDiv.className = "chat-msg-actions";
+      const speakBtn = document.createElement("button");
+      speakBtn.type = "button";
+      speakBtn.className = "bot-speak-btn";
+      speakBtn.textContent = "🔊 Escuchar";
+      speakBtn.title = "Escuchar respuesta en voz alta";
+      speakBtn.onclick = function() { speakMessageBubble(this); };
+      actionsDiv.appendChild(speakBtn);
+      msg.appendChild(actionsDiv);
+
+      if (suggestions && suggestions.length > 0) {
+        const sugContainer = document.createElement("div");
+        sugContainer.className = "chat-suggestions";
+        suggestions.forEach(item => {
+          const chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "chat-suggestion-chip";
+          chip.textContent = item.label;
+          chip.onclick = () => {
+            const inp = document.getElementById("chatInput");
+            if (inp) {
+              inp.value = item.query;
+              handleSendChatMessage();
+            }
+          };
+          sugContainer.appendChild(chip);
+        });
+        msg.appendChild(sugContainer);
+      }
+
+      container.appendChild(msg);
+      container.scrollTop = container.scrollHeight;
+
+      if (isVoiceAutoPlay) {
+        setTimeout(() => speakMessageBubble(speakBtn), 250);
+      }
+    }
+
+    async function handleSendChatMessage() {
+      if (typeof isBotTyping !== 'undefined' && isBotTyping) return;
+      const input = document.getElementById("chatInput");
+      const text = input ? input.value.trim() : "";
+      if (!text) return;
+
+      appendChatMessage(escapeHtml(text), "user");
+      if (input) input.value = "";
+      stopChatSpeechRecognition();
+
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (activeSpeakingBtn) {
+        activeSpeakingBtn.classList.remove("speaking");
+        activeSpeakingBtn.textContent = "🔊 Escuchar";
+        activeSpeakingBtn = null;
+      }
+
+      const typing = document.getElementById("chatTyping");
+      if (typing) typing.style.display = "flex";
+
+      chatConversationHistory.push({ role: "user", content: text });
+
+      // Filtro de alerta vital inmediata (061 / 112)
+      const qLow = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      if (qLow.includes("dolor de pecho") || qLow.includes("opresion") || qLow.includes("falta de aire") || qLow.includes("asfixia") || qLow.includes("desmayo") || qLow.includes("mareo intenso")) {
+        if (typing) typing.style.display = "none";
+        const emergencyResp = generateClinicalResponse(text);
+        typeBotMessage(emergencyResp.html || emergencyResp, emergencyResp.suggestions || []);
+        return;
+      }
+
+      let botHtml = "";
+      let botSuggestions = [];
+      let usedGemini = false;
+
+      try {
+        const askRes = await fetch("/api/chat/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            study_type: "FDG_ENDOCARDITIS",
+            patient_name: typeof getPatientFirstName === 'function' ? getPatientFirstName() : "",
+            history: chatConversationHistory.map(h => ({ role: h.role, text: h.content })),
+            api_key: getLocalGeminiKey()
+          })
+        });
+
+        if (askRes.ok) {
+          const askData = await askRes.json();
+          if (askData.status === "success" && askData.answer) {
+            usedGemini = true;
+            botHtml = formatMarkdownToHtml(askData.answer);
+            botSuggestions = askData.suggestions || [];
+            const badgeEl = document.getElementById("chatEngineBadge");
+            if (badgeEl) {
+              badgeEl.textContent = "✨ Gemini IA";
+              badgeEl.className = "chat-engine-badge gemini";
+            }
+          }
+        }
+      } catch (err) {}
+
+      if (!usedGemini) {
+        const localResp = generateClinicalResponse(text);
+        botHtml = localResp.html || localResp;
+        botSuggestions = localResp.suggestions || [];
+      }
+
+      if (typing) typing.style.display = "none";
+      chatConversationHistory.push({ role: "model", content: botHtml });
+      typeBotMessage(botHtml, botSuggestions);
+    }
+
+    function appendChatMessage(htmlText, type) {
+      const container = document.getElementById("chatMessages");
+      const msg = document.createElement("div");
+      msg.className = `chat-msg ${type}`;
+      msg.innerHTML = htmlText;
+      container.appendChild(msg);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    /* MOTOR DE IA CLÍNICA BASADO EN REGLAS SERGAS */
+    function generateClinicalResponse(rawQuery) {
+      const q = rawQuery.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      // Dolor de pecho / disnea urgente -> Alerta 112
+      if (q.includes("dolor de pecho") || q.includes("falta de aire") || q.includes("asfixia") || q.includes("desmayo") || q.includes("mareo intenso")) {
+        return `🚨 <strong style="color:#b91c1c;">ALERTA MÉDICA URGENTE:</strong><br>
+        Si presentas dolor opresivo en el pecho, dificultad severa para respirar o pérdida de conciencia, <strong>llama de inmediato al 061 / 112</strong> o acude al servicio de urgencias hospitalarias más próximo.`;
+      }
+
+      // 1. TIEMPO EN PASAR A MÁQUINA A LOS 90 MINUTOS
+      if (q.includes("90") || q.includes("pasar a maquina") || q.includes("tiempo en maquina") || q.includes("maquina") || q.includes("cuando paso") || q.includes("reposo")) {
+        return `⏱️ <strong>TIEMPO EN PASAR A MÁQUINA: A LOS 90 MINUTOS EXACTOS</strong><br><br>
+        • En el protocolo de <strong>Endocarditis</strong>, el tiempo de reposo tras la inyección del radiofármaco ¹⁸F-FDG es de <strong>90 minutos</strong> (a diferencia de otros estudios oncológicos habituales donde son 60 minutos).<br>
+        • <strong>¿Por qué 90 minutos?:</strong> Ese intervalo prolongado permite que la sangre se aclare completamente del trazador circulante y que el foco infeccioso en la válvula o marcapasos alcance la máxima concentración de contraste metabólico frente al fondo cardíaco apagado.<br>
+        • Durante esos 90 minutos reposarás tranquilamente tumbado/a en sillón en penumbra antes de entrar al tomógrafo PET-CT.`;
+      }
+
+      // 2. AYUNO DE 16 HORAS
+      if (q.includes("ayuno") || q.includes("16") || q.includes("horas") || q.includes("sin comer") || q.includes("hambre")) {
+        return `⏳ <strong>AYUNO ESTRICTO DE 16 HORAS:</strong><br><br>
+        • Para PET de Endocarditis, el ayuno estándar de 6 horas <strong>NO es válido</strong>. Se requiere un <strong>ayuno absoluto de 16 horas</strong> antes de tu cita.<br>
+        • Durante las 16 horas <strong>solo puedes beber agua sola pura</strong>.<br>
+        • <strong>Objetivo médico:</strong> Agotar todas las reservas de glucógeno y glucosa de las células miocárdicas sanas, forzando a todo el corazón a bloquear la captación de FDG.`;
+      }
+
+      // 3. COMER CARNE Y GRASA EL DÍA ANTERIOR
+      if (q.includes("carne") || q.includes("grasa") || q.includes("dieta") || q.includes("comer") || q.includes("alimento") || q.includes("cena") || q.includes("dia anterior")) {
+        return `🥩 <strong>COMER CARNE Y GRASA EL DÍA ANTERIOR (CERO HIDRATOS):</strong><br><br>
+        • <strong>Alimentos obligatorios recomendados:</strong> Carnes rojas y blancas, bacon, jamón serrano o ibérico, huevos (fritos, revueltos o cocidos), quesos curados o semicurados, pescados grasos (salmón, atún, sardinas), mantequilla y aceite de oliva virgen extra.<br>
+        • <strong>TOTALMENTE PROHIBIDOS:</strong> Pan, pasta, arroz, patatas, legumbres, fruta, galletas, cereales, dulces, zumos, refrescos ni azúcar.<br>
+        • Al saturar el organismo con grasas, el corazón se nutre exclusivamente de ácidos grasos y no captará nada de glucosa radiactiva.`;
+      }
+
+      // 4. HEPARINA 15 MINUTOS ANTES DE INYECTAR EL RADIOFÁRMACO
+      if (q.includes("heparina") || q.includes("15") || q.includes("inyectar") || q.includes("anticoagul") || q.includes("pinchazo")) {
+        return `💉 <strong>HEPARINA 15 MINUTOS ANTES DEL RADIOFÁRMACO:</strong><br><br>
+        • En la unidad de Medicina Nuclear, exactamente <strong>15 minutos antes</strong> de inyectarte el radiofármaco ¹⁸F-FDG, el equipo de enfermería te administrará una pequeña dosis de <strong>Heparina intravenosa</strong> (50 UI/kg).<br>
+        • <strong>Función clínica:</strong> La heparina activa la enzima <em>lipoproteína lipasa</em> en la pared de los capilares sanguíneos, disparando los niveles de ácidos grasos libres en sangre y asegurando el bloqueo metabólico completo del miocardio normal frente al FDG.`;
+      }
+
+      // 5. ENDOCARDITIS / VÁLVULAS / MARCAPASOS
+      if (q.includes("endocarditis") || q.includes("corazon") || q.includes("valvula") || q.includes("marcapasos") || q.includes("cable") || q.includes("protesis") || q.includes("infeccion")) {
+        return `❤️ <strong>¿POR QUÉ SE REALIZA ESTE ESTUDIO EN ENDOCARDITIS?</strong><br><br>
+        • La endocarditis es una infección grave en las válvulas cardíacas, prótesis valvulares o electrodos de marcapasos/DAI provocada por bacterias.<br>
+        • Las bacterias y los glóbulos blancos que combaten la infección devoran glucosa activamente.<br>
+        • Gracias a la preparación (carne y grasa + 16h ayuno + heparina 15 min antes), el corazón sano queda oscuro en la imagen, logrando que únicamente resplandezcan las bacterias en la válvula afectada.`;
+      }
+
+      // 6. MEDICACIÓN HABITUAL Y SINTROM
+      if (q.includes("medicacion") || q.includes("pastilla") || q.includes("sintrom") || q.includes("tension") || q.includes("tratamiento")) {
+        return `💊 <strong>MEDICACIÓN CARDÍACA HABITUAL:</strong><br><br>
+        • <strong>SÍ debes tomar tu medicación cardíaca habitual</strong> (antihipertensivos, betabloqueantes, Sintrom, antibióticos, protectores o tiroides) a su hora con un buen vaso de agua sola pura.<br>
+        • La heparina administrada 15 min antes es compatible con tu medicación. No suspendas ningún tratamiento sin indicación de tu cardiólogo.`;
+      }
+
+      // 7. AGUA / BEBER
+      if (q.includes("agua") || q.includes("beber") || q.includes("sed") || q.includes("hidrat")) {
+        return `💧 <strong>INGESTA DE AGUA PURA:</strong><br><br>
+        • <strong>SÍ, puedes y debes beber abundante agua sola</strong> durante las 16 horas de ayuno y a tu llegada a la unidad.<br>
+        • El agua pura no contiene calorías ni glucosa, por lo que <strong>no rompe el ayuno</strong> y facilita una hidratación óptima.`;
+      }
+
+      // 8. DÓNDE SE REALIZA LA PRUEBA
+      if (q.includes("donde") || q.includes("lugar") || q.includes("hospital") || q.includes("meixoeiro") || q.includes("ubicacion") || q.includes("llegar")) {
+        return `📍 <strong>LUGAR Y UBICACIÓN:</strong><br><br>
+        • <strong>Hospital:</strong> Hospital do Meixoeiro (Vigo · SERGAS).<br>
+        • <strong>Planta:</strong> <strong>Planta -1 (menos uno)</strong>.<br>
+        • <strong>Servicio:</strong> Sala de espera de Medicina Nuclear – Unidad PET.<br>
+        • Acude 15 minutos antes de la hora fijada para la toma de glucemia capilar y canalización venosa.`;
+      }
+
+      // 9. RADIOPROTECCIÓN
+      if (q.includes("radiacion") || q.includes("peligro") || q.includes("hijos") || q.includes("nino") || q.includes("bebe") || q.includes("embaraz") || q.includes("casa")) {
+        return `☢️ <strong>RADIOPROTECCIÓN TRAS LA PRUEBA:</strong><br><br>
+        • El radiofármaco tiene una vida media muy corta (110 minutos) y decae con rapidez.<br>
+        • Durante las 6 a 8 horas posteriores a la prueba, mantén una distancia preventiva de 1 a 2 metros con <strong>mujeres embarazadas y niños pequeños</strong>.<br>
+        • Bebe abundante agua para acelerar la eliminación urinaria. Al día siguiente podrás convivir con total normalidad.`;
+      }
+
+      // Saludos
+      if (q.includes("hola") || q.includes("buenos dias") || q.includes("tardes") || q.includes("saludos") || q.includes("gracias")) {
+        return `¡Hola! Soy tu asistente de Enfermería para <strong>PET FDG Endocarditis</strong>.<br><br>
+        Estoy aquí para ayudarte con el protocolo de los 90 minutos a máquina, ayuno de 16 horas, dieta previa de carne y grasa, o la heparina intravenosa 15 min antes.<br><br>
+        ¿Qué duda te gustaría revisar?`;
+      }
+
+      // Respuesta predeterminada
+      return `Como asistente de Enfermería de PET FDG Endocarditis te recuerdo los puntos clave:<br><br>
+      • 🥩 <strong>Día anterior:</strong> Comer únicamente carne y grasas (cero hidratos).<br>
+      • ⏳ <strong>Ayuno estricto de 16 horas</strong> (solo agua sola pura).<br>
+      • 💉 <strong>Heparina IV 15 min antes</strong> de inyectar el radiofármaco.<br>
+      • ⏱️ <strong>Paso a máquina a los 90 minutos</strong> de reposo.<br><br>
+      Si tienes una situación clínica que no encaja o requieres llamada médica, pulsa en <a href="#" onclick="abrirModalConsultaEnfermeria(); return false;" style="color:var(--cardiac-red); font-weight:700;">📞 Solicitar llamada con Enfermería</a>.`;
+    }
+
+    /* 4. CONTROL DE GLUCEMIA Y SEMÁFORO METABÓLICO */
+    function evaluarGlucemiaDiabetica() {
+      const valInput = document.getElementById("glucoseValue");
+      const val = parseInt(valInput.value, 10);
+      const box = document.getElementById("glucoseResultBox");
+      const badge = document.getElementById("glucoseBadge");
+      const text = document.getElementById("glucoseActionText");
+
+      if (isNaN(val)) return;
+
+      box.className = "glucose-result-box";
+
+      if (val < 140) {
+        box.classList.add("green");
+        badge.textContent = `🟢 GLUCEMIA ÓPTIMA (${val} mg/dL) — APTO PARA PROTOCOLO`;
+        text.textContent = "Tu cifra de glucosa basal en ayunas es perfecta para la supresión miocárdica. Continúa en ayuno bebiendo agua sola y acude puntual a tu cita.";
+      } else if (val <= 180) {
+        box.classList.add("amber");
+        badge.textContent = `🟡 GLUCEMIA MODERADA (${val} mg/dL) — PRECAUCIÓN`;
+        text.textContent = "Cifra límite. Bebe 2 vasos grandes de agua sola para ayudar a diluir la glucemia y avisa de inmediato al equipo de enfermería a tu llegada a la unidad.";
+      } else {
+        box.classList.add("red");
+        badge.textContent = `🔴 GLUCEMIA ELEVADA (${val} mg/dL) — NOTIFICACIÓN URGENTE`;
+        text.textContent = "La cifra supera los 180 mg/dL y compite intensamente con el 18F-FDG. Se ha generado una alerta en la consola médica de enfermería para valorar pauta de corrección con insulina rápida.";
+      }
+
+      // Notificar a la base de datos local
+      enviarRegistroEnfermeria({
+        origen: "SEMÁFORO_GLUCEMIA_ENDOCARDITIS",
+        nivel: val > 180 ? "ALERTA_GLUCEMIA_ALTA" : "CONTROL_GLUCEMIA",
+        paciente_nombre: document.getElementById("glucosePatientName").value || "Paciente",
+        hora_control_capilar: document.getElementById("glucoseTime").value || "08:00",
+        glucemia_mg_dl: val,
+        mensaje_escrito: `Glucemia reportada en domicilio: ${val} mg/dL para PET FDG Endocarditis`
+      });
+    }
+
+    /* 5. MODAL CONSULTA DIRECTA Y NOTA DE VOZ */
+    function abrirModalConsultaEnfermeria() {
+      const m = document.getElementById("nursingModal");
+      if (m) m.classList.add("active");
+    }
+
+    function cerrarModalConsultaEnfermeria() {
+      const m = document.getElementById("nursingModal");
+      if (m) m.classList.remove("active");
+    }
+
+    /* Grabación de Audio con Web Audio API y MediaRecorder */
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    async function toggleAudioRecording() {
+      const btn = document.getElementById("micBtn");
+      const status = document.getElementById("recordingStatus");
+      const audioPrev = document.getElementById("audioPreview");
+
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = e => {
+            if (e.data.size > 0) audioChunks.push(e.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            audioPrev.src = audioUrl;
+            audioPrev.style.display = "block";
+            status.textContent = "✅ Nota de voz grabada correctamente (puedes escucharla abajo)";
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          btn.classList.add("recording");
+          status.textContent = "🔴 Grabando tu mensaje... Pulsa de nuevo para detener.";
+        } catch (err) {
+          status.textContent = "⚠️ Permiso de micrófono no concedido. Puedes escribir tu duda en el cuadro de texto.";
+        }
+      } else {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+          mediaRecorder.stream.getTracks().forEach(t => t.stop());
+        }
+        isRecording = false;
+        btn.classList.remove("recording");
+      }
+    }
+
+    function enviarConsultaEnfermeria() {
+      const nombre = document.getElementById("nursingPatientName").value;
+      const tel = document.getElementById("nursingPatientPhone").value;
+      const msg = document.getElementById("nursingTextQuery").value;
+
+      enviarRegistroEnfermeria({
+        origen: "CONSULTA_DIRECTA_ENFERMERIA",
+        nivel: "SOLICITUD_LLAMADA",
+        paciente_nombre: nombre,
+        paciente_telefono: tel,
+        modo_envio: audioChunks.length > 0 ? "AUDIO_Y_TEXTO" : "TEXTO",
+        mensaje_escrito: msg || "Solicitud de llamada para resolución de dudas sobre PET FDG Endocarditis",
+        mensaje_alerta: `Llamar a ${nombre} al teléfono ${tel} para resolver dudas de preparación`
+      });
+
+      alert(`✅ Consulta registrada correctamente en la consola de Enfermería de Galaria.\n\nEl equipo asistencial revisará tu mensaje y se pondrá en contacto contigo al teléfono: ${tel}.`);
+      cerrarModalConsultaEnfermeria();
+    }
+
+    /* 6. CANCELACIÓN EN 2 PASOS */
+    function toggleCancelAccordion(forceOpen) {
+      const c = document.getElementById("cancelAccordionContent");
+      if (!c) return;
+      if (forceOpen === true) c.classList.add("open");
+      else c.classList.toggle("open");
+    }
+
+    function triggerModalConfirmation() {
+      const m = document.getElementById("confirmCancelModal");
+      if (m) m.classList.add("active");
+    }
+
+    function cerrarModalConfirmacionCancelacion() {
+      const m = document.getElementById("confirmCancelModal");
+      if (m) m.classList.remove("active");
+    }
+
+    async function ejecutarCancelacionDefinitiva() {
+      const nombre = document.getElementById("cancelPatientName").value;
+      const nhc = document.getElementById("cancelPatientNhc").value;
+      const tel = document.getElementById("cancelPatientPhone").value;
+      const motivo = document.getElementById("cancelReason").value;
+
+      try {
+        await fetch(CONFIG.CANCEL_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            estudio: "PET FDG Endocarditis",
+            paciente: nombre,
+            nhc: nhc,
+            telefono: tel,
+            motivo: motivo,
+            email_notificacion: CONFIG.EMAIL_NOTIFICACION_CANCELACION,
+            fecha_cancelacion: new Date().toISOString()
+          })
+        });
+      } catch (e) {
+        console.warn("Servicio de cancelación local:", e);
+      }
+
+      cerrarModalConfirmacionCancelacion();
+      alert(`✅ Cita cancelada con éxito.\n\nSe ha notificado al Servicio de Medicina Nuclear (Hospital Meixoeiro / Galaria) y a la dirección oficial: ${CONFIG.EMAIL_NOTIFICACION_CANCELACION}. Nos pondremos en contacto contigo para reprogramar tu exploración.`);
+    }
+
+    /* 7. SINCRONIZACIÓN CON BASE DE DATOS LOCAL SQLITE */
+    function enviarRegistroEnfermeria(payload) {
+      try {
+        fetch(CONFIG.DATABASE_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        }).catch(err => console.warn("Sync local:", err));
+      } catch(e) {}
+    }
+  </script>
+
+  <!-- MODAL DE CONFIGURACIÓN DE IA GEMINI -->
+  <div class="modal-backdrop" id="geminiConfigModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(8,41,61,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99999;padding:1rem;box-sizing:border-box;">
+    <div class="modal-box" style="background:#ffffff;width:100%;max-width:460px;border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;box-sizing:border-box;border-top:4px solid #007eb4;font-family:inherit;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+        <h3 style="margin:0;font-size:1.1rem;font-weight:800;color:#004868;display:flex;align-items:center;gap:6px;">
+          <span>✨</span> Inteligencia Artificial Gemini
+        </h3>
+        <button type="button" onclick="toggleChatConfigModal(false)" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#64748b;">✕</button>
+      </div>
+      <p style="font-size:0.82rem;color:#64748b;margin-bottom:1rem;line-height:1.45;">
+        Conecta el modelo <strong>Google Gemini</strong> para comprensión total del lenguaje natural médico, empatía clínica y respuestas conversacionales adaptadas. Si no se introduce clave, el asistente utilizará el <strong>motor clínico offline SERGAS</strong>.
+      </p>
+      
+      <div style="margin-bottom:0.85rem;">
+        <label for="geminiApiKeyInput" style="display:block;font-size:0.82rem;font-weight:700;color:#004868;margin-bottom:0.35rem;">API Key de Google Gemini:</label>
+        <div style="position:relative;display:flex;align-items:center;">
+          <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." style="width:100%;padding:0.65rem 2.4rem 0.65rem 0.9rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.88rem;font-family:monospace;box-sizing:border-box;">
+          <button type="button" onclick="toggleShowApiKey()" style="position:absolute;right:8px;background:none;border:none;font-size:0.95rem;color:#64748b;cursor:pointer;" title="Mostrar u ocultar clave">👁️</button>
+        </div>
+        <div style="margin-top:6px;">
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size:0.76rem;color:#007eb4;text-decoration:none;font-weight:600;">🔗 Obtener clave gratuita en Google AI Studio (aistudio.google.com)</a>
+        </div>
+      </div>
+
+      <div id="geminiKeyStatus" style="font-size:0.78rem;padding:8px 12px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:1rem;line-height:1.4;color:#334155;">
+        Comprobando estado del motor...
+      </div>
+
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" onclick="toggleChatConfigModal(false)" style="background:#e2e8f0;color:#334155;border:none;font-size:0.85rem;padding:0.55rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;">Cerrar</button>
+        <button type="button" onclick="saveGeminiApiKey()" style="background:#007eb4;color:#ffffff;border:none;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:700;">Guardar y Activar</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Instrucciones oficiales de preparación para PET 18F-Colina Paratiroides en Galaria / SERGAS: no se necesita ayuno previo y no hay que suspender ninguna medicación habitual. En la máquina se le inmovilizará la cabeza. Localización en Hospital Meixoeiro Planta -1 y medidas de radioprotección.">
+  <title>PET 18F-Colina Paratiroides | Audioguía Oficial de Preparación e Asistente Virtual</title>
+  
+  <!-- Fuente Corporativa Open Sans e JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES Y SISTEMA DE DISEÑO GALARIA - SERGAS (SERVIZO GALEGO DE SAÚDE)
+       ========================================================================== */
+    :root {
+      --sergas-blue: #007eb4;
+      --sergas-blue-hover: #005b82;
+      --sergas-navy: #004868;
+      --sergas-dark: #08293d;
+      --sergas-soft-blue: #e6f4fa;
+      --sergas-subtle: #f0f7fb;
+      
+      --colina-teal: #0d9488;
+      --colina-teal-dark: #0f766e;
+      --colina-soft-teal: #f0fdfa;
+      --colina-border-teal: #99f6e4;
+      
+      --amber-alert: #d97706;
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+
+      --bg-page: #f4f7f9;
+      --bg-card: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --border-subtle: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+      --transition-fast: 0.18s ease;
+      --transition-normal: 0.28s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* HEADER INSTITUCIONAL */
+    .top-bar-galaria {
+      background: #ffffff;
+      border-bottom: 2px solid #b9e2f5;
+      padding: 0.75rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 72, 104, 0.05);
+    }
+
+    .top-bar-content {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .galaria-logo-img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-text-block {
+      border-left: 1.5px solid var(--border-subtle);
+      padding-left: 0.85rem;
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--sergas-blue);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-portal-back {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--sergas-navy);
+      text-decoration: none;
+      background: var(--sergas-soft-blue);
+      border: 1px solid #bae6fd;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition-fast);
+    }
+
+    .btn-portal-back:hover {
+      background: #bae6fd;
+      color: var(--sergas-blue-hover);
+    }
+
+    /* HERO PRINCIPAL */
+    .hero-section {
+      background: linear-gradient(180deg, #ffffff 0%, #f0f7fb 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 2.25rem 1rem 2rem;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .badge-paratiroides {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--colina-soft-teal);
+      color: var(--colina-teal-dark);
+      border: 1px solid var(--colina-border-teal);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.15);
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-title {
+      font-size: 2.15rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* TARJETA OFICIAL DEL PACIENTE */
+    .patient-card-container {
+      background: #ffffff;
+      border: 1.5px solid #b9e2f5;
+      border-left: 5px solid var(--colina-teal);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.5rem;
+      box-shadow: var(--shadow-md);
+      text-align: left;
+      margin: 0 auto;
+      max-width: 840px;
+      position: relative;
+    }
+
+    .patient-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .patient-card-status {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-weight: 800;
+      font-size: 0.82rem;
+      color: #065f46;
+      background: #ecfdf5;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      border: 1px solid #a7f3d0;
+    }
+
+    .live-pulse {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.5);
+      animation: pulseAnim 1.8s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .patient-study-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0f766e;
+      background: #ccfbf1;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      border: 1px solid #99f6e4;
+    }
+
+    .patient-card-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .patient-data-item .p-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.15rem;
+      display: block;
+    }
+
+    .patient-data-item .p-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--sergas-dark);
+      line-height: 1.3;
+    }
+
+    .patient-data-item .p-nhc {
+      color: #0369a1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+
+    .patient-data-item .p-date {
+      color: #047857;
+      font-weight: 800;
+    }
+
+    /* ALERTA CLÍNICA PRINCIPAL */
+    .alert-banner-custom {
+      margin-top: 1.25rem;
+      background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+      border: 1.5px solid #5eead4;
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+      color: #115e59;
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.08);
+    }
+
+    .alert-banner-custom svg {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      fill: #0d9488;
+    }
+
+    .highlight-pill {
+      background: #fef08a;
+      color: #854d0e;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.85em;
+    }
+
+    .highlight-pill-teal {
+      background: #ccfbf1;
+      color: #0f766e;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.85em;
+      border: 1px solid #99f6e4;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+      max-width: 1040px;
+      margin: 1.75rem auto 3rem;
+      padding: 0 1.25rem;
+      width: 100%;
+    }
+
+    /* SECCIÓN DE VÍDEO EXPLICATIVO */
+    .video-section {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+    }
+
+    .video-header-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .video-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .video-duration {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--colina-teal-dark);
+      background: var(--colina-soft-teal);
+      border: 1px solid var(--colina-border-teal);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000000;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    
+
+    
+
+    
+
+    /* CUADRÍCULA DE RESUMEN CLÍNICO (COLINA PARATIROIDES) */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: var(--transition-normal);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: #b9e2f5;
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--colina-soft-teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--colina-teal);
+      border: 1px solid var(--colina-border-teal);
+    }
+
+    .card-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      line-height: 1.25;
+    }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .card-list li {
+      position: relative;
+      padding-left: 1.35rem;
+      line-height: 1.45;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0.2rem;
+      top: -0.1rem;
+      color: var(--colina-teal);
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    /* SECCIÓN DE LOCALIZACIÓN, HOSPITAL, PLANTA Y SALA DE ESPERA */
+    .location-card {
+      background: #ffffff;
+      border: 1.5px solid #b9e2f5;
+      border-left: 5px solid var(--sergas-blue);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .location-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .location-icon {
+      font-size: 2rem;
+      background: var(--sergas-soft-blue);
+      border: 1px solid #bae6fd;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .location-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      margin: 0 0 0.25rem 0;
+    }
+
+    .location-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .location-box {
+      background: var(--sergas-subtle);
+      border: 1px solid #d0e3ef;
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .location-box.highlight-box {
+      background: #f0fdfa;
+      border: 1.5px solid #5eead4;
+    }
+
+    .loc-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--colina-teal-dark);
+      background: #ffffff;
+      border: 1px solid #99f6e4;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      width: fit-content;
+      letter-spacing: 0.04em;
+    }
+
+    .location-box h4 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      margin: 0;
+    }
+
+    .location-box p {
+      font-size: 0.86rem;
+      color: var(--text-main);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .location-arrival-tip {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+      color: #1e40af;
+      line-height: 1.45;
+    }
+
+    .location-arrival-tip svg {
+      flex-shrink: 0;
+      color: #2563eb;
+    }
+
+    /* SECCIÓN DE RADIOPROTECCIÓN */
+    .radioprotection-card {
+      background: #ffffff;
+      border: 1.5px solid #fde68a;
+      border-left: 5px solid #d97706;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .radioprotection-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .radioprotection-header h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #92400e;
+    }
+
+    /* SECCIÓN ASISTENTE CHATBOT EN PÁGINA */
+    .assistant-card-section {
+      background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%);
+      border: 1.5px solid #99f6e4;
+      border-top: 4px solid var(--colina-teal);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin: 2rem 0;
+      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.08);
+    }
+
+    .chip-btn {
+      background: #ffffff;
+      border: 1px solid #ccfbf1;
+      color: var(--sergas-navy);
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: var(--transition-fast);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .chip-btn:hover {
+      background: var(--colina-soft-teal);
+      border-color: var(--colina-teal);
+      color: var(--colina-teal-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ACORDEÓN DE CANCELACIÓN */
+    .cancellation-wrapper {
+      background: #ffffff;
+      border: 1.5px solid #fecaca;
+      border-radius: var(--radius-lg);
+      margin: 2rem 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cancel-trigger-header {
+      background: #fef2f2;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+
+    .cancel-trigger-header:hover {
+      background: #fee2e2;
+    }
+
+    .cancel-accordion-content {
+      display: none;
+      padding: 1.5rem;
+      background: #ffffff;
+      border-top: 1px solid #fecaca;
+    }
+
+    .cancel-accordion-content.open {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* VENTANA FLOTANTE DEL CHATBOT */
+    .chat-floating-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, var(--colina-teal) 0%, var(--sergas-navy) 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 0.85rem 1.4rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35);
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .chat-floating-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(13, 148, 136, 0.45);
+    }
+
+    .chat-window {
+      position: fixed;
+      bottom: 90px;
+      right: 24px;
+      width: 380px;
+      max-width: calc(100vw - 48px);
+      height: 540px;
+      max-height: calc(100vh - 120px);
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      border: 1.5px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .chat-window.open {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--colina-teal) 0%, var(--sergas-navy) 100%);
+      color: #ffffff;
+      padding: 1rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .chat-header-title h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .chat-header-title p {
+      font-size: 0.72rem;
+      color: #ccfbf1;
+      margin: 0;
+    }
+
+    .chat-close-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: var(--transition-fast);
+    }
+
+    .chat-close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: #f8fafc;
+    }
+
+    .chat-msg {
+      max-width: 82%;
+      padding: 0.7rem 0.95rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      word-wrap: break-word;
+    }
+
+    .chat-msg.bot {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-sm);
+      animation: fadeInMsg 0.22s ease-out;
+    }
+
+    .chat-msg.user {
+      background: linear-gradient(135deg, var(--colina-teal) 0%, var(--sergas-navy) 100%);
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 2px 6px rgba(13, 148, 136, 0.2);
+      animation: fadeInMsg 0.22s ease-out;
+    }
+
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-typing {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      padding: 0.45rem 1.15rem;
+      display: none;
+      align-items: center;
+      gap: 7px;
+      font-style: normal;
+    }
+
+    .typing-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .typing-dots span {
+      width: 6px;
+      height: 6px;
+      background: var(--colina-teal);
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounceDot 1.4s infinite ease-in-out both;
+    }
+
+    .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0s; }
+
+    @keyframes bounceDot {
+      0%, 80%, 100% { transform: scale(0.5); opacity: 0.35; }
+      40% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .chat-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #e2e8f0;
+      animation: fadeInMsg 0.3s ease-out;
+    }
+
+    .chat-suggestion-chip {
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      color: #0f766e;
+      border-radius: 12px;
+      font-size: 0.77rem;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: inherit;
+    }
+
+    .chat-suggestion-chip:hover {
+      background: #0d9488;
+      color: #ffffff;
+      border-color: #0d9488;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(13, 148, 136, 0.25);
+    }
+
+    .chat-input-bar {
+      padding: 0.75rem 0.95rem;
+      background: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      padding: 0.65rem 0.95rem;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .chat-input-bar input:focus {
+      border-color: var(--colina-teal);
+    }
+
+    .chat-send-btn {
+      background: var(--colina-teal);
+      color: #ffffff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      flex-shrink: 0;
+    }
+
+    .chat-send-btn:hover {
+      background: var(--colina-teal-dark);
+      transform: scale(1.05);
+    }
+
+    /* MODAL DE CONSULTA DIRECTA Y VOZ */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      max-width: 540px;
+      width: 100%;
+      padding: 1.75rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+      border: 1.5px solid var(--border-subtle);
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .modal-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    .voice-recorder-box {
+      background: var(--colina-soft-teal);
+      border: 1.5px dashed var(--colina-teal);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .mic-btn {
+      background: #ffffff;
+      border: 2px solid var(--colina-teal);
+      color: var(--colina-teal);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mic-btn.recording {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #ffffff;
+      animation: pulseMic 1.2s infinite;
+    }
+
+    @keyframes pulseMic {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      transition: var(--transition-fast);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--sergas-navy);
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.65rem 0.85rem;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--colina-teal);
+    }
+
+    /* FOOTER */
+    footer {
+      width: 100%;
+      background: #ffffff;
+      border-top: 1px solid var(--border-subtle);
+      padding: 2rem 0;
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+  
+    /* ==========================================================================
+       CHATBOT INTERACTIVO CON VOZ Y GEMINI IA (SERGAS)
+       ========================================================================== */
+    .chat-engine-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 0.68rem !important;
+      padding: 2px 7px !important;
+      border-radius: 10px !important;
+      font-weight: 700 !important;
+      background: rgba(255, 255, 255, 0.18) !important;
+      color: #e0f2fe !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      letter-spacing: 0.2px !important;
+      transition: all 0.3s ease !important;
+      white-space: nowrap !important;
+    }
+
+    .chat-engine-badge.gemini {
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%) !important;
+      color: #ffffff !important;
+      border-color: #a5b4fc !important;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5) !important;
+    }
+
+    .chat-header-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      margin-left: auto !important;
+    }
+
+    .chat-header-btn {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 50% !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.95rem !important;
+      transition: all 0.2s ease !important;
+      padding: 0 !important;
+    }
+
+    .chat-header-btn:hover {
+      background: rgba(255, 255, 255, 0.28) !important;
+      transform: scale(1.05) !important;
+    }
+
+    .chat-header-btn.active {
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      border-color: #7dd3fc !important;
+      box-shadow: 0 0 8px rgba(14, 165, 233, 0.6) !important;
+    }
+
+    .chat-mic-btn {
+      background: #f1f5f9 !important;
+      color: #334155 !important;
+      border: 1.5px solid #cbd5e1 !important;
+      width: 38px !important;
+      height: 38px !important;
+      border-radius: 50% !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      transition: all 0.2s ease !important;
+      font-size: 1.05rem !important;
+      padding: 0 !important;
+      margin-right: 4px !important;
+    }
+
+    .chat-mic-btn:hover {
+      background: #e2e8f0 !important;
+      border-color: #94a3b8 !important;
+    }
+
+    .chat-mic-btn.listening {
+      background: #dc2626 !important;
+      color: #ffffff !important;
+      border-color: #ef4444 !important;
+      animation: pulseMic 1.4s infinite !important;
+    }
+
+    @keyframes pulseMic {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); }
+      70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); transform: scale(1.08); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
+    }
+
+    .bot-speak-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      padding: 3px 8px !important;
+      border-radius: 12px !important;
+      background: #f1f5f9 !important;
+      border: 1px solid #e2e8f0 !important;
+      color: #475569 !important;
+      font-size: 0.73rem !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      font-family: inherit !important;
+      margin-top: 6px !important;
+    }
+
+    .bot-speak-btn:hover {
+      background: #e2e8f0 !important;
+      color: #007eb4 !important;
+    }
+
+    .bot-speak-btn.speaking {
+      background: #dbeafe !important;
+      color: #1d4ed8 !important;
+      border-color: #93c5fd !important;
+      animation: pulseVoice 1.2s infinite ease-in-out !important;
+    }
+
+    @keyframes pulseVoice {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.03); }
+    }
+
+    .chat-msg-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin-top: 6px !important;
+    }
+
+    input.recording-active {
+      border-color: #dc2626 !important;
+      background: #fff5f5 !important;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       BARRA INSTITUCIONAL SUPERIOR
+       ========================================================================== -->
+  <header class="top-bar-galaria">
+    <div class="top-bar-content">
+      <div class="brand-group">
+        <img src="galaria_logo.jpg" alt="Galaria Logo" class="galaria-logo-img">
+        <div class="brand-text-block">
+          <div class="brand-title">SERVIZO GALEGO DE SAÚDE · GALARIA</div>
+          <div class="brand-sub">Unidade de Medicina Nuclear e Diagnóstico Molecular · Hospital Meixoeiro</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a href="../index.html" class="btn-portal-back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Portal PET
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO PRINCIPAL CON TARJETA DE CITACIÓN
+       ========================================================================== -->
+  <section class="hero-section">
+    <div class="hero-inner">
+      <div class="badge-paratiroides">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v4h4v2h-4v4h-2v-4H7v-2h4V7z"/></svg>
+        PROTOCOLO EXCLUSIVO: PET 18F-COLINA PARATIROIDES
+      </div>
+      <h1 class="hero-title">Audioguía de Preparación: PET 18F-Colina Paratiroides</h1>
+      <p class="hero-subtitle">
+        Programa oficial interactivo de preparación para la localización prequirúrgica de adenomas paratiroideos y estudio de hiperparatiroidismo mediante 18F-Fluorocolina (18F-FCH).
+      </p>
+
+      <!-- Tarjeta del Paciente Citado Oficial -->
+      <div id="patient-card-container" class="patient-card-container">
+        <div class="patient-card-header">
+          <div class="patient-card-status">
+            <span class="live-pulse"></span>
+            <span>PACIENTE CITADO OFICIAL</span>
+          </div>
+          <span class="patient-study-tag">ESTUDIO: PET 18F-COLINA PARATIROIDES</span>
+        </div>
+        <div class="patient-card-body">
+          <div class="patient-data-item">
+            <span class="p-label">👤 NOMBRE COMPLETO:</span>
+            <span class="p-value" id="display-patient-name">Cargando paciente...</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">📋 NÚMERO DE HISTORIA CLÍNICA (NHC):</span>
+            <span class="p-value p-nhc" id="display-patient-nhc">Consultar en Citaciones</span>
+          </div>
+          <div class="patient-data-item" id="display-cita-container">
+            <span class="p-label">📅 FECHA Y HORA DE CITA:</span>
+            <span class="p-value p-date" id="display-patient-cita">Asignada en Agenda</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">🏥 HOSPITAL Y PLANTA:</span>
+            <span class="p-value" style="font-weight: 800; color: var(--sergas-navy);">Hospital Meixoeiro · Planta -1</span>
+          </div>
+          <div class="patient-data-item" style="grid-column: 1 / -1;">
+            <span class="p-label">📍 SALA DE ESPERA Y RECEPCIÓN:</span>
+            <span class="p-value" style="font-size: 0.95rem; font-weight: 700; color: #0f766e;">
+              Servicio de Medicina Nuclear (Unidad PET-CT). Recepción y Sala de Espera de Pacientes Inyectados (Planta -1, siguiendo la línea de señalización azul).
+            </span>
+          </div>
+        </div>
+        <div style="margin-top: 0.75rem; padding: 0.5rem 1rem; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end;">
+          <button type="button" onclick="toggleCancelAccordion(true)" style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.3); color: #dc2626; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
+            ⚠️ ¿No puedes asistir a tu cita? Cancelar o aplazar prueba
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CONTENIDO PRINCIPAL
+       ========================================================================== -->
+  <main class="container">
+
+    <!-- SECCIÓN 1: VÍDEO EXPLICATIVO -->
+    <section class="video-section" aria-labelledby="video-heading">
+      <div class="video-header-info">
+        <h2 id="video-heading" class="video-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--colina-teal)" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          Vídeo Explicativo: Preparación para <span id="videoTestTitle" style="color: var(--colina-teal); font-weight: 700;">PET 18F-Colina Paratiroides</span>
+        </h2>
+        <span class="video-duration">Duración: 4 min</span>
+      </div>
+
+      <div class="video-container">
+        <video id="petVideo" controls poster="" preload="metadata" title="Vídeo de instrucción para paciente de PET">
+          <source id="videoSource" src="../Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
+          Tu navegador no soporta el reproductor de vídeo HTML5.
+        </video>
+      </div>
+    </section>
+
+    <!-- RESUMEN EN TARJETAS ESPECÍFICAS DE COLINA PARATIROIDES -->
+    <section class="summary-grid" aria-label="Resumen de instrucciones de preparación">
+      <!-- Tarjeta 1 -->
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        </div>
+        <h3 class="card-title">1. Medicación</h3>
+        <ul class="card-list">
+          <li><strong>No hay que suspender ninguna medicación</strong>: Continúa tomando todos tus medicamentos habituales en su horario normal.</li>
+          <li>Comunica únicamente si te has realizado <strong>cirugías previas de cuello, tiroides o paratiroides</strong>.</li>
+        </ul>
+      </article>
+
+      <!-- Tarjeta 2 -->
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+        </div>
+        <h3 class="card-title">2. Sin Ayuno e Hidratación Habitual</h3>
+        <ul class="card-list">
+          <li><strong>No se necesita ayuno</strong>: Puedes comer y realizar tus comidas habituales con total normalidad antes de acudir a la cita.</li>
+          <li><strong>Hidratación habitual</strong>: Puedes beber agua y mantener tu ingesta líquida normal.</li>
+          <li>No se requiere ningún tipo de restricción dietética previa.</li>
+        </ul>
+      </article>
+
+      <!-- Tarjeta 3 -->
+      <article class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14V6c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v8c-1.66 0-3 1.34-3 3v3h2v-2h16v2h2v-3c0-1.66-1.34-3-3-3zm-9-8h4v2h-4V6zm-5 6h14v2H5v-2z"/></svg>
+        </div>
+        <h3 class="card-title">3. En la Máquina: Inmovilización de Cabeza</h3>
+        <ul class="card-list">
+          <li><strong>Inmovilización de la cabeza</strong>: En la camilla del escáner, el personal técnico <strong>te inmovilizará la cabeza</strong> con un soporte y sujeción acolchada para evitar el más mínimo desplazamiento involuntario.</li>
+          <li>El escáner PET-CT se realiza <strong>centrado en cuello y mediastino superior</strong> a los 10-20 minutos de la inyección.</li>
+          <li>Durante la exploración en la máquina, permanece relajado/a, evitando movimientos o tragar saliva continuamente.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- SECCIÓN ASISTENTE CHATBOT EN PÁGINA -->
+    <section class="assistant-card-section" aria-labelledby="assistant-card-title">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 52px; height: 52px; border-radius: 12px; background: #ffffff; padding: 4px; border: 1.5px solid #99f6e4; box-shadow: 0 4px 10px rgba(13, 148, 136, 0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
+            <img src="galaria_logo.jpg" alt="Galaria Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            <span style="position: absolute; bottom: -3px; right: -3px; width: 12px; height: 12px; background-color: #10b981; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px #10b981;"></span>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <h3 id="assistant-card-title" style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--sergas-navy);">Asistente Virtual de Enfermería — PET 18F-Colina Paratiroides</h3>
+              <span style="font-size: 0.72rem; background: rgba(13, 148, 136, 0.1); color: var(--colina-teal-dark); border: 1px solid rgba(13, 148, 136, 0.25); padding: 2px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em;">
+                GALARIA · SERGAS
+              </span>
+              <span style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700;">
+                🟢 Asistencia Activa en Directo
+              </span>
+            </div>
+            <p style="margin: 0.35rem 0 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
+              Resuelve tus dudas en tiempo real sobre alimentación sin ayuno, medicación habitual, inmovilización de cabeza en la máquina o pulsa en las preguntas frecuentes:
+            </p>
+          </div>
+        </div>
+        <button type="button" onclick="toggleChatbot(true)" class="btn" style="background: linear-gradient(135deg, var(--colina-teal) 0%, var(--sergas-navy) 100%); color: #ffffff; font-weight: 700; font-size: 0.92rem; padding: 0.7rem 1.4rem; border-radius: 30px; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(13, 148, 136, 0.28); cursor: pointer; transition: all 0.2s ease;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          Abrir Chatbot de Enfermería
+        </button>
+      </div>
+
+      <!-- Formulario de Consulta Rápida -->
+      <form onsubmit="event.preventDefault(); const val=document.getElementById('pageChatInput').value.trim(); if(val){ openChatAndAsk(val); document.getElementById('pageChatInput').value=''; }" style="display: flex; gap: 0.6rem; margin-bottom: 1.15rem; flex-wrap: wrap;">
+        <input type="text" id="pageChatInput" placeholder="Escribe aquí tu duda (ej. ¿Tengo que ir en ayunas?, ¿Tomo mi medicación?, ¿Cómo me inmovilizan la cabeza?)..." style="flex: 1; min-width: 280px; padding: 0.8rem 1.25rem; border-radius: 30px; border: 1.5px solid #d0e3ef; background: #ffffff; color: var(--text-main); font-size: 0.95rem; box-shadow: 0 2px 6px rgba(0, 48, 76, 0.04); outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" onfocus="this.style.borderColor='var(--colina-teal)'; this.style.boxShadow='0 0 0 3px rgba(13, 148, 136, 0.15)';" onblur="this.style.borderColor='#d0e3ef'; this.style.boxShadow='0 2px 6px rgba(0, 48, 76, 0.04)';">
+        <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--colina-teal) 0%, var(--sergas-navy) 100%); color: #ffffff; border-radius: 30px; padding: 0.8rem 1.6rem; font-weight: 700; font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(13, 148, 136, 0.2);">
+          Consultar al Asistente 💬
+        </button>
+      </form>
+      
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Dónde se realiza la prueba, hospital, planta y sala de espera?')">📍 Hospital, planta y sala de espera</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Se necesita ayuno para esta prueba?')">🍽️ ¿Se necesita ayuno?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Hay que suspender alguna medicación?')">💊 ¿Suspender medicación?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Cómo se inmoviliza la cabeza en la máquina?')">🎯 Inmovilización de cabeza en la máquina</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Cuánto dura la prueba?')">⌛ ¿Cuánto dura la prueba?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué medidas de radioprotección debo seguir?')">☢️ Radioprotección</button>
+        <button type="button" class="chip-btn" style="border-color: var(--colina-teal); background-color: var(--colina-soft-teal); color: var(--colina-teal-dark); font-weight: 700;" onclick="abrirModalConsultaEnfermeria()">📞 Hablar con Enfermería</button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE CANCELACIÓN O REPROGRAMACIÓN DE CITA -->
+    <section class="cancellation-wrapper" aria-labelledby="cancel-heading">
+      <div class="cancel-trigger-header" id="cancelHeaderTrigger" onclick="toggleCancelAccordion()">
+        <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+          <span style="font-size: 1.25rem;">⚠️</span>
+          <span id="cancel-heading" style="font-weight: 800; color: #991b1b; font-size: 1.02rem;">
+            ¿Necesitas cancelar o reprogramar tu prueba de PET 18F-Colina Paratiroides?
+          </span>
+          <span style="background: rgba(239, 68, 68, 0.12); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.35); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">
+            Procedimiento Oficial
+          </span>
+        </div>
+        <span style="color: #b91c1c; font-size: 0.85rem; font-weight: 700;">Desplegar formulario ▼</span>
+      </div>
+
+      <div class="cancel-accordion-content" id="cancelAccordionContent">
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.45;">
+          El radiofármaco 18F-Fluorocolina se prepara específicamente con calibración horaria individualizada para tu estudio de paratiroides en la unidad de Medicina Nuclear. Si te resulta imposible acudir, notifícalo con antelación para reasignar la dosis a otro paciente en lista de espera y ofrecerte una nueva fecha.
+        </p>
+
+        <form id="cancellationForm" onsubmit="event.preventDefault(); triggerModalConfirmation();">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label for="cancelPatientName">Nombre del Paciente</label>
+              <input type="text" id="cancelPatientName" readonly required>
+            </div>
+            <div class="form-group">
+              <label for="cancelPatientNhc">NHC (Nº Historia)</label>
+              <input type="text" id="cancelPatientNhc" readonly required>
+            </div>
+            <div class="form-group">
+              <label for="cancelReason">Motivo de Cancelación / Aplazamiento</label>
+              <select id="cancelReason" required>
+                <option value="">Selecciona un motivo...</option>
+                <option value="Imposibilidad de acudir en la fecha/hora asignada">Imposibilidad de acudir en la fecha/hora asignada</option>
+                <option value="Enfermedad intercurrente / Fiebre">Enfermedad intercurrente / Fiebre</option>
+                <option value="Ingreso hospitalario o cirugía imprevista">Ingreso hospitalario o cirugía imprevista</option>
+                <option value="Problemas de transporte o desplazamiento">Problemas de transporte o desplazamiento</option>
+                <option value="Motivos personales de fuerza mayor">Motivos personales de fuerza mayor</option>
+                <option value="Otro motivo clínico">Otro motivo clínico</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label for="cancelObservation">Observaciones Adicionales (Opcional)</label>
+            <textarea id="cancelObservation" rows="2" placeholder="Indica si deseas que te contactemos para reprogramar una nueva fecha..."></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+            <button type="button" onclick="toggleCancelAccordion(false)" class="btn" style="background: #e2e8f0; color: #334155;">Cerrar</button>
+            <button type="submit" class="btn" style="background: var(--danger); color: #ffffff;">Notificar Cancelación a Medicina Nuclear</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       VENTANA FLOTANTE DEL CHATBOT DE ENFERMERÍA (PET 18F-COLINA PARATIROIDES)
+       ========================================================================== -->
+  <button id="openChatBtn" class="chat-floating-btn" onclick="toggleChatbot()" aria-label="Abrir Asistente de Enfermería">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+    <span>Asistente de Enfermería 💬</span>
+  </button>
+
+  <div id="chatWindow" class="chat-window" role="dialog" aria-modal="true" aria-label="Chatbot de Enfermería">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        <div>
+          <h4>Enfermería Medicina Nuclear</h4>
+          <p>Especialista PET 18F-Colina Paratiroides</p>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <span id="chatEngineBadge" class="chat-engine-badge" title="Estado de la Inteligencia Artificial">🛡️ SERGAS</span>
+        <button type="button" id="chatVoiceToggle" class="chat-header-btn" onclick="toggleChatAutoVoice()" title="Activar lectura de respuestas en voz alta" aria-label="Lectura en voz alta">🔇</button>
+        <button type="button" id="chatConfigBtn" class="chat-header-btn" onclick="toggleChatConfigModal(true)" title="Configuración de Inteligencia Artificial (Gemini)" aria-label="Configuración de IA">⚙️</button>
+        <button type="button" class="chat-close-btn" onclick="toggleChatbot(false)" aria-label="Cerrar chat">✕</button>
+      </div>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+      <div class="chat-msg bot">
+        👋 ¡Hola! Soy tu <strong>Asistente Virtual de Enfermería</strong> para la prueba <strong>PET 18F-Colina Paratiroides</strong> en el Hospital Meixoeiro (Galaria · SERGAS).<br><br>
+        Puedo orientarte con precisión sobre tu preparación: <strong>no necesitas ayuno previo</strong> (puedes comer con normalidad), <strong>no debes suspender ninguna medicación</strong> y cómo <strong>se inmovilizará suavemente la cabeza en la máquina</strong>.<br><br>
+        ¿Qué te gustaría consultar?
+        <div class="chat-suggestions">
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Necesito ayuno para la prueba de paratiroides?')">🍽️ ¿Se necesita ayuno?</button>
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Tengo que suspender alguna medicación habitual?')">💊 Medicación habitual</button>
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Cómo se inmoviliza la cabeza en la máquina?')">🎯 Inmovilización en máquina</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="chatTyping" class="chat-typing">
+      <span class="typing-dots"><span></span><span></span><span></span></span>
+      <span>El enfermero virtual está redactando tu respuesta...</span>
+    </div>
+
+    <div class="chat-input-bar">
+      <button type="button" id="chatMicBtn" class="chat-mic-btn" onclick="toggleChatSpeechRecognition()" title="Dictar consulta por voz" aria-label="Dictar consulta por voz">🎙️</button>
+      <input type="text" id="chatInput" placeholder="Pregunta sobre ayuno, medicación o la máquina..." onkeydown="if(event.key==='Enter') handleSendChatMessage();">
+      <button class="chat-send-btn" onclick="handleSendChatMessage()" aria-label="Enviar mensaje">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL DE CONSULTA DIRECTA Y GRABADORA DE VOZ
+       ========================================================================== -->
+  <div id="nursingModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Consulta directa a enfermería">
+    <div class="modal-box">
+      <h3 class="modal-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--colina-teal)"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+        Hablar con Enfermería de Medicina Nuclear
+      </h3>
+      <p class="modal-desc">
+        Si tienes alguna circunstancia especial (tratamiento complejo de hiperparatiroidismo, suplementación de calcio, cirugías cervicales previas o dificultad de movilidad), puedes dejarnos un mensaje escrito o grabar una nota de voz directa para el equipo asistencial:
+      </p>
+
+      <div class="voice-recorder-box">
+        <p style="font-size: 0.82rem; font-weight: 700; color: var(--colina-teal-dark); margin-bottom: 0.65rem;">
+          🎙️ Grabación de Nota de Voz para el Enfermero/a
+        </p>
+        <button type="button" id="micBtn" class="mic-btn" onclick="toggleAudioRecording()" title="Pulsa para grabar tu duda">
+          🎤
+        </button>
+        <div id="micStatusText" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem;">
+          Pulsa el micrófono para iniciar la grabación de voz
+        </div>
+      </div>
+
+      <form onsubmit="event.preventDefault(); enviarConsultaEnfermeria();">
+        <div class="form-group" style="margin-bottom: 0.75rem;">
+          <label for="nursingPatientName">Nombre del Paciente</label>
+          <input type="text" id="nursingPatientName" readonly required>
+        </div>
+        <div class="form-group" style="margin-bottom: 0.75rem;">
+          <label for="nursingPatientPhone">Teléfono de Contacto Directo</label>
+          <input type="tel" id="nursingPatientPhone" placeholder="Ej. 600 000 000" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label for="nursingPatientQuery">Detalle de tu Consulta Clínica</label>
+          <textarea id="nursingPatientQuery" rows="3" placeholder="Explica tu duda sobre medicación, preparación o la máquina..." required></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" onclick="cerrarModalConsultaEnfermeria()" class="btn" style="background: #e2e8f0; color: #334155;">Cancelar</button>
+          <button type="submit" class="btn" style="background: var(--colina-teal); color: #ffffff;">Enviar Consulta a Enfermería</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER INSTITUCIONAL
+       ========================================================================== -->
+  <footer>
+    <div class="container" style="margin: 0 auto; padding: 0 1.25rem;">
+      <p style="font-weight: 700; color: var(--sergas-navy); margin-bottom: 0.35rem;">
+        Plataforma Asistencial PET/CT · Galaria Empresa Pública de Servizos Sanitarios · Servizo Galego de Saúde (SERGAS)
+      </p>
+      <p>
+        Unidade PET / TC · Servizo de Medicina Nuclear · Hospital Meixoeiro (Vigo) · Teléfono de Información Asistencial: 986 811 111
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       SCRIPTS Y LÓGICA CLÍNICA INTERACTIVA
+       ========================================================================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initPatientData();
+    });
+
+    /* 1. LECTURA Y SINCRONIZACIÓN DEL PACIENTE */
+    function initPatientData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let nombre = urlParams.get('nombre') || urlParams.get('name') || sessionStorage.getItem('pet_patient_name') || localStorage.getItem('pet_patient_name') || "María Carmen Vázquez";
+      let nhc = urlParams.get('nhc') || urlParams.get('historia') || sessionStorage.getItem('pet_patient_nhc') || localStorage.getItem('pet_patient_nhc') || "NHC-391824";
+      let fecha = urlParams.get('fecha') || urlParams.get('cita') || sessionStorage.getItem('pet_patient_fecha') || "2026-11-26";
+      let hora = urlParams.get('hora') || sessionStorage.getItem('pet_patient_hora') || "09:00";
+
+      document.getElementById("display-patient-name").textContent = nombre;
+      document.getElementById("display-patient-nhc").textContent = nhc;
+      document.getElementById("display-patient-cita").textContent = `${fecha} a las ${hora} h`;
+
+      const cancelName = document.getElementById("cancelPatientName");
+      if (cancelName) cancelName.value = nombre;
+      const cancelNhc = document.getElementById("cancelPatientNhc");
+      if (cancelNhc) cancelNhc.value = nhc;
+      const nursName = document.getElementById("nursingPatientName");
+      if (nursName) nursName.value = nombre;
+
+      if (urlParams.get('openChat') === '1' || urlParams.get('chat') === '1') {
+        setTimeout(() => toggleChatbot(true), 600);
+      }
+    }
+
+    /* 2. REPRODUCTOR DE VÍDEO */
+    function seekVideo(seconds) {
+      const vid = document.getElementById("petVideo");
+      if (vid) {
+        vid.currentTime = seconds;
+        vid.play().catch(() => {});
+      }
+    }
+
+    /* 3. ASISTENTE CHATBOT VIRTUAL DE ENFERMERÍA (COLINA PARATIROIDES) */
+    function toggleChatbot(forceOpen) {
+      const win = document.getElementById("chatWindow");
+      if (!win) return;
+      if (forceOpen === true) {
+        win.classList.add("open");
+      } else if (forceOpen === false) {
+        win.classList.remove("open");
+      } else {
+        win.classList.toggle("open");
+      }
+    }
+
+    function openChatAndAsk(question) {
+      toggleChatbot(true);
+      const chatInput = document.getElementById("chatInput");
+      if (chatInput) {
+        chatInput.value = question;
+        handleSendChatMessage();
+      }
+    }
+
+    let isBotTyping = false;
+
+    function getPatientFirstName() {
+      const nameEl = document.getElementById("display-patient-name");
+      let fullName = (nameEl && nameEl.textContent) ? nameEl.textContent.trim() : "";
+      if (!fullName || fullName.includes("Cargando")) {
+        const urlParams = new URLSearchParams(window.location.search);
+        fullName = urlParams.get('nombre') || urlParams.get('name') || "";
+      }
+      const parts = fullName.split(/\s+/).filter(Boolean);
+      if (parts.length > 0 && !["cargando...", "paciente", "nhc"].includes(parts[0].toLowerCase())) {
+        return parts[0].charAt(0).toUpperCase() + parts[0].slice(1).toLowerCase();
+      }
+      return "";
+    }
+
+    async function handleSendChatMessage() {
+      if (typeof isBotTyping !== 'undefined' && isBotTyping) return;
+      const input = document.getElementById("chatInput");
+      const text = input ? input.value.trim() : "";
+      if (!text) return;
+
+      appendChatMessage(escapeHtml(text), "user");
+      if (input) input.value = "";
+      stopChatSpeechRecognition();
+
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (activeSpeakingBtn) {
+        activeSpeakingBtn.classList.remove("speaking");
+        activeSpeakingBtn.textContent = "🔊 Escuchar";
+        activeSpeakingBtn = null;
+      }
+
+      const typing = document.getElementById("chatTyping");
+      if (typing) typing.style.display = "flex";
+
+      chatConversationHistory.push({ role: "user", content: text });
+
+      // Filtro de alerta vital inmediata (061 / 112)
+      const qLow = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      if (qLow.includes("dolor de pecho") || qLow.includes("opresion") || qLow.includes("falta de aire") || qLow.includes("asfixia") || qLow.includes("desmayo") || qLow.includes("mareo intenso")) {
+        if (typing) typing.style.display = "none";
+        const emergencyResp = generateOrganicParatiroidesResponse(text);
+        typeBotMessage(emergencyResp.html || emergencyResp, emergencyResp.suggestions || []);
+        return;
+      }
+
+      let botHtml = "";
+      let botSuggestions = [];
+      let usedGemini = false;
+
+      try {
+        const askRes = await fetch("/api/chat/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            study_type: "F18_COLINA",
+            patient_name: typeof getPatientFirstName === 'function' ? getPatientFirstName() : "",
+            history: chatConversationHistory.map(h => ({ role: h.role, text: h.content })),
+            api_key: getLocalGeminiKey()
+          })
+        });
+
+        if (askRes.ok) {
+          const askData = await askRes.json();
+          if (askData.status === "success" && askData.answer) {
+            usedGemini = true;
+            botHtml = formatMarkdownToHtml(askData.answer);
+            botSuggestions = askData.suggestions || [];
+            const badgeEl = document.getElementById("chatEngineBadge");
+            if (badgeEl) {
+              badgeEl.textContent = "✨ Gemini IA";
+              badgeEl.className = "chat-engine-badge gemini";
+            }
+          }
+        }
+      } catch (err) {}
+
+      if (!usedGemini) {
+        const localResp = generateOrganicParatiroidesResponse(text);
+        botHtml = localResp.html || localResp;
+        botSuggestions = localResp.suggestions || [];
+      }
+
+      if (typing) typing.style.display = "none";
+      chatConversationHistory.push({ role: "model", content: botHtml });
+      typeBotMessage(botHtml, botSuggestions);
+    }
+
+    function appendChatMessage(htmlText, sender) {
+      const messagesContainer = document.getElementById("chatMessages");
+      if (!messagesContainer) return;
+
+      const div = document.createElement("div");
+      div.className = `chat-msg ${sender}`;
+      div.innerHTML = htmlText.replace(/\n/g, "<br>");
+      messagesContainer.appendChild(div);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    /* EFECTO DE ESCRITURA PROGRESIVA FLUIDA (TYPEWRITER STREAMING) */
+    function typeBotMessage(formattedHtml, suggestions = []) {
+      const messagesContainer = document.getElementById("chatMessages");
+      if (!messagesContainer) return;
+
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "chat-msg bot";
+
+      const contentSpan = document.createElement("span");
+      msgDiv.appendChild(contentSpan);
+      messagesContainer.appendChild(msgDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      // Tokenizar HTML preservando etiquetas completas o palabras y espacios
+      const tokens = formattedHtml.match(/(<[^>]+>|[^<>\s]+|\s+)/g) || [formattedHtml];
+
+      let i = 0;
+      let accumulated = "";
+      isBotTyping = true;
+
+      function step() {
+        const chunkSize = 2;
+        for (let c = 0; c < chunkSize && i < tokens.length; c++, i++) {
+          accumulated += tokens[i];
+        }
+        contentSpan.innerHTML = accumulated;
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        if (i < tokens.length) {
+          setTimeout(step, 20);
+        } else {
+          isBotTyping = false;
+          if (suggestions && suggestions.length > 0) {
+            const chipsDiv = document.createElement("div");
+            chipsDiv.className = "chat-suggestions";
+            suggestions.forEach(s => {
+              const chip = document.createElement("button");
+              chip.type = "button";
+              chip.className = "chat-suggestion-chip";
+              chip.innerHTML = s.label;
+              chip.onclick = () => {
+                if (isBotTyping) return;
+                openChatAndAsk(s.query);
+              };
+              chipsDiv.appendChild(chip);
+            });
+            msgDiv.appendChild(chipsDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          }
+        }
+      }
+
+      step();
+    }
+
+    /* 4. MOTOR CONVERSACIONAL ORGÁNICO: PET 18F-COLINA PARATIROIDES */
+    function generateOrganicParatiroidesResponse(query) {
+      const q = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const name = getPatientFirstName();
+      const salutation = name ? `, ${name}` : "";
+
+      const has = (...words) => words.some(w => q.includes(w));
+
+      // Intenciones
+      const isGreeting = has("hola", "buenos dias", "buenas tardes", "buenas", "que tal", "saludos", "ey");
+      const isThanks = has("gracias", "muchas gracias", "agradecid", "perfecto gracias", "vale gracias", "genial");
+      const isFear = has("miedo", "nervios", "panico", "angustia", "ansied", "asustad", "preocupad", "temor", "duda");
+      const isClaustro = has("claustro", "cerrad", "tunel", "tubo", "ahogo", "estrecho", "fobia");
+      const isPain = has("dolor", "duele", "aguja", "pinch", "via", "cateter", "molest");
+      const isCancel = has("cancelar", "anular", "aplazar", "cambiar cita", "no puedo asistir", "no puedo ir", "reprogramar");
+      const isHuman = has("humano", "telefono", "hablar con enfermera", "llamar", "personal sanitario", "contacto directo");
+
+      const isLugar = has("donde", "lugar", "hospital", "planta", "sala", "espera", "ubicacion", "llegar", "meixoeiro", "direccion", "como ir", "acceso", "piso");
+      const isAyuno = has("ayun", "comer", "comida", "desayun", "dieta", "hambre", "alimento", "ingerir");
+      const isAgua = has("agua", "beber", "liquido", "hidrat", "sed", "orinar", "pis");
+      const isMeds = has("calcio", "vitamina", "cinacalcet", "mimpara", "calcimimet", "pastilla", "medicacion", "farmaco", "tratamiento", "suspender", "tomar");
+      const isAnalitica = has("pth", "analitica", "analisis", "hormona", "sangre", "laboratorio");
+      const isCabeza = has("cabeza", "inmovil", "tragar", "saliva", "cuello", "quieto", "movimiento", "hablar", "deglutir", "sujecion", "soporte");
+      const isCirugia = has("cirugia", "operacion", "operad", "tiroides", "cicatriz", "extirp");
+      const isTiempos = has("duracion", "cuanto dura", "tiempo", "maquina", "espera", "reposo", "minuto", "tardo");
+      const isRadio = has("radioprotec", "embaraz", "nino", "contacto", "radiacion", "peligro", "aisl", "familia", "bebe");
+
+      // CASO 1: Agradecimiento
+      if (isThanks && !isAyuno && !isMeds && !isAnalitica && !isCabeza && !isLugar) {
+        return {
+          html: `¡De nada${salutation}! Me alegra haberte ayudado. Recuerda que en el Hospital Meixoeiro el equipo de Medicina Nuclear de Galaria cuidará de ti en cada instante. Si te surge cualquier otra duda antes de tu cita, vuelve a preguntarme cuando quieras.`,
+          suggestions: [
+            { label: "🍽️ Recordar ayuno", query: "¿Necesito ayuno para la prueba?" },
+            { label: "💊 Recordar medicación", query: "¿Debo tomar mi medicación habitual?" }
+          ]
+        };
+      }
+
+      // CASO 2: Saludo simple
+      if (isGreeting && !isAyuno && !isMeds && !isAnalitica && !isCabeza && !isLugar && !isRadio && !isFear && !isClaustro) {
+        return {
+          html: `¡Hola${salutation}! Qué alegría saludarte. Soy tu enfermero virtual para la prueba de <strong>PET 18F-Colina Paratiroides</strong> en el Hospital Meixoeiro.<br><br>Estoy aquí para resolver cualquier duda sobre tu preparación: <strong>no necesitas ayuno</strong>, <strong>no hay que suspender tu medicación</strong> y te explicaré cómo <strong>inmovilizamos cómodamente la cabeza en la máquina</strong>.<br><br>¿Qué te gustaría repasar primero?`,
+          suggestions: [
+            { label: "🍽️ ¿Se necesita ayuno?", query: "¿Necesito ayuno para la prueba de paratiroides?" },
+            { label: "💊 Medicación habitual", query: "¿Tengo que suspender alguna medicación habitual?" },
+            { label: "🎯 Inmovilización en máquina", query: "¿Cómo se inmoviliza la cabeza en la máquina?" }
+          ]
+        };
+      }
+
+      // CASO 3: Cancelación o aplazamiento
+      if (isCancel) {
+        return {
+          html: `Entendido${salutation}. Si surge algún imprevisto médico o personal y no puedes venir, te comprendemos plenamente.<br><br>El radiofármaco 18F-Fluorocolina se produce expresamente para cada paciente. Para registrar la cancelación y solicitar una nueva fecha, <strong>utiliza el formulario de cancelación</strong> que encontrarás más abajo en la página.`,
+          suggestions: [
+            { label: "⚠️ Abrir formulario de cancelación", query: "Quiero abrir el formulario de cancelación" },
+            { label: "📞 Contactar con el servicio", query: "Quiero hablar con enfermería" }
+          ]
+        };
+      }
+
+      // CASO 4: Contacto humano
+      if (isHuman) {
+        return {
+          html: `Por supuesto${salutation}. Si deseas una atención personalizada con el equipo asistencial o grabar una nota de voz con tu consulta, puedes abrir el formulario de enfermería en la pantalla y te contactaremos enseguida.`,
+          suggestions: [
+            { label: "📞 Abrir consulta de enfermería", query: "Quiero abrir la consulta de enfermería" },
+            { label: "📍 Ubicación del servicio", query: "¿Dónde está Medicina Nuclear en el Meixoeiro?" }
+          ]
+        };
+      }
+
+      // MÓDULOS DE CONOCIMIENTO CLÍNICO ORGÁNICO
+      const modules = [];
+      const suggestions = [];
+
+      // Módulo: Miedo y ansiedad
+      if (isFear) {
+        modules.push({
+          topic: "apoyo_emocional",
+          title: "Tranquilidad y Acompañamiento",
+          text: `Es completamente comprensible sentir respeto o inquietud${salutation}. Quiero asegurarte de que la prueba es indolora, segura y no invasiva. Los enfermeros y técnicos de Medicina Nuclear estaremos permanentemente a tu lado acompañándote en cada paso.`
+        });
+      }
+
+      // Módulo: Claustrofobia
+      if (isClaustro) {
+        modules.push({
+          topic: "claustrofobia",
+          title: "Espacio en el Escáner PET/CT",
+          text: `Si te preocupan los espacios cerrados, respira con tranquilidad: el equipo PET/CT <strong>no es un túnel cerrado</strong> ni angosto. Es un anillo ancho, corto y completamente abierto por ambos extremos, bien ventilado e iluminado. Tendrás un pulsador de aviso en la mano y nos comunicaremos continuamente por interfono.`
+        });
+      }
+
+      // Módulo: Dolor / Pinchazo
+      if (isPain) {
+        modules.push({
+          topic: "dolor",
+          title: "Canalización de la Vía Venosa",
+          text: `La prueba no duele en absoluto. Tan solo notarás un suave pinchazo con una aguja muy fina (tipo mariposa) para colocar una vía venosa por la que se administra el 18F-Fluorocolina. El radiofármaco no produce calor ni molestias.`
+        });
+      }
+
+      // Módulo: Ayuno (NO SE NECESITA AYUNO)
+      if (isAyuno) {
+        modules.push({
+          topic: "ayuno",
+          title: "Sin Ayuno Previo",
+          text: `<strong>No se necesita ayuno previo</strong>. Para la prueba de paratiroides puedes comer y realizar tus comidas habituales con total normalidad antes de acudir al hospital; no se requiere ninguna restricción dietética.`
+        });
+      }
+
+      // Módulo: Medicación (NO SUSPENDER MEDICACIÓN)
+      if (isMeds) {
+        modules.push({
+          topic: "medicacion",
+          title: "Mantener tu Medicación Habitual",
+          text: `<strong>No hay que suspender ninguna medicación</strong>. Debes continuar tomando todos tus medicamentos habituales (incluidos suplementos de calcio, vitamina D o fármacos para la paratiroides como cinacalcet) en su horario y dosis de siempre.`
+        });
+      }
+
+      // Módulo: Analítica (NO HAY QUE HACERSE ANALÍTICA)
+      if (isAnalitica) {
+        modules.push({
+          topic: "analitica",
+          title: "Sin Analítica Previa",
+          text: `<strong>No hay que realizarse ninguna analítica previa</strong>. No es necesario acudir con análisis de sangre ni aportar niveles hormonales o bioquímicos el día de la prueba.`
+        });
+      }
+
+      // Módulo: Inmovilización de la cabeza
+      if (isCabeza) {
+        modules.push({
+          topic: "inmovilizacion",
+          title: "Inmovilización de la Cabeza en la Máquina",
+          text: `<strong>En la máquina se te inmovilizará suavemente la cabeza</strong>: el equipo colocará un soporte anatómico y una sujeción acolchada muy confortable para que el cuello permanezca inmóvil. Debido al tamaño milimétrico de las glándulas paratiroides, esta inmovilización asegura imágenes de máxima nitidez. Te pediremos que estés relajado/a y <strong>evites tragar saliva de forma repetida o hablar</strong> durante los 15-20 minutos del escáner.`
+        });
+      }
+
+      // Módulo: Cirugías previas
+      if (isCirugia) {
+        modules.push({
+          topic: "cirugia",
+          title: "Cirugías Previas de Cuello / Tiroides",
+          text: `Si te han intervenido previamente del tiroides o de las paratiroides, avísanos en la entrevista clínica inicial. El PET con 18F-Colina es el estudio de referencia más preciso para localizar tejido paratiroideo residual o ectópico.`
+        });
+      }
+
+      // Módulo: Lugar y Acceso
+      if (isLugar) {
+        modules.push({
+          topic: "lugar",
+          title: "Ubicación en el Meixoeiro",
+          text: `La prueba se realiza en el <strong>Hospital do Meixoeiro</strong> (Vigo). Al entrar por el vestíbulo principal, baja en el ascensor a la <strong>Planta -1</strong> y sigue la <strong>línea azul del suelo</strong> hacia Medicina Nuclear / PET-TC. Llega con <strong>15 minutos de antelación</strong>.`
+        });
+      }
+
+      // Módulo: Tiempos
+      if (isTiempos) {
+        modules.push({
+          topic: "tiempos",
+          title: "Tiempos del Estudio",
+          text: `La estancia total en el hospital es de aproximadamente <strong>1 hora y media a 2 horas</strong>. Primero se realiza la acogida y la inyección intravenosa. La captación en paratiroides es rápida y el escáner suele comenzar entre 10 y 20 minutos tras la inyección, tomando unos <strong>15 a 20 minutos</strong> en la camilla.`
+        });
+      }
+
+      // Módulo: Agua e Hidratación
+      if (isAgua) {
+        modules.push({
+          topic: "agua",
+          title: "Hidratación con Agua",
+          text: `Puedes beber agua con total normalidad antes y después de la prueba. Una buena hidratación favorece la eliminación urinaria del radiofármaco.`
+        });
+      }
+
+      // Módulo: Radioprotección
+      if (isRadio) {
+        modules.push({
+          topic: "radioproteccion",
+          title: "Protección Radiológica",
+          text: `Durante las <strong>6 a 8 horas posteriores</strong> a la prueba, evita el contacto estrecho y prolongado (< 1 metro) con <strong>mujeres embarazadas y niños menores de 12 años</strong>. Con adultos puedes hacer vida normal. Bebe agua para eliminar los restos del trazador por la orina y tira de la cadena dos veces.`
+        });
+      }
+
+      // CONSTRUCCIÓN ORGÁNICA CON CONECTORES
+      if (modules.length === 1) {
+        const m = modules[0];
+        let intro = (m.topic === "apoyo_emocional" || m.topic === "claustrofobia") ? `Te comprendo muy bien${salutation}. ` : `Por supuesto${salutation}, te lo explico con claridad: `;
+
+        if (m.topic !== "ayuno") suggestions.push({ label: "🍽️ ¿Hace falta ayuno?", query: "¿Necesito ayuno para la prueba?" });
+        if (m.topic !== "medicacion") suggestions.push({ label: "💊 Medicación habitual", query: "¿Debo tomar mi medicación habitual?" });
+        if (m.topic !== "inmovilizacion") suggestions.push({ label: "🎯 Inmovilización cabeza", query: "¿Cómo se inmoviliza la cabeza en la máquina?" });
+        if (m.topic !== "lugar") suggestions.push({ label: "📍 Hospital y planta", query: "¿Dónde está Medicina Nuclear en el Meixoeiro?" });
+
+        return {
+          html: `${intro}<strong>${m.title}</strong>:<br><br>${m.text}`,
+          suggestions: suggestions.slice(0, 3)
+        };
+      }
+
+      if (modules.length > 1) {
+        let multiHtml = `Con mucho gusto${salutation}. Te aclaro cada uno de estos aspectos para que acudas con plena tranquilidad:<br><br>`;
+
+        const connectors = [
+          "• En primer lugar, sobre",
+          "• Por otra parte, en cuanto a",
+          "• Asimismo, respecto a",
+          "• Y finalmente, en relación con"
+        ];
+
+        modules.forEach((mod, idx) => {
+          const conn = connectors[idx] || "• Además, sobre";
+          multiHtml += `${conn} <strong>${mod.title.toLowerCase()}</strong>: ${mod.text}<br><br>`;
+        });
+
+        multiHtml += `¿Te ha quedado claro o quieres que repasemos algún otro detalle de la prueba?`;
+
+        const covered = modules.map(m => m.topic);
+        if (!covered.includes("ayuno")) suggestions.push({ label: "🍽️ Sin ayuno previo", query: "¿Necesito ayuno para la prueba?" });
+        if (!covered.includes("medicacion")) suggestions.push({ label: "💊 Mantener medicación", query: "¿Debo tomar mi medicación habitual?" });
+        if (!covered.includes("inmovilizacion")) suggestions.push({ label: "🎯 Inmovilización en máquina", query: "¿Cómo se inmoviliza la cabeza en la máquina?" });
+        if (!covered.includes("lugar")) suggestions.push({ label: "📍 Hospital y planta", query: "¿Dónde está Medicina Nuclear en el Meixoeiro?" });
+
+        return {
+          html: multiHtml,
+          suggestions: suggestions.slice(0, 3)
+        };
+      }
+
+      // CASO: PREGUNTA NO RECONOCIDA / DUDA ESPECÍFICA NO PROTOCOLIZADA
+      const cleanDuda = query.replace(/"/g, '&quot;').replace(/'/g, "\\'");
+      return {
+        html: `No dispongo de una respuesta clínica protocolizada exacta para esa consulta específica${salutation}.<br><br>` +
+              `Para garantizar tu seguridad y atender tu situación particular con el máximo rigor clínico, <strong>lo más recomendable es enviar tu duda directamente al equipo de Enfermería de Medicina Nuclear</strong> o grabarles una nota de voz:<br><br>` +
+              `<div style="background: #f0fdfa; border: 1.5px dashed var(--colina-teal); border-radius: 12px; padding: 14px; text-align: center; margin: 10px 0 6px;">` +
+              `<p style="font-size: 0.84rem; color: #0f766e; margin: 0 0 10px; font-weight: 700;">¿Quieres enviar esta duda al equipo de enfermería?</p>` +
+              `<button type="button" onclick="transferirDudaAEnfermeria('${cleanDuda}')" style="background: linear-gradient(135deg, var(--colina-teal) 0%, var(--sergas-navy) 100%); color: #ffffff; border: none; padding: 10px 20px; border-radius: 24px; font-size: 0.86rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.28); font-family: inherit;">` +
+              `📞 Enviar esta duda a Enfermería` +
+              `</button>` +
+              `<div style="font-size: 0.75rem; color: #64748b; margin-top: 7px;">Cargaremos tu pregunta en el formulario y te llamaremos por teléfono</div>` +
+              `</div>`,
+        suggestions: [
+          { label: "📞 Enviar duda a Enfermería", query: "Quiero enviar mi duda a enfermería" },
+          { label: "🎙️ Grabar nota de voz", query: "Quiero grabar una nota de voz para enfermería" },
+          { label: "🍽️ ¿Se necesita ayuno?", query: "¿Necesito ayuno para la prueba de paratiroides?" },
+          { label: "💊 Medicación habitual", query: "¿Tengo que suspender alguna medicación habitual?" }
+        ]
+      };
+    }
+
+    /* 4. MODAL DE CONSULTA DIRECTA Y GRABADORA DE VOZ */
+    function transferirDudaAEnfermeria(dudaText) {
+      abrirModalConsultaEnfermeria();
+      const queryField = document.getElementById("nursingPatientQuery");
+      if (queryField && dudaText && dudaText.trim() && !dudaText.includes("Quiero enviar mi duda")) {
+        queryField.value = dudaText.trim();
+      }
+      setTimeout(() => {
+        const phone = document.getElementById("nursingPatientPhone");
+        if (phone && !phone.value) phone.focus();
+      }, 250);
+    }
+
+    function abrirModalConsultaEnfermeria() {
+      const modal = document.getElementById("nursingModal");
+      if (modal) modal.classList.add("open");
+    }
+
+    function cerrarModalConsultaEnfermeria() {
+      const modal = document.getElementById("nursingModal");
+      if (modal) modal.classList.remove("open");
+    }
+
+    let isRecording = false;
+    let mediaRecorder = null;
+    let audioChunks = [];
+
+    function toggleAudioRecording() {
+      const btn = document.getElementById("micBtn");
+      const status = document.getElementById("micStatusText");
+
+      if (!isRecording) {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert("Tu navegador no soporta grabación directa de audio. Puedes escribir tu duda en el campo de texto.");
+          return;
+        }
+
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = event => {
+            audioChunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            status.textContent = "✅ Nota de voz grabada correctamente (lista para enviar)";
+            status.style.color = "#0f766e";
+            status.style.fontWeight = "700";
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          btn.classList.add("recording");
+          status.textContent = "🔴 Grabando tu mensaje de voz... Pulsa de nuevo para finalizar.";
+          status.style.color = "#b91c1c";
+        }).catch(err => {
+          alert("Permiso de micrófono no concedido. Por favor escribe tu duda en el cuadro de texto.");
+        });
+      } else {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+        isRecording = false;
+        btn.classList.remove("recording");
+      }
+    }
+
+    function enviarConsultaEnfermeria() {
+      const name = document.getElementById("nursingPatientName").value;
+      const phone = document.getElementById("nursingPatientPhone").value;
+      const query = document.getElementById("nursingPatientQuery").value;
+
+      alert(`✅ ¡Consulta registrada con éxito!\n\nEstimado/a ${name}, el equipo de Enfermería de Medicina Nuclear (PET 18F-Colina Paratiroides) ha recibido tu consulta telefónica (${phone}). Nos pondremos en contacto contigo a la mayor brevedad.`);
+      cerrarModalConsultaEnfermeria();
+    }
+
+    /* 5. CANCELACIÓN Y DESPLEGABLE */
+    function toggleCancelAccordion(forceOpen) {
+      const content = document.getElementById("cancelAccordionContent");
+      if (!content) return;
+      if (forceOpen === true) {
+        content.classList.add("open");
+        content.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        content.classList.toggle("open");
+      }
+    }
+
+    function triggerModalConfirmation() {
+      const name = document.getElementById("cancelPatientName").value;
+      const nhc = document.getElementById("cancelPatientNhc").value;
+      const reason = document.getElementById("cancelReason").value;
+
+      if (!confirm(`¿Confirmas la solicitud de aplazamiento o cancelación para la prueba PET 18F-Colina Paratiroides de ${name} (${nhc})?\n\nMotivo: ${reason}\n\nSe notificará de inmediato al Servicio de Medicina Nuclear del Hospital Meixoeiro para reasignar la dosis.`)) {
+        return;
+      }
+
+      alert(`✅ Notificación cursada correctamente.\n\nLa unidad de Gestión de Citas PET de Medicina Nuclear ha recibido el aviso para el paciente ${name} (${nhc}). Te llamaremos por teléfono para ofrecerte una nueva fecha.`);
+      document.getElementById("cancellationForm").reset();
+      toggleCancelAccordion(false);
+    }
+  
+
+    /* ==========================================================================
+       GESTIÓN DE VOZ (SPEECH) Y GEMINI IA - ASISTENTE INTEGRADO SERGAS
+       ========================================================================== */
+    var chatConversationHistory = [];
+    var isVoiceAutoPlay = localStorage.getItem("pet_chat_voice") === "true";
+    var isSpeechRecListening = false;
+    var speechRecognitionInstance = null;
+    var activeSpeakingBtn = null;
+
+    function getLocalGeminiKey() {
+      return (localStorage.getItem("gemini_api_key") || "").trim();
+    }
+
+    function toggleChatConfigModal(forceOpen) {
+      const modal = document.getElementById("geminiConfigModal");
+      if (!modal) return;
+      const show = forceOpen !== undefined ? forceOpen : (modal.style.display !== "flex" && !modal.classList.contains("active"));
+      if (show) {
+        modal.style.display = "flex";
+        modal.classList.add("active");
+        const inp = document.getElementById("geminiApiKeyInput");
+        if (inp) inp.value = getLocalGeminiKey();
+        checkGeminiStatus();
+      } else {
+        modal.style.display = "none";
+        modal.classList.remove("active");
+      }
+    }
+
+    function toggleShowApiKey() {
+      const inp = document.getElementById("geminiApiKeyInput");
+      if (!inp) return;
+      inp.type = inp.type === "password" ? "text" : "password";
+    }
+
+    async function checkGeminiStatus() {
+      const statusEl = document.getElementById("geminiKeyStatus");
+      const badgeEl = document.getElementById("chatEngineBadge");
+      let hasKey = false;
+      let modelName = "gemini-3.8-flash";
+
+      try {
+        const res = await fetch("/api/chat/config");
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg.has_key) {
+            hasKey = true;
+            modelName = cfg.model || modelName;
+          }
+        }
+      } catch (err) {}
+
+      if (!hasKey && getLocalGeminiKey()) {
+        hasKey = true;
+      }
+
+      if (hasKey) {
+        if (badgeEl) {
+          badgeEl.textContent = "✨ Gemini IA";
+          badgeEl.className = "chat-engine-badge gemini";
+        }
+        if (statusEl) {
+          statusEl.innerHTML = `🟢 <strong style="color:#059669;">Gemini IA Activo</strong> (${modelName}). El asistente comprende cualquier consulta en lenguaje natural con empatía clínica.`;
+        }
+      } else {
+        if (badgeEl) {
+          badgeEl.textContent = "🛡️ SERGAS";
+          badgeEl.className = "chat-engine-badge";
+        }
+        if (statusEl) {
+          statusEl.innerHTML = `🟡 <strong>Modo Local SERGAS</strong>: Operando con el motor clínico de protocolos hospitalarios. Introduce una clave para activar IA Generativa.`;
+        }
+      }
+    }
+
+    async function saveGeminiApiKey() {
+      const inp = document.getElementById("geminiApiKeyInput");
+      const keyVal = inp ? inp.value.trim() : "";
+      localStorage.setItem("gemini_api_key", keyVal);
+
+      try {
+        await fetch("/api/chat/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ gemini_api_key: keyVal })
+        });
+      } catch (err) {}
+
+      checkGeminiStatus();
+      setTimeout(() => toggleChatConfigModal(false), 350);
+    }
+
+    /* RECONOCIMIENTO DE VOZ POR MICRÓFONO (SPEECH-TO-TEXT) */
+    function initChatSpeechRecognition() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        const mic = document.getElementById("chatMicBtn");
+        if (mic) {
+          mic.title = "Reconocimiento de voz no soportado por este navegador (recomendado Chrome o Edge)";
+          mic.style.opacity = "0.5";
+        }
+        return null;
+      }
+
+      const rec = new SpeechRec();
+      rec.lang = "es-ES";
+      rec.continuous = false;
+      rec.interimResults = true;
+
+      rec.onstart = () => {
+        isSpeechRecListening = true;
+        const mic = document.getElementById("chatMicBtn");
+        const inp = document.getElementById("chatInput");
+        if (mic) mic.classList.add("listening");
+        if (inp) {
+          inp.classList.add("recording-active");
+          inp.placeholder = "🎙️ Escuchando... Di tu duda con claridad...";
+        }
+      };
+
+      rec.onresult = (evt) => {
+        let transcript = "";
+        for (let i = evt.resultIndex; i < evt.results.length; ++i) {
+          transcript += evt.results[i][0].transcript;
+        }
+        const inp = document.getElementById("chatInput");
+        if (inp) inp.value = transcript;
+      };
+
+      rec.onerror = (evt) => {
+        console.warn("Reconocimiento de voz:", evt.error);
+        stopChatSpeechRecognition();
+      };
+
+      rec.onend = () => {
+        stopChatSpeechRecognition();
+        const inp = document.getElementById("chatInput");
+        if (inp && inp.value.trim().length > 2) {
+          setTimeout(() => {
+            if (inp.value.trim().length > 2) {
+              if (typeof handleSendChatMessage === "function") {
+                handleSendChatMessage();
+              } else if (typeof handleUserMessageSubmit === "function") {
+                const fakeEvt = new Event("submit", { cancelable: true });
+                handleUserMessageSubmit(fakeEvt);
+              } else if (typeof processUserMessage === "function") {
+                const val = inp.value.trim();
+                inp.value = "";
+                processUserMessage(val);
+              }
+            }
+          }, 450);
+        }
+      };
+
+      return rec;
+    }
+
+    function toggleChatSpeechRecognition() {
+      if (!speechRecognitionInstance) {
+        speechRecognitionInstance = initChatSpeechRecognition();
+      }
+      if (!speechRecognitionInstance) {
+        alert("Tu navegador no admite reconocimiento de voz nativo. Te recomendamos usar Google Chrome o Microsoft Edge.");
+        return;
+      }
+
+      if (isSpeechRecListening) {
+        speechRecognitionInstance.stop();
+        stopChatSpeechRecognition();
+      } else {
+        try {
+          if (window.speechSynthesis) window.speechSynthesis.cancel();
+          speechRecognitionInstance.start();
+        } catch (err) {
+          console.warn(err);
+          stopChatSpeechRecognition();
+        }
+      }
+    }
+
+    function toggleSpeechRecognition() {
+      toggleChatSpeechRecognition();
+    }
+
+    function stopChatSpeechRecognition() {
+      isSpeechRecListening = false;
+      const mic = document.getElementById("chatMicBtn");
+      const inp = document.getElementById("chatInput");
+      if (mic) mic.classList.remove("listening");
+      if (inp) {
+        inp.classList.remove("recording-active");
+        inp.placeholder = "Escribe o pulsa el micrófono para hablar...";
+      }
+    }
+
+    function stopSpeechRecognition() {
+      stopChatSpeechRecognition();
+    }
+
+    /* SÍNTESIS DE VOZ Y LECTURA EN VOZ ALTA (TEXT-TO-SPEECH) */
+    function updateVoiceToggleUI() {
+      const btn = document.getElementById("chatVoiceToggle");
+      if (!btn) return;
+      if (isVoiceAutoPlay) {
+        btn.textContent = "🔊";
+        btn.classList.add("active");
+        btn.title = "Lectura en voz alta: ACTIVADA (Pulsa para silenciar)";
+      } else {
+        btn.textContent = "🔇";
+        btn.classList.remove("active");
+        btn.title = "Lectura en voz alta: DESACTIVADA (Pulsa para activar)";
+      }
+    }
+
+    function toggleChatAutoVoice() {
+      isVoiceAutoPlay = !isVoiceAutoPlay;
+      localStorage.setItem("pet_chat_voice", isVoiceAutoPlay ? "true" : "false");
+      updateVoiceToggleUI();
+      if (!isVoiceAutoPlay && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        if (activeSpeakingBtn) {
+          activeSpeakingBtn.classList.remove("speaking");
+          activeSpeakingBtn.textContent = "🔊 Escuchar";
+          activeSpeakingBtn = null;
+        }
+      }
+    }
+
+    function cleanHtmlForSpeech(html) {
+      if (!html) return "";
+      let text = html.replace(/<[^>]+>/g, " ");
+      text = text.replace(/18F-FDG/gi, "flúor 18 efe de ge")
+                 .replace(/FDG/gi, "efe de ge")
+                 .replace(/18F-Colina/gi, "flúor 18 colina")
+                 .replace(/18F-PSMA/gi, "flúor 18 pe ese eme a")
+                 .replace(/68Ga/gi, "galio 68")
+                 .replace(/⁶⁸Ga/gi, "galio 68")
+                 .replace(/DOTATOC/gi, "dotatoc")
+                 .replace(/PSMA/gi, "pe ese eme a")
+                 .replace(/PET\/CT/gi, "pet tac")
+                 .replace(/PET-CT/gi, "pet tac")
+                 .replace(/PET/gi, "pet")
+                 .replace(/mg\/dL/gi, "miligramos por decilitro")
+                 .replace(/UI\/kg/gi, "unidades internacionales por kilo")
+                 .replace(/\bmin\b/gi, "minutos")
+                 .replace(/\bh\b/gi, "horas")
+                 .replace(/Planta\s*-1/gi, "Planta menos uno")
+                 .replace(/[-*#•]/g, " ")
+                 .replace(/\s+/g, " ")
+                 .trim();
+      return text;
+    }
+
+    function speakMessageBubble(btn) {
+      if (!window.speechSynthesis) {
+        alert("Tu navegador no soporta síntesis de voz.");
+        return;
+      }
+
+      if (activeSpeakingBtn === btn && window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        btn.classList.remove("speaking");
+        btn.textContent = "🔊 Escuchar";
+        activeSpeakingBtn = null;
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      if (activeSpeakingBtn) {
+        activeSpeakingBtn.classList.remove("speaking");
+        activeSpeakingBtn.textContent = "🔊 Escuchar";
+      }
+
+      const bubble = btn.closest(".chat-msg.bot") || btn.closest(".message-bot") || btn.closest(".message") || btn.parentElement;
+      if (!bubble) return;
+
+      const clone = bubble.cloneNode(true);
+      const actions = clone.querySelectorAll(".chat-msg-actions, .chat-suggestions, .bot-author-tag, .bot-speak-btn");
+      actions.forEach(el => el.remove());
+
+      const plainText = cleanHtmlForSpeech(clone.innerHTML);
+      if (!plainText) return;
+
+      const utter = new SpeechSynthesisUtterance(plainText);
+      utter.lang = "es-ES";
+      utter.rate = 1.0;
+      utter.pitch = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const esVoice = voices.find(v => v.lang.startsWith("es-ES") || v.lang.startsWith("es"));
+      if (esVoice) utter.voice = esVoice;
+
+      activeSpeakingBtn = btn;
+      btn.classList.add("speaking");
+      btn.textContent = "⏹️ Detener";
+
+      utter.onend = () => {
+        btn.classList.remove("speaking");
+        btn.textContent = "🔊 Escuchar";
+        if (activeSpeakingBtn === btn) activeSpeakingBtn = null;
+      };
+
+      utter.onerror = () => {
+        btn.classList.remove("speaking");
+        btn.textContent = "🔊 Escuchar";
+        if (activeSpeakingBtn === btn) activeSpeakingBtn = null;
+      };
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    function formatMarkdownToHtml(md) {
+      if (!md) return "";
+      let html = md
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g, "<em>$1</em>")
+        .replace(/\n\s*•\s*(.*?)(?=\n|$)/g, "<br>• $1")
+        .replace(/\n\s*-\s*(.*?)(?=\n|$)/g, "<br>• $1")
+        .replace(/\n\s*\d+\.\s*(.*?)(?=\n|$)/g, "<br><strong>$1</strong>")
+        .replace(/\n{2,}/g, "<br><br>")
+        .replace(/\n/g, "<br>");
+      return html;
+    }
+
+    if (typeof escapeHtml !== "function") {
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+    }
+
+    if (typeof getPatientFirstName !== "function") {
+      function getPatientFirstName() {
+        const nameElem = document.getElementById("nursingPatientName") || document.getElementById("patientName") || document.getElementById("consultName");
+        let full = nameElem && nameElem.value ? nameElem.value.trim() : "";
+        if (!full) {
+          const urlParams = new URLSearchParams(window.location.search);
+          full = urlParams.get("paciente") || urlParams.get("nombre") || sessionStorage.getItem("pet_patient_name") || "";
+        }
+        if (!full) {
+          const titular = document.querySelector(".patient-badge-name") || document.querySelector(".header-user-name") || document.getElementById("display-patient-name");
+          if (titular) full = titular.textContent.trim();
+        }
+        if (!full) return "";
+        const first = full.split(/\s+/)[0];
+        return first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
+      }
+    }
+
+    // Inicialización automática de estado y voz
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        checkGeminiStatus();
+        updateVoiceToggleUI();
+      });
+    } else {
+      checkGeminiStatus();
+      updateVoiceToggleUI();
+    }
+
+  </script>
+
+  <!-- MODAL DE CONFIGURACIÓN DE IA GEMINI -->
+  <div class="modal-backdrop" id="geminiConfigModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(8,41,61,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99999;padding:1rem;box-sizing:border-box;">
+    <div class="modal-box" style="background:#ffffff;width:100%;max-width:460px;border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;box-sizing:border-box;border-top:4px solid #007eb4;font-family:inherit;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+        <h3 style="margin:0;font-size:1.1rem;font-weight:800;color:#004868;display:flex;align-items:center;gap:6px;">
+          <span>✨</span> Inteligencia Artificial Gemini
+        </h3>
+        <button type="button" onclick="toggleChatConfigModal(false)" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#64748b;">✕</button>
+      </div>
+      <p style="font-size:0.82rem;color:#64748b;margin-bottom:1rem;line-height:1.45;">
+        Conecta el modelo <strong>Google Gemini</strong> para comprensión total del lenguaje natural médico, empatía clínica y respuestas conversacionales adaptadas. Si no se introduce clave, el asistente utilizará el <strong>motor clínico offline SERGAS</strong>.
+      </p>
+      
+      <div style="margin-bottom:0.85rem;">
+        <label for="geminiApiKeyInput" style="display:block;font-size:0.82rem;font-weight:700;color:#004868;margin-bottom:0.35rem;">API Key de Google Gemini:</label>
+        <div style="position:relative;display:flex;align-items:center;">
+          <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." style="width:100%;padding:0.65rem 2.4rem 0.65rem 0.9rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.88rem;font-family:monospace;box-sizing:border-box;">
+          <button type="button" onclick="toggleShowApiKey()" style="position:absolute;right:8px;background:none;border:none;font-size:0.95rem;color:#64748b;cursor:pointer;" title="Mostrar u ocultar clave">👁️</button>
+        </div>
+        <div style="margin-top:6px;">
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size:0.76rem;color:#007eb4;text-decoration:none;font-weight:600;">🔗 Obtener clave gratuita en Google AI Studio (aistudio.google.com)</a>
+        </div>
+      </div>
+
+      <div id="geminiKeyStatus" style="font-size:0.78rem;padding:8px 12px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:1rem;line-height:1.4;color:#334155;">
+        Comprobando estado del motor...
+      </div>
+
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" onclick="toggleChatConfigModal(false)" style="background:#e2e8f0;color:#334155;border:none;font-size:0.85rem;padding:0.55rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;">Cerrar</button>
+        <button type="button" onclick="saveGeminiApiKey()" style="background:#007eb4;color:#ffffff;border:none;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:700;">Guardar y Activar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../pet_chat_human_stream.js"></script>
+</body>
+</html>

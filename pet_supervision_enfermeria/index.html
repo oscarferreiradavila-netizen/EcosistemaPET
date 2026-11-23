@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supervisión de Enfermería & Cuidados PET/CT | Galaria · SERGAS</title>
+  <meta name="description"
+    content="Consola Oficial de Supervisión de Enfermería y Cuidados de la Unidad PET/CT (Galaria · SERGAS): Monitor de boxes de reposo, eficacia de audioguías, calidad de venopunción, extravasaciones, puntualidad en camilla y absentismo.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261123_PLANILLA_05">
+</head>
+
+<body>
+
+  <!-- 1. BARRA INSTITUCIONAL SERGAS -->
+  <div class="sergas-top-bar">
+    <div class="sergas-top-inner">
+      <div class="sergas-top-left">
+        <span class="xunta-badge">XUNTA DE GALICIA</span>
+        <span>CONSELLERÍA DE SANIDADE · SERGAS · GALARIA</span>
+        <span style="opacity:0.65;">|</span>
+        <span style="color:#ccfbf1; font-weight:800;">MÓDULO 8 · SUPERVISIÓN DE ENFERMERÍA Y CUIDADOS</span>
+      </div>
+      <div class="sergas-top-links">
+        <a href="../index.html" class="top-nav-link">🏠 Portal Maestro</a>
+        <a href="../pet_peticion_medica/index.html" class="top-nav-link">🩺 1. Petición</a>
+        <a href="../pet_ct_triage/web_app/index.html" class="top-nav-link">📊 2. Triaje</a>
+        <a href="../pet_prep_page/enfermeria.html" class="top-nav-link">🏥 4. Enfermería Box</a>
+        <a href="../pet_consola_medica/index.html" class="top-nav-link">👨‍⚕️ 5. Consola Médica</a>
+        <a href="../pet_consola_tecnicos/index.html" class="top-nav-link">🔬 6. Técnicos TSID</a>
+        <a href="../pet_jefatura_servicio/index.html" class="top-nav-link">📈 7. Jefatura de Servicio</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CABECERA EJECUTIVA DE SUPERVISIÓN -->
+  <header class="nurse-header">
+    <div class="nurse-header-inner">
+      <div class="brand-group">
+        <img src="../galaria_logo.jpg" alt="Galaria SERGAS" class="brand-logo" onerror="this.style.display='none'">
+        <div class="brand-titles">
+          <h1>
+            <span>🩺 Consola de Supervisión de Enfermería & Cuidados PET/CT</span>
+            <span class="role-pill-nurse">Dirección de Cuidados</span>
+          </h1>
+          <p>Control Asistencial de Boxes de Reposo, Adherencia a Audioguías, Venopunción y Sincronización Camilla</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <select id="selectPeriodoNurse" class="period-select" onchange="window.supervisionApp.cambiarPeriodo(this.value)">
+          <option value="today" selected>⚡ Jornada Operativa Actual (En Tiempo Real)</option>
+          <option value="week">📅 Últimos 7 Días (Evolución Diaria)</option>
+          <option value="month">📅 Último Mes (Evolución Semanal)</option>
+          <option value="all">📅 Histórico Semestral</option>
+        </select>
+
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.abrirModalTurno()">
+          👥 Asignar Turno
+        </button>
+
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.abrirModalNuevoPedido()">
+          📦 Tramitar Pedido
+        </button>
+
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.abrirModalIncidenciaVenopuncion()">
+          💉 Incidencia Vía
+        </button>
+
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.sincronizarDatos()">
+          🔄 Sincronizar
+        </button>
+
+        <button type="button" class="btn-nurse btn-nurse-primary" onclick="window.supervisionApp.imprimirInformeCuidados()">
+          🖨️ Imprimir Memoria
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. CONTENEDOR PRINCIPAL -->
+  <main class="main-container">
+
+    <!-- 3.1. TARJETAS KPI DE SUPERVISIÓN DE ENFERMERÍA -->
+    <section class="kpi-nurse-grid">
+      <!-- KPI 2: Eficacia y Adherencia a las Audioguías -->
+      <article class="kpi-nurse-card" style="--kpi-color:#0d9488; --kpi-bg:#ccfbf1;"
+        onclick="window.supervisionApp.cambiarTab('audioguias')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Adherencia a Audioguías</span>
+          <div class="kpi-icon-badge">🎧</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiAdherenciaAudioguia" style="color:#0d9488;">85.4%</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiSuspensionesBadge">-87% susp.</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextAudioguias">Cancelación: 1.1% con audioguía vs 8.7% sin</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkNurseAudioguias"></div>
+      </article>
+
+      <!-- KPI 3: Paso en Hora a Camilla y Ventana EARL -->
+      <article class="kpi-nurse-card" style="--kpi-color:#0284c7; --kpi-bg:#e0f2fe;"
+        onclick="window.supervisionApp.cambiarTab('puntualidad')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Ventana EARL & Camilla</span>
+          <div class="kpi-icon-badge">⏱️</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiVentanaEarlPct" style="color:#0284c7;">93.1%</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiDesviacionCamillaBadge">±2.4 min</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextEarl">Intervalo 55-75 min post-inyección respetado</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkNurseEarl"></div>
+      </article>
+
+      <!-- KPI 4: Control de Vías Venosas y Extravasaciones -->
+      <article class="kpi-nurse-card" style="--kpi-color:#7c3aed; --kpi-bg:#f5f3ff;"
+        onclick="window.supervisionApp.cambiarTab('venopuncion')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Vías & Extravasaciones</span>
+          <div class="kpi-icon-badge">💉</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiTasaExtravasacion" style="color:#7c3aed;">0.3%</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiViasCorrectasBadge">99.7% correctas</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextVias">Calibre 20G/22G · Monitorización de punto punción</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkNurseExtravasacion"></div>
+      </article>
+
+      <!-- KPI 5: Absentismo (No-Shows) y Recitación Rápida en Box -->
+      <article class="kpi-nurse-card" style="--kpi-color:#d97706; --kpi-bg:#fffbeb;"
+        onclick="window.supervisionApp.cambiarTab('absentismo')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">No-Show & Recitación</span>
+          <div class="kpi-icon-badge">🔄</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiNoShowCount" style="color:#d97706;">2</span>
+          <span class="kpi-pill-rate badge-warn" id="kpiRecitadosCount">3 recitados</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextAbsentismo">Detección a 8:15h · Reasignación de dosis</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkNurseNoShow"></div>
+      </article>
+
+      <!-- KPI 6: Tiempo Door-to-Door de Permanencia Asistencial -->
+      <article class="kpi-nurse-card" style="--kpi-color:#be123c; --kpi-bg:#fff1f2;"
+        onclick="window.supervisionApp.cambiarTab('permanencia')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Tiempo Door-to-Door</span>
+          <div class="kpi-icon-badge">⏳</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-big-number" id="kpiDoorToDoorMin" style="color:#be123c;">112 min</span>
+          <span class="kpi-pill-rate badge-ok" id="kpiReposoBoxMin">58m en box</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextPermanencia">Acogida (14m) + Box (58m) + Camilla (18m) + Alta (22m)</span>
+        </div>
+        <div class="kpi-sparkline-wrap" id="sparkNursePermanencia"></div>
+      </article>
+    </section>
+
+    <!-- 3.2. BARRA DE PESTAÑAS DE SUPERVISIÓN DE ENFERMERÍA -->
+    <nav class="nurse-tabs-bar">
+      <button type="button" class="nurse-tab-btn active" data-tab="turnos"
+        onclick="window.supervisionApp.cambiarTab('turnos')">
+        <span>👥 Turnos y Planilla de Personal</span>
+        <span class="tab-count-badge" id="badgeTurnosPersonal">6 En Servicio</span>
+      </button>
+
+      <button type="button" class="nurse-tab-btn" data-tab="pedidos"
+        onclick="window.supervisionApp.cambiarTab('pedidos')">
+        <span>📦 Pedidos y Material Sanitario</span>
+        <span class="tab-count-badge" id="badgePedidosPendientes">2 En Curso</span>
+      </button>
+
+      <button type="button" class="nurse-tab-btn" data-tab="audioguias"
+        onclick="window.supervisionApp.cambiarTab('audioguias')">
+        <span>🎧 Audioguías & Preparación</span>
+        <span class="tab-count-badge" id="badgeAudioguiasAdh">85% Adherencia</span>
+      </button>
+
+      <button type="button" class="nurse-tab-btn" data-tab="puntualidad"
+        onclick="window.supervisionApp.cambiarTab('puntualidad')">
+        <span>⏱️ Paso a Camilla & EARL</span>
+        <span class="tab-count-badge" id="badgeVentanaEarl">93% En Ventana</span>
+      </button>
+
+      <button type="button" class="nurse-tab-btn" data-tab="venopuncion"
+        onclick="window.supervisionApp.cambiarTab('venopuncion')">
+        <span>💉 Vías & Extravasaciones</span>
+        <span class="tab-count-badge" id="badgeExtravasacion">0.3%</span>
+      </button>
+
+      <button type="button" class="nurse-tab-btn" data-tab="absentismo"
+        onclick="window.supervisionApp.cambiarTab('absentismo')">
+        <span>🔄 Absentismo & Recitación</span>
+        <span class="tab-count-badge" id="badgeAbsentismoRecitar">3 Huecos Salvos</span>
+      </button>
+
+      <button type="button" class="nurse-tab-btn" data-tab="informe_cuidados"
+        onclick="window.supervisionApp.cambiarTab('informe_cuidados')" style="border:1.5px solid var(--nurse-teal);">
+        <span>📑 Memoria de Cuidados</span>
+        <span class="tab-count-badge" style="background:var(--nurse-teal); color:#fff;">Oficial</span>
+      </button>
+    </nav>
+
+    <!-- ======================================================================
+         PESTAÑA 1: TURNOS Y CUADRANTE DE PERSONAL DE ENFERMERÍA & TSID
+         ====================================================================== -->
+    <section id="tab-turnos" class="tab-panel active">
+      <!-- PLANILLA INTERACTIVA DE PERSONAL (TÉCNICOS, ENFERMEROS, CELADORES, TCAE) -->
+      <div class="panel-card" style="margin-bottom:1.25rem;">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>👥 Planilla Interactiva de Personal — Medicina Nuclear &amp; PET-CT</h2>
+            <p>Selecciona cualquier trabajador con un clic (o arrástralo directamente) para moverlo de un lado a otro y colocarlo en el turno correspondiente.</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;" class="no-print">
+            <label style="font-size:0.78rem; font-weight:800; color:#004868;">📅 Fecha:</label>
+            <input type="date" id="planillaFechaInput" class="period-select"
+              onchange="window.supervisionApp.setPlanillaFecha(this.value)">
+            <button type="button" class="btn-nurse btn-nurse-outline"
+              onclick="window.supervisionApp.setPlanillaFecha('hoy')">Hoy</button>
+            <button type="button" class="btn-nurse btn-nurse-outline"
+              onclick="window.supervisionApp.setPlanillaFecha('manana')">Mañana</button>
+            <button type="button" class="btn-nurse btn-nurse-primary"
+              onclick="window.print()">🖨️ Imprimir Planilla</button>
+            <button type="button" class="btn-nurse btn-nurse-outline" style="color:#b91c1c; border-color:#fecaca;"
+              onclick="window.supervisionApp.resetPlanillaDia()">🔄 Restablecer Día</button>
+          </div>
+        </div>
+
+        <div class="planilla-controls-row no-print">
+          <div class="planilla-subtabs">
+            <button type="button" class="planilla-cat-btn active" data-cat="enfermeros"
+              onclick="window.supervisionApp.setPlanillaCategoria('enfermeros')">
+              <span>🩺 Planilla Enfermeros/as</span>
+              <span class="planilla-cat-count" id="countPlanilla_enfermeros">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="tecnicos"
+              onclick="window.supervisionApp.setPlanillaCategoria('tecnicos')">
+              <span>☢️ Planilla Técnicos</span>
+              <span class="planilla-cat-count" id="countPlanilla_tecnicos">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="celadores"
+              onclick="window.supervisionApp.setPlanillaCategoria('celadores')">
+              <span>🏥 Planilla Celadores/as</span>
+              <span class="planilla-cat-count" id="countPlanilla_celadores">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="tcaes"
+              onclick="window.supervisionApp.setPlanillaCategoria('tcaes')">
+              <span>🧤 Planilla TCAEs</span>
+              <span class="planilla-cat-count" id="countPlanilla_tcaes">0</span>
+            </button>
+            <button type="button" class="planilla-cat-btn" data-cat="resumen"
+              onclick="window.supervisionApp.setPlanillaCategoria('resumen')"
+              style="border-color:#0284c7; color:#0369a1;">
+              <span>📊 Resumen 4 Planillas</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="planillaSelectionBar" class="planilla-selection-bar hidden no-print">
+          <span id="planillaSelectionText">👆 Trabajador seleccionado: — Haz clic en la columna de turno destino para moverlo.</span>
+          <button type="button" class="btn-nurse btn-nurse-outline"
+            onclick="window.supervisionApp.selectPlanillaWorker(null)">✕ Cancelar selección</button>
+        </div>
+
+        <div id="planillaAddBar" class="planilla-add-bar no-print">
+          <span style="font-size:0.8rem; font-weight:800; color:#004868;">➕ Añadir trabajador a esta planilla:</span>
+          <input type="text" id="inputNuevoTrabajadorNombre" class="period-select" style="min-width:220px; background:#fff;"
+            placeholder="Nombre y Apellidos...">
+          <select id="selectNuevoTrabajadorArea" class="period-select" style="background:#fff;">
+            <option value="PET-CT">🔵 Habitual: PET-CT</option>
+            <option value="Medicina Nuclear">🟢 Habitual: Medicina Nuclear</option>
+            <option value="Terapia Metabólica">🟠 Habitual: Terapia Metabólica</option>
+            <option value="Orense">🩷 Habitual: Orense</option>
+            <option value="Polivalente">🟣 Polivalente (MN + PET-CT + TM)</option>
+          </select>
+          <button type="button" class="btn-nurse btn-nurse-primary"
+            onclick="window.supervisionApp.agregarTrabajadorPlanilla()">+ Añadir a Plantilla</button>
+        </div>
+
+        <div id="planillaBoardContainer"></div>
+
+        <!-- Barra de Confirmación del Día -->
+        <div class="planilla-confirm-bar no-print">
+          <div style="font-size:0.84rem; color:#065f46; font-weight:700;">
+            📌 Cuando tengas colocados los turnos del día, pulsa <strong>Confirmar</strong> para registrarlos automáticamente en el calendario inferior.
+          </div>
+          <button type="button" class="btn-nurse btn-nurse-primary" style="background:#059669; border-color:#059669;"
+            onclick="window.supervisionApp.confirmarPlanillaDia()">
+            ✅ Confirmar Turnos del Día y Añadir al Calendario
+          </button>
+        </div>
+
+        <!-- Calendario Mensual de Registro de Quién Trabajó Cada Día -->
+        <div id="planillaCalendarContainer" class="planilla-calendar-card"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 2: PEDIDOS Y MATERIAL SANITARIO & RADIOFÁRMACOS
+         ====================================================================== -->
+    <section id="tab-pedidos" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📦 Gestión de Pedidos de Material Sanitario, Fungibles y Radiofármacos</h2>
+            <p>Pedidos diferenciados de material <strong>GALARIA</strong> y <strong>SERGAS (LOGAS)</strong> con calculadora exacta de fungibles por prueba y día</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+            <button type="button" class="btn-nurse btn-nurse-primary" style="background:#007eb4; border-color:#007eb4;"
+              onclick="window.supervisionApp.abrirModalNuevoPedido('GALARIA')">
+              🔵 + Pedido GALARIA
+            </button>
+            <button type="button" class="btn-nurse btn-nurse-primary" style="background:#059669; border-color:#059669;"
+              onclick="window.supervisionApp.abrirModalNuevoPedido('SERGAS')">
+              🟢 + Pedido SERGAS
+            </button>
+            <a href="https://logas.sergas.es/" target="_blank" rel="noopener noreferrer"
+              class="btn-nurse btn-nurse-outline"
+              style="text-decoration:none; border-color:#059669; color:#047857; font-weight:800;">
+              🔗 Abrir LOGAS (SERGAS)
+            </a>
+          </div>
+        </div>
+
+        <!-- Tarjetas resumen de inventario y pedidos -->
+        <div class="orders-summary-grid">
+          <div class="orders-summary-card">
+            <div class="shift-card-top">
+              <span class="shift-card-title">Fungibles Críticos en Stock</span>
+              <span class="status-badge badge-ok">Stock Óptimo</span>
+            </div>
+            <div class="shift-card-val" style="color:#059669;">
+              145 Catéteres 20G/22G
+            </div>
+            <div class="shift-card-meta">
+              80 uds Suero Salino 0.9% (100 mL) · 95 Apósitos Plomados
+            </div>
+          </div>
+
+          <div class="orders-summary-card">
+            <div class="shift-card-top">
+              <span class="shift-card-title">Radiofármacos del Día (Ciclotrón)</span>
+              <span class="status-badge badge-ok">28 Dosis 18F-FDG</span>
+            </div>
+            <div class="shift-card-val" style="color:var(--sergas-navy);">
+              35 Dosis Recibidas
+            </div>
+            <div class="shift-card-meta">
+              28 FDG + 4 PSMA (68Ga) + 3 Fluorcolina (18F) suministradas en hora
+            </div>
+          </div>
+
+          <div class="orders-summary-card">
+            <div class="shift-card-top">
+              <span class="shift-card-title">Pedidos Activos en Curso</span>
+              <span class="status-badge badge-warn" id="statPedidosActivosBadge">2 En Tránsito</span>
+            </div>
+            <div class="shift-card-val" style="color:#d97706;">
+              2 Pedidos
+            </div>
+            <div class="shift-card-meta">
+              Farmacia Hospitalaria (Contraste iodado) y Almacén General SERGAS
+            </div>
+          </div>
+
+          <div class="orders-summary-card">
+            <div class="shift-card-top">
+              <span class="shift-card-title">Garantía Asistencial</span>
+              <span class="status-badge badge-ok">100% Sin Roturas</span>
+            </div>
+            <div class="shift-card-val" style="color:var(--nurse-teal-dark);">
+              0 Roturas de Stock
+            </div>
+            <div class="shift-card-meta">
+              Disponibilidad inmediata para rescate glucémico y vías venosas difíciles
+            </div>
+          </div>
+        </div>
+
+        <!-- CALCULADORA Y MENÚ DE FUNGIBLES POR TIPO DE PRUEBA (POR PACIENTE / POR TURNO) -->
+        <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:1rem 1.15rem; margin-bottom:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
+            <div>
+              <h3 style="font-family:'Outfit',sans-serif; font-size:1rem; color:#004868; margin:0;">
+                🧮 Menú de Fungibles por Tipo de Prueba (Por Paciente o Por Turno)
+              </h3>
+              <p style="font-size:0.77rem; color:#475569; margin:2px 0 0 0;">
+                Elige el tipo de prueba, configura qué material usa (ej: <strong>Equipo Intego por turno</strong>, <strong>PAS por paciente</strong>) y calcula el pedido exacto.
+              </p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+              <button type="button" class="btn-nurse btn-nurse-primary" style="background:#007eb4; border-color:#007eb4; font-size:0.8rem;"
+                onclick="window.supervisionApp.generarPedidoDesdeCalculadora('GALARIA')">
+                🔵 Generar Pedido GALARIA
+              </button>
+              <button type="button" class="btn-nurse btn-nurse-primary" style="background:#059669; border-color:#059669; font-size:0.8rem;"
+                onclick="window.supervisionApp.generarPedidoDesdeCalculadora('SERGAS')">
+                🟢 Generar Pedido SERGAS (y Copiar para LOGAS)
+              </button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(165px, 1fr)); gap:0.75rem; margin-bottom:0.9rem;">
+            <div style="grid-column: span 2;">
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">🧪 Tipo de Prueba:</label>
+              <select id="selectTipoPruebaFungible" class="period-select" style="width:100%; background:#fff; font-weight:700;"
+                onchange="window.supervisionApp.onCambioTipoPruebaFungible(this.value)">
+                <option value="fdg">18F-FDG (Oncológico / Neuro / Vasculitis)</option>
+                <option value="fdg_contraste">18F-FDG + Contraste IV</option>
+                <option value="fdg_endocarditis">18F-FDG Endocarditis (HEP)</option>
+                <option value="psma">68Ga-PSMA / 18F-PSMA</option>
+                <option value="colina">18F-Fluorcolina (Próstata / Paratiroides)</option>
+                <option value="dotatoc">68Ga-DOTATOC (Neuroendocrinos)</option>
+                <option value="mn_conv">Medicina Nuclear Convencional (Gammagrafía / SPECT)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">👤 Pacientes / día:</label>
+              <input type="number" id="calcPacientesDia" class="period-select" style="width:100%; background:#fff;" value="20" min="0"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">⏱️ Turnos / día:</label>
+              <input type="number" id="calcTurnosDia" class="period-select" style="width:100%; background:#fff;" value="2" min="0"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">📅 Días a cubrir:</label>
+              <input type="number" id="calcDiasPedido" class="period-select" style="width:100%; background:#fff;" value="5" min="1"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">🛡️ Margen (%):</label>
+              <input type="number" id="calcMargenPct" class="period-select" style="width:100%; background:#fff;" value="10" min="0" max="50"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+          </div>
+
+          <!-- Añadir nuevo fungible a esta prueba -->
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem; padding:0.65rem 0.85rem; background:#ffffff; border:1px dashed #94a3b8; border-radius:10px; margin-bottom:0.9rem;" class="no-print">
+            <span style="font-size:0.78rem; font-weight:800; color:#004868;">➕ Añadir material a esta prueba:</span>
+            <input type="text" id="inputNuevoFungibleNombre" class="period-select" style="min-width:210px; background:#fff;" placeholder="Ej: Equipo Intego, PAS, Aguja...">
+            <select id="selectNuevoFungibleAlcance" class="period-select" style="background:#fff;">
+              <option value="paciente">👤 Por Paciente</option>
+              <option value="turno">⏱️ Por Turno</option>
+            </select>
+            <input type="number" id="inputNuevoFungibleRatio" class="period-select" style="width:75px; background:#fff;" value="1" step="0.5" min="0.5" title="Cantidad">
+            <select id="selectNuevoFungibleCanal" class="period-select" style="background:#fff;">
+              <option value="GALARIA">🔵 GALARIA</option>
+              <option value="SERGAS">🟢 SERGAS (LOGAS)</option>
+            </select>
+            <button type="button" class="btn-nurse btn-nurse-primary" style="font-size:0.78rem; padding:0.45rem 0.85rem;"
+              onclick="window.supervisionApp.agregarFungibleAPrueba()">+ Añadir</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="nurse-table">
+              <thead>
+                <tr>
+                  <th>Material / Fungible</th>
+                  <th>Aplicación (Paciente / Turno)</th>
+                  <th>Cantidad</th>
+                  <th>Canal de Pedido</th>
+                  <th>Consumo 1 Día</th>
+                  <th id="thCalcTotalDias">Total 5 Días (+10%)</th>
+                  <th class="no-print">Quitar</th>
+                </tr>
+              </thead>
+              <tbody id="tablaCalculoFungiblesBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLA 1: PEDIDOS MATERIAL GALARIA -->
+        <div style="margin-bottom:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:6px;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.96rem; color:#0369a1; margin:0;">
+              🔵 Pedidos de Material GALARIA (PET-CT / Radiofarmacia / Blindajes)
+            </h3>
+            <button type="button" class="btn-nurse btn-nurse-outline no-print" style="font-size:0.76rem; padding:4px 10px;"
+              onclick="window.supervisionApp.abrirModalNuevoPedido('GALARIA')">➕ Añadir a Galaria</button>
+          </div>
+          <div class="table-responsive">
+            <table class="nurse-table">
+              <thead>
+                <tr>
+                  <th>Código Pedido</th>
+                  <th>Categoría Material</th>
+                  <th>Descripción / Artículo</th>
+                  <th>Proveedor / Origen</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Pedido / Entrega</th>
+                  <th>Estado</th>
+                  <th>Supervisión / Firma</th>
+                  <th class="no-print">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaPedidosGalariaBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLA 2: PEDIDOS MATERIAL SERGAS (CON ENLACE A LOGAS) -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:6px;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.96rem; color:#047857; margin:0;">
+              🟢 Pedidos de Material SERGAS (Almacén General / LOGAS)
+            </h3>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;" class="no-print">
+              <a href="https://logas.sergas.es/" target="_blank" rel="noopener noreferrer"
+                class="btn-nurse btn-nurse-outline" style="text-decoration:none; font-size:0.76rem; padding:4px 10px; border-color:#059669; color:#047857; font-weight:800;">
+                🔗 Ir a LOGAS SERGAS
+              </a>
+              <button type="button" class="btn-nurse btn-nurse-outline" style="font-size:0.76rem; padding:4px 10px;"
+                onclick="window.supervisionApp.abrirModalNuevoPedido('SERGAS')">➕ Añadir a SERGAS</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="nurse-table">
+              <thead>
+                <tr>
+                  <th>Código Pedido</th>
+                  <th>Categoría Material</th>
+                  <th>Descripción / Artículo</th>
+                  <th>Proveedor / Origen</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Pedido / Entrega</th>
+                  <th>Estado</th>
+                  <th>Supervisión / Firma</th>
+                  <th class="no-print">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaPedidosSergasBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 3: EFICACIA DE LAS AUDIOGUÍAS Y PREPARACIÓN PREVIA
+         ====================================================================== -->
+    <section id="tab-audioguias" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🎧 Eficacia Preventiva de las Audioguías Multimedia del Paciente</h2>
+            <p>Impacto clínico y humanizador: adherencia a instrucciones previas, reducción de cancelaciones en box y resolución de dudas antes de acudir</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok">Adherencia Global: 85.4%</span>
+            <span class="status-badge badge-ok">-87% Suspensiones</span>
+          </div>
+        </div>
+
+        <div class="dashboard-row-equal" style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.25rem;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              📊 Tasa de Cancelación en Box: Pacientes CON vs SIN Audioguía
+            </h3>
+            <div id="chartCancelacionAudioguia"></div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+              🍩 Desglose de Causas de Mala Preparación Detectadas en Box
+            </h3>
+            <div id="chartCausasMalPrepNurse"></div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="nurse-table">
+            <thead>
+              <tr>
+                <th>Protocolo de Audioguía</th>
+                <th>Pacientes Citados</th>
+                <th>Escucharon Audioguía</th>
+                <th>% Adherencia</th>
+                <th>Suspensiones con Audioguía</th>
+                <th>Suspensiones sin Audioguía</th>
+                <th>Efectividad Preventiva</th>
+              </tr>
+            </thead>
+            <tbody id="tablaAudioguiasEficaciaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 4: PASO EN HORA A CAMILLA Y VENTANA EARL
+         ====================================================================== -->
+    <section id="tab-puntualidad" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>⏱️ Puntualidad de Paso a Camilla y Cumplimiento de la Ventana EARL (55 - 75 min)</h2>
+            <p>Sincronización milimétrica entre la inyección en box y el tomógrafo PET/CT para asegurar reproducibilidad cuantitativa del SUV</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-ok">93.1% Cumplimiento EARL</span>
+            <span class="status-badge badge-ok">Desviación Media: ±2.4 min</span>
+          </div>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.1rem; margin-bottom:1.25rem;">
+          <h3 style="font-family:'Outfit',sans-serif; font-size:0.95rem; color:#004868; margin-bottom:0.5rem;">
+            📈 Intervalo Minutos Post-Inyección vs Ventana Óptima EARL (EANM)
+          </h3>
+          <div id="chartVentanaEarlNurse"></div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="nurse-table">
+            <thead>
+              <tr>
+                <th>Paciente / NHC</th>
+                <th>Box</th>
+                <th>Radiofármaco</th>
+                <th>Hora Inyección</th>
+                <th>Hora Prevista Paso (+60m)</th>
+                <th>Hora Real Paso</th>
+                <th>Desviación (Δ min)</th>
+                <th>Estado Ventana EARL</th>
+                <th>Técnico TSID Asignado</th>
+              </tr>
+            </thead>
+            <tbody id="tablaPasoCamillaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 5: CALIDAD DE VENOPUNCIÓN Y EXTRAVASACIONES
+         ====================================================================== -->
+    <section id="tab-venopuncion" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>💉 Control de Calidad de Vías Venosas y Prevención de Extravasaciones Paravenosas</h2>
+            <p>Auditoría de calibre, selección anatómica del brazo punzado y registro dosimétrico de incidencias en administración</p>
+          </div>
+          <button type="button" class="btn-nurse btn-nurse-outline no-print" onclick="window.supervisionApp.abrirModalIncidenciaVenopuncion()">
+            ➕ Registrar Incidencia de Vía
+          </button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:1rem; margin-bottom:1.25rem;">
+          <div style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#6d28d9; text-transform:uppercase;">Tasa de Extravasación</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#7c3aed;">0.3%</div>
+            <div style="font-size:0.73rem; color:#64748b;">Excelente estándar internacional (&lt;1%)</div>
+          </div>
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#047857; text-transform:uppercase;">Calibre Preferente 20G</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#059669;">84.2%</div>
+            <div style="font-size:0.73rem; color:#64748b;">Flujo óptimo sin hemólisis</div>
+          </div>
+          <div style="background:#f0f9ff; border:1px solid #bae6fd; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#0369a1; text-transform:uppercase;">Brazo Contralateral</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#0284c7;">98.5%</div>
+            <div style="font-size:0.73rem; color:#64748b;">Evita falsos ganglios axilares positivos</div>
+          </div>
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:0.9rem 1.1rem;">
+            <div style="font-size:0.75rem; font-weight:700; color:#b45309; text-transform:uppercase;">Incidencias Registradas</div>
+            <div style="font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:#d97706;" id="statTotalIncidenciasVias">1</div>
+            <div style="font-size:0.73rem; color:#64748b;">100% notificadas en historia electrónica</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="nurse-table">
+            <thead>
+              <tr>
+                <th>Paciente / NHC</th>
+                <th>Fecha / Hora</th>
+                <th>Calibre Catéter</th>
+                <th>Lado y Localización</th>
+                <th>Tipo Incidencia</th>
+                <th>Grado Extravasación</th>
+                <th>Medidas Inmediatas de Enfermería</th>
+                <th>Impacto en Imagen</th>
+              </tr>
+            </thead>
+            <tbody id="tablaVenopuncionBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 6: ABSENTISMO, NO-SHOWS Y RECITACIÓN EN BOX
+         ====================================================================== -->
+    <section id="tab-absentismo" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>🔄 Protocolo de Absentismo Inmediato (No-Show) y Recuperación de Huecos Libres</h2>
+            <p>Protocolo activo a primera hora: llamada telefónica de enfermería, liberación de box y reasignación de dosis a pacientes en espera</p>
+          </div>
+          <div style="display:flex; gap:8px;" class="no-print">
+            <span class="status-badge badge-warn" id="statNoShowsRegistradosBadge">2 No-Shows</span>
+            <span class="status-badge badge-ok" id="statHuecosRecitadosBadge">3 Pacientes Recuperados</span>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="nurse-table">
+            <thead>
+              <tr>
+                <th>Paciente Ausente</th>
+                <th>Hora Cita</th>
+                <th>Radiofármaco Comprometido</th>
+                <th>Llamada de Enfermería</th>
+                <th>Causa Identificada</th>
+                <th>Acción de Recuperación</th>
+                <th>Paciente Reasignado / Box</th>
+                <th>Estado de la Dosis</th>
+              </tr>
+            </thead>
+            <tbody id="tablaAbsentismoBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PESTAÑA 7: INFORME OFICIAL DE SUPERVISIÓN DE CUIDADOS
+         ====================================================================== -->
+    <section id="tab-informe_cuidados" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>📑 Memoria Oficial de Supervisión de Cuidados y Calidad Asistencial</h2>
+            <p>Informe estructurado para la Dirección de Enfermería de Galaria y Servizo Galego de Saúde (SERGAS)</p>
+          </div>
+          <button type="button" class="btn-nurse btn-nurse-primary no-print" onclick="window.print()">
+            🖨️ Imprimir / Guardar en PDF
+          </button>
+        </div>
+
+        <div id="printReportContainer" style="background:#ffffff; padding:1.5rem; border:1px solid #cbd5e1; border-radius:12px;">
+          <!-- Generado dinámicamente con plantilla oficial SERGAS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: DUPLICAR TRABAJADOR PARA DOBLE TURNO / HORAS EXTRAS -->
+  <div id="modalDuplicarHorasExtras" class="nurse-modal-backdrop">
+    <div class="nurse-modal-box">
+      <div class="nurse-modal-header">
+        <h3>⏱️ Duplicar Trabajador — Doble Turno / Horas Extras</h3>
+        <button type="button" onclick="window.supervisionApp.cerrarModalDuplicarExtra()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="nurse-modal-body">
+        <div style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.7rem 0.9rem; font-size:0.84rem; color:#92400e;">
+            <strong>Profesional:</strong> <span id="lblWorkerDuplicarNombre">—</span>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Turno del Doble Turno / Hora Extra:</label>
+            <select id="selectTurnoDuplicarExtra" class="period-select" style="width:100%;"></select>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Horas que va a hacer (ej: 4h, 7h o 15:00-19:00):</label>
+            <input type="text" id="inputHorasExtras" class="period-select" style="width:100%;" placeholder="Ej: 4h (15:00-19:00)" value="7h">
+          </div>
+        </div>
+      </div>
+      <div class="nurse-modal-footer">
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cerrarModalDuplicarExtra()">Cancelar</button>
+        <button type="button" class="btn-nurse btn-nurse-primary" style="background:#d97706; border-color:#d97706;" onclick="window.supervisionApp.confirmarDuplicarExtra()">➕ Añadir Doble Turno</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: REGISTRAR INCIDENCIA DE VENOPUNCIÓN -->
+  <div id="modalIncidenciaVenopuncion" class="nurse-modal-backdrop">
+    <div class="nurse-modal-box">
+      <div class="nurse-modal-header">
+        <h3>💉 Registrar Calidad de Vía / Extravasación</h3>
+        <button type="button" onclick="window.supervisionApp.cerrarModalIncidenciaVenopuncion()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="nurse-modal-body">
+        <div style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Seleccionar Box / Paciente:</label>
+            <select id="selectBoxVenopuncion" class="period-select" style="width:100%;">
+              <option value="Box 1">Box 1 · Arturo Salgado Pérez (NHC-839104)</option>
+              <option value="Box 2">Box 2 · Rosa Otero Carballo (NHC-728192)</option>
+              <option value="Box 3">Box 3 · Manuel Castro Varela (NHC-481920)</option>
+              <option value="Box 4">Box 4 · Dolores Fraga Neira (NHC-910293)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Calibre y Localización:</label>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+              <select id="selectCalibreCateter" class="period-select">
+                <option value="20G (Rosa)">Catéter 20G (Rosa - Recomendado)</option>
+                <option value="22G (Azul)">Catéter 22G (Azul)</option>
+                <option value="18G (Verde)">Catéter 18G (Verde)</option>
+              </select>
+              <select id="selectLadoVenopuncion" class="period-select">
+                <option value="Antebrazo Izquierdo">Antebrazo Izquierdo</option>
+                <option value="Antebrazo Derecho">Antebrazo Derecho</option>
+                <option value="Fosa Antecubital Izquierda">Fosa Antecubital Izq.</option>
+                <option value="Fosa Antecubital Derecha">Fosa Antecubital Dcha.</option>
+                <option value="Dorso Mano">Dorso de Mano</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Tipo de Incidencia / Extravasación:</label>
+            <select id="selectTipoExtravasacion" class="period-select" style="width:100%;">
+              <option value="ninguna">Inyección Correcta (Sin extravasación detectable)</option>
+              <option value="leve">Extravasación Leve (&lt; 1% dosis estimada en tejido local)</option>
+              <option value="moderada">Extravasación Moderada (1% - 5% dosis estimada)</option>
+              <option value="grave">Extravasación Grave (&gt; 5% dosis - Requiere dosimetría de piel)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="nurse-modal-footer">
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cerrarModalIncidenciaVenopuncion()">Cancelar</button>
+        <button type="button" class="btn-nurse btn-nurse-primary" onclick="window.supervisionApp.guardarIncidenciaVenopuncion()">💾 Registrar Incidencia</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ASIGNAR / MODIFICAR TURNO DE PERSONAL -->
+  <div id="modalTurnoPersonal" class="nurse-modal-backdrop">
+    <div class="nurse-modal-box">
+      <div class="nurse-modal-header">
+        <h3>👥 Asignar Turno y Puesto Asistencial</h3>
+        <button type="button" onclick="window.supervisionApp.cerrarModalTurno()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="nurse-modal-body">
+        <div style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Nombre del Profesional:</label>
+            <input type="text" id="inputTurnoNombre" class="period-select" style="width:100%;" placeholder="Ej: Carmen Varela Dopico">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Categoría Profesional:</label>
+              <select id="selectTurnoCategoria" class="period-select" style="width:100%;">
+                <option value="DUE (Enfermero/a)">DUE (Enfermero/a Especialista)</option>
+                <option value="TSID (Técnico Sup. Imagen)">TSID (Técnico Tomógrafo)</option>
+                <option value="TCAE (Téc. Cuidados Aux.)">TCAE (Cuidados Auxiliares)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Turno Operativo:</label>
+              <select id="selectTurnoFranja" class="period-select" style="width:100%;">
+                <option value="Mañana (07:30 - 15:00)">Mañana (07:30 - 15:00)</option>
+                <option value="Tarde (14:30 - 22:00)">Tarde (14:30 - 22:00)</option>
+                <option value="Refuerzo (09:00 - 16:30)">Refuerzo Carga (09:00 - 16:30)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Puesto Operativo Asignado:</label>
+            <select id="selectTurnoPuesto" class="period-select" style="width:100%;">
+              <option value="P1 · Acogida, Glucemias & Vías">P1 · Acogida, Glucemias & Canalización de Vías</option>
+              <option value="P2 · Cabina Plomada (Inyección Radiofármacos)">P2 · Cabina Plomada (Inyección Radiofármacos)</option>
+              <option value="P3 · Control Boxes Reposo & Rescate Glucémico">P3 · Control Boxes Reposo & Rescate Glucémico</option>
+              <option value="P4 · Apoyo Tomógrafo PET/CT & Transfer Camilla">P4 · Apoyo Tomógrafo PET/CT & Transfer Camilla</option>
+              <option value="P5 · Radiofarmacia & Gestión de Residuos">P5 · Radiofarmacia & Gestión de Residuos</option>
+            </select>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Dosimetría Mes (mSv):</label>
+              <input type="number" step="0.01" id="inputTurnoDosimetria" class="period-select" style="width:100%;" value="0.16" placeholder="0.16">
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Estado de Presencia:</label>
+              <select id="selectTurnoEstado" class="period-select" style="width:100%;">
+                <option value="activo">En Servicio Activo</option>
+                <option value="descanso">Descanso Radiológico / Rotación</option>
+                <option value="relevo">Relevo Programado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nurse-modal-footer">
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cerrarModalTurno()">Cancelar</button>
+        <button type="button" class="btn-nurse btn-nurse-primary" onclick="window.supervisionApp.guardarTurno()">💾 Guardar Asignación</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TRAMITAR NUEVO PEDIDO DE MATERIAL SANITARIO / RADIOFÁRMACOS -->
+  <div id="modalNuevoPedido" class="nurse-modal-backdrop">
+    <div class="nurse-modal-box">
+      <div class="nurse-modal-header">
+        <h3>📦 Tramitar Nuevo Pedido de Material / Radiofármaco</h3>
+        <button type="button" onclick="window.supervisionApp.cerrarModalNuevoPedido()" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="nurse-modal-body">
+        <div style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Categoría del Pedido:</label>
+            <select id="selectPedidoCategoria" class="period-select" style="width:100%;">
+              <option value="Fungible Sanitario">Fungible Sanitario (Catéteres, sueros, apósitos)</option>
+              <option value="Radiofármaco">Radiofármaco (Ciclotrón Galaria / Curium)</option>
+              <option value="Contraste Radiológico">Contraste Radiológico (Iopromida / Iohexol)</option>
+              <option value="Rescate Glucémico">Rescate Glucémico (Agua mineral 500 mL, tiras reactivas)</option>
+              <option value="Protección Radiológica">Material Protección Radiológica (Blindajes, jeringas plomadas)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Artículo / Descripción Detallada:</label>
+            <input type="text" id="inputPedidoDescripcion" class="period-select" style="width:100%;" placeholder="Ej: Catéteres intravenosos periféricos 20G (Rosa) con válvula">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Tipo / Canal de Pedido:</label>
+              <select id="selectPedidoCanal" class="period-select" style="width:100%;" onchange="window.supervisionApp.onCambioCanalPedido(this.value)">
+                <option value="GALARIA">🔵 Pedido Material GALARIA</option>
+                <option value="SERGAS">🟢 Pedido Material SERGAS (LOGAS)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Proveedor / Destino Solicitud:</label>
+              <select id="selectPedidoProveedor" class="period-select" style="width:100%;">
+                <option value="Galaria · Logística PET-CT">Galaria · Logística PET-CT</option>
+                <option value="Ciclotrón Galaria (Santiago)">Ciclotrón Galaria (Santiago)</option>
+                <option value="Almacén Central SERGAS (LOGAS)">Almacén Central SERGAS (LOGAS)</option>
+                <option value="Farmacia Hospitalaria SERGAS">Farmacia Hospitalaria SERGAS</option>
+                <option value="Curium Pharma">Curium Pharma (Generador 68Ga)</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Cantidad Solicitada:</label>
+            <input type="text" id="inputPedidoCantidad" class="period-select" style="width:100%;" placeholder="Ej: 100 uds (2 cajas)">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Prioridad Asistencial:</label>
+            <select id="selectPedidoPrioridad" class="period-select" style="width:100%;">
+              <option value="ordinario">Reposición Ordinaria Semanal</option>
+              <option value="preferente">Preferente (Cobertura próximas 48 horas)</option>
+              <option value="urgente">Urgente Inmediato (Riesgo de agotamiento de stock)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="nurse-modal-footer">
+        <button type="button" class="btn-nurse btn-nurse-outline" onclick="window.supervisionApp.cerrarModalNuevoPedido()">Cancelar</button>
+        <button type="button" class="btn-nurse btn-nurse-primary" onclick="window.supervisionApp.guardarNuevoPedido()">💾 Tramitar Pedido Oficial</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="nurseToastContainer" class="nurse-toast-container"></div>
+
+  <!-- Semilla oficial de peticiones y lógica de supervisión -->
+  <script src="../pet_ct_triage/web_app/peticiones_seed.js"></script>
+  <script src="app.js?v=20261123_PEDIDOS_09"></script>
+</body>
+
+</html>

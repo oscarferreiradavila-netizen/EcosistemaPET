@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+  <p:cSld>
+    <p:spTree>
+      <p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>
+      <p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr>
+
+      <!-- Fondo Azul Marino Galaria -->
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="2" name="Fondo"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="0" y="0"/><a:ext cx="12192000" cy="6858000"/></a:xfrm>
+          <a:solidFill><a:srgbClr val="004868"/></a:solidFill>
+          <a:ln><a:noFill/></a:ln>
+        </p:spPr>
+      </p:sp>
+
+      <!-- Banda Cyan Superior -->
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="3" name="Banda"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="0" y="0"/><a:ext cx="12192000" cy="180000"/></a:xfrm>
+          <a:solidFill><a:srgbClr val="007EB4"/></a:solidFill>
+          <a:ln><a:noFill/></a:ln>
+        </p:spPr>
+      </p:sp>
+
+      <!-- Tarjeta Central Glassmorphism -->
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="4" name="Card"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="900000" y="1000000"/><a:ext cx="10392000" cy="4858000"/></a:xfrm>
+          <a:solidFill><a:srgbClr val="08293D"/></a:solidFill>
+          <a:ln w="25400"><a:solidFill><a:srgbClr val="007EB4"/></a:solidFill></a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr vert="horz" lIns="360000" tIns="360000" rIns="360000" bIns="360000"/>
+          <a:lstStyle/>
+          
+          <!-- Badge -->
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="1300" b="1"><a:solidFill><a:srgbClr val="007EB4"/></a:solidFill></a:rPr>
+              <a:t>🏥 MANUAL CLÍNICO, TÉCNICO Y OPERATIVO</a:t>
+            </a:r>
+          </a:p>
+
+          <!-- Espaciador -->
+          <a:p><a:endParaRPr sz="1000"/></a:p>
+
+          <!-- Título Portada -->
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="3400" b="1"><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill></a:rPr>
+              <a:t>ECOSISTEMA DIGITAL PET/CT & MEDICINA NUCLEAR</a:t>
+            </a:r>
+          </a:p>
+
+          <!-- Espaciador -->
+          <a:p><a:endParaRPr sz="800"/></a:p>
+
+          <!-- Subtítulo Portada -->
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="1800"><a:solidFill><a:srgbClr val="E6F4FA"/></a:solidFill></a:rPr>
+              <a:t>Suite Integral de Prescripción Médica, Triaje Logístico Matricial, Audioguías Asistenciales y Seguridad Radiológica</a:t>
+            </a:r>
+          </a:p>
+
+          <!-- Espaciador -->
+          <a:p><a:endParaRPr sz="1800"/></a:p>
+
+          <!-- Institución -->
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="1400" b="1"><a:solidFill><a:srgbClr val="0284C7"/></a:solidFill></a:rPr>
+              <a:t>Galaria · Empresa Pública de Servizos Sanitarios | SERGAS</a:t>
+            </a:r>
+          </a:p>
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="1200"><a:solidFill><a:srgbClr val="94A3B8"/></a:solidFill></a:rPr>
+              <a:t>Documentación Técnica, Funcional y Clínica · Octubre 2026</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+    </p:spTree>
+  </p:cSld>
+</p:sld>

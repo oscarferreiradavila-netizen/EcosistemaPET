@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+  <p:cSld>
+    <p:spTree>
+      <p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>
+      <p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr>
+
+      <!-- Fondo Página Claro y Sanitario -->
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="2" name="Fondo"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="0" y="0"/><a:ext cx="12192000" cy="6858000"/></a:xfrm>
+          <a:solidFill><a:srgbClr val="F8FAFC"/></a:solidFill>
+          <a:ln><a:noFill/></a:ln>
+        </p:spPr>
+      </p:sp>
+
+      <!-- Cabecera Superior Corporativa -->
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="3" name="Header"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="600000" y="400000"/><a:ext cx="10992000" cy="950000"/></a:xfrm>
+          <a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill>
+          <a:ln w="12700"><a:solidFill><a:srgbClr val="D6E2E9"/></a:solidFill></a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr vert="horz" lIns="180000" tIns="120000" rIns="180000" bIns="120000"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="1000" b="1"><a:solidFill><a:srgbClr val="007EB4"/></a:solidFill></a:rPr>
+              <a:t>MÓDULO 1: PRESCRIPCIÓN MÉDICA</a:t>
+            </a:r>
+          </a:p>
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="1900" b="1"><a:solidFill><a:srgbClr val="004868"/></a:solidFill></a:rPr>
+              <a:t>3. Portal Clínico de Prescripción Médica PET/CT</a:t>
+            </a:r>
+          </a:p>
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="1100"><a:solidFill><a:srgbClr val="526071"/></a:solidFill></a:rPr>
+              <a:t>Formulario Oficial Digitalizado con Validación Dosimétrica y Cálculo de Prioridad</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+
+      <!-- Columna Izquierda: Puntos Clave -->
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="4" name="TextCol"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="600000" y="1500000"/><a:ext cx="5800000" cy="4800000"/></a:xfrm>
+          <a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill>
+          <a:ln w="12700"><a:solidFill><a:srgbClr val="D6E2E9"/></a:solidFill></a:ln>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr vert="horz" lIns="240000" tIns="240000" rIns="240000" bIns="240000"/>
+          <a:lstStyle/>
+<a:p>
+  <a:pPr marL="280000" indent="-280000">
+    <a:buChar char="▪"/>
+    <a:buClr><a:srgbClr val="007EB4"/></a:buClr>
+  </a:pPr>
+  <a:r>
+    <a:rPr lang="es-ES" sz="1150"><a:solidFill><a:srgbClr val="1E293B"/></a:solidFill></a:rPr>
+    <a:t>📋 Filiación Hospitalaria Exhaustiva: Registro obligatorio de NHC, facultativo solicitante, servicio, peso y talla para el cálculo de dosis en MBq.</a:t>
+  </a:r>
+</a:p>
+<a:p><a:endParaRPr sz="600"/></a:p>
+<a:p>
+  <a:pPr marL="280000" indent="-280000">
+    <a:buChar char="▪"/>
+    <a:buClr><a:srgbClr val="007EB4"/></a:buClr>
+  </a:pPr>
+  <a:r>
+    <a:rPr lang="es-ES" sz="1150"><a:solidFill><a:srgbClr val="1E293B"/></a:solidFill></a:rPr>
+    <a:t>☢️ Selección de 10 Protocolos Oficiales: 18F-FDG oncológico, FDG contraste iodado, Endocarditis infecciosa HEP, 68Ga-PSMA, 68Ga-DOTATOC, 18F-Colina, 18F-Paratiroides, 18F-PSMA y FDG Neurología.</a:t>
+  </a:r>
+</a:p>
+<a:p><a:endParaRPr sz="600"/></a:p>
+<a:p>
+  <a:pPr marL="280000" indent="-280000">
+    <a:buChar char="▪"/>
+    <a:buClr><a:srgbClr val="007EB4"/></a:buClr>
+  </a:pPr>
+  <a:r>
+    <a:rPr lang="es-ES" sz="1150"><a:solidFill><a:srgbClr val="1E293B"/></a:solidFill></a:rPr>
+    <a:t>🧮 Motor de Priorización Dinámica: Clasifica de forma objetiva al paciente en 🔴 P1 (<7d), 🟡 P2 (<14d) o 🟢 P3 (>14d) según guías EANM.</a:t>
+  </a:r>
+</a:p>
+<a:p><a:endParaRPr sz="600"/></a:p>
+<a:p>
+  <a:pPr marL="280000" indent="-280000">
+    <a:buChar char="▪"/>
+    <a:buClr><a:srgbClr val="007EB4"/></a:buClr>
+  </a:pPr>
+  <a:r>
+    <a:rPr lang="es-ES" sz="1150"><a:solidFill><a:srgbClr val="1E293B"/></a:solidFill></a:rPr>
+    <a:t>⚠️ Detección Inmediata de Riesgos: Alergias al yodo, insuficiencia renal, diabetes mellitus, claustrofobia y necesidad de camilla/sedación.</a:t>
+  </a:r>
+</a:p>
+<a:p><a:endParaRPr sz="600"/></a:p>
+  </p:txBody>
+</p:sp>
+
+<!-- Columna Derecha: Imagen Ilustrativa -->
+<p:pic>
+  <p:nvPicPr>
+    <p:cNvPr id="5" name="Screenshot"/>
+    <p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr>
+    <p:nvPr/>
+  </p:nvPicPr>
+  <p:blipFill>
+    <a:blip r:embed="rId2"/>
+    <a:stretch><a:fillRect/></a:stretch>
+  </p:blipFill>
+  <p:spPr>
+    <a:xfrm><a:off x="6600000" y="1500000"/><a:ext cx="5000000" cy="4800000"/></a:xfrm>
+    <a:ln w="25400"><a:solidFill><a:srgbClr val="007EB4"/></a:solidFill></a:ln>
+  </p:spPr>
+</p:pic>
+      <!-- Pie de Diapositiva -->
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="6" name="Footer"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="600000" y="6400000"/><a:ext cx="10992000" cy="300000"/></a:xfrm>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr vert="horz" lIns="0" tIns="0" rIns="0" bIns="0"/>
+          <a:lstStyle/>
+          <a:p>
+            <a:r>
+              <a:rPr lang="es-ES" sz="900"><a:solidFill><a:srgbClr val="718096"/></a:solidFill></a:rPr>
+              <a:t>Galaria · Unidade de Medicina Nuclear (SERGAS) | Presentación Oficial del Ecosistema | Diapositiva 4 de 12</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+
+    </p:spTree>
+  </p:cSld>
+</p:sld>

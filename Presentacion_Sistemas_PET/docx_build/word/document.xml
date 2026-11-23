@@ -1,0 +1,2199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+            xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+            xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+            xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+            xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+  <w:body>
+    <w:p>
+  <w:pPr><w:jc w:val="center"/><w:spacing w:after="120"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="22"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>XUNTA DE GALICIA · CONSELLERÍA DE SANIDADE · SERGAS</w:t>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:jc w:val="center"/><w:spacing w:after="360"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="20"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Galaria · Empresa Pública de Servizos Sanitarios, S.A. | Unidade de Medicina Nuclear</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="360" w:after="140"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="36"/><w:color w:val="004868"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>🏥 Ecosistema Digital PET/CT &amp; Medicina Nuclear</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Manual Integral de Arquitectura Asistencial, Algorítmica y Guía Operativa</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Galaria · Empresa Pública de Servizos Sanitarios | SERGAS (Servizo Galego de Saúde)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*Documento Técnico, Clínico y de Gestión Asistencial · Edición Oficial Octubre 2026*</w:t>
+  </w:r>
+</w:p>
+
+<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D6E2E9"/></w:pBdr><w:spacing w:before="180" w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📌 Índice de Contenidos</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. [Visión Global del Ecosistema y Trabajo en Conjunto](#1-visión-global-del-ecosistema-y-trabajo-en-conjunto)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[El Problema Tradicional en los Servicios de Medicina Nuclear](#11-el-problema-tradicional-en-los-servicios-de-medicina-nuclear)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Arquitectura de Interoperabilidad End-to-End](#12-arquitectura-de-interoperabilidad-end-to-end)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Matriz de Beneficios Cuantitativos y Cualitativos](#13-matriz-de-beneficios-cuantitativos-y-cualitativos)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2. [Programa 1: Portal Clínico de Prescripción Médica](#2-programa-1-portal-clínico-de-prescripción-médica-pet_peticion_medica)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Filiación Hospitalaria y Parámetros Dosimétricos](#21-filiación-hospitalaria-y-parámetros-dosimétricos)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Catálogo Oficial de 10 Trazadores y Protocolos Clínicos](#22-catálogo-oficial-de-10-trazadores-y-protocolos-clínicos)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Cuestionario Clínico Preventivo y Filtros de Seguridad](#23-cuestionario-clínico-preventivo-y-filtros-de-seguridad)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Cálculo Dinámico de Prioridad en Tiempo Real](#24-cálculo-dinámico-de-prioridad-en-tiempo-real)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Panel "Mis Peticiones Registradas": Auditoría y Visor del Médico](#25-panel-mis-peticiones-registradas-auditoría-y-visor-del-médico)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3. [Programa 2: Suite de Triaje Clínico y Agendamiento Matricial](#3-programa-2-suite-de-triaje-clínico-y-agendamiento-matricial-pet_ct_triage)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Algoritmo de Priorización Clínica EANM / SERGAS](#31-algoritmo-de-priorización-clínica-eanm--sergas)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Parrilla Semanal y Matriz Logística por Radiofármaco](#32-parrilla-semanal-y-matriz-logística-por-radiofármaco)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Alertas Técnicas y Reglas de Bloqueo de Seguridad](#33-alertas-técnicas-y-reglas-de-bloqueo-de-seguridad)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Gestión de Peonadas y Jornadas Extraordinarias](#34-gestión-de-peonadas-y-jornadas-extraordinarias)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Flujo de Confirmación de Pacientes y Envío de Audioguías](#35-flujo-de-confirmación-de-pacientes-y-envío-de-audioguías)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4. [Programa 3: Portal de Audioguías y Preparación del Paciente](#4-programa-3-portal-de-audioguías-y-preparación-del-paciente-pet_prep_page)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Audioguía Interactiva con Síntesis de Voz](#41-audioguía-interactiva-con-síntesis-de-voz)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Cronómetro de Ayuno y Protocolo Dietético Restrictivo](#42-cronómetro-de-ayuno-y-protocolo-dietético-restrictivo)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Protocolo Específico de Glucemia en Pacientes Diabéticos](#43-protocolo-específico-de-glucemia-en-pacientes-diabéticos)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Chatbot Enfermero Virtual 24/7](#44-chatbot-enfermero-virtual-247)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Sistema de Cancelación y Aplazamiento Online](#45-sistema-de-cancelación-y-aplazamiento-online)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>5. [Programa 4: Consola de Enfermería y Control Pre-Analítico](#5-programa-4-consola-de-enfermería-y-control-pre-analítico-enfermeriahtml)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Monitorización Asistencial Previa](#51-monitorización-asistencial-previa)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Gestión de Urgencias Diabéticas (Glucemia ≥ 200 mg/dL)](#52-gestión-de-urgencias-diabéticas-glucemia--200-mgdl)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Bandeja de Dudas y Solicitudes de Llamada](#53-bandeja-de-dudas-y-solicitudes-de-llamada)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>[Impacto en la Reducción del Absentismo](#54-impacto-en-la-reducción-del-absentismo)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>6. [Conclusiones y Hoja de Ruta Asistencial](#6-conclusiones-y-hoja-de-ruta-asistencial)</w:t>
+  </w:r>
+</w:p>
+
+<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D6E2E9"/></w:pBdr><w:spacing w:before="180" w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:before="360" w:after="140"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="36"/><w:color w:val="004868"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. Visión Global del Ecosistema y Trabajo en Conjunto</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1.1. El Problema Tradicional en los Servicios de Medicina Nuclear</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Históricamente, los centros de Medicina Nuclear y Tomografía por Emisión de Positrones (PET/CT) han enfrentado tres cuellos de botella críticos:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. Peticiones en papel o formularios no normalizados: Letra manuscrita difícilmente legible, omisión de datos antropométricos clave (peso, talla) imprescindibles para la dosimetría radiactiva, y falta de información terapéutica reciente (quimioterapia o radioterapia).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2. Logística compleja y vida media ultracorta: Los radiofármacos emisores de positrones (como el Flúor-18 con $T_{1/2} \approx 109.7$ min o el Galio-68 con $T_{1/2} \approx 67.7$ min) sufren decaimiento continuo desde su síntesis en el ciclotrón. Citar a un paciente sin una parrilla adaptada al radiofármaco genera pérdidas de miles de euros en dosis decaídas e inservibles.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3. Cancelaciones en el día de la cita por mala preparación: Un paciente que ingiere alimentos azucarados, mastica chicle o presenta glucemias elevadas (&gt; 180 mg/dL) debe ser cancelado inmediatamente en la sala de inyección, perdiéndose la dosis encargada para él y retrasando su tratamiento oncológico.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1.2. Arquitectura de Interoperabilidad End-to-End</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Para dar respuesta definitiva a estos retos, la Unidad de Medicina Nuclear de Galaria (SERGAS) ha diseñado un ecosistema modular de cuatro aplicaciones interconectadas mediante una Base de Datos Clínica Unificada:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------------------------------------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>ECOSISTEMA DIGITAL PET/CT</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------------------------------------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. PRESCRIPCIÓN MÉDICA                v</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------+     [ Base de Datos Central ]     +--------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>pet_peticion_medica</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>===&gt; ( JSON / CSV / Sheets ) ===&gt;</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>pet_ct_triage</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- 10 Trazadores</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Triaje P1/P2/P3</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Priorización en vivo</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>&lt;================================</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Parrilla Isótopos</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Historial de médico</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>(Estado Cita Asignada)</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Bloqueo QT/RT</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------+                                   | - Envío Audioguía  |</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+--------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>v</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3. ASISTENCIA AL PACIENTE                                   2. CONFIRMACIÓN Y CITA</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------+                                   +--------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>pet_prep_page</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>&lt;================================</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>SMS / WhatsApp</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Audioguía con voz</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>(Enlace personalizado)</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>con URL de cita</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>| - Dieta sin hidratos  |                                   +--------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Chatbot 24/7</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Cancelar / Aplazar</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>| (Alertas Glucemia / Dudas)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>v</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4. CONTROL CLÍNICO ENFERMERÍA</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>enfermeria.html</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Urgencias Glucemia</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Llamada a pacientes</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>- Cero No-Shows</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+-----------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1.3. Matriz de Beneficios Cuantitativos y Cualitativos</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Beneficio Clave</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Situación Anterior (Tradicional)</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Con el Ecosistema PET/CT</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Impacto Asistencial y Económico</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Tiempo de validación de peticiones**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>24 - 48 horas mediante revisión manual de volantes en papel.</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Validación y cálculo de prioridad instantáneo** (&lt; 3 segundos).</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Agiliza el inicio de tratamientos en pacientes oncológicos urgentes.</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Legibilidad y Completitud**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Errores habituales por caligrafía manual, datos dosimétricos ausentes.</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Formulario 100% digitalizado, normalizado y con validación de campos obligatorios.**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Cero llamadas del técnico para averiguar peso o antecedentes del paciente.</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Eficacia en el Agendamiento**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Citas manuales sin control estricto de cupos por radiofármaco.</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Matriz algorítmica por isótopo, franja horaria y vida media física.**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Aprovechamiento del 100% de la actividad radioactiva del ciclotrón.</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Liberación a Personal de Administración**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>El administrativo debía llamar uno a uno a decenas de pacientes para citar y explicar la preparación.</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Confirmación digital en 2 fases y envío automático de la audioguía por SMS.**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Liberación de más del 70% del tiempo administrativo para otras tareas.</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Más Tiempo Asistencial**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Médicos y enfermeros consumían su jornada atendiendo llamadas de dudas básicas repetitivas.</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**El paciente resuelve dudas con la audioguía y el chatbot 24/7.**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>El personal sanitario puede centrarse en el cuidado directo del enfermo.</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Resolución Inmediata de Dudas**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>El paciente esperaba con angustia hasta contactar con el hospital.</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Chatbot interactivo con respuestas inmediatas avaladas por Guías EANM.**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Tranquilidad, reducción del estrés y máxima humanización asistencial.</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Tasa de Cancelaciones ("No-Shows")**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>8% - 12% por falta de ayuno, glucemias altas o ausencias no avisadas.</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>**Reducción del absentismo a menos del 1.5%.**</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Ahorro directo de miles de euros en radiofármacos que antes caducaban.</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D6E2E9"/></w:pBdr><w:spacing w:before="180" w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:before="360" w:after="140"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="36"/><w:color w:val="004868"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2. Programa 1: Portal Clínico de Prescripción Médica (`pet_peticion_medica`)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El Portal Clínico de Prescripción es el punto de partida del ecosistema. Diseñado específicamente para facultativos prescriptores (Oncología Médica, Oncología Radioterápica, Urología, Neumología, Neurología, Cirugía, etc.), sustituye los formularios manuales por un entorno digital asistido con validación clínica automática.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="3719" name="Portal Clínico de Prescripción Médica"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Portal Clínico de Prescripción Médica"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg1"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Portal Clínico de Prescripción Médica</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2.1. Filiación Hospitalaria y Parámetros Dosimétricos</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El formulario exige la cumplimentación de los datos estructurales del paciente:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Filiación: Nombre completo, Número de Historia Clínica (NHC), fecha de solicitud y servicio solicitante.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Médico Prescriptor: Registro del nombre y número de colegiado del médico que emite la orden.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Datos Antropométricos (Peso y Talla):</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>&gt; [!IMPORTANT]</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>&gt; El peso (kg) y la talla (cm) son variables críticas en Medicina Nuclear. Con ellos se calcula el Índice de Masa Corporal (IMC) y el *Standardized Uptake Value* (SUV), además de determinar la dosis exacta de actividad radioactiva (MBq) a inyectar según los estándares internacionales de la *European Association of Nuclear Medicine* (EANM).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2.2. Catálogo Oficial de 10 Trazadores y Protocolos Clínicos</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El facultativo dispone de un selector dinámico con los 10 protocolos diagnósticos estandarizados por Galaria y el SERGAS:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1.  18F-FDG Oncológico / Inflamatorio General</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2.  18F-FDG con Contraste Iodado Diagnóstico</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3.  18F-FDG Endocarditis + Protocolo HEP (Supresión Miocárdica de Glucosa)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4.  68Ga-PSMA (Cáncer de Próstata en Recidiva / Estadificación Inicial de Alto Riesgo)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>5.  68Ga-DOTATOC Tumores Neuroendocrinos (Receptores de Somatostatina)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>6.  18F-Colina (Hiperparatiroidismo primario y Adenomas)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>7.  18F-Paratiroides</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>8.  18F-FDG Neurológico Normal (Diagnóstico Diferencial de Demencias)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>9.  18F-FDG Neurológico + Neurofisioneurología (Mapeo de Epilepsia Refractaria)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>10. 18F-PSMA (Diagnóstico Prostático con Marcado de Flúor-18)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2.3. Cuestionario Clínico Preventivo y Filtros de Seguridad</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El formulario incorpora un cuestionario de cribado clínico obligatorio:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>¿Precisa Sedación?: Identifica a pacientes con claustrofobia severa, agitación o niños para programar la presencia del equipo de Anestesiología.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Movilidad y Traslado: Distingue entre pacientes *Autónomos*, *En Silla de Ruedas* o *Encamados*, permitiendo reservar las camillas de inyección apropiadas.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Alergia a Contrastes Iodados: En caso afirmativo, desactiva la opción de contraste IV o alerta sobre la necesidad de premedicación corticoidea.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Diabetes Mellitus y Glucemia Conocida: Registra el tratamiento (insulina o metformina) y la glucemia capilar reciente.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Fecha de Fin de Quimioterapia / Radioterapia: Permite al sistema calcular los días transcurridos desde el último ciclo para evitar bloqueos técnicos.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2.4. Cálculo Dinámico de Prioridad en Tiempo Real</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>A medida que el médico introduce la sospecha diagnóstica y la indicación, el algoritmo calcula en pantalla la Prioridad Asistencial:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>🔴 Prioridad 1 (Urgente): Target &lt; 7 días (Peligro vital, cambio de conducta terapéutica inmediata, infección grave de prótesis o paciente hospitalizado).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>🟡 Prioridad 2 (Preferente): Target &lt; 14 días (Estadificación inicial de tumores de rápida progresión, reestadificación post-tratamiento o sospecha de recidiva con marcadores en ascenso).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>🟢 Prioridad 3 (Ordinaria): Target &gt; 14 días (Nódulos pulmonares solitarios de bajo riesgo, seguimiento a largo plazo de enfermedad estable o estudios de deterioro cognitivo).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2.5. Panel "Mis Peticiones Registradas": Auditoría y Visor del Médico</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Cada médico accede a una pestaña exclusiva donde puede auditar en tiempo real el ciclo de vida de todas sus peticiones sin necesidad de llamar por teléfono:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="9472" name="Base de Datos y Registro de Peticiones del Médico"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Base de Datos y Registro de Peticiones del Médico"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg2"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Base de Datos y Registro de Peticiones del Médico</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Visibilidad del Estado de Triaje:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>🟡 `Pendiente de Triaje`: La solicitud ha sido registrada y está en cola de evaluación por el facultativo de Medicina Nuclear.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>🟢 `Cita Asignada`: Muestra la fecha exacta, la hora y el radiofármaco asignado (indicando si se realizará en turno ordinario o en Peonada).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>🔵 `Realizado`: La exploración se ha completado y está en fase de informe clínico.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Búsqueda Dinámica: Filtrado por NHC, nombre de paciente o fecha.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Emisión de Volantes Oficiales: Botón para imprimir en PDF la prescripción clínica completa.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Interoperabilidad JSON / CSV: Permite exportar la base de datos completa para su integración con el motor de agendamiento.</w:t>
+  </w:r>
+</w:p>
+
+<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D6E2E9"/></w:pBdr><w:spacing w:before="180" w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:before="360" w:after="140"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="36"/><w:color w:val="004868"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3. Programa 2: Suite de Triaje Clínico y Agendamiento Matricial (`pet_ct_triage`)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>La Suite de Triaje es el cerebro logístico y asistencial de la Unidad de Medicina Nuclear. Integra un motor en Python y JavaScript capaz de procesar cientos de peticiones procedentes del portal médico o de Google Sheets y asignarlas automáticamente a la parrilla semanal de citación.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="7965" name="Suite de Triaje y Agendamiento PET/CT"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Suite de Triaje y Agendamiento PET/CT"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg3"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Suite de Triaje y Agendamiento PET/CT</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3.1. Algoritmo de Priorización Clínica EANM / SERGAS</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El motor analiza los datos clínicos estructurados y aplica las reglas de priorización consensuadas:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Pacientes Hospitalizados: Se elevan automáticamente a Prioridad 1 para acortar la estancia en cama hospitalaria.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Cinética de Marcadores: En cáncer de próstata, un tiempo de duplicación de PSA (PSADT) inferior a 3 meses convierte la solicitud en P1 Urgente.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Ventanas Terapéuticas Estrictas: Asigna la cita dentro de la ventana de oportunidad antes de comités de tumores o cirugías programadas.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3.2. Parrilla Semanal y Matriz Logística por Radiofármaco</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>La producción de isótopos en ciclotrón o generador exige una estricta organización por días de la semana:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+------------+-----------------------------------+--------------------+---------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>DÍA</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>RADIOFÁRMACOS ASIGNADOS</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>CAPACIDAD DIARIA</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>FRANJAS HORARIAS ASISTENCIALES</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+------------+-----------------------------------+--------------------+---------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Lunes</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>18F-FDG + 68Ga-PSMA / DOTATOC</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>7 FDG + 1 68Ga</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>08:00 Autónomos</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:00 Planta/Silla</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:30 Elución Fija 68Ga</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>11:00 Sedac.</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+------------+-----------------------------------+--------------------+---------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Martes</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Fluor-PSMA (18F) + 18F-FDG</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>4 Fluor + 4 FDG</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>08:00 Fluor-PSMA</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:00 FDG</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+------------+-----------------------------------+--------------------+---------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Miércoles</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>18F-Colina</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>6 Colina</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>08:00 Autónomos</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:00 Planta/Silla</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+------------+-----------------------------------+--------------------+---------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Jueves</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>18F-FDG + 68Ga-PSMA / DOTATOC</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>7 FDG + 1 68Ga</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>08:00 Autónomos</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:00 Planta/Silla</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:30 Elución Fija 68Ga</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>11:00 Sedac.</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+------------+-----------------------------------+--------------------+---------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:tbl>
+<w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:bottom w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6E2E9"/><w:insideV w:val="none"/><w:left w:val="none"/><w:right w:val="none"/></w:tblBorders></w:tblPr>
+<w:tr>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>Viernes</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>18F-FDG + 68Ga-PSMA / DOTATOC</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>7 FDG + 1 68Ga</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>08:00 Autónomos</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:shd w:val="clear" w:color="auto" w:fill="F0F7FB"/><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:b/><w:color w:val="004868"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:00 Planta/Silla</w:t></w:r></w:p></w:tc>
+</w:tr>
+<w:tr>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t></w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>10:30 Elución Fija 68Ga</w:t></w:r></w:p></w:tc>
+<w:tc><w:tcPr><w:tcMar><w:top w:w="140" w:type="dxa"/><w:bottom w:w="140" w:type="dxa"/><w:left w:w="160" w:type="dxa"/><w:right w:w="160" w:type="dxa"/></w:tcMar></w:tcPr><w:p><w:r><w:rPr><w:color w:val="1E293B"/><w:sz w:val="20"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr><w:t>11:00 Sedac.</w:t></w:r></w:p></w:tc>
+</w:tr>
+</w:tbl><w:p><w:pPr><w:spacing w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>+------------+-----------------------------------+--------------------+---------------------------------------+</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3.3. Alertas Técnicas y Reglas de Bloqueo de Seguridad</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El motor de triaje audita cada paciente y activa bloqueos automáticos para evitar errores médicos y diagnósticos fallidos:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="8212" name="Tabla de Pacientes y Alertas Técnicas"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Tabla de Pacientes y Alertas Técnicas"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg4"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Tabla de Pacientes y Alertas Técnicas</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. ⛔ Bloqueo por Quimioterapia / Radioterapia Reciente (&lt; 21 días):</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*Fundamento Fisiopatológico:* Tras un tratamiento citotóxico o radioterápico, las células tumorales entran en un estado transitorio de aturdimiento metabólico (*stunning*), mientras que el tejido sano circundante sufre una intensa inflamación reactiva. Un PET realizado antes de 3 semanas produce con frecuencia falsos negativos tumorales o falsos positivos inflamatorios.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*Acción del Software:* Muestra la etiqueta `⚠️ ALERTA TÉCNICA: QT/RT RECIENTE (&lt;21 días)` y bloquea cualquier fecha anterior al día 21 post-tratamiento, programando la cita exactamente el primer día clínicamente válido.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2. 🩸 Protocolo Diabetes (Glucemia &gt; 180 mg/dL):</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*Fundamento Fisiopatológico:* El 18F-FDG utiliza los mismos transportadores transmembrana (GLUT-1 y GLUT-4) que la d-glucosa endógena. Una glucemia elevada compite y desplaza al trazador, reduciendo drásticamente la captación tumoral y provocando hipercaptación difusa en músculo esquelético.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*Acción del Software:* Asigna la etiqueta `⚠️ PROTOCOLO DIABETES`, adjunta la pauta de corrección con insulina/metformina y deriva el caso a la Consola de Enfermería.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3.4. Gestión de Peonadas y Jornadas Extraordinarias</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Para dar cumplimiento a los objetivos del *Plan de Garantía de Tiempos Máximos de Espera* del SERGAS, el programa incluye un módulo específico para Turnos Extraordinarios (Peonadas):</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Identifica pacientes cuya ventana clínica está próxima a vencer.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Genera propuestas de citación vespertina (a partir de las 15:00 o 16:00 horas).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Agrupa los pacientes por tipo de trazador para optimizar un único envío extraordinario de radiofármaco.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3.5. Flujo de Confirmación de Pacientes y Envío de Audioguías</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>La gestión de citas se estructura en un flujo de dos fases:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="7086" name="Confirmación de Citación y Envío de Audioguías"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Confirmación de Citación y Envío de Audioguías"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg5"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Confirmación de Citación y Envío de Audioguías</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. Fase 1: Pacientes Citados Pendientes de Confirmar:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>La agenda muestra los pacientes con cita calculada pero aún no contactados.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El operador puede pulsar "Confirmar Cita" de forma individual o "Confirmar Todos los Pacientes" en bloque.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2. Fase 2: Pacientes Confirmados y Envío de Audioguías:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Al confirmar la asistencia, el sistema genera de forma automática un enlace único y seguro dirigido al portal del paciente.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Se envía por SMS o WhatsApp conteniendo la fecha, la hora exacta, el radiofármaco asignado y el acceso directo a su audioguía oficial de preparación.</w:t>
+  </w:r>
+</w:p>
+
+<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D6E2E9"/></w:pBdr><w:spacing w:before="180" w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:before="360" w:after="140"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="36"/><w:color w:val="004868"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4. Programa 3: Portal de Audioguías y Preparación del Paciente (`pet_prep_page`)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>El Portal Asistencial al Paciente es una aplicación web adaptativa accesible desde cualquier teléfono móvil, tablet u ordenador. Su misión es garantizar que el paciente llegue al hospital en condiciones fisiológicas y metabólicas ideales para la adquisición de la imagen.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="3388" name="Portal de Audioguía y Preparación de Pacientes"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Portal de Audioguía y Preparación de Pacientes"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg6"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Portal de Audioguía y Preparación de Pacientes</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4.1. Audioguía Interactiva con Síntesis de Voz</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Accesibilidad Universal: Pensada especialmente para pacientes de edad avanzada o con dificultades de visión, dispone de un reproductor que narra con voz clara y pausada todas las instrucciones.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Secuencia Paso a Paso: Explica qué sucederá al llegar al hospital, la colocación de la vía venosa, el tiempo de reposo tras la inyección (60 minutos en sala tranquila) y la duración dentro del tomógrafo (15-20 minutos).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4.2. Cronómetro de Ayuno y Protocolo Dietético Restrictivo</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Cronómetro Visual de Ayuno (6 Horas): Cuenta atrás que indica cuándo debe realizarse la última comida sólida. Solo se permite beber agua pura.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Dieta sin Carbohidratos (24 Horas Antes):</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*Alimentos Permitidos:* Carnes, pescados, huevos, quesos curados, tofu, aceite de oliva y agua.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*Alimentos Prohibidos:* Pan, arroz, pasta, patatas, frutas, legumbres, dulces, refrescos y chicles (incluso los sin azúcar, ya que el acto de masticar estimula la captación muscular en maseteros).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Reposo Muscular Estricto (24-48 Horas Antes):</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Prohibición absoluta de ejercicio físico vigoroso, gimnasio o caminatas intensas, para evitar que el 18F-FDG se acumule en los músculos esqueléticos fatigados enmascarando posibles adenopatías o lesiones metastásicas.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Hidratación Abundante: Se pauta la ingesta de 1 litro de agua durante las 2 horas previas a la cita para acelerar la eliminación urinaria del radiofármaco no fijado, reduciendo sustancialmente la dosis de radiación en la vejiga.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4.3. Protocolo Específico de Glucemia en Pacientes Diabéticos</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Para pacientes citados a estudios con 18F-FDG (Glucosa):</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Control Glucémico Previo: Se solicita comprobar la glucemia capilar el día anterior y la mañana de la prueba. Debe mantenerse por debajo de 160 - 180 mg/dL.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Manejo de Insulina:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>No inyectar insulina rápida en las 4 horas previas al PET, ya que la hiperinsulinemia forzaría la entrada de FDG en el músculo y la grasa en lugar del tumor.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>La insulina basal de acción lenta suele mantenerse según prescripción habitual.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Fármacos Orales: La metformina se suspende 48 horas antes si el estudio incluye contraste iodado para prevenir acidosis láctica.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4.4. Chatbot Enfermero Virtual 24/7</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Integrado en la esquina inferior del portal, el Chatbot Enfermero Virtual atiende dudas recurrentes en tiempo real:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="2429" name="Chatbot Enfermero Virtual"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Chatbot Enfermero Virtual"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg7"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Chatbot Enfermero Virtual</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Botones de Sugerencias Rápidas:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*¿Cuántas horas de ayuno?*</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*¿Qué como el día anterior?*</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*¿Puedo beber agua?*</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*¿Puedo masticar chicle?*</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*¿Qué hago si soy diabético?*</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*¿Tomo mis pastillas habituales?*</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>*¿Cuánto dura la prueba?*</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Detección de Alarmas Clínicas: Si el paciente describe síntomas de alarma (ej. dolor torácico opresivo, disnea o fiebre alta), el chatbot emite una alerta roja y envía un aviso urgente a la Consola de Enfermería.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4.5. Sistema de Cancelación y Aplazamiento Online</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Autoservicio del Paciente: Si el paciente sufre un imprevisto, puede pulsar el botón "¿No puedes asistir a tu cita? Cancelar o aplazar prueba".</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Reasignación Inmediata de Dosis: La cancelación se comunica al instante a la Suite de Triaje y a la Consola de Enfermería, permitiendo citar a un paciente en lista de espera urgente y evitando que el radiofármaco ya encargado sea desechado.</w:t>
+  </w:r>
+</w:p>
+
+<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D6E2E9"/></w:pBdr><w:spacing w:before="180" w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:before="360" w:after="140"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="36"/><w:color w:val="004868"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>5. Programa 4: Consola de Enfermería y Control Pre-Analítico (`enfermeria.html`)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>La Consola de Enfermería es la herramienta de trabajo en tiempo real del equipo de Enfermería de Medicina Nuclear. Centraliza las alertas clínicas procedentes de los portales de los pacientes y las solicitudes que precisan intervención profesional directa.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="200" w:after="80"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:drawing>
+      <wp:inline distT="0" distB="0" distL="0" distR="0">
+        <wp:extent cx="5760000" cy="3600000"/>
+        <wp:docPr id="4607" name="Consola de Enfermería SERGAS"/>
+        <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
+          <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+            <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
+              <pic:nvPicPr>
+                <pic:cNvPr id="0" name="Consola de Enfermería SERGAS"/>
+                <pic:cNvPicPr/>
+              </pic:nvPicPr>
+              <pic:blipFill>
+                <a:blip r:embed="rIdImg8"/>
+                <a:stretch><a:fillRect/></a:stretch>
+              </pic:blipFill>
+              <pic:spPr>
+                <a:xfrm><a:off x="0" y="0"/><a:ext cx="5760000" cy="3600000"/></a:xfrm>
+                <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+              </pic:spPr>
+            </pic:pic>
+          </a:graphicData>
+        </a:graphic>
+      </wp:inline>
+    </w:drawing>
+  </w:r>
+</w:p>
+<w:p>
+  <w:pPr><w:spacing w:after="240"/><w:jc w:val="center"/></w:pPr>
+  <w:r>
+    <w:rPr><w:i/><w:sz w:val="18"/><w:color w:val="526071"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>📸 Consola de Enfermería SERGAS</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>5.1. Monitorización Asistencial Previa</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Sincronización Continua: Conectada en vivo con la base de datos de pacientes citados para las próximas 24 a 72 horas.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Cribado Pre-Analítico Telefónico: La enfermera contacta preventivamente con los pacientes complejos para validar que han seguido las pautas dietéticas y confirmar que disponen de ambulancia asignada.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>5.2. Gestión de Urgencias Diabéticas (Glucemia ≥ 200 mg/dL)</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Tarjeta Roja de Prioridad Absoluta: Cuando un paciente introduce en el portal o chatbot una cifra de glucemia superior a 180-200 mg/dL, se activa una alarma sonora y visual en la consola.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Protocolo de Actuación Inmediata:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. La enfermera pulsa sobre la alerta para ver los datos de contacto y antecedentes.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2. Llama telefónicamente al paciente para valorar si procede un ajuste extraordinario de insulina, una cita en primera hora con pauta especial o el aplazamiento a una nueva fecha.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3. Previene que el paciente se desplace al hospital para ser cancelado en puerta.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>5.3. Bandeja de Dudas y Solicitudes de Llamada</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Gestión de Dudas de Pacientes: Recoge consultas médicas personalizadas que no pudieron ser resueltas por las preguntas automáticas del chatbot.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Trazabilidad de Respuestas: Permite a la enfermera registrar la llamada efectuada, escribir notas clínicas sobre el paciente y marcar la consulta como resuelta.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:before="300" w:after="120"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="28"/><w:color w:val="007EB4"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>5.4. Impacto en la Reducción del Absentismo</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Gracias a la combinación de audioguías y control de enfermería:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Tasa de cancelaciones en sala inferior al 1.5% (frente a la media nacional del 8-12%).</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Cero dosis de radiofármaco perdidas por pacientes que no se presentan sin avisar.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:ind w:left="360" w:hanging="240"/><w:spacing w:after="80"/></w:pPr>
+  <w:r><w:rPr><w:color w:val="007EB4"/></w:rPr><w:t>▪ </w:t></w:r>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>Excelente satisfacción percibida por el usuario, que se siente acompañado durante todo el proceso.</w:t>
+  </w:r>
+</w:p>
+
+<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="D6E2E9"/></w:pBdr><w:spacing w:before="180" w:after="180"/></w:pPr></w:p>
+<w:p>
+  <w:pPr><w:spacing w:before="360" w:after="140"/><w:jc w:val="left"/></w:pPr>
+  <w:r>
+    <w:rPr><w:b/><w:sz w:val="36"/><w:color w:val="004868"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>6. Conclusiones y Hoja de Ruta Asistencial</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>La implantación de este ecosistema digital en la Unidad de Medicina Nuclear de Galaria (SERGAS) representa un salto cualitativo hacia la excelencia médica y la eficiencia operativa:</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>1. Eficiencia Asistencial: La automatización del triaje reduce el tiempo de citación de días a segundos y garantiza el cumplimiento de los tiempos de espera oncológicos.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>2. Sostenibilidad Económica: La matriz de citas por radiofármaco y la reducción de cancelaciones a menos del 1.5% maximizan el rendimiento de las eluciones de Galio-68 y los envíos de Flúor-18.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>3. Seguridad y Calidad Clínica: Los bloqueos preventivos por quimioterapia reciente y control glucémico eliminan las exploraciones no diagnósticas.</w:t>
+  </w:r>
+</w:p>
+
+<w:p>
+  <w:pPr><w:spacing w:after="140"/></w:pPr>
+  <w:r>
+    <w:rPr><w:sz w:val="21"/><w:color w:val="1E293B"/><w:rFonts w:ascii="Helvetica Neue" w:hAnsi="Helvetica Neue"/></w:rPr>
+    <w:t>4. Humanización de la Asistencia: El paciente dispone de audioguías accesibles y atención continua, transformando una prueba compleja en un proceso guiado, seguro y transparente.</w:t>
+  </w:r>
+</w:p>
+
+    <w:sectPr>
+      <w:pgSz w:w="11906" w:h="16838"/>
+      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440"/>
+    </w:sectPr>
+  </w:body>
+</w:document>

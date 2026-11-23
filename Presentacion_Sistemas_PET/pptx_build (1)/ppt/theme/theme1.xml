@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<a:theme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="Galaria Theme">
+  <a:themeElements>
+    <a:clrScheme name="Galaria">
+      <a:dk1><a:sysClr val="windowText" lastClr="000000"/></a:dk1>
+      <a:lt1><a:sysClr val="window" lastClr="FFFFFF"/></a:lt1>
+      <a:dk2><a:srgbClr val="004868"/></a:dk2>
+      <a:lt2><a:srgbClr val="F0F7FB"/></a:lt2>
+      <a:accent1><a:srgbClr val="007EB4"/></a:accent1>
+      <a:accent2><a:srgbClr val="004868"/></a:accent2>
+      <a:accent3><a:srgbClr val="0284C7"/></a:accent3>
+      <a:accent4><a:srgbClr val="16A34A"/></a:accent4>
+      <a:accent5><a:srgbClr val="D97706"/></a:accent5>
+      <a:accent6><a:srgbClr val="DC2626"/></a:accent6>
+      <a:hlink><a:srgbClr val="007EB4"/></a:hlink>
+      <a:folHlink><a:srgbClr val="004868"/></a:folHlink>
+    </a:clrScheme>
+    <a:fontScheme name="Galaria">
+      <a:majorFont><a:latin typeface="Helvetica Neue"/></a:majorFont>
+      <a:minorFont><a:latin typeface="Helvetica Neue"/></a:minorFont>
+    </a:fontScheme>
+    <a:fmtScheme name="Galaria">
+      <a:fillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:fillStyleLst>
+      <a:lnStyleLst><a:ln><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln></a:lnStyleLst>
+      <a:effectStyleLst><a:effectStyle><a:effectLst/></a:effectStyle></a:effectStyleLst>
+      <a:bgFillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:bgFillStyleLst>
+    </a:fmtScheme>
+  </a:themeElements>
+</a:theme>

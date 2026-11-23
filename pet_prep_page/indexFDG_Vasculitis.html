@@ -1,0 +1,3095 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Instrucciones oficiales de preparación para PET FDG Vasculitis (Arteritis de Células Gigantes / Grandes Vasos y Takayasu) de Galaria - SERGAS: ayuno estricto de 6 horas, dieta baja en hidratos, reposo muscular y tiempo de espera para ir a máquina de 90 minutos.">
+  <title>PET FDG Vasculitis | Audioguía Oficial de Preparación y Asistente Virtual</title>
+  
+  <!-- Fuente Google Fonts: Open Sans & Outfit (Identidad Corporativa Galaria / SERGAS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES Y SISTEMA DE DISEÑO GALARIA - SERGAS (SERVIZO GALEGO DE SAÚDE)
+       ESPECIALIDAD: PET FDG VASCULITIS (INFLAMACIÓN DE GRANDES VASOS)
+       ========================================================================== */
+    :root {
+      --sergas-blue: #007eb4;             /* Azul principal Galaria / Sergas */
+      --sergas-blue-hover: #005b82;       /* Azul interacción */
+      --sergas-navy: #004868;            /* Azul corporativo titulares */
+      --sergas-dark: #08293d;            /* Azul profundo institucional */
+      --sergas-soft-blue: #e6f4fa;       /* Azul pastel fondos */
+      --sergas-subtle: #f0f7fb;          /* Fondo suave */
+
+      /* Acentos Vasculares / Inflamación */
+      --vascular-red: #c026d3;           /* Púrpura / Magenta vascular */
+      --vascular-dark: #701a75;
+      --vascular-soft: #fdf4ff;
+      --vascular-border: #f0abfc;
+
+      --accent-coral: #e11d48;           /* Coral arterial */
+      --accent-soft-coral: #fff1f2;
+      --accent-border-coral: #fecdd3;
+
+      --contrast-amber: #b45309;         /* Advertencias clínicas */
+      --contrast-soft-amber: #fffbeb;
+      --contrast-border: #fcd34d;
+
+      --primary: #007eb4;
+      --primary-hover: #005b82;
+      --primary-dark: #004868;
+      --accent-cyan: #0284c7;
+
+      --bg-page: #f4f7f9;                /* Fondo limpio sanitario */
+      --bg-card: #ffffff;                /* Tarjetas blancas */
+      --bg-card-hover: #f8fafc;
+      --bg-elevated: #e2e8f0;
+      --border-subtle: #d6e2e9;
+
+      --danger: #dc2626;
+      --danger-hover: #b91c1c;
+      --danger-bg: #fef2f2;
+      --danger-border: #fca5a5;
+
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --success-border: #86efac;
+
+      --text-main: #1e293b;
+      --text-muted: #526071;
+      --text-dim: #718096;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --radius-full: 9999px;
+
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+      --shadow-sm: 0 1px 3px rgba(0, 40, 70, 0.06);
+      --shadow-md: 0 4px 14px rgba(0, 60, 100, 0.08);
+      --shadow-lg: 0 10px 25px rgba(0, 60, 100, 0.12);
+      --shadow-blue: 0 4px 16px rgba(0, 126, 180, 0.25);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--sergas-blue);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1020px;
+      padding: 0 1.25rem;
+      margin: 0 auto;
+    }
+
+    /* BARRA SUPERIOR INSTITUCIONAL (SERGAS / XUNTA) */
+    .sergas-top-bar {
+      width: 100%;
+      background: #004868;
+      color: #ffffff;
+      font-size: 0.8rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .sergas-top-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .sergas-gov-text {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .xunta-pill {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .sergas-sub {
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    .sergas-portal-id {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+    }
+
+    .lang-pill {
+      background: rgba(0, 126, 180, 0.4);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* CABECERA PRINCIPAL GALARIA */
+    .galaria-main-header {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 3px solid var(--sergas-blue);
+      padding: 0.85rem 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .galaria-brand-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .hospital-unit-info {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+    }
+
+    .unit-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      letter-spacing: 0.05em;
+    }
+
+    .unit-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* HERO BANNER: PROTOCOLO VASCULITIS */
+    .hero-banner {
+      width: 100%;
+      background: linear-gradient(135deg, #00364f 0%, #004d70 50%, #002538 100%);
+      color: #ffffff;
+      padding: 2.25rem 0 2rem 0;
+      position: relative;
+      border-bottom: 4px solid var(--accent-coral);
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(225, 29, 72, 0.25);
+      border: 1px solid rgba(254, 205, 211, 0.5);
+      color: #ffe4e6;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      box-shadow: 0 0 14px rgba(225, 29, 72, 0.35);
+    }
+
+    .header-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: #fecdd3;
+    }
+
+    .hero-banner h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-banner .subtitle {
+      font-size: 1.02rem;
+      color: #dbeafe;
+      max-width: 880px;
+      line-height: 1.5;
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+    }
+
+    /* TARJETA OFICIAL DEL PACIENTE CITADO */
+    .patient-card-container {
+      background: rgba(255, 255, 255, 0.98);
+      color: var(--text-main);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.35rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      border-left: 6px solid var(--accent-coral);
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .patient-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .patient-card-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      letter-spacing: 0.03em;
+    }
+
+    .live-pulse {
+      width: 10px;
+      height: 10px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulse 1.8s infinite;
+    }
+
+    .live-pulse.coral {
+      background: #e11d48;
+      box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(225, 29, 72, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+    }
+
+    .patient-study-tag {
+      background: var(--accent-soft-coral);
+      color: #9f1239;
+      border: 1px solid var(--accent-border-coral);
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .patient-card-body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem 1.25rem;
+    }
+
+    .patient-data-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .p-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .p-value {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .p-value.p-nhc {
+      font-family: monospace;
+      color: var(--sergas-navy);
+      font-size: 1.05rem;
+    }
+
+    .p-value.p-date {
+      color: var(--accent-coral);
+    }
+
+    /* ALERTA CLÍNICA PRINCIPAL: 90 MINUTOS DE ESPERA PARA PASAR A MÁQUINA */
+    .alert-banner-vasculitis {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 2px solid var(--accent-border-coral);
+      border-left: 6px solid var(--accent-coral);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.35rem;
+      box-shadow: 0 4px 16px rgba(225, 29, 72, 0.12);
+      margin-top: 1rem;
+    }
+
+    .vasculitis-grid-pills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+
+    .vasculitis-pill {
+      background: var(--accent-soft-coral);
+      border: 1.5px solid var(--accent-border-coral);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.9rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .vasculitis-pill.blue {
+      background: var(--sergas-soft-blue);
+      border-color: #bae6fd;
+    }
+
+    .vasculitis-pill.amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .pill-icon {
+      font-size: 1.35rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .pill-content h4 {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
+      line-height: 1.25;
+    }
+
+    .pill-content p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    /* SECCIÓN DE VÍDEO EXPLICATIVO */
+    .video-section {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .video-header-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .video-duration {
+      font-size: 0.78rem;
+      background: var(--sergas-soft-blue);
+      color: var(--sergas-blue);
+      border: 1px solid var(--border-subtle);
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #000000;
+      box-shadow: var(--shadow-md);
+      aspect-ratio: 16 / 9;
+      max-height: 480px;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    
+
+    
+
+    
+
+    /* GRID DE 3 TARJETAS EXPLICATIVAS (ESTÁNDAR PET_PREP_PAGE CON 90 MINUTOS) */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all var(--transition-normal);
+      border-top: 4px solid var(--sergas-blue);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card.card-coral {
+      border-top-color: var(--accent-coral);
+    }
+
+    .card.card-amber {
+      border-top-color: var(--warning);
+    }
+
+    .card-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon-circle.coral {
+      background: var(--accent-soft-coral);
+      color: var(--accent-coral);
+      border: 1px solid var(--accent-border-coral);
+    }
+
+    .card-icon-circle.amber {
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
+    }
+
+    .card-icon-circle.blue {
+      background: var(--sergas-soft-blue);
+      color: var(--sergas-blue);
+      border: 1px solid #bae6fd;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      margin-bottom: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .card-list li {
+      position: relative;
+      padding-left: 1.4rem;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0.25rem;
+      color: var(--sergas-blue);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .card.card-coral .card-list li::before {
+      color: var(--accent-coral);
+    }
+
+    /* CRONOLOGÍA / TIMELINE */
+    .timeline-section {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+      padding: 1.75rem;
+      margin-top: 2rem;
+    }
+
+    .timeline-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-header h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .timeline-header p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      position: relative;
+    }
+
+    .t-step {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      position: relative;
+      border-left: 4px solid var(--sergas-blue);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .t-step.highlight-coral {
+      background: var(--accent-soft-coral);
+      border-color: var(--accent-border-coral);
+      border-left-color: var(--accent-coral);
+    }
+
+    .t-step.highlight-amber {
+      background: #fffbeb;
+      border-color: #fde68a;
+      border-left-color: #d97706;
+    }
+
+    .t-step-time {
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--sergas-blue);
+    }
+
+    .t-step.highlight-coral .t-step-time {
+      color: #9f1239;
+    }
+
+    .t-step-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .t-step-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* ASISTENTE CHATBOT ON-PAGE */
+    .assistant-card-section {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border: 1.5px solid #d0e3ef;
+      border-top: 4px solid var(--accent-coral);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-top: 2rem;
+      box-shadow: 0 8px 24px rgba(0, 48, 76, 0.08);
+    }
+
+    .chip-btn {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 6px 13px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--sergas-navy);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .chip-btn:hover {
+      background: var(--sergas-soft-blue);
+      border-color: var(--sergas-blue);
+      color: var(--sergas-blue);
+      transform: translateY(-1px);
+    }
+
+    /* CONTROL DE GLUCEMIA */
+    .diabetes-wrapper {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .diabetes-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .diabetes-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+    }
+
+    .diabetes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      color: var(--text-main);
+      background: #ffffff;
+      font-family: inherit;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--sergas-blue);
+      box-shadow: 0 0 0 3px rgba(0, 126, 180, 0.15);
+    }
+
+    .glucose-result-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      display: none;
+    }
+
+    .glucose-result-box.green {
+      display: block;
+      background: #ecfdf5;
+      border: 1.5px solid #6ee7b7;
+      color: #065f46;
+    }
+
+    .glucose-result-box.amber {
+      display: block;
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      color: #92400e;
+    }
+
+    .glucose-result-box.red {
+      display: block;
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+      color: #991b1b;
+    }
+
+    /* CANCELACIÓN */
+    .cancellation-wrapper {
+      background: #ffffff;
+      border: 1px solid #fca5a5;
+      border-radius: var(--radius-lg);
+      margin-top: 2rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cancel-trigger-header {
+      background: #fef2f2;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      transition: background var(--transition-fast);
+    }
+
+    .cancel-trigger-header:hover {
+      background: #fee2e2;
+    }
+
+    .cancel-accordion-content {
+      padding: 1.5rem;
+      display: none;
+      border-top: 1px solid #fca5a5;
+      background: #ffffff;
+    }
+
+    .cancel-accordion-content.open {
+      display: block;
+    }
+
+    /* BOTONES */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .btn-coral {
+      background: linear-gradient(135deg, var(--accent-coral) 0%, #be123c 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+    }
+
+    .btn-coral:hover {
+      background: linear-gradient(135deg, #be123c 0%, #881337 100%);
+      transform: translateY(-1px);
+    }
+
+    /* CHATBOT FLOTANTE Y VENTANA */
+    .floating-chat-trigger {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: linear-gradient(135deg, var(--accent-coral) 0%, #be123c 100%);
+      color: #ffffff;
+      border-radius: 50px;
+      padding: 0.85rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 8px 24px rgba(225, 29, 72, 0.4);
+      cursor: pointer;
+      z-index: 1000;
+      border: 2px solid #ffffff;
+      transition: all var(--transition-fast);
+    }
+
+    .floating-chat-trigger:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(225, 29, 72, 0.5);
+    }
+
+    .chat-window {
+      position: fixed;
+      bottom: 5.5rem;
+      right: 1.5rem;
+      width: 410px;
+      max-width: calc(100vw - 2rem);
+      height: 600px;
+      max-height: calc(100vh - 7rem);
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 18px 45px rgba(0, 48, 76, 0.28);
+      display: none;
+      flex-direction: column;
+      z-index: 1001;
+      overflow: hidden;
+      border: 1.5px solid #d0e3ef;
+      border-top: 5px solid var(--accent-coral);
+    }
+
+    .chat-window.open {
+      display: flex;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #004868 0%, #002f45 100%);
+      color: #ffffff;
+      padding: 0.9rem 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .chat-header-title h4 {
+      font-size: 0.96rem;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .chat-header-title p {
+      font-size: 0.72rem;
+      color: #bae6fd;
+      margin: 0;
+    }
+
+    .chat-close-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+
+    .chat-close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: #f8fafc;
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 0.85rem 1.05rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      word-break: break-word;
+      animation: fadeInMsg 0.25s ease-out;
+    }
+
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-msg.bot {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid #e2e8f0;
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      position: relative;
+    }
+
+    .chat-msg.user {
+      background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%);
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+      box-shadow: 0 2px 6px rgba(0, 126, 180, 0.25);
+    }
+
+    .chat-typing {
+      display: none;
+      align-self: flex-start;
+      background: #ffffff;
+      padding: 0.6rem 0.95rem;
+      border-radius: var(--radius-md);
+      border: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .typing-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .typing-dots span {
+      width: 6px;
+      height: 6px;
+      background: var(--sergas-blue);
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounceDot 1.3s infinite ease-in-out both;
+    }
+
+    .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes bounceDot {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .bot-typing-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 14px;
+      background-color: var(--sergas-blue);
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blinkCursor 0.7s infinite;
+    }
+
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    .chat-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    .chat-suggestion-chip {
+      background: var(--sergas-soft-blue);
+      color: var(--sergas-navy);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 4px 10px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .chat-suggestion-chip:hover {
+      background: var(--sergas-blue);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .chat-input-bar {
+      padding: 0.75rem;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      padding: 0.65rem 0.9rem;
+      border: 1.5px solid #d0e3ef;
+      border-radius: 25px;
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .chat-input-bar input:focus {
+      border-color: var(--sergas-blue);
+    }
+
+    .chat-send-btn {
+      background: var(--sergas-blue);
+      color: #ffffff;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    /* MODAL DE CONSULTA DIRECTA Y NOTA DE VOZ */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(8, 41, 61, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 520px;
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border-top: 5px solid var(--accent-coral);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.45;
+    }
+
+    /* GRABADORA DE AUDIO */
+    .voice-recorder-box {
+      background: #f8fafc;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .mic-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%);
+      color: #ffffff;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 126, 180, 0.3);
+      transition: all 0.2s;
+    }
+
+    .mic-btn.recording {
+      background: #ef4444;
+      animation: pulse 1.2s infinite;
+    }
+
+    /* FOOTER */
+    footer {
+      width: 100%;
+      background: #ffffff;
+      border-top: 3px solid var(--sergas-blue);
+      padding: 2.25rem 0 1.5rem 0;
+      margin-top: 3.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-banner h1 { font-size: 1.7rem; }
+      .vasculitis-grid-pills { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .timeline-steps { grid-template-columns: 1fr; }
+      .chat-window {
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        bottom: 5.5rem;
+        height: 70vh;
+      }
+    }
+  
+    /* ==========================================================================
+       CHATBOT INTERACTIVO CON VOZ Y GEMINI IA (SERGAS)
+       ========================================================================== */
+    .chat-engine-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 0.68rem !important;
+      padding: 2px 7px !important;
+      border-radius: 10px !important;
+      font-weight: 700 !important;
+      background: rgba(255, 255, 255, 0.18) !important;
+      color: #e0f2fe !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      letter-spacing: 0.2px !important;
+      transition: all 0.3s ease !important;
+      white-space: nowrap !important;
+    }
+
+    .chat-engine-badge.gemini {
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%) !important;
+      color: #ffffff !important;
+      border-color: #a5b4fc !important;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5) !important;
+    }
+
+    .chat-header-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      margin-left: auto !important;
+    }
+
+    .chat-header-btn {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 50% !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.95rem !important;
+      transition: all 0.2s ease !important;
+      padding: 0 !important;
+    }
+
+    .chat-header-btn:hover {
+      background: rgba(255, 255, 255, 0.28) !important;
+      transform: scale(1.05) !important;
+    }
+
+    .chat-header-btn.active {
+      background: #0ea5e9 !important;
+      color: #ffffff !important;
+      border-color: #7dd3fc !important;
+      box-shadow: 0 0 8px rgba(14, 165, 233, 0.6) !important;
+    }
+
+    .chat-mic-btn {
+      background: #f1f5f9 !important;
+      color: #334155 !important;
+      border: 1.5px solid #cbd5e1 !important;
+      width: 38px !important;
+      height: 38px !important;
+      border-radius: 50% !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      transition: all 0.2s ease !important;
+      font-size: 1.05rem !important;
+      padding: 0 !important;
+      margin-right: 4px !important;
+    }
+
+    .chat-mic-btn:hover {
+      background: #e2e8f0 !important;
+      border-color: #94a3b8 !important;
+    }
+
+    .chat-mic-btn.listening {
+      background: #dc2626 !important;
+      color: #ffffff !important;
+      border-color: #ef4444 !important;
+      animation: pulseMic 1.4s infinite !important;
+    }
+
+    @keyframes pulseMic {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); }
+      70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); transform: scale(1.08); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
+    }
+
+    .bot-speak-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      padding: 3px 8px !important;
+      border-radius: 12px !important;
+      background: #f1f5f9 !important;
+      border: 1px solid #e2e8f0 !important;
+      color: #475569 !important;
+      font-size: 0.73rem !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      font-family: inherit !important;
+      margin-top: 6px !important;
+    }
+
+    .bot-speak-btn:hover {
+      background: #e2e8f0 !important;
+      color: #007eb4 !important;
+    }
+
+    .bot-speak-btn.speaking {
+      background: #dbeafe !important;
+      color: #1d4ed8 !important;
+      border-color: #93c5fd !important;
+      animation: pulseVoice 1.2s infinite ease-in-out !important;
+    }
+
+    @keyframes pulseVoice {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.03); }
+    }
+
+    .chat-msg-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin-top: 6px !important;
+    }
+
+    input.recording-active {
+      border-color: #dc2626 !important;
+      background: #fff5f5 !important;
+    }
+
+  </style>
+</head>
+<body>
+<!-- ==============================================================================
+     BARRA FIXA SUPERIOR: REVISOR OFICIAL DE AUDIOGUÍAS (13 PROTOCOLOS)
+     ============================================================================== -->
+<style id="audioguia-switcher-styles">
+.audioguia-official-topbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #00364e 0%, #004868 60%, #00608a 100%);
+  color: #ffffff;
+  padding: 0.5rem 1.25rem;
+  z-index: 999999;
+  box-shadow: 0 4px 18px rgba(0, 30, 50, 0.4);
+  border-bottom: 2px solid #007eb4;
+  font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+.audioguia-official-topbar * {
+  box-sizing: border-box;
+}
+.topbar-wrapper {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.topbar-left-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.btn-return-portal {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-return-portal:hover {
+  background: #ffffff;
+  color: #004868;
+  transform: translateY(-1px);
+}
+.topbar-label-tag {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #bae6fd;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.topbar-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+.btn-topbar-nav {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 5px 12px;
+  border-radius: 7px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.btn-topbar-nav:hover {
+  background: #ffffff;
+  color: #004868;
+  transform: translateY(-1px);
+}
+.topbar-dropdown-select {
+  background: #ffffff;
+  color: #00364e;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 5px 10px;
+  border-radius: 7px;
+  border: 2px solid #007eb4;
+  outline: none;
+  cursor: pointer;
+  max-width: 380px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.topbar-right-box {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.topbar-supplier-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: #0284c7; color: #fff;
+  white-space: nowrap;
+}
+.topbar-counter-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: rgba(0, 0, 0, 0.3);
+  color: #38bdf8;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  white-space: nowrap;
+}
+@media (max-width: 900px) {
+  .topbar-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .topbar-nav-controls {
+    justify-content: space-between;
+  }
+  .topbar-dropdown-select {
+    max-width: 100%;
+    flex: 1;
+  }
+}
+</style>
+
+<div class="audioguia-official-topbar">
+  <div class="topbar-wrapper">
+    <div class="topbar-left-box">
+      <a href="/index.html#seccion-audioguias" class="btn-return-portal" title="Volver ao Enlace Maestro e ver todas as audioguías">
+        🏛️ <strong>Enlace Maestro</strong>
+      </a>
+      <span class="topbar-label-tag">
+        🎧 REVISOR OFICIAL (06/13)
+      </span>
+      <span class="topbar-supplier-pill">🏢 Ciclotrón</span>
+    </div>
+
+    <div class="topbar-nav-controls">
+      <a href="indexFDG_Endocarditis.html" class="btn-topbar-nav" title="Ir á anterior: 18F-FDG Endocarditis Infecciosa">
+        ⬅️ Anterior
+      </a>
+      <select class="topbar-dropdown-select" onchange="window.location.href = this.value;" title="Cambiar a calquera das 12 audioguías">
+        <option value="indexFDG_NoDiabetico.html" >[01/12] 18F-FDG Oncolóxico (Non Diabéticos · Sen glicemia) (Ciclotrón)</option>
+        <option value="indexFDG.html" >[02/12] 18F-FDG Oncolóxico (Diabéticos · Con envío de glicemia) (Ciclotrón)</option>
+        <option value="indexFDG_Contraste.html" >[03/12] 18F-FDG con Contraste Iodado IV (Ciclotrón)</option>
+        <option value="indexFDG_Endocarditis.html" >[04/12] 18F-FDG Endocarditis Infecciosa (Ciclotrón)</option>
+        <option value="indexFDG_Vasculitis.html" selected>[05/12] 18F-FDG Vasculitis Grandes Vasos (Ciclotrón)</option>
+        <option value="indexFDG_Neurologico.html" >[06/12] 18F-FDG Neurolóxico / Demencias (Ciclotrón)</option>
+        <option value="indexFDG_Neurofisioneurologia.html" >[07/12] 18F-FDG Neurofisioneuroloxía / EEG (Ciclotrón)</option>
+        <option value="indexga68PSMA.html" >[08/12] 68Ga-PSMA Próstata (Radiofarmacia)</option>
+        <option value="indexga68DOTATOC.html" >[09/12] 68Ga-DOTATOC / Neuroendócrinos (Radiofarmacia)</option>
+        <option value="indexf18PSMA.html" >[10/12] 18F-PSMA Próstata (Curium Madrid)</option>
+        <option value="indexf18Colina.html" >[11/12] 18F-Colina Próstata (Ciclotrón)</option>
+        <option value="indexColinaParatiroides.html" >[12/12] 18F-Colina Paratiroides (Ciclotrón)</option>
+      </select>
+      <a href="indexFDG_Neurologico.html" class="btn-topbar-nav" title="Ir á seguinte: 18F-FDG Neurolóxico / Demencias">
+        Seguinte ➡️
+      </a>
+    </div>
+
+    <div class="topbar-right-box">
+      <span class="topbar-counter-pill">05 / 12</span>
+      <a href="/index.html#seccion-audioguias" class="btn-return-portal" style="background: rgba(2, 132, 199, 0.3); border-color: #38bdf8;">
+        📋 Catálogo das 12
+      </a>
+    </div>
+  </div>
+</div>
+<!-- FIN BARRA FIXA REVISOR -->
+
+
+
+
+
+
+  <!-- 1. BARRA SUPERIOR INSTITUCIONAL XUNTA / SERGAS -->
+  <div class="sergas-top-bar">
+    <div class="container sergas-top-container">
+      <div class="sergas-gov-text">
+        <span class="xunta-pill">XUNTA DE GALICIA</span>
+        <span class="sergas-sub">CONSELLERÍA DE SANIDADE · SERGAS</span>
+      </div>
+      <div class="sergas-portal-id">
+        <span>Portal Asistencial ao Paciente</span>
+        <span class="lang-pill">GAL | ES</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CABECERA PRINCIPAL GALARIA -->
+  <header class="galaria-main-header">
+    <div class="container brand-row">
+      <div class="brand-logo-area">
+        <img src="galaria_logo.jpg" alt="Galaria Empresa Pública de Servizos Sanitarios" class="galaria-brand-logo">
+      </div>
+      <div class="hospital-unit-info">
+        <span class="unit-tag">UNIDADE DE MEDICINA NUCLEAR E DIAGNÓSTICO MOLECULAR</span>
+        <span class="unit-sub">Rede Pública PET-CT de Galicia · Galaria · SERGAS</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. HERO BANNER: PET FDG VASCULITIS -->
+  <section class="hero-banner">
+    <div class="container">
+      <div class="header-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"/></svg>
+        <span>PROTOCOLO CLÍNICO: PET FDG VASCULITIS DE GRANDES VASOS</span>
+      </div>
+
+      <h1>PET FDG Vasculitis</h1>
+      <p class="subtitle">
+        Audioguía oficial de preparación para la detección de vasculitis de grandes vasos (Arteritis de Células Gigantes / Temporal y Arteritis de Takayasu) e inflamación vascular. Protocolo estándar de preparación con tiempo de espera prolongado para ir a máquina a los 90 minutos.
+      </p>
+
+      <!-- TARJETA OFICIAL DEL PACIENTE CITADO -->
+      <div class="patient-card-container">
+        <div class="patient-card-header">
+          <div class="patient-card-status">
+            <span class="live-pulse coral"></span>
+            <span>PACIENTE CITADO OFICIAL</span>
+          </div>
+          <span class="patient-study-tag">ESTUDIO: PET FDG VASCULITIS / ARTERITIS DE GRANDES VASOS</span>
+        </div>
+        <div class="patient-card-body">
+          <div class="patient-data-item">
+            <span class="p-label">👤 Nombre del Paciente:</span>
+            <span class="p-value" id="display-patient-name">Cargando paciente...</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">📋 Historia Clínica (NHC):</span>
+            <span class="p-value p-nhc" id="display-patient-nhc">Consultar en Citaciones</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">📅 Fecha y Hora de Cita:</span>
+            <span class="p-value p-date" id="display-patient-cita">Asignada en Agenda</span>
+          </div>
+          <div class="patient-data-item">
+            <span class="p-label">📍 Centro Asistencial y Sala de Espera:</span>
+            <span class="p-value" style="font-size: 0.92rem; font-weight: 700; color: var(--sergas-navy);">Hospital Meixoeiro · Planta -1 (Medicina Nuclear · Recepción y Sala de Espera PET)</span>
+          </div>
+        </div>
+        <div style="margin-top: 0.75rem; padding: 0.5rem 0.5rem 0; border-top: 1px dashed var(--border-subtle); display: flex; justify-content: flex-end;">
+          <button type="button" onclick="toggleCancelAccordion(true)" style="background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.3); color: #dc2626; font-size: 0.85rem; font-weight: 700; padding: 6px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+            ⚠️ ¿No puedes asistir? Cancelar o aplazar cita
+          </button>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- 4. CONTENIDO PRINCIPAL -->
+  <main class="container" style="margin-top: 1.5rem;">
+
+    <!-- SECCIÓN VÍDEO EXPLICATIVO -->
+    <section class="video-section" aria-labelledby="video-heading">
+      <div class="video-header-info">
+        <h2 id="video-heading" class="video-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--accent-coral)"><path d="M8 5v14l11-7z"/></svg>
+          Vídeo Explicativo: <span style="color: var(--accent-coral); font-weight: 800;">Preparación para PET FDG Vasculitis</span>
+        </h2>
+        <span class="video-duration">Duración: 2:50 min</span>
+      </div>
+
+      <div class="video-container">
+        <video id="petVideo" controls poster="galaria_logo.jpg" preload="metadata" title="Vídeo de instrucción para paciente de PET FDG Vasculitis">
+          <source id="videoSource" src="../pet_prep_page/Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
+          <source src="../Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
+          <source src="Video_Completo_PET_CT_1_al_16.mp4" type="video/mp4">
+          Tu navegador no soporta el reproductor de vídeo HTML5.
+        </video>
+      </div>
+    </section>
+
+    <!-- RESUMEN EN 3 TARJETAS CLÍNICAS (IGUAL A PET_PREP_PAGE CON 90 MINUTOS) -->
+    <section class="summary-grid" aria-label="Instrucciones esenciales de preparación">
+      
+      <!-- TARJETA 1: ANTES DE LA PRUEBA -->
+      <article class="card card-coral">
+        <div class="card-icon-circle coral">🏃</div>
+        <h3 class="card-title">1. Antes de la prueba</h3>
+        <ul class="card-list">
+          <li><strong>NO hacer deporte ni ejercicio físico 24 a 48h antes:</strong> Para no desviar la glucosa radiactiva hacia los músculos esqueléticos y mantener limpia la imagen.</li>
+          <li><strong>Dieta pobre en hidratos el día previo:</strong> Evita pan, pasta, arroz, patatas, legumbres, fruta y azúcares. Cena ligero (proteína a la plancha con verduras).</li>
+          <li><strong>Tratamiento inmunosupresor o corticoides:</strong> Si tomas medicación para la vasculitis (ej. prednisona), tómala según las indicaciones de tu reumatólogo/médico.</li>
+        </ul>
+      </article>
+
+      <!-- TARJETA 2: AYUNO DE 6 HORAS -->
+      <article class="card card-amber">
+        <div class="card-icon-circle amber">⏰</div>
+        <h3 class="card-title">2. Dieta y Ayuno de 6 Horas</h3>
+        <ul class="card-list">
+          <li><strong>Mínimo 6 horas de ayuno estricto de alimentos sólidos:</strong> No consumas comida ni zumos o bebidas azucaradas en las 6 horas previas a la hora de tu cita.</li>
+          <li><strong>Bebe abundante agua sola (1 litro):</strong> El agua no rompe el ayuno, limpia las vías urinarias y optimiza la calidad diagnóstica del estudio vascular.</li>
+          <li><strong>Prohibido chicles, caramelos y café:</strong> Estimulan el metabolismo muscular y la salivación.</li>
+        </ul>
+      </article>
+
+      <!-- TARJETA 3: DÍA DE LA PRUEBA Y 90 MINUTOS PARA IR A MÁQUINA -->
+      <article class="card card-coral">
+        <div class="card-icon-circle coral">⏱️</div>
+        <h3 class="card-title">3. Día de la prueba: 90 min de espera</h3>
+        <ul class="card-list">
+          <li><strong>Tiempo de espera para ir a máquina: 90 minutos:</strong> Tras inyectar el radiofármaco 18F-FDG, reposarás en sillón individual en penumbra durante <strong>90 minutos exactos</strong> antes de pasar al tomógrafo PET-CT.</li>
+          <li><strong>¿Por qué 90 minutos?:</strong> En vasculitis de grandes vasos, 90 minutos permiten el aclaramiento óptimo del fondo sanguíneo de la aorta y grandes arterias, maximizando el contraste de la pared inflamada.</li>
+          <li><strong>Ropa cómoda:</strong> Viste ropa holgada sin cremalleras ni botones metálicos en el pecho o cuello. Duración en máquina: ~25 minutos.</li>
+        </ul>
+      </article>
+
+    </section>
+
+    <!-- BANNER DESTACADO DE RADIOPROTECCIÓN -->
+    <div style="background: #ffffff; border: 1.5px solid #d0e3ef; border-left: 6px solid var(--sergas-blue); border-radius: var(--radius-md); padding: 1.15rem 1.4rem; margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-sm);">
+      <div style="font-size: 2.2rem; flex-shrink: 0; line-height: 1;">☢️</div>
+      <div>
+        <h4 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--sergas-navy);">Medidas de Radioprotección tras la prueba:</h4>
+        <p style="margin: 0.35rem 0 0 0; font-size: 0.92rem; color: var(--text-main); line-height: 1.45;">
+          <strong>No se puede estar en contacto con niños ni mujeres embarazadas en las siguientes 6-8 horas tras la prueba</strong> y <strong>beber abundante agua para eliminar el radiofármaco</strong>.
+        </p>
+      </div>
+    </div>
+
+<!-- ASISTENTE CHATBOT ON-PAGE -->
+    <section class="assistant-card-section" aria-labelledby="assistant-card-title">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 52px; height: 52px; border-radius: 12px; background: #ffffff; padding: 4px; border: 1.5px solid #d0e3ef; box-shadow: 0 4px 10px rgba(0, 48, 76, 0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
+            <img src="galaria_logo.jpg" alt="Galaria Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+            <span style="position: absolute; bottom: -3px; right: -3px; width: 12px; height: 12px; background-color: #22c55e; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px #22c55e;"></span>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <h3 id="assistant-card-title" style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--sergas-navy);">
+                Asistente Virtual de Enfermería — PET FDG Vasculitis
+              </h3>
+              <span style="font-size: 0.72rem; background: rgba(225, 29, 72, 0.1); color: var(--accent-coral); border: 1px solid rgba(225, 29, 72, 0.3); padding: 2px 8px; border-radius: 6px; font-weight: 800;">
+                PROTOCOLOS SERGAS · GALARIA
+              </span>
+              <span style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.12); color: #15803d; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 20px; font-weight: 700;">
+                🟢 Asistencia en Directo
+              </span>
+            </div>
+            <p style="margin: 0.35rem 0 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">
+              Consulta tus dudas en tiempo real sobre los 90 minutos de espera a máquina, ayuno de 6 horas, dieta, reposo o pulsa las preguntas rápidas:
+            </p>
+          </div>
+        </div>
+        <button type="button" onclick="toggleChatbot(true)" class="btn btn-coral">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          Abrir Chat de Enfermería
+        </button>
+      </div>
+
+      <!-- Buscador de dudas directo -->
+      <form onsubmit="event.preventDefault(); const val=document.getElementById('pageChatInput').value.trim(); if(val){ openChatAndAsk(val); document.getElementById('pageChatInput').value=''; }" style="display: flex; gap: 0.6rem; margin-bottom: 1.15rem; flex-wrap: wrap;">
+        <input type="text" id="pageChatInput" placeholder="Escribe tu consulta (ej. ¿Por qué 90 minutos para ir a máquina?, ¿cuántas horas de ayuno?, ¿puedo beber agua?)..." style="flex: 1; min-width: 280px; padding: 0.8rem 1.25rem; border-radius: 30px; border: 1.5px solid #d0e3ef; background: #ffffff; color: var(--text-main); font-size: 0.95rem; outline: none;">
+        <button type="submit" class="btn btn-coral" style="border-radius: 30px; padding: 0.8rem 1.6rem;">
+          Consultar al Asistente 💬
+        </button>
+      </form>
+      
+      <!-- Chips rápidos con las preguntas del usuario -->
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <button type="button" class="chip-btn" style="border-color: #fecdd3; background: #fff1f2; color: #9f1239; font-weight: 700;" onclick="openChatAndAsk('¿Por qué el tiempo de espera para ir a máquina es de 90 minutos?')">⏱️ ¿Por qué 90 minutos para ir a máquina?</button>
+        <button type="button" class="chip-btn" style="border-color: #fde68a; background: #fffbeb; color: #b45309; font-weight: 700;" onclick="openChatAndAsk('¿Cuántas horas de ayuno se necesitan para vasculitis?')">⏰ Ayuno de 6 horas</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué es la vasculitis y qué evalúa el PET?')">🩺 ¿Qué es la vasculitis?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Qué dieta debo seguir el día anterior?')">🥗 Dieta previa sin hidratos</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Por qué no puedo hacer deporte 24-48h antes?')">🏃 Reposo sin ejercicio</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Puedo beber agua durante el ayuno?')">💧 ¿Puedo beber agua?</button>
+        <button type="button" class="chip-btn" onclick="openChatAndAsk('¿Dónde se realiza la prueba?')">📍 ¿Dónde es la cita?</button>
+        <button type="button" class="chip-btn" style="border-color: #38bdf8; background: #f0f9ff; color: #0369a1; font-weight: 700;" onclick="openChatAndAsk('¿Cuáles son las medidas de radioprotección tras la prueba?')">☢️ Radioprotección: no contacto 6-8h y beber agua</button>
+        <button type="button" class="chip-btn" style="border-color: var(--sergas-blue); background-color: var(--sergas-soft-blue); color: var(--sergas-navy); font-weight: 700;" onclick="abrirModalConsultaEnfermeria()">📞 Hablar con Enfermería (Llamada / Audio)</button>
+      </div>
+    </section>
+
+    <!-- CONTROL DE GLUCEMIA Y METABOLISMO EN DOMICILIO -->
+    <section class="diabetes-wrapper" aria-labelledby="diabetes-heading">
+      <div class="diabetes-header">
+        <div class="card-icon-circle coral" style="width: 44px; height: 44px; margin-bottom: 0;">🩸</div>
+        <div>
+          <h2 id="diabetes-heading" class="diabetes-title">Control de Glucemia Capilar en Ayunas</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+            Al utilizar 18F-FDG (análogo de la glucosa), el control de azúcar en ayunas es clave para evitar que compita con el radiofármaco.
+          </p>
+        </div>
+      </div>
+
+      <form id="glucoseForm" onsubmit="event.preventDefault(); evaluarGlucemiaDiabetica();">
+        <div class="diabetes-grid">
+          <div class="form-group">
+            <label for="glucosePatientName">Nombre del Paciente <span style="color: var(--danger)">*</span></label>
+            <input type="text" id="glucosePatientName" placeholder="Nombre y apellidos" required>
+          </div>
+          <div class="form-group">
+            <label for="glucoseTime">Hora del control capilar <span style="color: var(--danger)">*</span></label>
+            <input type="time" id="glucoseTime" required>
+          </div>
+          <div class="form-group">
+            <label for="glucoseValue">Glucemia Capilar (mg/dL) <span style="color: var(--danger)">*</span></label>
+            <input type="number" id="glucoseValue" min="30" max="600" placeholder="Ej. 105" required>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; text-align: right;">
+          <button type="submit" class="btn btn-coral">
+            🩺 Validar Glucemia y Registrar en Consola de Enfermería
+          </button>
+        </div>
+      </form>
+
+      <div id="glucoseResultBox" class="glucose-result-box" role="status" aria-live="assertive">
+        <div id="glucoseBadge" style="font-weight: 800; font-size: 1.05rem; margin-bottom: 0.35rem;"></div>
+        <p id="glucoseActionText" style="font-size: 0.92rem; line-height: 1.45;"></p>
+      </div>
+    </section>
+
+    <!-- CANCELACIÓN O REPROGRAMACIÓN DE CITA -->
+    <section class="cancellation-wrapper" aria-labelledby="cancel-heading">
+      <div class="cancel-trigger-header" id="cancelHeaderTrigger" onclick="toggleCancelAccordion()">
+        <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+          <span style="font-size: 1.25rem;">⚠️</span>
+          <span id="cancel-heading" style="font-weight: 800; color: #991b1b; font-size: 1.02rem;">
+            ¿Necesitas cancelar o reprogramar tu prueba de Vasculitis?
+          </span>
+          <span style="background: rgba(239, 68, 68, 0.12); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.35); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;">
+            Procedimiento Oficial
+          </span>
+        </div>
+        <span style="color: #b91c1c; font-size: 0.85rem; font-weight: 700;">Desplegar formulario ▼</span>
+      </div>
+
+      <div class="cancel-accordion-content" id="cancelAccordionContent">
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.45;">
+          El radiofármaco 18F-FDG se produce diariamente con calibración horaria exclusiva y el turno de reposo de 90 minutos se asigna nominalmente. Si te resulta imposible acudir, notifícalo con antelación para reasignar la dosis y agendarte una nueva fecha.
+        </p>
+
+        <form id="cancellationForm" onsubmit="event.preventDefault(); triggerModalConfirmation();">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label for="cancelPatientName">Nombre y Apellidos <span style="color: var(--danger)">*</span></label>
+              <input type="text" id="cancelPatientName" placeholder="Nombre completo" required>
+            </div>
+            <div class="form-group">
+              <label for="cancelPatientNhc">Nº Historia Clínica (NHC) <span style="color: var(--danger)">*</span></label>
+              <input type="text" id="cancelPatientNhc" placeholder="Ej. NHC-131362" required>
+            </div>
+            <div class="form-group">
+              <label for="cancelPatientPhone">Teléfono de Contacto <span style="color: var(--danger)">*</span></label>
+              <input type="tel" id="cancelPatientPhone" placeholder="Ej. 600 000 000" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="cancelReason">Motivo de la cancelación o aplazamiento <span style="color: var(--danger)">*</span></label>
+            <select id="cancelReason" required>
+              <option value="" disabled selected>Selecciona el motivo principal...</option>
+              <option value="imposibilidad_ayuno">No pude cumplir las 6 horas de ayuno estricto</option>
+              <option value="fiebre_empeoramiento">Empeoramiento de síntomas o fiebre</option>
+              <option value="ingreso_hospitalario">Ingreso hospitalario sobrevenido</option>
+              <option value="problema_transporte">Problema sobrevenido de transporte / traslado</option>
+              <option value="otro">Otro motivo justificado</option>
+            </select>
+          </div>
+
+          <div style="text-align: right;">
+            <button type="submit" class="btn" style="background-color: var(--danger); color: #ffffff;">
+              ⚠️ Confirmar Cancelación y Notificar a Medicina Nuclear
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 5. BOTÓN FLOTANTE Y VENTANA DE CHATBOT -->
+  <button type="button" class="floating-chat-trigger" onclick="toggleChatbot()" aria-label="Abrir Asistente Virtual">
+    <span style="font-size: 1.3rem;">💬</span>
+    <span style="font-weight: 700; font-size: 0.92rem;">Enfermería Vasculitis</span>
+  </button>
+
+  <aside class="chat-window" id="chatWindow" aria-label="Ventana de Chatbot">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <div style="width: 34px; height: 34px; border-radius: 50%; background: #ffffff; padding: 2px; display: flex; align-items: center; justify-content: center;">
+          <img src="galaria_logo.jpg" alt="Galaria" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
+        </div>
+        <div>
+          <h4>Enfermería PET Vasculitis</h4>
+          <p>Galaria · SERGAS · Asistencia Activa</p>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <span id="chatEngineBadge" class="chat-engine-badge" title="Estado de la Inteligencia Artificial">🛡️ SERGAS</span>
+        <button type="button" id="chatVoiceToggle" class="chat-header-btn" onclick="toggleChatAutoVoice()" title="Activar lectura de respuestas en voz alta" aria-label="Lectura en voz alta">🔇</button>
+        <button type="button" id="chatConfigBtn" class="chat-header-btn" onclick="toggleChatConfigModal(true)" title="Configuración de Inteligencia Artificial (Gemini)" aria-label="Configuración de IA">⚙️</button>
+        <button type="button" class="chat-close-btn" onclick="toggleChatbot(false)" aria-label="Cerrar chat">✕</button>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        ¡Hola! Soy tu enfermero/a virtual para <strong>PET FDG Vasculitis</strong>.<br><br>📍 <strong>Lugar de la prueba:</strong> Hospital Meixoeiro, <strong>Planta -1</strong> (al lado de Medicina Nuclear).<br>
+        🕒 <strong>Hora de tu cita:</strong> Estás citado/a a las <strong id="chatPatientHoraGreeting">08:20 h</strong>.<br><br>
+        Estoy aquí para ayudarte a preparar tu prueba con la máxima seguridad y claridad. Recuerda los 4 pilares esenciales:<br>
+        1. ⏱️ <strong>Tiempo a máquina: 90 minutos exactos</strong> de reposo en sillón.<br>
+        2. ⏰ <strong>Ayuno estricto de 6 horas</strong> (solo agua pura abundante).<br>
+        3. 🏃 <strong>Reposo físico y muscular 24-48h antes</strong> (nada de deporte).<br>
+        4. 🥗 <strong>Dieta baja en hidratos de carbono</strong> el día anterior.<br><br>
+        ¿Qué duda te gustaría revisar?
+        <div class="chat-suggestions">
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Dónde se realiza la prueba y a qué hora estoy citado?')">📍 ¿Dónde es y mi hora de cita?</button>
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Por qué son 90 minutos de espera para ir a máquina?')">⏱️ ¿Por qué 90 min a máquina?</button>
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Cómo debo hacer el ayuno de 6 horas y el agua?')">⏰ Ayuno de 6 horas</button>
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Por qué no puedo hacer deporte ni ejercicio antes?')">🏃 Reposo muscular</button>
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Qué puedo comer el día anterior?')">🥗 Dieta previa</button>
+          <button type="button" class="chat-suggestion-chip" onclick="openChatAndAsk('¿Debo suspender los corticoides o mi medicación?')">💊 Corticoides y medicación</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-typing" id="chatTyping">
+      El enfermero virtual está redactando tu respuesta
+      <div class="typing-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <form class="chat-input-bar" onsubmit="event.preventDefault(); handleSendChatMessage();">
+      <button type="button" id="chatMicBtn" class="chat-mic-btn" onclick="toggleChatSpeechRecognition()" title="Dictar consulta por voz" aria-label="Dictar consulta por voz">🎙️</button>
+      <input type="text" id="chatInput" placeholder="Escribe tu duda aquí..." autocomplete="off">
+      <button type="submit" class="chat-send-btn" aria-label="Enviar duda">➤</button>
+    </form>
+  </aside>
+
+  <!-- 6. MODAL DE CONSULTA DIRECTA A ENFERMERÍA CON NOTA DE VOZ -->
+  <div class="modal-backdrop" id="nursingModal">
+    <div class="modal-box">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+        <h3 class="modal-title">
+          <span>📞</span> Consulta Directa con Enfermería
+        </h3>
+        <button type="button" onclick="cerrarModalConsultaEnfermeria()" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-muted);">✕</button>
+      </div>
+
+      <p class="modal-desc">
+        Si tienes dudas sobre tu preparación para PET de Vasculitis o tomas corticoides, déjanos tu consulta escrita o <strong>graba una nota de voz</strong>. Nuestro equipo asistencial te llamará por teléfono.
+      </p>
+
+      <form id="nursingDirectForm" onsubmit="event.preventDefault(); enviarConsultaEnfermeria();">
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label for="nursingPatientName">Nombre y Apellidos <span style="color: var(--danger)">*</span></label>
+          <input type="text" id="nursingPatientName" placeholder="Tu nombre completo" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.85rem;">
+          <label for="nursingPatientPhone">Teléfono de contacto para la llamada <span style="color: var(--danger)">*</span></label>
+          <input type="tel" id="nursingPatientPhone" placeholder="Ej. 654 987 321" required>
+        </div>
+
+        <!-- Grabadora de Audio / Micrófono -->
+        <div class="voice-recorder-box">
+          <p style="font-size: 0.85rem; font-weight: 700; color: var(--sergas-navy); margin-bottom: 0.6rem;">
+            🎙️ Grabar Nota de Voz con tu duda (Opcional):
+          </p>
+          <button type="button" class="mic-btn" id="micBtn" onclick="toggleAudioRecording()">
+            🎤
+          </button>
+          <div id="recordingStatus" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Pulsa el micrófono para hablar
+          </div>
+          <audio id="audioPreview" controls style="display: none; width: 100%; margin-top: 0.75rem;"></audio>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label for="nursingTextQuery">O escribe tu mensaje detallado:</label>
+          <textarea id="nursingTextQuery" rows="3" placeholder="Describe brevemente tus dudas o tratamiento..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button type="button" class="btn" onclick="cerrarModalConsultaEnfermeria()" style="background: #e2e8f0; color: var(--text-main);">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-coral">
+            Enviar a Enfermería y Solicitar Llamada
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. MODAL DE CONFIRMACIÓN DE CANCELACIÓN -->
+  <div class="modal-backdrop" id="confirmCancelModal">
+    <div class="modal-box" style="border-top-color: var(--danger);">
+      <h3 class="modal-title" style="color: var(--danger);">
+        ⚠️ ¿Confirmar cancelación de la cita de Vasculitis?
+      </h3>
+      <p class="modal-desc" id="confirmCancelText">
+        Estás a punto de cancelar tu cita para PET FDG Vasculitis. Se liberará la dosis de radiofármaco y el turno de 90 minutos de espera a máquina.
+      </p>
+
+      <div style="background: #fef2f2; border: 1px solid #fca5a5; padding: 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.85rem; color: #991b1b;">
+        Se enviará una notificación oficial urgente al Servicio de Medicina Nuclear (<strong>oscarferreiradavila@gmail.com</strong>) con tus datos clínicos.
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+        <button type="button" class="btn" onclick="cerrarModalConfirmacionCancelacion()" style="background: #e2e8f0; color: var(--text-main);">
+          No, mantener mi cita
+        </button>
+        <button type="button" class="btn" onclick="ejecutarCancelacionDefinitiva()" style="background: var(--danger); color: #ffffff;">
+          Sí, cancelar cita oficialmente
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. FOOTER INSTITUCIONAL -->
+  <footer>
+    <div class="container footer-container">
+      <img src="galaria_logo.jpg" alt="Galaria Empresa Pública" style="height: 38px; width: auto; object-fit: contain;">
+      <p style="font-weight: 700; color: var(--sergas-navy); margin: 0;">
+        © Galaria - Empresa Pública de Servizos Sanitarios, S.A. | Servizo Galego de Saúde (SERGAS)
+      </p>
+      <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">
+        Unidade de Medicina Nuclear e Diagnóstico Molecular · Hospital Meixoeiro (Vigo)
+      </p>
+      <p style="margin: 0; font-size: 0.78rem; color: #94a3b8;">
+        Protocolo clínico validado para Vasculitis de Grandes Vasos (EANM / SNMMI Guidelines).
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       LÓGICA JAVASCRIPT DEL PROGRAMA: PET FDG VASCULITIS
+       ========================================================================== -->
+  <script>
+    const CONFIG = {
+      NOMBRE_CENTRO: "Galaria - SERGAS · Hospital Meixoeiro",
+      TELEFONO: "986 811 111",
+      EMAIL_NOTIFICACION_CANCELACION: "oscarferreiradavila@gmail.com",
+      DATABASE_API_URL: "/api/enfermeria/base_datos",
+      CANCEL_ENDPOINT: "/api/citas/cancelar"
+    };
+
+    /* INICIALIZACIÓN */
+    document.addEventListener("DOMContentLoaded", () => {
+      initPatientData();
+    });
+
+    /* 1. LECTURA Y SINCRONIZACIÓN DEL PACIENTE */
+    function initPatientData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let nombre = urlParams.get('nombre') || urlParams.get('name') || sessionStorage.getItem('pet_patient_name') || localStorage.getItem('pet_patient_name') || "Carmen Varela Rey";
+      let nhc = urlParams.get('nhc') || urlParams.get('historia') || sessionStorage.getItem('pet_patient_nhc') || localStorage.getItem('pet_patient_nhc') || "NHC-142850";
+      let fecha = urlParams.get('fecha') || urlParams.get('cita') || sessionStorage.getItem('pet_patient_fecha') || "2026-11-18";
+      let hora = urlParams.get('hora') || sessionStorage.getItem('pet_patient_hora') || "09:00";
+
+      document.getElementById("display-patient-name").textContent = nombre;
+      document.getElementById("display-patient-nhc").textContent = nhc;
+      document.getElementById("display-patient-cita").textContent = `${fecha} a las ${hora} h`;
+
+      const cancelName = document.getElementById("cancelPatientName");
+      if (cancelName) cancelName.value = nombre;
+      const cancelNhc = document.getElementById("cancelPatientNhc");
+      if (cancelNhc) cancelNhc.value = nhc;
+      const glucName = document.getElementById("glucosePatientName");
+      if (glucName) glucName.value = nombre;
+      const nursName = document.getElementById("nursingPatientName");
+      if (nursName) nursName.value = nombre;
+
+      if (urlParams.get('openChat') === '1' || urlParams.get('chat') === '1') {
+        setTimeout(() => toggleChatbot(true), 600);
+      }
+    }
+
+    /* 2. REPRODUCTOR DE VÍDEO */
+    function seekVideo(seconds) {
+      const vid = document.getElementById("petVideo");
+      if (vid) {
+        vid.currentTime = seconds;
+        vid.play().catch(() => {});
+      }
+    }
+
+    /* 3. ASISTENTE CHATBOT VIRTUAL DE ENFERMERÍA */
+    function toggleChatbot(forceOpen) {
+      const win = document.getElementById("chatWindow");
+      if (!win) return;
+      if (forceOpen === true) {
+        win.classList.add("open");
+      } else if (forceOpen === false) {
+        win.classList.remove("open");
+      } else {
+        win.classList.toggle("open");
+      }
+    }
+
+    function openChatAndAsk(question) {
+      toggleChatbot(true);
+      const chatInput = document.getElementById("chatInput");
+      if (chatInput) {
+        chatInput.value = question;
+        handleSendChatMessage();
+      }
+    }
+
+    let isBotTyping = false;
+
+    function getPatientFirstName() {
+      const nameElem = document.getElementById("nursingPatientName");
+      let full = nameElem && nameElem.value ? nameElem.value.trim() : "";
+      if (!full) {
+        const urlParams = new URLSearchParams(window.location.search);
+        full = urlParams.get("paciente") || urlParams.get("nombre") || "";
+      }
+      if (!full) {
+        const titular = document.getElementById("display-patient-name") || document.querySelector(".patient-badge-name");
+        if (titular) full = titular.textContent.trim();
+      }
+      if (!full) return "";
+      const first = full.split(/\s+/)[0];
+      return first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
+    }
+
+    function getPatientCitationInfo() {
+      let nombre = "";
+      let nhc = "";
+      let fecha = "";
+      let hora = "";
+      try {
+        if (typeof resolveCitedPatient === "function") {
+          const p = resolveCitedPatient();
+          if (p) {
+            nombre = p.nombre || "";
+            nhc = p.nhc || "";
+            fecha = p.fecha || "";
+            hora = p.hora || "";
+          }
+        }
+      } catch(e){}
+
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (!nombre) nombre = urlParams.get("nombre") || urlParams.get("name") || urlParams.get("paciente") || "";
+        if (!nhc) nhc = urlParams.get("nhc") || urlParams.get("historia") || urlParams.get("id") || "";
+        if (!fecha) fecha = urlParams.get("fecha") || urlParams.get("cita") || "";
+        if (!hora) hora = urlParams.get("hora") || "";
+      } catch(e){}
+
+      if (!nombre) nombre = sessionStorage.getItem("pet_patient_name") || localStorage.getItem("pet_patient_name") || "";
+      if (!nhc) nhc = sessionStorage.getItem("pet_patient_nhc") || localStorage.getItem("pet_patient_nhc") || "";
+      if (!fecha) fecha = sessionStorage.getItem("pet_patient_fecha") || localStorage.getItem("pet_patient_fecha") || "";
+      if (!hora) hora = sessionStorage.getItem("pet_patient_hora") || localStorage.getItem("pet_patient_hora") || "";
+
+      if (!hora || hora === "Confirmar") hora = "08:20";
+
+      try {
+        if (nombre && nombre !== "Paciente Citado") sessionStorage.setItem("pet_patient_name", nombre);
+        if (nhc && nhc !== "NHC-PENDIENTE") sessionStorage.setItem("pet_patient_nhc", nhc);
+        if (fecha) sessionStorage.setItem("pet_patient_fecha", fecha);
+        if (hora) sessionStorage.setItem("pet_patient_hora", hora);
+      } catch(e){}
+
+      return { nombre, nhc, fecha, hora };
+    }
+
+    async function handleSendChatMessage() {
+      if (typeof isBotTyping !== 'undefined' && isBotTyping) return;
+      const input = document.getElementById("chatInput");
+      const text = input ? input.value.trim() : "";
+      if (!text) return;
+
+      appendChatMessage(escapeHtml(text), "user");
+      if (input) input.value = "";
+      stopChatSpeechRecognition();
+
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (activeSpeakingBtn) {
+        activeSpeakingBtn.classList.remove("speaking");
+        activeSpeakingBtn.textContent = "🔊 Escuchar";
+        activeSpeakingBtn = null;
+      }
+
+      const typing = document.getElementById("chatTyping");
+      if (typing) typing.style.display = "flex";
+
+      chatConversationHistory.push({ role: "user", content: text });
+
+      // Filtro de alerta vital inmediata (061 / 112)
+      const qLow = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      if (qLow.includes("dolor de pecho") || qLow.includes("opresion") || qLow.includes("falta de aire") || qLow.includes("asfixia") || qLow.includes("desmayo") || qLow.includes("mareo intenso")) {
+        if (typing) typing.style.display = "none";
+        const emergencyResp = generateOrganicVasculitisResponse(text);
+        typeBotMessage(emergencyResp.html || emergencyResp, emergencyResp.suggestions || []);
+        return;
+      }
+
+      let botHtml = "";
+      let botSuggestions = [];
+      let usedGemini = false;
+
+      try {
+        const askRes = await fetch("/api/chat/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            study_type: "FDG_VASCULITIS",
+            patient_name: typeof getPatientFirstName === 'function' ? getPatientFirstName() : "",
+            patient_hora: (getPatientCitationInfo().hora || "08:20"),
+            patient_fecha: getPatientCitationInfo().fecha,
+            history: chatConversationHistory.map(h => ({ role: h.role, text: h.content })),
+            api_key: getLocalGeminiKey()
+          })
+        });
+
+        if (askRes.ok) {
+          const askData = await askRes.json();
+          if (askData.status === "success" && askData.answer) {
+            usedGemini = true;
+            botHtml = formatMarkdownToHtml(askData.answer);
+            botSuggestions = askData.suggestions || [];
+            const badgeEl = document.getElementById("chatEngineBadge");
+            if (badgeEl) {
+              badgeEl.textContent = "✨ Gemini IA";
+              badgeEl.className = "chat-engine-badge gemini";
+            }
+          }
+        }
+      } catch (err) {}
+
+      if (!usedGemini) {
+        const localResp = generateOrganicVasculitisResponse(text);
+        botHtml = localResp.html || localResp;
+        botSuggestions = localResp.suggestions || [];
+      }
+
+      if (typing) typing.style.display = "none";
+      chatConversationHistory.push({ role: "model", content: botHtml });
+      typeBotMessage(botHtml, botSuggestions);
+    }
+
+    function appendChatMessage(htmlText, type) {
+      const container = document.getElementById("chatMessages");
+      const msg = document.createElement("div");
+      msg.className = `chat-msg ${type}`;
+      msg.innerHTML = htmlText;
+      container.appendChild(msg);
+      container.scrollTop = container.scrollHeight;
+      return msg;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    /* EFECTO TYPEWRITER HUMANO (STREAMING PROGRESIVO DE PALABRAS) */
+    function typeBotMessage(formattedHtml, suggestions) {
+      isBotTyping = true;
+      const container = document.getElementById("chatMessages");
+      const msg = document.createElement("div");
+      msg.className = "chat-msg bot";
+
+      const cursor = document.createElement("span");
+      cursor.className = "bot-typing-cursor";
+      msg.appendChild(cursor);
+      container.appendChild(msg);
+      container.scrollTop = container.scrollHeight;
+
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = formattedHtml;
+      const fullText = tempDiv.innerText || tempDiv.textContent || "";
+      const tokens = fullText.split(/(\s+)/);
+
+      let tokenIndex = 0;
+      let textNode = document.createTextNode("");
+      msg.insertBefore(textNode, cursor);
+
+      const streamTimer = setInterval(() => {
+        if (tokenIndex < tokens.length) {
+          const chunk = tokens.slice(tokenIndex, tokenIndex + 2).join("");
+          textNode.nodeValue += chunk;
+          tokenIndex += 2;
+          container.scrollTop = container.scrollHeight;
+        } else {
+          clearInterval(streamTimer);
+          msg.innerHTML = formattedHtml;
+
+          if (suggestions && suggestions.length > 0) {
+            const sugContainer = document.createElement("div");
+            sugContainer.className = "chat-suggestions";
+            suggestions.forEach(item => {
+              const chip = document.createElement("button");
+              chip.type = "button";
+              chip.className = "chat-suggestion-chip";
+              chip.textContent = item.label;
+              chip.onclick = () => {
+                const inp = document.getElementById("chatInput");
+                if (inp) {
+                  inp.value = item.query;
+                  handleSendChatMessage();
+                }
+              };
+              sugContainer.appendChild(chip);
+            });
+            msg.appendChild(sugContainer);
+          }
+
+          cursor.remove();
+          container.scrollTop = container.scrollHeight;
+          isBotTyping = false;
+        }
+      }, 20);
+    }
+
+    /* SINTETIZADOR CLÍNICO ORGÁNICO PARA PET FDG VASCULITIS */
+    function generateOrganicVasculitisResponse(rawQuery) {
+      const query = rawQuery.trim();
+      const q = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const firstName = getPatientFirstName();
+      const salutation = firstName ? `, ${firstName}` : "";
+
+      // 0. SÍNTOMAS DE ALERTA MÉDICA URGENTE -> 061 / 112
+      if (q.includes("dolor de pecho") || q.includes("opresion") || q.includes("falta de aire") || q.includes("vision borrosa brusca") || q.includes("perdida de vision") || q.includes("desmayo") || q.includes("asfixia")) {
+        return {
+          html: `🚨 <strong style="color:var(--danger);">ALERTA MÉDICA URGENTE${salutation.toUpperCase()}:</strong><br><br>` +
+                `Si experimentas pérdida brusca de visión, visión doble repentina, dolor torácico o asfixia, <strong>llama inmediatamente al 061 o 112</strong> o acude a Urgencias de inmediato.<br><br>` +
+                `<em>En sospecha de arteritis de células gigantes con afectación ocular no se debe demorar la valoración médica.</em>`,
+          suggestions: [
+            { label: "📞 Contactar con Urgencias 112", query: "Necesito asistencia médica urgente" },
+            { label: "🏥 Urgencias Hospital Meixoeiro", query: "¿Dónde está el hospital Meixoeiro?" }
+          ]
+        };
+      }
+
+      // 1. SALUDOS O AGRADECIMIENTOS
+      if (q === "hola" || q.startsWith("hola ") || q === "buenos dias" || q === "buenas tardes" || q === "buenas noches" || q === "ola") {
+        return {
+          html: `¡Hola${salutation}! Te doy la bienvenida al asistente de Enfermería para el <strong>PET/CT 18F-FDG de Vasculitis</strong>.<br><br>` +
+                `Para que la exploración de los grandes vasos sanguíneos sea de máxima calidad diagnóstica, recuerda los 4 puntos clave:<br>` +
+                `1. ⏱️ <strong>Tiempo a máquina: 90 minutos de espera</strong> en sillón tras inyectar el radiofármaco.<br>` +
+                `2. ⏰ <strong>Ayuno estricto de 6 horas</strong> (solo agua pura abundante).<br>` +
+                `3. 🏃 <strong>Reposo físico absoluto 24-48h antes</strong> (sin deporte ni esfuerzos musculares).<br>` +
+                `4. 🥗 <strong>Dieta baja en hidratos de carbono</strong> el día anterior.<br><br>` +
+                `¿Qué detalle te gustaría que revisemos juntos?`,
+          suggestions: [
+            { label: "⏱️ ¿Por qué 90 min?", query: "¿Por qué son 90 minutos de espera para ir a máquina?" },
+            { label: "⏰ Ayuno de 6 horas", query: "¿Cómo debo hacer el ayuno de 6 horas y el agua?" },
+            { label: "🏃 Reposo muscular", query: "¿Por qué no puedo hacer deporte ni ejercicio antes?" },
+            { label: "💊 Corticoides y medicación", query: "¿Debo suspender los corticoides o mi medicación?" }
+          ]
+        };
+      }
+
+      if (q.includes("gracias") || q.includes("muchas gracias") || q.includes("perfecto") || q.includes("entendido")) {
+        return {
+          html: `De nada${salutation}, estamos a tu entera disposición. Recuerda guardar reposo muscular previo y beber agua abundante durante el ayuno.<br><br>` +
+                `Si tienes cualquier otra consulta antes de tu cita, aquí estamos para ayudarte.`,
+          suggestions: [
+            { label: "📍 ¿Dónde acudir?", query: "¿Dónde se realiza la prueba y en qué planta?" },
+            { label: "☢️ Radioprotección en casa", query: "¿Qué precauciones debo tomar tras la prueba?" }
+          ]
+        };
+      }
+
+      // DETECCIÓN MULTI-INTENCIÓN CLÍNICA
+      const modules = [];
+
+      // MÓDULO 1: TIEMPO EN MÁQUINA / 90 MINUTOS
+      if (q.includes("90") || q.includes("tiempo") || q.includes("maquina") || q.includes("ir a maquina") || q.includes("espera") || q.includes("cuanto dura") || q.includes("reposo")) {
+        modules.push({
+          topic: "tiempos",
+          text: `<strong>El tiempo de espera para entrar a máquina es de 90 minutos exactos</strong> tras la inyección del radiofármaco (a diferencia de los 60 minutos convencionales). Esta espera prolongada es crucial para que la sangre circulante elimine el trazador (aclaramiento del pool vascular) y las células inflamatorias de la pared arterial capten la máxima señal, logrando imágenes de gran contraste de la aorta y sus ramas. Luego, dentro del tomógrafo estarás unos <strong>20 minutos</strong> tumbado/a.`
+        });
+      }
+
+      // MÓDULO 2: AYUNO ESTRICTO DE 6 HORAS Y AGUA
+      if (q.includes("ayuno") || q.includes("6") || q.includes("horas") || q.includes("sin comer") || q.includes("hambre") || q.includes("desayun")) {
+        modules.push({
+          topic: "ayuno",
+          text: `<strong>Ayuno estricto de 6 horas de sólidos</strong> previo a tu cita. Durante estas 6 horas <strong>debes beber abundante agua pura sola</strong> (al menos 1 litro). El agua no rompe el ayuno, mantiene una óptima hidratación y facilita la eliminación renal del radiofármaco. Quedan prohibidos chicles, caramelos, café, té y zumos.`
+        });
+      }
+
+      // MÓDULO 3: DIETA PREVIA EL DÍA ANTERIOR
+      if (q.includes("dieta") || q.includes("comer") || q.includes("cena") || q.includes("dia anterior") || q.includes("alimento") || q.includes("pan") || q.includes("pasta") || q.includes("arroz") || q.includes("fruta")) {
+        modules.push({
+          topic: "dieta",
+          text: `<strong>Dieta pobre en hidratos de carbono en las 24 horas previas:</strong> Evita pan, pasta, arroz, patatas, legumbres, fruta, dulces y refrescos azucarados. Se recomienda comer proteínas limpias y verduras (pescado blanco o azul, carne a la plancha, huevos, jamón serrano y ensalada verde aliñada con aceite de oliva). Así reducimos la captación inespecífica de glucosa en el organismo.`
+        });
+      }
+
+      // MÓDULO 4: REPOSO FÍSICO Y MUSCULAR (NADA DE EJERCICIO)
+      if (q.includes("ejercicio") || q.includes("deporte") || q.includes("gimnasio") || q.includes("correr") || q.includes("caminar mucho") || q.includes("esfuerzo") || q.includes("pesas")) {
+        modules.push({
+          topic: "ejercicio",
+          text: `<strong>Reposo físico y muscular 24 a 48 horas antes:</strong> Está totalmente desaconsejado hacer deporte, correr, levantar peso o caminatas largas. Cuando los músculos trabajan, se activan y absorben con avidez el 18F-FDG, lo que podría tapar u ocultar la inflamación de los vasos sanguíneos que el médico especialista necesita evaluar con precisión.`
+        });
+      }
+
+      // MÓDULO 5: ¿QUÉ ES LA VASCULITIS Y QUÉ EVALÚA EL PET?
+      if (q.includes("vasculitis") || q.includes("arteritis") || q.includes("takayasu") || q.includes("temporal") || q.includes("celulas gigantes") || q.includes("aorta") || q.includes("inflamac")) {
+        modules.push({
+          topic: "vasculitis",
+          text: `<strong>¿Qué es la vasculitis y qué busca el PET?:</strong> La vasculitis es una inflamación inmunológica en las paredes de las arterias (como la aorta, ramas supraaórticas o arterias temporales). El PET con 18F-FDG actúa como un rastreador metabólico ultrasensible que identifica exactamente qué vasos están inflamados (arteritis de células gigantes o de Takayasu) y ayuda a monitorizar si el tratamiento médico está funcionando.`
+        });
+      }
+
+      // MÓDULO 6: CORTICOIDES Y MEDICACIÓN HABITUAL
+      if (q.includes("corticoide") || q.includes("prednisona") || q.includes("deflazacort") || q.includes("medicacion") || q.includes("pastilla") || q.includes("reumato") || q.includes("inmunosupresor")) {
+        modules.push({
+          topic: "medicacion",
+          text: `<strong>Corticoides y medicación habitual:</strong> No suspendas tu medicación habitual ni los corticoides salvo que tu reumatólogo o médico prescriptor te lo haya indicado expresamente. Puedes tomar tus pastillas a su hora con agua sola pura. Al llegar a la unidad de PET, informa al personal de enfermería sobre la dosis exacta y hora en que tomaste tus corticoides.`
+        });
+      }
+
+      // MÓDULO 7: AGUA E HIDRATACIÓN
+      if (q.includes("agua") || q.includes("beber") || q.includes("sed") || q.includes("liquido") || q.includes("hidrat")) {
+        modules.push({
+          topic: "agua",
+          text: `<strong>Ingesta de agua:</strong> Beber abundante agua sola pura (1 litro o más) antes y después de la prueba es altamente beneficioso. Ayuda a despejar el fondo vascular, protege tu función renal y permite expulsar con rapidez el exceso de trazador radiactivo a través de la orina.`
+        });
+      }
+
+      // MÓDULO 8: LUGAR Y UBICACIÓN DE LA PRUEBA
+      if (q.includes("donde") || q.includes("lugar") || q.includes("hospital") || q.includes("a que hora") || q.includes("hora") || q.includes("cita") || q.includes("horario") || q.includes("meixoeiro") || q.includes("ubicacion") || q.includes("planta") || q.includes("llegar")) {
+        modules.push({
+          topic: "lugar",
+          text: `La prueba se realiza en el <strong>Hospital Meixoeiro</strong>, en la <strong>Planta -1, al lado de Medicina Nuclear</strong> (Unidad PET-CT).<br><br>• Estás citado/a a las <strong>${getPatientCitationInfo().hora || '08:20'} h</strong>${getPatientCitationInfo().fecha ? ` del día <strong>${getPatientCitationInfo().fecha}</strong>` : ''}.<br>• Te rogamos acudir con unos 10 a 15 minutos de antelación para realizar la admisión con tranquilidad.`
+        });
+      }
+
+      // MÓDULO 9: RADIOPROTECCIÓN TRAS LA PRUEBA
+      if (q.includes("radiacion") || q.includes("radioprotec") || q.includes("peligro") || q.includes("hijos") || q.includes("nino") || q.includes("bebe") || q.includes("embaraz") || q.includes("casa") || q.includes("contacto")) {
+        modules.push({
+          topic: "radioproteccion",
+          text: `<strong>Protección radiológica post-prueba:</strong> Durante las <strong>6 a 8 horas siguientes</strong> a la prueba, mantén una distancia prudencial de al menos 2 metros con mujeres embarazadas y niños pequeños. Bebe agua con frecuencia para eliminar el radiofármaco por la orina. Pasadas esas 6-8 horas, la radiación se reduce a niveles insignificantes y podrás retomar la convivencia habitual.`
+        });
+      }
+
+      // MÓDULO 10: TRANQUILIDAD, ANSIEDAD O DOLOR
+      if (q.includes("miedo") || q.includes("claustrofob") || q.includes("nervios") || q.includes("ansiedad") || q.includes("dolor") || q.includes("pinchazo") || q.includes("tubo")) {
+        modules.push({
+          topic: "tranquilidad",
+          text: `<strong>Tranquilidad y confort:</strong> La prueba es totalmente indolora. El tomógrafo PET-CT es amplio y abierto por ambos extremos. Nuestro equipo de enfermería y técnicos estará acompañándote y monitorizándote de forma continua, pudiendo hablar con ellos en cualquier momento a través del interfono.`
+        });
+      }
+
+      // CONSTRUCCIÓN ORGÁNICA MULTI-RESPUESTA
+      if (modules.length > 0) {
+        let multiHtml = "";
+        if (modules.length === 1) {
+          multiHtml = `${modules[0].text}`;
+        } else {
+          multiHtml = `Con mucho gusto te resuelvo estas dudas de manera conjunta${salutation}:<br><br>`;
+          const connectors = [
+            "• <strong>En primer lugar</strong>, respecto a los tiempos y reposo: ",
+            "• <strong>Por otra parte</strong>, en lo relativo a la preparación alimentaria: ",
+            "• <strong>Además</strong>, ten en cuenta que: ",
+            "• <strong>Asimismo</strong>, conviene recordar que: "
+          ];
+          modules.forEach((mod, idx) => {
+            const connector = connectors[idx] || "• ";
+            multiHtml += `${connector}${mod.text}<br><br>`;
+          });
+        }
+
+        const suggestions = [];
+        const covered = modules.map(m => m.topic);
+        if (!covered.includes("tiempos")) suggestions.push({ label: "⏱️ ¿Por qué 90 min?", query: "¿Por qué son 90 minutos de espera a la máquina?" });
+        if (!covered.includes("ayuno")) suggestions.push({ label: "⏰ Ayuno de 6 horas", query: "¿Cómo debo hacer el ayuno de 6 horas y el agua?" });
+        if (!covered.includes("ejercicio")) suggestions.push({ label: "🏃 Reposo muscular", query: "¿Por qué no puedo hacer deporte antes?" });
+        if (!covered.includes("medicacion")) suggestions.push({ label: "💊 Corticoides", query: "¿Debo suspender los corticoides o mi medicación?" });
+        if (!covered.includes("radioproteccion")) suggestions.push({ label: "☢️ Radioprotección en casa", query: "¿Qué cuidados debo tener tras la prueba con mi familia?" });
+
+        return {
+          html: multiHtml,
+          suggestions: suggestions.slice(0, 3)
+        };
+      }
+
+      // CASO: PREGUNTA NO RECONOCIDA O DUDA ESPECÍFICA NO PROTOCOLIZADA
+      const cleanDuda = query.replace(/"/g, '&quot;').replace(/'/g, "\\'");
+      return {
+        html: `No dispongo de una respuesta clínica protocolizada exacta para esa consulta específica${salutation}.<br><br>` +
+              `Dado que la <strong>Vasculitis de Grandes Vasos</strong> requiere máxima precaución con tu medicación e historia reumatológica, <strong>te recomendamos enviar tu duda directamente al equipo de Enfermería de Medicina Nuclear</strong>:<br><br>` +
+              `<div style="background: var(--sergas-soft-blue); border: 1.5px dashed var(--sergas-blue); border-radius: 12px; padding: 14px; text-align: center; margin: 10px 0 6px;">` +
+              `<p style="font-size: 0.84rem; color: var(--sergas-navy); margin: 0 0 10px; font-weight: 700;">¿Deseas enviar esta consulta al equipo de Enfermería?</p>` +
+              `<button type="button" onclick="transferirDudaAEnfermeria('${cleanDuda}')" style="background: linear-gradient(135deg, var(--sergas-blue) 0%, var(--sergas-navy) 100%); color: #ffffff; border: none; padding: 10px 20px; border-radius: 24px; font-size: 0.86rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 4px 12px rgba(0, 126, 180, 0.28); font-family: inherit;">` +
+              `📞 Enviar esta duda a Enfermería` +
+              `</button>` +
+              `<div style="font-size: 0.75rem; color: #64748b; margin-top: 7px;">Cargaremos tu pregunta en el formulario y te llamaremos al teléfono facilitado</div>` +
+              `</div>`,
+        suggestions: [
+          { label: "📞 Enviar duda a Enfermería", query: "Quiero enviar mi duda a enfermería" },
+          { label: "🎙️ Grabar nota de voz", query: "Quiero grabar una nota de voz para enfermería" },
+          { label: "⏱️ ¿Por qué 90 min?", query: "¿Por qué son 90 minutos de espera para ir a máquina?" },
+          { label: "💊 Corticoides y medicación", query: "¿Debo suspender los corticoides o mi medicación?" }
+        ]
+      };
+    }
+
+    function transferirDudaAEnfermeria(dudaText) {
+      abrirModalConsultaEnfermeria();
+      const queryField = document.getElementById("nursingTextQuery");
+      if (queryField && dudaText && dudaText.trim() && !dudaText.includes("Quiero enviar mi duda")) {
+        queryField.value = dudaText.trim();
+      }
+      setTimeout(() => {
+        const phone = document.getElementById("nursingPatientPhone");
+        if (phone && !phone.value) phone.focus();
+      }, 250);
+    }
+
+    /* 4. CONTROL DE GLUCEMIA Y SEMÁFORO METABÓLICO */
+    function evaluarGlucemiaDiabetica() {
+      const valInput = document.getElementById("glucoseValue");
+      const val = parseInt(valInput.value, 10);
+      const box = document.getElementById("glucoseResultBox");
+      const badge = document.getElementById("glucoseBadge");
+      const text = document.getElementById("glucoseActionText");
+
+      if (isNaN(val)) return;
+
+      box.className = "glucose-result-box";
+
+      if (val < 140) {
+        box.classList.add("green");
+        badge.textContent = `🟢 GLUCEMIA ÓPTIMA (${val} mg/dL) — APTO PARA LA PRUEBA`;
+        text.textContent = "Tu cifra de glucosa basal en ayunas es adecuada. Mantén el ayuno bebiendo agua sola y acude puntual a tu cita.";
+      } else if (val <= 180) {
+        box.classList.add("amber");
+        badge.textContent = `🟡 GLUCEMIA MODERADA (${val} mg/dL) — PRECAUCIÓN`;
+        text.textContent = "Nivel algo elevado. Bebe abundante agua sola y comunícalo a enfermería en cuanto llegues a la sala.";
+      } else {
+        box.classList.add("red");
+        badge.textContent = `🔴 GLUCEMIA ELEVADA (${val} mg/dL) — NOTIFICACIÓN URGENTE`;
+        text.textContent = "La cifra supera los 180 mg/dL y compite con el radiofármaco. Se ha notificado a la consola médica para valoración.";
+      }
+
+      const patientNameVal = (document.getElementById("glucosePatientName") ? document.getElementById("glucosePatientName").value : "") || "Paciente";
+      const glucoseTimeVal = (document.getElementById("glucoseTime") ? document.getElementById("glucoseTime").value : "") || "08:00";
+
+      if (typeof registrarGlucemiaEcosistema === "function") {
+        registrarGlucemiaEcosistema({
+          paciente_nombre: patientNameVal,
+          hora_control_capilar: glucoseTimeVal,
+          glucemia_mg_dl: val,
+          origen: "SEMÁFORO_GLUCEMIA_VASCULITIS",
+          nivel: val >= 200 ? "ROJO_PREFERENTE" : (val > 180 ? "ALERTA_GLUCEMIA_ALTA" : "CONTROL_GLUCEMIA"),
+          mensaje_alerta: `Control glucemia capilar Vasculitis: ${val} mg/dL a las ${glucoseTimeVal} h (${patientNameVal})`
+        });
+      }
+
+      enviarRegistroEnfermeria({
+        origen: "SEMÁFORO_GLUCEMIA_VASCULITIS",
+        nivel: val >= 200 ? "ROJO_PREFERENTE" : (val > 180 ? "ALERTA_GLUCEMIA_ALTA" : "CONTROL_GLUCEMIA"),
+        paciente_nombre: patientNameVal,
+        hora_control_capilar: glucoseTimeVal,
+        glucemia_mg_dl: val,
+        mensaje_escrito: `Glucemia reportada en domicilio: ${val} mg/dL para PET FDG Vasculitis`
+      });
+    }
+
+    /* 5. MODAL CONSULTA DIRECTA Y NOTA DE VOZ */
+    function abrirModalConsultaEnfermeria() {
+      const m = document.getElementById("nursingModal");
+      if (m) m.classList.add("active");
+    }
+
+    function cerrarModalConsultaEnfermeria() {
+      const m = document.getElementById("nursingModal");
+      if (m) m.classList.remove("active");
+    }
+
+    /* Grabación de Audio con Web Audio API y MediaRecorder */
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    async function toggleAudioRecording() {
+      const btn = document.getElementById("micBtn");
+      const status = document.getElementById("recordingStatus");
+      const audioPrev = document.getElementById("audioPreview");
+
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = e => {
+            if (e.data.size > 0) audioChunks.push(e.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            audioPrev.src = audioUrl;
+            audioPrev.style.display = "block";
+            status.textContent = "✅ Nota de voz grabada correctamente (puedes escucharla abajo)";
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          btn.classList.add("recording");
+          status.textContent = "🔴 Grabando tu duda... Pulsa de nuevo para detener.";
+        } catch (err) {
+          status.textContent = "⚠️ Permiso de micrófono no concedido. Puedes escribir tu duda en el cuadro de texto.";
+        }
+      } else {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+          mediaRecorder.stream.getTracks().forEach(t => t.stop());
+        }
+        isRecording = false;
+        btn.classList.remove("recording");
+      }
+    }
+
+    function enviarConsultaEnfermeria() {
+      const nombre = document.getElementById("nursingPatientName").value;
+      const tel = document.getElementById("nursingPatientPhone").value;
+      const msg = document.getElementById("nursingTextQuery").value;
+
+      enviarRegistroEnfermeria({
+        origen: "CONSULTA_DIRECTA_ENFERMERIA_VASCULITIS",
+        nivel: "SOLICITUD_LLAMADA",
+        paciente_nombre: nombre,
+        paciente_telefono: tel,
+        modo_envio: audioChunks.length > 0 ? "AUDIO_Y_TEXTO" : "TEXTO",
+        mensaje_escrito: msg || "Solicitud de llamada sobre preparación para PET FDG Vasculitis",
+        mensaje_alerta: `Llamar a ${nombre} al teléfono ${tel} para resolver dudas de Vasculitis`
+      });
+
+      alert(`✅ Consulta registrada correctamente en la consola de Enfermería de Galaria.\n\nEl equipo asistencial revisará tu mensaje y se pondrá en contacto contigo al teléfono: ${tel}.`);
+      cerrarModalConsultaEnfermeria();
+    }
+
+    /* 6. CANCELACIÓN EN 2 PASOS */
+    function toggleCancelAccordion(forceOpen) {
+      const c = document.getElementById("cancelAccordionContent");
+      if (!c) return;
+      if (forceOpen === true) c.classList.add("open");
+      else c.classList.toggle("open");
+    }
+
+    function triggerModalConfirmation() {
+      const m = document.getElementById("confirmCancelModal");
+      if (m) m.classList.add("active");
+    }
+
+    function cerrarModalConfirmacionCancelacion() {
+      const m = document.getElementById("confirmCancelModal");
+      if (m) m.classList.remove("active");
+    }
+
+    async function ejecutarCancelacionDefinitiva() {
+      const nombre = document.getElementById("cancelPatientName").value;
+      const nhc = document.getElementById("cancelPatientNhc").value;
+      const tel = document.getElementById("cancelPatientPhone").value;
+      const motivo = document.getElementById("cancelReason").value;
+
+      try {
+        await fetch(CONFIG.CANCEL_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            estudio: "PET FDG Vasculitis",
+            paciente: nombre,
+            nhc: nhc,
+            telefono: tel,
+            motivo: motivo,
+            email_notificacion: CONFIG.EMAIL_NOTIFICACION_CANCELACION,
+            fecha_cancelacion: new Date().toISOString()
+          })
+        });
+      } catch (e) {
+        console.warn("Servicio de cancelación local:", e);
+      }
+
+      cerrarModalConfirmacionCancelacion();
+      alert(`✅ Cita cancelada con éxito.\n\nSe ha notificado al Servicio de Medicina Nuclear (Hospital Meixoeiro / Galaria) y a la dirección oficial: ${CONFIG.EMAIL_NOTIFICACION_CANCELACION}. Nos pondremos en contacto contigo para reprogramar tu exploración.`);
+    }
+
+    /* 7. SINCRONIZACIÓN CON BASE DE DATOS LOCAL SQLITE */
+    function enviarRegistroEnfermeria(payload) {
+      try {
+        fetch(CONFIG.DATABASE_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        }).catch(err => console.warn("Sync local:", err));
+      } catch(e) {}
+    }
+  
+
+    /* ==========================================================================
+       GESTIÓN DE VOZ (SPEECH) Y GEMINI IA - ASISTENTE INTEGRADO SERGAS
+       ========================================================================== */
+    var chatConversationHistory = [];
+    var isVoiceAutoPlay = localStorage.getItem("pet_chat_voice") === "true";
+    var isSpeechRecListening = false;
+    var speechRecognitionInstance = null;
+    var activeSpeakingBtn = null;
+
+    function getLocalGeminiKey() {
+      return (localStorage.getItem("gemini_api_key") || "").trim();
+    }
+
+    function toggleChatConfigModal(forceOpen) {
+      const modal = document.getElementById("geminiConfigModal");
+      if (!modal) return;
+      const show = forceOpen !== undefined ? forceOpen : (modal.style.display !== "flex" && !modal.classList.contains("active"));
+      if (show) {
+        modal.style.display = "flex";
+        modal.classList.add("active");
+        const inp = document.getElementById("geminiApiKeyInput");
+        if (inp) inp.value = getLocalGeminiKey();
+        checkGeminiStatus();
+      } else {
+        modal.style.display = "none";
+        modal.classList.remove("active");
+      }
+    }
+
+    function toggleShowApiKey() {
+      const inp = document.getElementById("geminiApiKeyInput");
+      if (!inp) return;
+      inp.type = inp.type === "password" ? "text" : "password";
+    }
+
+    async function checkGeminiStatus() {
+      const statusEl = document.getElementById("geminiKeyStatus");
+      const badgeEl = document.getElementById("chatEngineBadge");
+      let hasKey = false;
+      let modelName = "gemini-3.8-flash";
+
+      try {
+        const res = await fetch("/api/chat/config");
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg.has_key) {
+            hasKey = true;
+            modelName = cfg.model || modelName;
+          }
+        }
+      } catch (err) {}
+
+      if (!hasKey && getLocalGeminiKey()) {
+        hasKey = true;
+      }
+
+      if (hasKey) {
+        if (badgeEl) {
+          badgeEl.textContent = "✨ Gemini IA";
+          badgeEl.className = "chat-engine-badge gemini";
+        }
+        if (statusEl) {
+          statusEl.innerHTML = `🟢 <strong style="color:#059669;">Gemini IA Activo</strong> (${modelName}). El asistente comprende cualquier consulta en lenguaje natural con empatía clínica.`;
+        }
+      } else {
+        if (badgeEl) {
+          badgeEl.textContent = "🛡️ SERGAS";
+          badgeEl.className = "chat-engine-badge";
+        }
+        if (statusEl) {
+          statusEl.innerHTML = `🟡 <strong>Modo Local SERGAS</strong>: Operando con el motor clínico de protocolos hospitalarios. Introduce una clave para activar IA Generativa.`;
+        }
+      }
+    }
+
+    async function saveGeminiApiKey() {
+      const inp = document.getElementById("geminiApiKeyInput");
+      const keyVal = inp ? inp.value.trim() : "";
+      localStorage.setItem("gemini_api_key", keyVal);
+
+      try {
+        await fetch("/api/chat/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ gemini_api_key: keyVal })
+        });
+      } catch (err) {}
+
+      checkGeminiStatus();
+      setTimeout(() => toggleChatConfigModal(false), 350);
+    }
+
+    /* RECONOCIMIENTO DE VOZ POR MICRÓFONO (SPEECH-TO-TEXT) */
+    function initChatSpeechRecognition() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        const mic = document.getElementById("chatMicBtn");
+        if (mic) {
+          mic.title = "Reconocimiento de voz no soportado por este navegador (recomendado Chrome o Edge)";
+          mic.style.opacity = "0.5";
+        }
+        return null;
+      }
+
+      const rec = new SpeechRec();
+      rec.lang = "es-ES";
+      rec.continuous = false;
+      rec.interimResults = true;
+
+      rec.onstart = () => {
+        isSpeechRecListening = true;
+        const mic = document.getElementById("chatMicBtn");
+        const inp = document.getElementById("chatInput");
+        if (mic) mic.classList.add("listening");
+        if (inp) {
+          inp.classList.add("recording-active");
+          inp.placeholder = "🎙️ Escuchando... Di tu duda con claridad...";
+        }
+      };
+
+      rec.onresult = (evt) => {
+        let transcript = "";
+        for (let i = evt.resultIndex; i < evt.results.length; ++i) {
+          transcript += evt.results[i][0].transcript;
+        }
+        const inp = document.getElementById("chatInput");
+        if (inp) inp.value = transcript;
+      };
+
+      rec.onerror = (evt) => {
+        console.warn("Reconocimiento de voz:", evt.error);
+        stopChatSpeechRecognition();
+      };
+
+      rec.onend = () => {
+        stopChatSpeechRecognition();
+        const inp = document.getElementById("chatInput");
+        if (inp && inp.value.trim().length > 2) {
+          setTimeout(() => {
+            if (inp.value.trim().length > 2) {
+              if (typeof handleSendChatMessage === "function") {
+                handleSendChatMessage();
+              } else if (typeof handleUserMessageSubmit === "function") {
+                const fakeEvt = new Event("submit", { cancelable: true });
+                handleUserMessageSubmit(fakeEvt);
+              } else if (typeof processUserMessage === "function") {
+                const val = inp.value.trim();
+                inp.value = "";
+                processUserMessage(val);
+              }
+            }
+          }, 450);
+        }
+      };
+
+      return rec;
+    }
+
+    function toggleChatSpeechRecognition() {
+      if (!speechRecognitionInstance) {
+        speechRecognitionInstance = initChatSpeechRecognition();
+      }
+      if (!speechRecognitionInstance) {
+        alert("Tu navegador no admite reconocimiento de voz nativo. Te recomendamos usar Google Chrome o Microsoft Edge.");
+        return;
+      }
+
+      if (isSpeechRecListening) {
+        speechRecognitionInstance.stop();
+        stopChatSpeechRecognition();
+      } else {
+        try {
+          if (window.speechSynthesis) window.speechSynthesis.cancel();
+          speechRecognitionInstance.start();
+        } catch (err) {
+          console.warn(err);
+          stopChatSpeechRecognition();
+        }
+      }
+    }
+
+    function toggleSpeechRecognition() {
+      toggleChatSpeechRecognition();
+    }
+
+    function stopChatSpeechRecognition() {
+      isSpeechRecListening = false;
+      const mic = document.getElementById("chatMicBtn");
+      const inp = document.getElementById("chatInput");
+      if (mic) mic.classList.remove("listening");
+      if (inp) {
+        inp.classList.remove("recording-active");
+        inp.placeholder = "Escribe o pulsa el micrófono para hablar...";
+      }
+    }
+
+    function stopSpeechRecognition() {
+      stopChatSpeechRecognition();
+    }
+
+    /* SÍNTESIS DE VOZ Y LECTURA EN VOZ ALTA (TEXT-TO-SPEECH) */
+    function updateVoiceToggleUI() {
+      const btn = document.getElementById("chatVoiceToggle");
+      if (!btn) return;
+      if (isVoiceAutoPlay) {
+        btn.textContent = "🔊";
+        btn.classList.add("active");
+        btn.title = "Lectura en voz alta: ACTIVADA (Pulsa para silenciar)";
+      } else {
+        btn.textContent = "🔇";
+        btn.classList.remove("active");
+        btn.title = "Lectura en voz alta: DESACTIVADA (Pulsa para activar)";
+      }
+    }
+
+    function toggleChatAutoVoice() {
+      isVoiceAutoPlay = !isVoiceAutoPlay;
+      localStorage.setItem("pet_chat_voice", isVoiceAutoPlay ? "true" : "false");
+      updateVoiceToggleUI();
+      if (!isVoiceAutoPlay && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        if (activeSpeakingBtn) {
+          activeSpeakingBtn.classList.remove("speaking");
+          activeSpeakingBtn.textContent = "🔊 Escuchar";
+          activeSpeakingBtn = null;
+        }
+      }
+    }
+
+    function cleanHtmlForSpeech(html) {
+      if (!html) return "";
+      let text = html.replace(/<[^>]+>/g, " ");
+      text = text.replace(/18F-FDG/gi, "flúor 18 efe de ge")
+                 .replace(/FDG/gi, "efe de ge")
+                 .replace(/18F-Colina/gi, "flúor 18 colina")
+                 .replace(/18F-PSMA/gi, "flúor 18 pe ese eme a")
+                 .replace(/68Ga/gi, "galio 68")
+                 .replace(/⁶⁸Ga/gi, "galio 68")
+                 .replace(/DOTATOC/gi, "dotatoc")
+                 .replace(/PSMA/gi, "pe ese eme a")
+                 .replace(/PET\/CT/gi, "pet tac")
+                 .replace(/PET-CT/gi, "pet tac")
+                 .replace(/PET/gi, "pet")
+                 .replace(/mg\/dL/gi, "miligramos por decilitro")
+                 .replace(/UI\/kg/gi, "unidades internacionales por kilo")
+                 .replace(/\bmin\b/gi, "minutos")
+                 .replace(/\bh\b/gi, "horas")
+                 .replace(/Planta\s*-1/gi, "Planta menos uno")
+                 .replace(/[-*#•]/g, " ")
+                 .replace(/\s+/g, " ")
+                 .trim();
+      return text;
+    }
+
+    function speakMessageBubble(btn) {
+      if (!window.speechSynthesis) {
+        alert("Tu navegador no soporta síntesis de voz.");
+        return;
+      }
+
+      if (activeSpeakingBtn === btn && window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        btn.classList.remove("speaking");
+        btn.textContent = "🔊 Escuchar";
+        activeSpeakingBtn = null;
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      if (activeSpeakingBtn) {
+        activeSpeakingBtn.classList.remove("speaking");
+        activeSpeakingBtn.textContent = "🔊 Escuchar";
+      }
+
+      const bubble = btn.closest(".chat-msg.bot") || btn.closest(".message-bot") || btn.closest(".message") || btn.parentElement;
+      if (!bubble) return;
+
+      const clone = bubble.cloneNode(true);
+      const actions = clone.querySelectorAll(".chat-msg-actions, .chat-suggestions, .bot-author-tag, .bot-speak-btn");
+      actions.forEach(el => el.remove());
+
+      const plainText = cleanHtmlForSpeech(clone.innerHTML);
+      if (!plainText) return;
+
+      const utter = new SpeechSynthesisUtterance(plainText);
+      utter.lang = "es-ES";
+      utter.rate = 1.0;
+      utter.pitch = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const esVoice = voices.find(v => v.lang.startsWith("es-ES") || v.lang.startsWith("es"));
+      if (esVoice) utter.voice = esVoice;
+
+      activeSpeakingBtn = btn;
+      btn.classList.add("speaking");
+      btn.textContent = "⏹️ Detener";
+
+      utter.onend = () => {
+        btn.classList.remove("speaking");
+        btn.textContent = "🔊 Escuchar";
+        if (activeSpeakingBtn === btn) activeSpeakingBtn = null;
+      };
+
+      utter.onerror = () => {
+        btn.classList.remove("speaking");
+        btn.textContent = "🔊 Escuchar";
+        if (activeSpeakingBtn === btn) activeSpeakingBtn = null;
+      };
+
+      window.speechSynthesis.speak(utter);
+    }
+
+    function formatMarkdownToHtml(md) {
+      if (!md) return "";
+      let html = md
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/g, "<em>$1</em>")
+        .replace(/\n\s*•\s*(.*?)(?=\n|$)/g, "<br>• $1")
+        .replace(/\n\s*-\s*(.*?)(?=\n|$)/g, "<br>• $1")
+        .replace(/\n\s*\d+\.\s*(.*?)(?=\n|$)/g, "<br><strong>$1</strong>")
+        .replace(/\n{2,}/g, "<br><br>")
+        .replace(/\n/g, "<br>");
+      return html;
+    }
+
+    if (typeof escapeHtml !== "function") {
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+    }
+
+    if (typeof getPatientFirstName !== "function") {
+      function getPatientFirstName() {
+        const nameElem = document.getElementById("nursingPatientName") || document.getElementById("patientName") || document.getElementById("consultName");
+        let full = nameElem && nameElem.value ? nameElem.value.trim() : "";
+        if (!full) {
+          const urlParams = new URLSearchParams(window.location.search);
+          full = urlParams.get("paciente") || urlParams.get("nombre") || sessionStorage.getItem("pet_patient_name") || "";
+        }
+        if (!full) {
+          const titular = document.querySelector(".patient-badge-name") || document.querySelector(".header-user-name") || document.getElementById("display-patient-name");
+          if (titular) full = titular.textContent.trim();
+        }
+        if (!full) return "";
+        const first = full.split(/\s+/)[0];
+        return first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
+      }
+    }
+
+    // Inicialización automática de estado y voz
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        checkGeminiStatus();
+        updateVoiceToggleUI();
+      });
+    } else {
+      checkGeminiStatus();
+      updateVoiceToggleUI();
+    }
+
+  </script>
+
+  <!-- MODAL DE CONFIGURACIÓN DE IA GEMINI -->
+  <div class="modal-backdrop" id="geminiConfigModal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(8,41,61,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99999;padding:1rem;box-sizing:border-box;">
+    <div class="modal-box" style="background:#ffffff;width:100%;max-width:460px;border-radius:16px;padding:1.5rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);position:relative;max-height:90vh;overflow-y:auto;box-sizing:border-box;border-top:4px solid #007eb4;font-family:inherit;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+        <h3 style="margin:0;font-size:1.1rem;font-weight:800;color:#004868;display:flex;align-items:center;gap:6px;">
+          <span>✨</span> Inteligencia Artificial Gemini
+        </h3>
+        <button type="button" onclick="toggleChatConfigModal(false)" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:#64748b;">✕</button>
+      </div>
+      <p style="font-size:0.82rem;color:#64748b;margin-bottom:1rem;line-height:1.45;">
+        Conecta el modelo <strong>Google Gemini</strong> para comprensión total del lenguaje natural médico, empatía clínica y respuestas conversacionales adaptadas. Si no se introduce clave, el asistente utilizará el <strong>motor clínico offline SERGAS</strong>.
+      </p>
+      
+      <div style="margin-bottom:0.85rem;">
+        <label for="geminiApiKeyInput" style="display:block;font-size:0.82rem;font-weight:700;color:#004868;margin-bottom:0.35rem;">API Key de Google Gemini:</label>
+        <div style="position:relative;display:flex;align-items:center;">
+          <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." style="width:100%;padding:0.65rem 2.4rem 0.65rem 0.9rem;border:1.5px solid #cbd5e1;border-radius:8px;font-size:0.88rem;font-family:monospace;box-sizing:border-box;">
+          <button type="button" onclick="toggleShowApiKey()" style="position:absolute;right:8px;background:none;border:none;font-size:0.95rem;color:#64748b;cursor:pointer;" title="Mostrar u ocultar clave">👁️</button>
+        </div>
+        <div style="margin-top:6px;">
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="font-size:0.76rem;color:#007eb4;text-decoration:none;font-weight:600;">🔗 Obtener clave gratuita en Google AI Studio (aistudio.google.com)</a>
+        </div>
+      </div>
+
+      <div id="geminiKeyStatus" style="font-size:0.78rem;padding:8px 12px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:1rem;line-height:1.4;color:#334155;">
+        Comprobando estado del motor...
+      </div>
+
+      <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+        <button type="button" onclick="toggleChatConfigModal(false)" style="background:#e2e8f0;color:#334155;border:none;font-size:0.85rem;padding:0.55rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;">Cerrar</button>
+        <button type="button" onclick="saveGeminiApiKey()" style="background:#007eb4;color:#ffffff;border:none;font-size:0.85rem;padding:0.55rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:700;">Guardar y Activar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/pet_glucose_sync.js"></script>
+  <script src="assets/pet_chat_human_stream.js"></script>
+</body>
+</html>

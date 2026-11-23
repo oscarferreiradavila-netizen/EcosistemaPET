@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dossier Oficial: Ecosistema Digital PET/CT & Medicina Nuclear - Galaria SERGAS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sergas-blue: #007eb4;
+      --sergas-blue-hover: #005b82;
+      --sergas-navy: #004868;
+      --sergas-dark: #08293d;
+      --sergas-soft: #f0f7fb;
+      --sergas-border: #d6e2e9;
+      --text-main: #1e293b;
+      --text-muted: #475569;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Open Sans', -apple-system, sans-serif;
+      color: var(--text-main);
+      background: #f8fafc;
+      line-height: 1.65;
+      font-size: 15px;
+      padding: 40px 20px;
+    }
+    .page-container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 60px 70px;
+      border-radius: 12px;
+      box-shadow: 0 4px 25px rgba(0, 40, 70, 0.08);
+      border: 1px solid var(--sergas-border);
+    }
+    .doc-header-banner {
+      border-bottom: 3px solid var(--sergas-blue);
+      padding-bottom: 25px;
+      margin-bottom: 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .doc-brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--sergas-blue);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .doc-brand-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .btn-print {
+      background: var(--sergas-blue);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-print:hover { background: var(--sergas-blue-hover); }
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.1rem;
+      color: var(--sergas-navy);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.45rem;
+      color: var(--sergas-navy);
+      margin-top: 35px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--sergas-border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      color: var(--sergas-blue);
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+    p { margin-bottom: 14px; }
+    ul { margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+    hr { border: none; border-top: 1px solid var(--sergas-border); margin: 35px 0; }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+    .doc-image-box {
+      margin: 25px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--sergas-border);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      background: #08293d;
+      text-align: center;
+    }
+    .doc-image-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .doc-image-caption {
+      background: #f8fafc;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-top: 1px solid var(--sergas-border);
+      text-align: left;
+    }
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid var(--sergas-border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th {
+      background: var(--sergas-soft);
+      color: var(--sergas-navy);
+      font-weight: 700;
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--sergas-border);
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--sergas-border);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #fafcff; }
+    .alert {
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border-left: 4px solid var(--sergas-blue);
+      background: var(--sergas-soft);
+      font-size: 0.92rem;
+    }
+    .alert-important, .alert-warning {
+      border-left-color: #d97706;
+      background: #fffbeb;
+    }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page-container { box-shadow: none; border: none; padding: 0; }
+      .btn-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div class="doc-header-banner">
+      <div>
+        <div class="doc-brand-title">XUNTA DE GALICIA · CONSELLERÍA DE SANIDADE · SERGAS</div>
+        <div class="doc-brand-subtitle">Galaria · Empresa Pública de Servizos Sanitarios, S.A. | Unidade de Medicina Nuclear</div>
+      </div>
+      <div>
+        <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Guardar en PDF</button>
+      </div>
+    </div>
+    <h1>🏥 Ecosistema Digital PET/CT & Medicina Nuclear</h1>
+<h2>Manual Integral de Arquitectura Asistencial, Algorítmica y Guía Operativa</h2>
+<p><strong>Galaria · Empresa Pública de Servizos Sanitarios | SERGAS (Servizo Galego de Saúde)</strong></p>
+<p><em>Documento Técnico, Clínico y de Gestión Asistencial · Edición Oficial Octubre 2026</em></p>
+<hr>
+<h2>📌 Índice de Contenidos</h2>
+<p style="padding-left: 20px;"><strong>1.</strong> [Visión Global del Ecosistema y Trabajo en Conjunto](#1-visión-global-del-ecosistema-y-trabajo-en-conjunto)</p>
+<ul>
+<li>[El Problema Tradicional en los Servicios de Medicina Nuclear](#11-el-problema-tradicional-en-los-servicios-de-medicina-nuclear)</li>
+<li>[Arquitectura de Interoperabilidad End-to-End](#12-arquitectura-de-interoperabilidad-end-to-end)</li>
+<li>[Matriz de Beneficios Cuantitativos y Cualitativos](#13-matriz-de-beneficios-cuantitativos-y-cualitativos)</li>
+<p style="padding-left: 20px;"><strong>2.</strong> [Programa 1: Portal Clínico de Prescripción Médica](#2-programa-1-portal-clínico-de-prescripción-médica-pet_peticion_medica)</p>
+<li>[Filiación Hospitalaria y Parámetros Dosimétricos](#21-filiación-hospitalaria-y-parámetros-dosimétricos)</li>
+<li>[Catálogo Oficial de 10 Trazadores y Protocolos Clínicos](#22-catálogo-oficial-de-10-trazadores-y-protocolos-clínicos)</li>
+<li>[Cuestionario Clínico Preventivo y Filtros de Seguridad](#23-cuestionario-clínico-preventivo-y-filtros-de-seguridad)</li>
+<li>[Cálculo Dinámico de Prioridad en Tiempo Real](#24-cálculo-dinámico-de-prioridad-en-tiempo-real)</li>
+<li>[Panel "Mis Peticiones Registradas": Auditoría y Visor del Médico](#25-panel-mis-peticiones-registradas-auditoría-y-visor-del-médico)</li>
+<p style="padding-left: 20px;"><strong>3.</strong> [Programa 2: Suite de Triaje Clínico y Agendamiento Matricial](#3-programa-2-suite-de-triaje-clínico-y-agendamiento-matricial-pet_ct_triage)</p>
+<li>[Algoritmo de Priorización Clínica EANM / SERGAS](#31-algoritmo-de-priorización-clínica-eanm--sergas)</li>
+<li>[Parrilla Semanal y Matriz Logística por Radiofármaco](#32-parrilla-semanal-y-matriz-logística-por-radiofármaco)</li>
+<li>[Alertas Técnicas y Reglas de Bloqueo de Seguridad](#33-alertas-técnicas-y-reglas-de-bloqueo-de-seguridad)</li>
+<li>[Gestión de Peonadas y Jornadas Extraordinarias](#34-gestión-de-peonadas-y-jornadas-extraordinarias)</li>
+<li>[Flujo de Confirmación de Pacientes y Envío de Audioguías](#35-flujo-de-confirmación-de-pacientes-y-envío-de-audioguías)</li>
+<p style="padding-left: 20px;"><strong>4.</strong> [Programa 3: Portal de Audioguías y Preparación del Paciente](#4-programa-3-portal-de-audioguías-y-preparación-del-paciente-pet_prep_page)</p>
+<li>[Audioguía Interactiva con Síntesis de Voz](#41-audioguía-interactiva-con-síntesis-de-voz)</li>
+<li>[Cronómetro de Ayuno y Protocolo Dietético Restrictivo](#42-cronómetro-de-ayuno-y-protocolo-dietético-restrictivo)</li>
+<li>[Protocolo Específico de Glucemia en Pacientes Diabéticos](#43-protocolo-específico-de-glucemia-en-pacientes-diabéticos)</li>
+<li>[Chatbot Enfermero Virtual 24/7](#44-chatbot-enfermero-virtual-247)</li>
+<li>[Sistema de Cancelación y Aplazamiento Online](#45-sistema-de-cancelación-y-aplazamiento-online)</li>
+<p style="padding-left: 20px;"><strong>5.</strong> [Programa 4: Consola de Enfermería y Control Pre-Analítico](#5-programa-4-consola-de-enfermería-y-control-pre-analítico-enfermeriahtml)</p>
+<li>[Monitorización Asistencial Previa](#51-monitorización-asistencial-previa)</li>
+<li>[Gestión de Urgencias Diabéticas (Glucemia ≥ 200 mg/dL)](#52-gestión-de-urgencias-diabéticas-glucemia--200-mgdl)</li>
+<li>[Bandeja de Dudas y Solicitudes de Llamada](#53-bandeja-de-dudas-y-solicitudes-de-llamada)</li>
+<li>[Impacto en la Reducción del Absentismo](#54-impacto-en-la-reducción-del-absentismo)</li>
+<p style="padding-left: 20px;"><strong>6.</strong> [Conclusiones y Hoja de Ruta Asistencial](#6-conclusiones-y-hoja-de-ruta-asistencial)</p>
+</ul>
+<hr>
+<h1>1. Visión Global del Ecosistema y Trabajo en Conjunto</h1>
+<h2>1.1. El Problema Tradicional en los Servicios de Medicina Nuclear</h2>
+<p>Históricamente, los centros de Medicina Nuclear y Tomografía por Emisión de Positrones (PET/CT) han enfrentado tres cuellos de botella críticos:</p>
+<p style="padding-left: 20px;"><strong>1.</strong> <strong>Peticiones en papel o formularios no normalizados:</strong> Letra manuscrita difícilmente legible, omisión de datos antropométricos clave (peso, talla) imprescindibles para la dosimetría radiactiva, y falta de información terapéutica reciente (quimioterapia o radioterapia).</p>
+<p style="padding-left: 20px;"><strong>2.</strong> <strong>Logística compleja y vida media ultracorta:</strong> Los radiofármacos emisores de positrones (como el Flúor-18 con $T_{1/2} \approx 109.7$ min o el Galio-68 con $T_{1/2} \approx 67.7$ min) sufren decaimiento continuo desde su síntesis en el ciclotrón. Citar a un paciente sin una parrilla adaptada al radiofármaco genera pérdidas de miles de euros en dosis decaídas e inservibles.</p>
+<p style="padding-left: 20px;"><strong>3.</strong> <strong>Cancelaciones en el día de la cita por mala preparación:</strong> Un paciente que ingiere alimentos azucarados, mastica chicle o presenta glucemias elevadas (> 180 mg/dL) debe ser cancelado inmediatamente en la sala de inyección, perdiéndose la dosis encargada para él y retrasando su tratamiento oncológico.</p>
+<h2>1.2. Arquitectura de Interoperabilidad End-to-End</h2>
+<p>Para dar respuesta definitiva a estos retos, la Unidad de Medicina Nuclear de <strong>Galaria (SERGAS)</strong> ha diseñado un ecosistema modular de cuatro aplicaciones interconectadas mediante una <strong>Base de Datos Clínica Unificada</strong>:</p>
+</pre>
+<p>+-----------------------------------------------------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>ECOSISTEMA DIGITAL PET/CT</th></tr></thead><tbody>
+</tbody></table></div>
+<p>+-----------------------------------------------------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr></tr></thead><tbody>
+</tbody></table></div>
+<p style="padding-left: 20px;"><strong>1.</strong> PRESCRIPCIÓN MÉDICA                v</p>
+<p>+-----------------------+     [ Base de Datos Central ]     +--------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>pet_peticion_medica</th><th>===> ( JSON / CSV / Sheets ) ===></th><th>pet_ct_triage</th></tr></thead><tbody>
+<tr><td>- 10 Trazadores</td><td></td><td>- Triaje P1/P2/P3</td></tr>
+<tr><td>- Priorización en vivo</td><td><================================</td><td>- Parrilla Isótopos</td></tr>
+<tr><td>- Historial de médico</td><td>(Estado Cita Asignada)</td><td>- Bloqueo QT/RT</td></tr>
+</tbody></table></div>
+<p>+-----------------------+                                   | - Envío Audioguía  |</p>
+<p>+--------------------+</p>
+<div class="table-container"><table>
+<thead><tr></tr></thead><tbody>
+</tbody></table></div>
+<p>v</p>
+<p style="padding-left: 20px;"><strong>3.</strong> ASISTENCIA AL PACIENTE                                   2. CONFIRMACIÓN Y CITA</p>
+<p>+-----------------------+                                   +--------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>pet_prep_page</th><th><================================</th><th>SMS / WhatsApp</th></tr></thead><tbody>
+<tr><td>- Audioguía con voz</td><td>(Enlace personalizado)</td><td>con URL de cita</td></tr>
+</tbody></table></div>
+<p>| - Dieta sin hidratos  |                                   +--------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>- Chatbot 24/7</th></tr></thead><tbody>
+<tr><td>- Cancelar / Aplazar</td></tr>
+</tbody></table></div>
+<p>+-----------------------+</p>
+<div class="table-container"><table>
+<thead><tr></tr></thead><tbody>
+</tbody></table></div>
+<p>| (Alertas Glucemia / Dudas)</p>
+<p>v</p>
+<p style="padding-left: 20px;"><strong>4.</strong> CONTROL CLÍNICO ENFERMERÍA</p>
+<p>+-----------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>enfermeria.html</th></tr></thead><tbody>
+<tr><td>- Urgencias Glucemia</td></tr>
+<tr><td>- Llamada a pacientes</td></tr>
+<tr><td>- Cero No-Shows</td></tr>
+</tbody></table></div>
+<p>+-----------------------+</p>
+</pre>
+<h2>1.3. Matriz de Beneficios Cuantitativos y Cualitativos</h2>
+<div class="table-container"><table>
+<thead><tr><th>Beneficio Clave</th><th>Situación Anterior (Tradicional)</th><th>Con el Ecosistema PET/CT</th><th>Impacto Asistencial y Económico</th></tr></thead><tbody>
+<tr><td>**Tiempo de validación de peticiones**</td><td>24 - 48 horas mediante revisión manual de volantes en papel.</td><td>**Validación y cálculo de prioridad instantáneo** (< 3 segundos).</td><td>Agiliza el inicio de tratamientos en pacientes oncológicos urgentes.</td></tr>
+<tr><td>**Legibilidad y Completitud**</td><td>Errores habituales por caligrafía manual, datos dosimétricos ausentes.</td><td>**Formulario 100% digitalizado, normalizado y con validación de campos obligatorios.**</td><td>Cero llamadas del técnico para averiguar peso o antecedentes del paciente.</td></tr>
+<tr><td>**Eficacia en el Agendamiento**</td><td>Citas manuales sin control estricto de cupos por radiofármaco.</td><td>**Matriz algorítmica por isótopo, franja horaria y vida media física.**</td><td>Aprovechamiento del 100% de la actividad radioactiva del ciclotrón.</td></tr>
+<tr><td>**Liberación a Personal de Administración**</td><td>El administrativo debía llamar uno a uno a decenas de pacientes para citar y explicar la preparación.</td><td>**Confirmación digital en 2 fases y envío automático de la audioguía por SMS.**</td><td>Liberación de más del 70% del tiempo administrativo para otras tareas.</td></tr>
+<tr><td>**Más Tiempo Asistencial**</td><td>Médicos y enfermeros consumían su jornada atendiendo llamadas de dudas básicas repetitivas.</td><td>**El paciente resuelve dudas con la audioguía y el chatbot 24/7.**</td><td>El personal sanitario puede centrarse en el cuidado directo del enfermo.</td></tr>
+<tr><td>**Resolución Inmediata de Dudas**</td><td>El paciente esperaba con angustia hasta contactar con el hospital.</td><td>**Chatbot interactivo con respuestas inmediatas avaladas por Guías EANM.**</td><td>Tranquilidad, reducción del estrés y máxima humanización asistencial.</td></tr>
+<tr><td>**Tasa de Cancelaciones ("No-Shows")**</td><td>8% - 12% por falta de ayuno, glucemias altas o ausencias no avisadas.</td><td>**Reducción del absentismo a menos del 1.5%.**</td><td>Ahorro directo de miles de euros en radiofármacos que antes caducaban.</td></tr>
+</tbody></table></div>
+<hr>
+<h1>2. Programa 1: Portal Clínico de Prescripción Médica (`pet_peticion_medica`)</h1>
+<p>El <strong>Portal Clínico de Prescripción</strong> es el punto de partida del ecosistema. Diseñado específicamente para facultativos prescriptores (Oncología Médica, Oncología Radioterápica, Urología, Neumología, Neurología, Cirugía, etc.), sustituye los formularios manuales por un entorno digital asistido con validación clínica automática.</p>
+<div class="doc-image-box"><img src="screenshots/pet_peticion.png" alt="Portal Clínico de Prescripción Médica"><div class="doc-image-caption">📸 Portal Clínico de Prescripción Médica</div></div>
+<h2>2.1. Filiación Hospitalaria y Parámetros Dosimétricos</h2>
+<p>El formulario exige la cumplimentación de los datos estructurales del paciente:</p>
+<ul>
+<li><strong>Filiación:</strong> Nombre completo, Número de Historia Clínica (NHC), fecha de solicitud y servicio solicitante.</li>
+<li><strong>Médico Prescriptor:</strong> Registro del nombre y número de colegiado del médico que emite la orden.</li>
+<li><strong>Datos Antropométricos (Peso y Talla):</strong></li>
+<div class="alert alert-important">
+<p>El peso (kg) y la talla (cm) son variables críticas en Medicina Nuclear. Con ellos se calcula el Índice de Masa Corporal (IMC) y el *Standardized Uptake Value* (SUV), además de determinar la dosis exacta de actividad radioactiva (MBq) a inyectar según los estándares internacionales de la *European Association of Nuclear Medicine* (EANM).</p>
+</div>
+</ul>
+<h2>2.2. Catálogo Oficial de 10 Trazadores y Protocolos Clínicos</h2>
+<p>El facultativo dispone de un selector dinámico con los 10 protocolos diagnósticos estandarizados por Galaria y el SERGAS:</p>
+</pre>
+<p style="padding-left: 20px;"><strong>1.</strong>  18F-FDG Oncológico / Inflamatorio General</p>
+<p style="padding-left: 20px;"><strong>2.</strong>  18F-FDG con Contraste Iodado Diagnóstico</p>
+<p style="padding-left: 20px;"><strong>3.</strong>  18F-FDG Endocarditis + Protocolo HEP (Supresión Miocárdica de Glucosa)</p>
+<p style="padding-left: 20px;"><strong>4.</strong>  68Ga-PSMA (Cáncer de Próstata en Recidiva / Estadificación Inicial de Alto Riesgo)</p>
+<p style="padding-left: 20px;"><strong>5.</strong>  68Ga-DOTATOC Tumores Neuroendocrinos (Receptores de Somatostatina)</p>
+<p style="padding-left: 20px;"><strong>6.</strong>  18F-Colina (Hiperparatiroidismo primario y Adenomas)</p>
+<p style="padding-left: 20px;"><strong>7.</strong>  18F-Paratiroides</p>
+<p style="padding-left: 20px;"><strong>8.</strong>  18F-FDG Neurológico Normal (Diagnóstico Diferencial de Demencias)</p>
+<p style="padding-left: 20px;"><strong>9.</strong>  18F-FDG Neurológico + Neurofisioneurología (Mapeo de Epilepsia Refractaria)</p>
+<p style="padding-left: 20px;"><strong>10.</strong> 18F-PSMA (Diagnóstico Prostático con Marcado de Flúor-18)</p>
+</pre>
+<h2>2.3. Cuestionario Clínico Preventivo y Filtros de Seguridad</h2>
+<p>El formulario incorpora un cuestionario de cribado clínico obligatorio:</p>
+<ul>
+<li><strong>¿Precisa Sedación?:</strong> Identifica a pacientes con claustrofobia severa, agitación o niños para programar la presencia del equipo de Anestesiología.</li>
+<li><strong>Movilidad y Traslado:</strong> Distingue entre pacientes <em>Autónomos</em>, <em>En Silla de Ruedas</em> o <em>Encamados</em>, permitiendo reservar las camillas de inyección apropiadas.</li>
+<li><strong>Alergia a Contrastes Iodados:</strong> En caso afirmativo, desactiva la opción de contraste IV o alerta sobre la necesidad de premedicación corticoidea.</li>
+<li><strong>Diabetes Mellitus y Glucemia Conocida:</strong> Registra el tratamiento (insulina o metformina) y la glucemia capilar reciente.</li>
+<li><strong>Fecha de Fin de Quimioterapia / Radioterapia:</strong> Permite al sistema calcular los días transcurridos desde el último ciclo para evitar bloqueos técnicos.</li>
+</ul>
+<h2>2.4. Cálculo Dinámico de Prioridad en Tiempo Real</h2>
+<p>A medida que el médico introduce la sospecha diagnóstica y la indicación, el algoritmo calcula en pantalla la <strong>Prioridad Asistencial</strong>:</p>
+<ul>
+<li>🔴 <strong>Prioridad 1 (Urgente):</strong> Target < 7 días (Peligro vital, cambio de conducta terapéutica inmediata, infección grave de prótesis o paciente hospitalizado).</li>
+<li>🟡 <strong>Prioridad 2 (Preferente):</strong> Target < 14 días (Estadificación inicial de tumores de rápida progresión, reestadificación post-tratamiento o sospecha de recidiva con marcadores en ascenso).</li>
+<li>🟢 <strong>Prioridad 3 (Ordinaria):</strong> Target > 14 días (Nódulos pulmonares solitarios de bajo riesgo, seguimiento a largo plazo de enfermedad estable o estudios de deterioro cognitivo).</li>
+</ul>
+<h2>2.5. Panel "Mis Peticiones Registradas": Auditoría y Visor del Médico</h2>
+<p>Cada médico accede a una pestaña exclusiva donde puede auditar en tiempo real el ciclo de vida de todas sus peticiones sin necesidad de llamar por teléfono:</p>
+<div class="doc-image-box"><img src="screenshots/pet_peticion_db.png" alt="Base de Datos y Registro de Peticiones del Médico"><div class="doc-image-caption">📸 Base de Datos y Registro de Peticiones del Médico</div></div>
+<ul>
+<li><strong>Visibilidad del Estado de Triaje:</strong></li>
+<li>🟡 `Pendiente de Triaje`: La solicitud ha sido registrada y está en cola de evaluación por el facultativo de Medicina Nuclear.</li>
+<li>🟢 `Cita Asignada`: Muestra la fecha exacta, la hora y el radiofármaco asignado (indicando si se realizará en turno ordinario o en <strong>Peonada</strong>).</li>
+<li>🔵 `Realizado`: La exploración se ha completado y está en fase de informe clínico.</li>
+<li><strong>Búsqueda Dinámica:</strong> Filtrado por NHC, nombre de paciente o fecha.</li>
+<li><strong>Emisión de Volantes Oficiales:</strong> Botón para imprimir en PDF la prescripción clínica completa.</li>
+<li><strong>Interoperabilidad JSON / CSV:</strong> Permite exportar la base de datos completa para su integración con el motor de agendamiento.</li>
+</ul>
+<hr>
+<h1>3. Programa 2: Suite de Triaje Clínico y Agendamiento Matricial (`pet_ct_triage`)</h1>
+<p>La <strong>Suite de Triaje</strong> es el cerebro logístico y asistencial de la Unidad de Medicina Nuclear. Integra un motor en Python y JavaScript capaz de procesar cientos de peticiones procedentes del portal médico o de Google Sheets y asignarlas automáticamente a la parrilla semanal de citación.</p>
+<div class="doc-image-box"><img src="screenshots/pet_triage_dashboard.png" alt="Suite de Triaje y Agendamiento PET/CT"><div class="doc-image-caption">📸 Suite de Triaje y Agendamiento PET/CT</div></div>
+<h2>3.1. Algoritmo de Priorización Clínica EANM / SERGAS</h2>
+<p>El motor analiza los datos clínicos estructurados y aplica las reglas de priorización consensuadas:</p>
+<ul>
+<li><strong>Pacientes Hospitalizados:</strong> Se elevan automáticamente a Prioridad 1 para acortar la estancia en cama hospitalaria.</li>
+<li><strong>Cinética de Marcadores:</strong> En cáncer de próstata, un tiempo de duplicación de PSA (PSADT) inferior a 3 meses convierte la solicitud en P1 Urgente.</li>
+<li><strong>Ventanas Terapéuticas Estrictas:</strong> Asigna la cita dentro de la ventana de oportunidad antes de comités de tumores o cirugías programadas.</li>
+</ul>
+<h2>3.2. Parrilla Semanal y Matriz Logística por Radiofármaco</h2>
+<p>La producción de isótopos en ciclotrón o generador exige una estricta organización por días de la semana:</p>
+</pre>
+<p>+------------+-----------------------------------+--------------------+---------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>DÍA</th><th>RADIOFÁRMACOS ASIGNADOS</th><th>CAPACIDAD DIARIA</th><th>FRANJAS HORARIAS ASISTENCIALES</th></tr></thead><tbody>
+</tbody></table></div>
+<p>+------------+-----------------------------------+--------------------+---------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>Lunes</th><th>18F-FDG + 68Ga-PSMA / DOTATOC</th><th>7 FDG + 1 68Ga</th><th>08:00 Autónomos</th><th>10:00 Planta/Silla</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td>10:30 Elución Fija 68Ga</td><td>11:00 Sedac.</td></tr>
+</tbody></table></div>
+<p>+------------+-----------------------------------+--------------------+---------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>Martes</th><th>Fluor-PSMA (18F) + 18F-FDG</th><th>4 Fluor + 4 FDG</th><th>08:00 Fluor-PSMA</th><th>10:00 FDG</th></tr></thead><tbody>
+</tbody></table></div>
+<p>+------------+-----------------------------------+--------------------+---------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>Miércoles</th><th>18F-Colina</th><th>6 Colina</th><th>08:00 Autónomos</th><th>10:00 Planta/Silla</th></tr></thead><tbody>
+</tbody></table></div>
+<p>+------------+-----------------------------------+--------------------+---------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>Jueves</th><th>18F-FDG + 68Ga-PSMA / DOTATOC</th><th>7 FDG + 1 68Ga</th><th>08:00 Autónomos</th><th>10:00 Planta/Silla</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td>10:30 Elución Fija 68Ga</td><td>11:00 Sedac.</td></tr>
+</tbody></table></div>
+<p>+------------+-----------------------------------+--------------------+---------------------------------------+</p>
+<div class="table-container"><table>
+<thead><tr><th>Viernes</th><th>18F-FDG + 68Ga-PSMA / DOTATOC</th><th>7 FDG + 1 68Ga</th><th>08:00 Autónomos</th><th>10:00 Planta/Silla</th></tr></thead><tbody>
+<tr><td></td><td></td><td></td><td>10:30 Elución Fija 68Ga</td><td>11:00 Sedac.</td></tr>
+</tbody></table></div>
+<p>+------------+-----------------------------------+--------------------+---------------------------------------+</p>
+</pre>
+<h2>3.3. Alertas Técnicas y Reglas de Bloqueo de Seguridad</h2>
+<p>El motor de triaje audita cada paciente y activa bloqueos automáticos para evitar errores médicos y diagnósticos fallidos:</p>
+<div class="doc-image-box"><img src="screenshots/pet_triage_table.png" alt="Tabla de Pacientes y Alertas Técnicas"><div class="doc-image-caption">📸 Tabla de Pacientes y Alertas Técnicas</div></div>
+<p style="padding-left: 20px;"><strong>1.</strong> <strong>⛔ Bloqueo por Quimioterapia / Radioterapia Reciente (< 21 días):</strong></p>
+<ul>
+<li><em>Fundamento Fisiopatológico:</em> Tras un tratamiento citotóxico o radioterápico, las células tumorales entran en un estado transitorio de aturdimiento metabólico (<em>stunning</em>), mientras que el tejido sano circundante sufre una intensa inflamación reactiva. Un PET realizado antes de 3 semanas produce con frecuencia <strong>falsos negativos tumorales</strong> o <strong>falsos positivos inflamatorios</strong>.</li>
+<li><em>Acción del Software:</em> Muestra la etiqueta `⚠️ ALERTA TÉCNICA: QT/RT RECIENTE (<21 días)` y <strong>bloquea cualquier fecha anterior al día 21 post-tratamiento</strong>, programando la cita exactamente el primer día clínicamente válido.</li>
+<p style="padding-left: 20px;"><strong>2.</strong> <strong>🩸 Protocolo Diabetes (Glucemia > 180 mg/dL):</strong></p>
+<li><em>Fundamento Fisiopatológico:</em> El 18F-FDG utiliza los mismos transportadores transmembrana (GLUT-1 y GLUT-4) que la d-glucosa endógena. Una glucemia elevada compite y desplaza al trazador, reduciendo drásticamente la captación tumoral y provocando hipercaptación difusa en músculo esquelético.</li>
+<li><em>Acción del Software:</em> Asigna la etiqueta `⚠️ PROTOCOLO DIABETES`, adjunta la pauta de corrección con insulina/metformina y deriva el caso a la Consola de Enfermería.</li>
+</ul>
+<h2>3.4. Gestión de Peonadas y Jornadas Extraordinarias</h2>
+<p>Para dar cumplimiento a los objetivos del <em>Plan de Garantía de Tiempos Máximos de Espera</em> del SERGAS, el programa incluye un módulo específico para <strong>Turnos Extraordinarios (Peonadas)</strong>:</p>
+<ul>
+<li>Identifica pacientes cuya ventana clínica está próxima a vencer.</li>
+<li>Genera propuestas de citación vespertina (a partir de las 15:00 o 16:00 horas).</li>
+<li>Agrupa los pacientes por tipo de trazador para optimizar un único envío extraordinario de radiofármaco.</li>
+</ul>
+<h2>3.5. Flujo de Confirmación de Pacientes y Envío de Audioguías</h2>
+<p>La gestión de citas se estructura en un flujo de <strong>dos fases</strong>:</p>
+<div class="doc-image-box"><img src="screenshots/triage_confirmaciones.png" alt="Confirmación de Citación y Envío de Audioguías"><div class="doc-image-caption">📸 Confirmación de Citación y Envío de Audioguías</div></div>
+<p style="padding-left: 20px;"><strong>1.</strong> <strong>Fase 1: Pacientes Citados Pendientes de Confirmar:</strong></p>
+<ul>
+<li>La agenda muestra los pacientes con cita calculada pero aún no contactados.</li>
+<li>El operador puede pulsar <strong>"Confirmar Cita"</strong> de forma individual o <strong>"Confirmar Todos los Pacientes"</strong> en bloque.</li>
+<p style="padding-left: 20px;"><strong>2.</strong> <strong>Fase 2: Pacientes Confirmados y Envío de Audioguías:</strong></p>
+<li>Al confirmar la asistencia, el sistema genera de forma automática un <strong>enlace único y seguro</strong> dirigido al portal del paciente.</li>
+<li>Se envía por SMS o WhatsApp conteniendo la fecha, la hora exacta, el radiofármaco asignado y el acceso directo a su audioguía oficial de preparación.</li>
+</ul>
+<hr>
+<h1>4. Programa 3: Portal de Audioguías y Preparación del Paciente (`pet_prep_page`)</h1>
+<p>El <strong>Portal Asistencial al Paciente</strong> es una aplicación web adaptativa accesible desde cualquier teléfono móvil, tablet u ordenador. Su misión es garantizar que el paciente llegue al hospital en condiciones fisiológicas y metabólicas ideales para la adquisición de la imagen.</p>
+<div class="doc-image-box"><img src="screenshots/pet_prep.png" alt="Portal de Audioguía y Preparación de Pacientes"><div class="doc-image-caption">📸 Portal de Audioguía y Preparación de Pacientes</div></div>
+<h2>4.1. Audioguía Interactiva con Síntesis de Voz</h2>
+<ul>
+<li><strong>Accesibilidad Universal:</strong> Pensada especialmente para pacientes de edad avanzada o con dificultades de visión, dispone de un reproductor que narra con voz clara y pausada todas las instrucciones.</li>
+<li><strong>Secuencia Paso a Paso:</strong> Explica qué sucederá al llegar al hospital, la colocación de la vía venosa, el tiempo de reposo tras la inyección (60 minutos en sala tranquila) y la duración dentro del tomógrafo (15-20 minutos).</li>
+</ul>
+<h2>4.2. Cronómetro de Ayuno y Protocolo Dietético Restrictivo</h2>
+<ul>
+<li><strong>Cronómetro Visual de Ayuno (6 Horas):</strong> Cuenta atrás que indica cuándo debe realizarse la última comida sólida. Solo se permite beber agua pura.</li>
+<li><strong>Dieta sin Carbohidratos (24 Horas Antes):</strong></li>
+<li><em>Alimentos Permitidos:</em> Carnes, pescados, huevos, quesos curados, tofu, aceite de oliva y agua.</li>
+<li><em>Alimentos Prohibidos:</em> Pan, arroz, pasta, patatas, frutas, legumbres, dulces, refrescos y chicles (incluso los sin azúcar, ya que el acto de masticar estimula la captación muscular en maseteros).</li>
+<li><strong>Reposo Muscular Estricto (24-48 Horas Antes):</strong></li>
+<li>Prohibición absoluta de ejercicio físico vigoroso, gimnasio o caminatas intensas, para evitar que el 18F-FDG se acumule en los músculos esqueléticos fatigados enmascarando posibles adenopatías o lesiones metastásicas.</li>
+<li><strong>Hidratación Abundante:</strong> Se pauta la ingesta de 1 litro de agua durante las 2 horas previas a la cita para acelerar la eliminación urinaria del radiofármaco no fijado, reduciendo sustancialmente la dosis de radiación en la vejiga.</li>
+</ul>
+<h2>4.3. Protocolo Específico de Glucemia en Pacientes Diabéticos</h2>
+<p>Para pacientes citados a estudios con 18F-FDG (Glucosa):</p>
+<ul>
+<li><strong>Control Glucémico Previo:</strong> Se solicita comprobar la glucemia capilar el día anterior y la mañana de la prueba. Debe mantenerse <strong>por debajo de 160 - 180 mg/dL</strong>.</li>
+<li><strong>Manejo de Insulina:</strong></li>
+<li>No inyectar insulina rápida en las 4 horas previas al PET, ya que la hiperinsulinemia forzaría la entrada de FDG en el músculo y la grasa en lugar del tumor.</li>
+<li>La insulina basal de acción lenta suele mantenerse según prescripción habitual.</li>
+<li><strong>Fármacos Orales:</strong> La metformina se suspende 48 horas antes si el estudio incluye contraste iodado para prevenir acidosis láctica.</li>
+</ul>
+<h2>4.4. Chatbot Enfermero Virtual 24/7</h2>
+<p>Integrado en la esquina inferior del portal, el <strong>Chatbot Enfermero Virtual</strong> atiende dudas recurrentes en tiempo real:</p>
+<div class="doc-image-box"><img src="screenshots/prep_chatbot.png" alt="Chatbot Enfermero Virtual"><div class="doc-image-caption">📸 Chatbot Enfermero Virtual</div></div>
+<ul>
+<li><strong>Botones de Sugerencias Rápidas:</strong></li>
+<li><em>¿Cuántas horas de ayuno?</em></li>
+<li><em>¿Qué como el día anterior?</em></li>
+<li><em>¿Puedo beber agua?</em></li>
+<li><em>¿Puedo masticar chicle?</em></li>
+<li><em>¿Qué hago si soy diabético?</em></li>
+<li><em>¿Tomo mis pastillas habituales?</em></li>
+<li><em>¿Cuánto dura la prueba?</em></li>
+<li><strong>Detección de Alarmas Clínicas:</strong> Si el paciente describe síntomas de alarma (ej. dolor torácico opresivo, disnea o fiebre alta), el chatbot emite una alerta roja y envía un aviso urgente a la Consola de Enfermería.</li>
+</ul>
+<h2>4.5. Sistema de Cancelación y Aplazamiento Online</h2>
+<ul>
+<li><strong>Autoservicio del Paciente:</strong> Si el paciente sufre un imprevisto, puede pulsar el botón <strong>"¿No puedes asistir a tu cita? Cancelar o aplazar prueba"</strong>.</li>
+<li><strong>Reasignación Inmediata de Dosis:</strong> La cancelación se comunica al instante a la Suite de Triaje y a la Consola de Enfermería, permitiendo citar a un paciente en lista de espera urgente y evitando que el radiofármaco ya encargado sea desechado.</li>
+</ul>
+<hr>
+<h1>5. Programa 4: Consola de Enfermería y Control Pre-Analítico (`enfermeria.html`)</h1>
+<p>La <strong>Consola de Enfermería</strong> es la herramienta de trabajo en tiempo real del equipo de Enfermería de Medicina Nuclear. Centraliza las alertas clínicas procedentes de los portales de los pacientes y las solicitudes que precisan intervención profesional directa.</p>
+<div class="doc-image-box"><img src="screenshots/enfermeria_consola_abierta.png" alt="Consola de Enfermería SERGAS"><div class="doc-image-caption">📸 Consola de Enfermería SERGAS</div></div>
+<h2>5.1. Monitorización Asistencial Previa</h2>
+<ul>
+<li><strong>Sincronización Continua:</strong> Conectada en vivo con la base de datos de pacientes citados para las próximas 24 a 72 horas.</li>
+<li><strong>Cribado Pre-Analítico Telefónico:</strong> La enfermera contacta preventivamente con los pacientes complejos para validar que han seguido las pautas dietéticas y confirmar que disponen de ambulancia asignada.</li>
+</ul>
+<h2>5.2. Gestión de Urgencias Diabéticas (Glucemia ≥ 200 mg/dL)</h2>
+<ul>
+<li><strong>Tarjeta Roja de Prioridad Absoluta:</strong> Cuando un paciente introduce en el portal o chatbot una cifra de glucemia superior a 180-200 mg/dL, se activa una alarma sonora y visual en la consola.</li>
+<li><strong>Protocolo de Actuación Inmediata:</strong></li>
+<p style="padding-left: 20px;"><strong>1.</strong> La enfermera pulsa sobre la alerta para ver los datos de contacto y antecedentes.</p>
+<p style="padding-left: 20px;"><strong>2.</strong> Llama telefónicamente al paciente para valorar si procede un ajuste extraordinario de insulina, una cita en primera hora con pauta especial o el aplazamiento a una nueva fecha.</p>
+<p style="padding-left: 20px;"><strong>3.</strong> Previene que el paciente se desplace al hospital para ser cancelado en puerta.</p>
+</ul>
+<h2>5.3. Bandeja de Dudas y Solicitudes de Llamada</h2>
+<ul>
+<li><strong>Gestión de Dudas de Pacientes:</strong> Recoge consultas médicas personalizadas que no pudieron ser resueltas por las preguntas automáticas del chatbot.</li>
+<li><strong>Trazabilidad de Respuestas:</strong> Permite a la enfermera registrar la llamada efectuada, escribir notas clínicas sobre el paciente y marcar la consulta como resuelta.</li>
+</ul>
+<h2>5.4. Impacto en la Reducción del Absentismo</h2>
+<p>Gracias a la combinación de audioguías y control de enfermería:</p>
+<ul>
+<li><strong>Tasa de cancelaciones en sala inferior al 1.5%</strong> (frente a la media nacional del 8-12%).</li>
+<li><strong>Cero dosis de radiofármaco perdidas</strong> por pacientes que no se presentan sin avisar.</li>
+<li><strong>Excelente satisfacción percibida por el usuario</strong>, que se siente acompañado durante todo el proceso.</li>
+</ul>
+<hr>
+<h1>6. Conclusiones y Hoja de Ruta Asistencial</h1>
+<p>La implantación de este ecosistema digital en la Unidad de Medicina Nuclear de Galaria (SERGAS) representa un salto cualitativo hacia la <strong>excelencia médica y la eficiencia operativa</strong>:</p>
+<p style="padding-left: 20px;"><strong>1.</strong> <strong>Eficiencia Asistencial:</strong> La automatización del triaje reduce el tiempo de citación de días a segundos y garantiza el cumplimiento de los tiempos de espera oncológicos.</p>
+<p style="padding-left: 20px;"><strong>2.</strong> <strong>Sostenibilidad Económica:</strong> La matriz de citas por radiofármaco y la reducción de cancelaciones a menos del 1.5% maximizan el rendimiento de las eluciones de Galio-68 y los envíos de Flúor-18.</p>
+<p style="padding-left: 20px;"><strong>3.</strong> <strong>Seguridad y Calidad Clínica:</strong> Los bloqueos preventivos por quimioterapia reciente y control glucémico eliminan las exploraciones no diagnósticas.</p>
+<p style="padding-left: 20px;"><strong>4.</strong> <strong>Humanización de la Asistencia:</strong> El paciente dispone de audioguías accesibles y atención continua, transformando una prueba compleja en un proceso guiado, seguro y transparente.</p>
+  </div>
+</body>
+</html>
