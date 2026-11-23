@@ -1448,3 +1448,66 @@ body {
 .svc-tm { background: #fed7aa; color: #c2410c; }
 .svc-orense { background: #fbcfe8; color: #9d174d; }
 .svc-noche { background: #bfdbfe; color: #1e3a8a; }
+
+/* ==========================================================================
+   RESUMEN SEMANAL DE PACIENTES HECHOS Y FINALIZADOS
+   ========================================================================== */
+.weekly-days-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.weekly-day-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.15s ease;
+}
+
+.weekly-day-card.has-patients {
+  border-color: #99f6e4;
+  background: #f0fdfa;
+}
+
+.weekly-day-card.is-zero {
+  border-color: #e2e8f0;
+  background: #f8fafc;
+  opacity: 0.75;
+}
+
+.weekly-day-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #004868;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weekly-day-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f766e;
+  margin: 4px 0 2px 0;
+}
+
+.weekly-day-card.is-zero .weekly-day-count {
+  color: #94a3b8;
+  font-size: 1.05rem;
+}
+
+.weekly-day-sub {
+  font-size: 0.68rem;
+  color: #64748b;
+  line-height: 1.2;
+}
