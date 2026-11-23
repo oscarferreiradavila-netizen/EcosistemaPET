@@ -1337,3 +1337,23 @@ body {
   background: #fef3c7;
   border-color: #d97706;
 }
+
+.cal-svc-line {
+  margin-top: 2px;
+  font-size: 0.64rem;
+  line-height: 1.25;
+}
+
+.cal-svc-tag {
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 0.6rem;
+}
+
+.svc-pet { background: #bae6fd; color: #0369a1; }
+.svc-mn { background: #bbf7d0; color: #15803d; }
+.svc-tm { background: #fed7aa; color: #c2410c; }
+.svc-orense { background: #fbcfe8; color: #9d174d; }
+.svc-noche { background: #bfdbfe; color: #1e3a8a; }

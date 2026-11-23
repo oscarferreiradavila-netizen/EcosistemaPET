@@ -1410,6 +1410,18 @@
   function confirmarPlanillaDia() {
     const fecha = planillaState.fecha;
     const summaryByCat = {};
+    const byShiftService = {
+      manana: { pet: [], mn: [], tm: [], orense: [] },
+      tarde: { pet: [], mn: [], tm: [], apoyo: [] },
+      noche: { unidad: [], tm: [] }
+    };
+
+    const shortLabels = {
+      enfermeros: 'DUE',
+      tecnicos: 'TSID',
+      celadores: 'Cel',
+      tcaes: 'TCAE'
+    };
 
     PLANILLA_CATEGORIES.forEach(cat => {
       const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
@@ -1419,10 +1431,38 @@
       const noche = [];
 
       const pushEntry = (label, sh) => {
-        if (sh === 'manana_orense') manana.push(`${label} (Orense)`);
-        else if (sh.startsWith('manana')) manana.push(label);
-        else if (sh.startsWith('tarde')) tarde.push(label);
-        else if (sh.startsWith('noche')) noche.push(label);
+        const tag = `${shortLabels[cat.id]} ${label.split(' ')[0]}${label.includes('[H.Extra') ? ' ' + label.slice(label.indexOf('[H.Extra')) : ''}`;
+        if (sh === 'manana_orense') {
+          manana.push(`${label} (Orense)`);
+          byShiftService.manana.orense.push(tag);
+        } else if (sh === 'manana_pet') {
+          manana.push(label);
+          byShiftService.manana.pet.push(tag);
+        } else if (sh === 'manana_mn') {
+          manana.push(label);
+          byShiftService.manana.mn.push(tag);
+        } else if (sh === 'manana_tm') {
+          manana.push(label);
+          byShiftService.manana.tm.push(tag);
+        } else if (sh === 'tarde_pet') {
+          tarde.push(label);
+          byShiftService.tarde.pet.push(tag);
+        } else if (sh === 'tarde_mn') {
+          tarde.push(label);
+          byShiftService.tarde.mn.push(tag);
+        } else if (sh === 'tarde_tm') {
+          tarde.push(label);
+          byShiftService.tarde.tm.push(tag);
+        } else if (sh.startsWith('tarde')) {
+          tarde.push(label);
+          byShiftService.tarde.apoyo.push(tag);
+        } else if (sh === 'noche_tm') {
+          noche.push(label);
+          byShiftService.noche.tm.push(tag);
+        } else if (sh.startsWith('noche')) {
+          noche.push(label);
+          byShiftService.noche.unidad.push(tag);
+        }
       };
 
       catWorkers.forEach(w => pushEntry(w.name, getWorkerShiftForDate(w, fecha)));
@@ -1432,7 +1472,8 @@
 
     planillaState.confirmedCalendar[fecha] = {
       confirmedAt: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
-      categories: summaryByCat
+      categories: summaryByCat,
+      byShiftService
     };
 
     savePlanillaData();
@@ -1540,7 +1581,45 @@
       const isSelected = planillaState.fecha === dateStr;
 
       let entriesHtml = '';
-      if (conf && conf.categories) {
+      if (conf && conf.byShiftService) {
+        const b = conf.byShiftService;
+        const renderSvcLines = (svcObj, defs) => {
+          return defs.map(d => {
+            const list = (svcObj && svcObj[d.key]) || [];
+            if (list.length === 0) return '';
+            return `<div class="cal-svc-line"><span class="cal-svc-tag ${d.cls}">${d.label}</span> ${escapeHTML(list.join(', '))}</div>`;
+          }).filter(Boolean).join('');
+        };
+
+        const mananaHtml = renderSvcLines(b.manana, [
+          { key: 'pet', label: 'PET', cls: 'svc-pet' },
+          { key: 'mn', label: 'Nuclear', cls: 'svc-mn' },
+          { key: 'tm', label: 'Metab.', cls: 'svc-tm' },
+          { key: 'orense', label: 'Orense', cls: 'svc-orense' }
+        ]);
+        const tardeHtml = renderSvcLines(b.tarde, [
+          { key: 'pet', label: 'PET', cls: 'svc-pet' },
+          { key: 'mn', label: 'Nuclear', cls: 'svc-mn' },
+          { key: 'tm', label: 'Metab.', cls: 'svc-tm' },
+          { key: 'apoyo', label: 'Refuerzo', cls: 'svc-tm' }
+        ]);
+        const nocheHtml = renderSvcLines(b.noche, [
+          { key: 'unidad', label: 'Unidad', cls: 'svc-noche' },
+          { key: 'tm', label: 'Metab.', cls: 'svc-tm' }
+        ]);
+
+        const blocks = [];
+        if (mananaHtml) {
+          blocks.push(`<div class="planilla-cal-entry cal-entry-m"><strong>☀️ MAÑANA</strong>${mananaHtml}</div>`);
+        }
+        if (tardeHtml) {
+          blocks.push(`<div class="planilla-cal-entry cal-entry-t"><strong>🌆 TARDE</strong>${tardeHtml}</div>`);
+        }
+        if (nocheHtml) {
+          blocks.push(`<div class="planilla-cal-entry cal-entry-n"><strong>🌙 NOCHE</strong>${nocheHtml}</div>`);
+        }
+        entriesHtml = blocks.join('<hr class="cal-shift-divider">');
+      } else if (conf && conf.categories) {
         const shortLabels = {
           enfermeros: 'DUE',
           tecnicos: 'TSID',
