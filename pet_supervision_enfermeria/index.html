@@ -323,12 +323,22 @@
         <div class="panel-header">
           <div class="panel-title-group">
             <h2>📦 Gestión de Pedidos de Material Sanitario, Fungibles y Radiofármacos</h2>
-            <p>Aprovisionamiento continuo desde Farmacia Hospitalaria, Almacén General SERGAS y Laboratorio Ciclotrón Galaria / Curium</p>
+            <p>Pedidos diferenciados de material <strong>GALARIA</strong> y <strong>SERGAS (LOGAS)</strong> con calculadora exacta de fungibles por prueba y día</p>
           </div>
-          <div style="display:flex; gap:8px;" class="no-print">
-            <button type="button" class="btn-nurse btn-nurse-primary" onclick="window.supervisionApp.abrirModalNuevoPedido()">
-              ➕ Tramitar Nuevo Pedido
+          <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+            <button type="button" class="btn-nurse btn-nurse-primary" style="background:#007eb4; border-color:#007eb4;"
+              onclick="window.supervisionApp.abrirModalNuevoPedido('GALARIA')">
+              🔵 + Pedido GALARIA
             </button>
+            <button type="button" class="btn-nurse btn-nurse-primary" style="background:#059669; border-color:#059669;"
+              onclick="window.supervisionApp.abrirModalNuevoPedido('SERGAS')">
+              🟢 + Pedido SERGAS
+            </button>
+            <a href="https://logas.sergas.es/" target="_blank" rel="noopener noreferrer"
+              class="btn-nurse btn-nurse-outline"
+              style="text-decoration:none; border-color:#059669; color:#047857; font-weight:800;">
+              🔗 Abrir LOGAS (SERGAS)
+            </a>
           </div>
         </div>
 
@@ -387,24 +397,135 @@
           </div>
         </div>
 
-        <!-- Tabla de pedidos de material -->
-        <div class="table-responsive">
-          <table class="nurse-table">
-            <thead>
-              <tr>
-                <th>Código Pedido</th>
-                <th>Categoría Material</th>
-                <th>Descripción / Artículo</th>
-                <th>Proveedor / Origen</th>
-                <th>Cantidad</th>
-                <th>Fecha Pedido / Entrega</th>
-                <th>Estado</th>
-                <th>Supervisión / Firma</th>
-                <th class="no-print">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="tablaPedidosMaterialBody"></tbody>
-          </table>
+        <!-- CALCULADORA EXACTA DE FUNGIBLES POR PRUEBA Y DÍA -->
+        <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:1rem 1.15rem; margin-bottom:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
+            <div>
+              <h3 style="font-family:'Outfit',sans-serif; font-size:1rem; color:#004868; margin:0;">
+                🧮 Calculadora de Fungibles por Prueba y Día
+              </h3>
+              <p style="font-size:0.77rem; color:#475569; margin:2px 0 0 0;">
+                Ajusta el número diario de pruebas para calcular el consumo exacto de 1 día y generar el pedido para los días seleccionados.
+              </p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
+              <button type="button" class="btn-nurse btn-nurse-primary" style="background:#007eb4; border-color:#007eb4; font-size:0.8rem;"
+                onclick="window.supervisionApp.generarPedidoDesdeCalculadora('GALARIA')">
+                🔵 Generar Pedido GALARIA
+              </button>
+              <button type="button" class="btn-nurse btn-nurse-primary" style="background:#059669; border-color:#059669; font-size:0.8rem;"
+                onclick="window.supervisionApp.generarPedidoDesdeCalculadora('SERGAS')">
+                🟢 Generar Pedido SERGAS (y Copiar para LOGAS)
+              </button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:0.75rem; margin-bottom:0.9rem;">
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">Pruebas PET-CT / día:</label>
+              <input type="number" id="calcPruebasPet" class="period-select" style="width:100%; background:#fff;" value="24" min="0"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">Con Contraste IV / día:</label>
+              <input type="number" id="calcPruebasContraste" class="period-select" style="width:100%; background:#fff;" value="10" min="0"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">Pruebas Med. Nuclear / día:</label>
+              <input type="number" id="calcPruebasMN" class="period-select" style="width:100%; background:#fff;" value="18" min="0"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">Días a cubrir (Pedido):</label>
+              <input type="number" id="calcDiasPedido" class="period-select" style="width:100%; background:#fff;" value="5" min="1"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+            <div>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">Margen seguridad (%):</label>
+              <input type="number" id="calcMargenPct" class="period-select" style="width:100%; background:#fff;" value="10" min="0" max="50"
+                oninput="window.supervisionApp.recalcularFungibles()">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="nurse-table">
+              <thead>
+                <tr>
+                  <th>Material Fungible</th>
+                  <th>Cálculo por Prueba</th>
+                  <th>Consumo 1 Día</th>
+                  <th id="thCalcTotalDias">Total 5 Días (+10%)</th>
+                  <th>Canal de Pedido</th>
+                </tr>
+              </thead>
+              <tbody id="tablaCalculoFungiblesBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLA 1: PEDIDOS MATERIAL GALARIA -->
+        <div style="margin-bottom:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:6px;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.96rem; color:#0369a1; margin:0;">
+              🔵 Pedidos de Material GALARIA (PET-CT / Radiofarmacia / Blindajes)
+            </h3>
+            <button type="button" class="btn-nurse btn-nurse-outline no-print" style="font-size:0.76rem; padding:4px 10px;"
+              onclick="window.supervisionApp.abrirModalNuevoPedido('GALARIA')">➕ Añadir a Galaria</button>
+          </div>
+          <div class="table-responsive">
+            <table class="nurse-table">
+              <thead>
+                <tr>
+                  <th>Código Pedido</th>
+                  <th>Categoría Material</th>
+                  <th>Descripción / Artículo</th>
+                  <th>Proveedor / Origen</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Pedido / Entrega</th>
+                  <th>Estado</th>
+                  <th>Supervisión / Firma</th>
+                  <th class="no-print">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaPedidosGalariaBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLA 2: PEDIDOS MATERIAL SERGAS (CON ENLACE A LOGAS) -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; flex-wrap:wrap; gap:6px;">
+            <h3 style="font-family:'Outfit',sans-serif; font-size:0.96rem; color:#047857; margin:0;">
+              🟢 Pedidos de Material SERGAS (Almacén General / LOGAS)
+            </h3>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;" class="no-print">
+              <a href="https://logas.sergas.es/" target="_blank" rel="noopener noreferrer"
+                class="btn-nurse btn-nurse-outline" style="text-decoration:none; font-size:0.76rem; padding:4px 10px; border-color:#059669; color:#047857; font-weight:800;">
+                🔗 Ir a LOGAS SERGAS
+              </a>
+              <button type="button" class="btn-nurse btn-nurse-outline" style="font-size:0.76rem; padding:4px 10px;"
+                onclick="window.supervisionApp.abrirModalNuevoPedido('SERGAS')">➕ Añadir a SERGAS</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="nurse-table">
+              <thead>
+                <tr>
+                  <th>Código Pedido</th>
+                  <th>Categoría Material</th>
+                  <th>Descripción / Artículo</th>
+                  <th>Proveedor / Origen</th>
+                  <th>Cantidad</th>
+                  <th>Fecha Pedido / Entrega</th>
+                  <th>Estado</th>
+                  <th>Supervisión / Firma</th>
+                  <th class="no-print">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaPedidosSergasBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -792,18 +913,26 @@
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
             <div>
-              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Proveedor / Destino Solicitud:</label>
-              <select id="selectPedidoProveedor" class="period-select" style="width:100%;">
-                <option value="Almacén Central SERGAS">Almacén Central SERGAS</option>
-                <option value="Farmacia Hospitalaria SERGAS">Farmacia Hospitalaria SERGAS</option>
-                <option value="Ciclotrón Galaria (Santiago)">Ciclotrón Galaria (Santiago)</option>
-                <option value="Curium Pharma">Curium Pharma (Generador 68Ga)</option>
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Tipo / Canal de Pedido:</label>
+              <select id="selectPedidoCanal" class="period-select" style="width:100%;" onchange="window.supervisionApp.onCambioCanalPedido(this.value)">
+                <option value="GALARIA">🔵 Pedido Material GALARIA</option>
+                <option value="SERGAS">🟢 Pedido Material SERGAS (LOGAS)</option>
               </select>
             </div>
             <div>
-              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Cantidad Solicitada:</label>
-              <input type="text" id="inputPedidoCantidad" class="period-select" style="width:100%;" placeholder="Ej: 100 uds (2 cajas)">
+              <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Proveedor / Destino Solicitud:</label>
+              <select id="selectPedidoProveedor" class="period-select" style="width:100%;">
+                <option value="Galaria · Logística PET-CT">Galaria · Logística PET-CT</option>
+                <option value="Ciclotrón Galaria (Santiago)">Ciclotrón Galaria (Santiago)</option>
+                <option value="Almacén Central SERGAS (LOGAS)">Almacén Central SERGAS (LOGAS)</option>
+                <option value="Farmacia Hospitalaria SERGAS">Farmacia Hospitalaria SERGAS</option>
+                <option value="Curium Pharma">Curium Pharma (Generador 68Ga)</option>
+              </select>
             </div>
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Cantidad Solicitada:</label>
+            <input type="text" id="inputPedidoCantidad" class="period-select" style="width:100%;" placeholder="Ej: 100 uds (2 cajas)">
           </div>
           <div>
             <label style="font-size:0.8rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Prioridad Asistencial:</label>
@@ -826,7 +955,7 @@
 
   <!-- Semilla oficial de peticiones y lógica de supervisión -->
   <script src="../pet_ct_triage/web_app/peticiones_seed.js"></script>
-  <script src="app.js?v=20261123_PLANILLA_05"></script>
+  <script src="app.js?v=20261123_PEDIDOS_06"></script>
 </body>
 
 </html>

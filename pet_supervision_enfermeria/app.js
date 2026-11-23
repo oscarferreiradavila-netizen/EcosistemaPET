@@ -585,16 +585,18 @@
     }
   }
 
-  function renderPedidosTable() {
-    const tbody = document.getElementById('tablaPedidosMaterialBody');
-    if (!tbody) return;
+  function getPedidoCanal(p) {
+    if (p.canal === 'GALARIA' || p.canal === 'SERGAS') return p.canal;
+    const prov = String(p.proveedor || '').toLowerCase();
+    return (prov.includes('galaria') || prov.includes('curium')) ? 'GALARIA' : 'SERGAS';
+  }
 
-    let enCursoCount = 0;
-
-    tbody.innerHTML = state.pedidos.map((p, idx) => {
+  function renderPedidosRowsHtml(list) {
+    if (!list || list.length === 0) {
+      return '<tr><td colspan="9" style="text-align:center; color:#94a3b8; padding:0.9rem;">No hay pedidos registrados en esta sección.</td></tr>';
+    }
+    return list.map(({ p, idx }) => {
       const isTransito = p.estado === 'transito';
-      if (isTransito) enCursoCount++;
-
       const estadoBadge = p.estado === 'entregado'
         ? '<span class="status-badge badge-ok">🟢 Entregado & Validado</span>'
         : (p.estado === 'transito'
@@ -636,6 +638,30 @@
         </tr>
       `;
     }).join('');
+  }
+
+  function renderPedidosTable() {
+    let enCursoCount = 0;
+    const galariaList = [];
+    const sergasList = [];
+
+    state.pedidos.forEach((p, idx) => {
+      if (p.estado === 'transito') enCursoCount++;
+      if (getPedidoCanal(p) === 'GALARIA') {
+        galariaList.push({ p, idx });
+      } else {
+        sergasList.push({ p, idx });
+      }
+    });
+
+    const tbodyGal = document.getElementById('tablaPedidosGalariaBody');
+    if (tbodyGal) tbodyGal.innerHTML = renderPedidosRowsHtml(galariaList);
+
+    const tbodySer = document.getElementById('tablaPedidosSergasBody');
+    if (tbodySer) tbodySer.innerHTML = renderPedidosRowsHtml(sergasList);
+
+    const tbodyOld = document.getElementById('tablaPedidosMaterialBody');
+    if (tbodyOld) tbodyOld.innerHTML = renderPedidosRowsHtml(state.pedidos.map((p, idx) => ({ p, idx })));
 
     const badgePedidos = document.getElementById('badgePedidosPendientes');
     if (badgePedidos) {
@@ -644,6 +670,95 @@
     const statBadge = document.getElementById('statPedidosActivosBadge');
     if (statBadge) {
       statBadge.textContent = `${enCursoCount} En Tránsito`;
+    }
+    recalcularFungibles();
+  }
+
+  function computeFungiblesPlan() {
+    const pet = Math.max(0, parseInt(document.getElementById('calcPruebasPet')?.value || '24', 10) || 0);
+    const contraste = Math.max(0, parseInt(document.getElementById('calcPruebasContraste')?.value || '10', 10) || 0);
+    const mn = Math.max(0, parseInt(document.getElementById('calcPruebasMN')?.value || '18', 10) || 0);
+    const dias = Math.max(1, parseInt(document.getElementById('calcDiasPedido')?.value || '5', 10) || 1);
+    const margen = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
+
+    const totalPruebas = pet + mn;
+    const factor = 1 + margen / 100;
+
+    const items = [
+      { nombre: 'Catéteres IV periféricos 20G / 22G', ratio: '1,1 uds / prueba (PET + MN)', dia: Math.ceil(totalPruebas * 1.1), canal: 'SERGAS' },
+      { nombre: 'Llaves de 3 pasos + alargadera corta', ratio: '1 ud / prueba (PET + MN)', dia: totalPruebas, canal: 'SERGAS' },
+      { nombre: 'Suero Salino Fisiológico 0.9% (100 mL)', ratio: '1 bolsa / prueba (PET + MN)', dia: totalPruebas, canal: 'SERGAS' },
+      { nombre: 'Kit venopunción (gasas, apósito, clorhexidina)', ratio: '1 kit / prueba (PET + MN)', dia: totalPruebas, canal: 'SERGAS' },
+      { nombre: 'Jeringas 5 mL / 10 mL + agujas carga', ratio: '1,2 uds / prueba', dia: Math.ceil(totalPruebas * 1.2), canal: 'SERGAS' },
+      { nombre: 'Sistemas inyector automático + viales contraste', ratio: '1 set / prueba con contraste IV', dia: contraste, canal: 'GALARIA' },
+      { nombre: 'Jeringas plomadas / protectores / material radiofarmacia', ratio: '1 set / prueba PET-CT + MN', dia: totalPruebas, canal: 'GALARIA' },
+      { nombre: 'Pares guantes nitrilo / plomados + empapadores plomados', ratio: '1,5 uds / prueba', dia: Math.ceil(totalPruebas * 1.5), canal: 'GALARIA' }
+    ].map(it => ({
+      ...it,
+      totalPedido: Math.ceil(it.dia * dias * factor)
+    }));
+
+    return { pet, contraste, mn, dias, margen, totalPruebas, items };
+  }
+
+  function recalcularFungibles() {
+    const tbody = document.getElementById('tablaCalculoFungiblesBody');
+    if (!tbody) return;
+
+    const plan = computeFungiblesPlan();
+    const thTotal = document.getElementById('thCalcTotalDias');
+    if (thTotal) {
+      thTotal.textContent = `Total ${plan.dias} ${plan.dias === 1 ? 'Día' : 'Días'} (+${plan.margen}%)`;
+    }
+
+    tbody.innerHTML = plan.items.map(it => `
+      <tr>
+        <td><strong>${escapeHTML(it.nombre)}</strong></td>
+        <td style="font-size:0.76rem; color:#475569;">${escapeHTML(it.ratio)}</td>
+        <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#004868;">${it.dia} uds/día</td>
+        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">${it.totalPedido} uds</td>
+        <td>
+          <span class="status-badge ${it.canal === 'GALARIA' ? 'badge-info' : 'badge-ok'}">
+            ${it.canal === 'GALARIA' ? '🔵 GALARIA' : '🟢 SERGAS (LOGAS)'}
+          </span>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function generarPedidoDesdeCalculadora(canal) {
+    const plan = computeFungiblesPlan();
+    const filtered = plan.items.filter(it => it.canal === canal);
+    const resumenLineas = filtered.map(it => `${it.nombre}: ${it.totalPedido} uds`).join(' · ');
+    const numPed = Math.floor(100 + Math.random() * 900);
+
+    const nuevo = {
+      id: `${canal === 'GALARIA' ? 'GAL' : 'SER'}-2026-${numPed}`,
+      canal,
+      categoria: 'Fungible Sanitario (Cálculo Exacto)',
+      descripcion: `Reposición ${plan.dias}d (${plan.pet} PET + ${plan.mn} MN/día): ${resumenLineas}`,
+      proveedor: canal === 'GALARIA' ? 'Galaria · Logística PET-CT' : 'Almacén Central SERGAS (LOGAS)',
+      cantidad: `${filtered.reduce((acc, x) => acc + x.totalPedido, 0)} uds totales`,
+      fecha: new Date().toLocaleDateString('es-ES') + ` (${plan.dias} días)`,
+      estado: 'transito',
+      supervision: 'Supervisora de Turno (DUE)',
+      observaciones: `Calculado para ${plan.totalPruebas} pruebas/día (+${plan.margen}% margen).`
+    };
+
+    state.pedidos.unshift(nuevo);
+    saveNurseData();
+    renderAll();
+    cambiarTab('pedidos');
+
+    if (canal === 'SERGAS') {
+      const textoLogas = `PEDIDO LOGAS SERGAS (${plan.dias} días · ${plan.totalPruebas} pruebas/día):\n` +
+        filtered.map(it => `- ${it.nombre}: ${it.totalPedido} uds`).join('\n');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textoLogas).catch(() => {});
+      }
+      showToast('🟢 Pedido SERGAS creado y copiado al portapapeles para pegar en LOGAS.');
+    } else {
+      showToast('🔵 Pedido GALARIA creado con el cálculo exacto de fungibles.');
     }
   }
 
@@ -918,7 +1033,22 @@
     }
   }
 
-  function abrirModalNuevoPedido() {
+  function onCambioCanalPedido(canal) {
+    const selProv = document.getElementById('selectPedidoProveedor');
+    if (!selProv) return;
+    if (canal === 'GALARIA') {
+      selProv.value = 'Galaria · Logística PET-CT';
+    } else {
+      selProv.value = 'Almacén Central SERGAS (LOGAS)';
+    }
+  }
+
+  function abrirModalNuevoPedido(canalPre = 'GALARIA') {
+    const selCanal = document.getElementById('selectPedidoCanal');
+    if (selCanal && (canalPre === 'GALARIA' || canalPre === 'SERGAS')) {
+      selCanal.value = canalPre;
+      onCambioCanalPedido(canalPre);
+    }
     const modal = document.getElementById('modalNuevoPedido');
     if (modal) modal.classList.add('active');
   }
@@ -929,6 +1059,7 @@
   }
 
   function guardarNuevoPedido() {
+    const canal = document.getElementById('selectPedidoCanal')?.value || 'GALARIA';
     const categoria = document.getElementById('selectPedidoCategoria').value;
     const descripcion = (document.getElementById('inputPedidoDescripcion').value || '').trim();
     const proveedor = document.getElementById('selectPedidoProveedor').value;
@@ -942,7 +1073,8 @@
 
     const numPed = Math.floor(100 + Math.random() * 900);
     const nuevo = {
-      id: `PED-2026-${numPed}`,
+      id: `${canal === 'GALARIA' ? 'GAL' : 'SER'}-2026-${numPed}`,
+      canal,
       categoria,
       descripcion,
       proveedor,
@@ -950,7 +1082,7 @@
       fecha: new Date().toLocaleDateString('es-ES') + ' (' + prioridad.toUpperCase() + ')',
       estado: 'transito',
       supervision: 'Supervisora de Turno (DUE)',
-      observaciones: `Prioridad: ${prioridad}. Tramitado a través de plataforma SERGAS.`
+      observaciones: `Prioridad: ${prioridad}. Tramitado vía ${canal === 'GALARIA' ? 'GALARIA' : 'LOGAS SERGAS'}.`
     };
 
     state.pedidos.unshift(nuevo);
@@ -1833,9 +1965,12 @@
       guardarTurno,
       eliminarTurno,
       abrirModalNuevoPedido,
+      onCambioCanalPedido,
       cerrarModalNuevoPedido,
       guardarNuevoPedido,
       marcarPedidoEntregado,
+      recalcularFungibles,
+      generarPedidoDesdeCalculadora,
       abrirModalIncidenciaVenopuncion,
       cerrarModalIncidenciaVenopuncion,
       guardarIncidenciaVenopuncion,
