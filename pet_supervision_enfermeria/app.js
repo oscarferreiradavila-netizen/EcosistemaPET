@@ -767,43 +767,23 @@
     const totalPruebas = pet + mn;
     const factor = 1 + margen / 100;
 
-    let costeDia = 0;
-    let costeSergasTotal = 0;
-    let costeGalariaTotal = 0;
-
     const items = fungiblesConfig.map((cfg, idx) => {
       const baseCount = cfg.base === 'contraste' ? contraste : totalPruebas;
       const dia = Math.ceil(baseCount * cfg.ratio);
       const totalPedido = Math.ceil(baseCount * cfg.ratio * dias * factor);
-      const costeDiaItem = dia * cfg.precio;
-      const costeTotalItem = totalPedido * cfg.precio;
-
-      costeDia += costeDiaItem;
-      if (cfg.canal === 'SERGAS') costeSergasTotal += costeTotalItem;
-      else costeGalariaTotal += costeTotalItem;
 
       return {
         ...cfg,
         idx,
         dia,
-        totalPedido,
-        costeDiaItem,
-        costeTotalItem
+        totalPedido
       };
     });
 
-    const costePorPrueba = totalPruebas > 0 ? (costeDia / totalPruebas) : 0;
-    const costeTotalGlobal = costeSergasTotal + costeGalariaTotal;
-
     return {
       modo, pet, contraste, mn, dias, margen, totalPruebas,
-      costeDia, costePorPrueba, costeSergasTotal, costeGalariaTotal, costeTotalGlobal,
       items
     };
-  }
-
-  function formatEuro(val) {
-    return val.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
   }
 
   function recalcularFungibles() {
@@ -822,19 +802,6 @@
       thTotal.textContent = `Total ${plan.dias} ${plan.dias === 1 ? unitLabel : unitPlural} (+${plan.margen}%)`;
     }
 
-    const elCostePrueba = document.getElementById('statCostePorPrueba');
-    if (elCostePrueba) elCostePrueba.textContent = formatEuro(plan.costePorPrueba);
-    const elCosteDia = document.getElementById('statCostePorDia');
-    if (elCosteDia) elCosteDia.textContent = formatEuro(plan.costeDia);
-    const elCosteDiaDet = document.getElementById('statCosteDiaDetalle');
-    if (elCosteDiaDet) elCosteDiaDet.textContent = `Consumo neto (${plan.totalPruebas} pruebas / ${unitLabel.toLowerCase()})`;
-    const elCosteSer = document.getElementById('statCosteSergas');
-    if (elCosteSer) elCosteSer.textContent = formatEuro(plan.costeSergasTotal);
-    const elCosteGal = document.getElementById('statCosteGalaria');
-    if (elCosteGal) elCosteGal.textContent = formatEuro(plan.costeGalariaTotal);
-    const elCosteTot = document.getElementById('statCosteTotalGlobal');
-    if (elCosteTot) elCosteTot.textContent = `Total conjunto: ${formatEuro(plan.costeTotalGlobal)}`;
-
     tbody.innerHTML = plan.items.map(it => `
       <tr>
         <td>
@@ -846,14 +813,8 @@
             style="width:72px; padding:4px 6px; border:1px solid #cbd5e1; border-radius:6px; font-family:'JetBrains Mono',monospace; font-weight:700;"
             onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'ratio', this.value)">
         </td>
-        <td>
-          <input type="number" step="0.05" min="0" value="${it.precio.toFixed(2)}"
-            style="width:78px; padding:4px 6px; border:1px solid #cbd5e1; border-radius:6px; font-family:'JetBrains Mono',monospace; font-weight:700;"
-            onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'precio', this.value)"> €
-        </td>
         <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#004868;">${it.dia} uds</td>
         <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">${it.totalPedido} uds</td>
-        <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#0f172a;">${formatEuro(it.costeTotalItem)}</td>
         <td>
           <span class="status-badge ${it.canal === 'GALARIA' ? 'badge-info' : 'badge-ok'}">
             ${it.canal === 'GALARIA' ? '🔵 GALARIA' : '🟢 SERGAS (LOGAS)'}
@@ -866,8 +827,7 @@
   function generarPedidoDesdeCalculadora(canal) {
     const plan = computeFungiblesPlan();
     const filtered = plan.items.filter(it => it.canal === canal);
-    const costeCanal = filtered.reduce((acc, x) => acc + x.costeTotalItem, 0);
-    const resumenLineas = filtered.map(it => `${it.nombre}: ${it.totalPedido} uds (${formatEuro(it.costeTotalItem)})`).join(' · ');
+    const resumenLineas = filtered.map(it => `${it.nombre}: ${it.totalPedido} uds`).join(' · ');
     const numPed = Math.floor(100 + Math.random() * 900);
 
     const nuevo = {
@@ -876,11 +836,11 @@
       categoria: 'Fungible Sanitario (Cálculo Exacto)',
       descripcion: `Reposición ${plan.dias}d (${plan.pet} PET + ${plan.mn} MN): ${resumenLineas}`,
       proveedor: canal === 'GALARIA' ? 'Galaria · Logística PET-CT' : 'Almacén Central SERGAS (LOGAS)',
-      cantidad: `${filtered.reduce((acc, x) => acc + x.totalPedido, 0)} uds · ${formatEuro(costeCanal)}`,
+      cantidad: `${filtered.reduce((acc, x) => acc + x.totalPedido, 0)} uds totales`,
       fecha: new Date().toLocaleDateString('es-ES') + ` (${plan.dias}d)`,
       estado: 'transito',
       supervision: 'Supervisora de Turno (DUE)',
-      observaciones: `Coste estimado: ${formatEuro(costeCanal)} (${plan.totalPruebas} pruebas, +${plan.margen}% margen).`
+      observaciones: `Calculado para ${plan.totalPruebas} pruebas (+${plan.margen}% margen).`
     };
 
     state.pedidos.unshift(nuevo);
@@ -889,14 +849,14 @@
     cambiarTab('pedidos');
 
     if (canal === 'SERGAS') {
-      const textoLogas = `PEDIDO LOGAS SERGAS (${plan.dias} días · Coste est.: ${formatEuro(costeCanal)}):\n` +
-        filtered.map(it => `- ${it.nombre}: ${it.totalPedido} uds (${formatEuro(it.costeTotalItem)})`).join('\n');
+      const textoLogas = `PEDIDO LOGAS SERGAS (${plan.dias} días · ${plan.totalPruebas} pruebas):\n` +
+        filtered.map(it => `- ${it.nombre}: ${it.totalPedido} uds`).join('\n');
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textoLogas).catch(() => {});
       }
-      showToast(`🟢 Pedido SERGAS (${formatEuro(costeCanal)}) creado y copiado para pegar en LOGAS.`);
+      showToast('🟢 Pedido SERGAS creado y copiado al portapapeles para pegar en LOGAS.');
     } else {
-      showToast(`🔵 Pedido GALARIA (${formatEuro(costeCanal)}) creado con el cálculo exacto.`);
+      showToast('🔵 Pedido GALARIA creado con el cálculo exacto de fungibles.');
     }
   }
 

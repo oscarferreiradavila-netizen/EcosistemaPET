@@ -457,40 +457,14 @@
             </div>
           </div>
 
-          <!-- Resumen de Costes por Prueba, Turno y Pedido -->
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:0.75rem; margin-bottom:0.9rem;">
-            <div style="background:#ffffff; border:1px solid #cbd5e1; border-left:4px solid #0284c7; border-radius:8px; padding:0.6rem 0.85rem;">
-              <div style="font-size:0.71rem; font-weight:800; color:#0369a1; text-transform:uppercase;">💶 Coste Medio / Prueba</div>
-              <div style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:800; color:#0f172a;" id="statCostePorPrueba">0,00 €</div>
-              <div style="font-size:0.7rem; color:#64748b;" id="statCostePruebaDetalle">PET / MN fungibles por paciente</div>
-            </div>
-            <div style="background:#ffffff; border:1px solid #cbd5e1; border-left:4px solid #0d9488; border-radius:8px; padding:0.6rem 0.85rem;">
-              <div style="font-size:0.71rem; font-weight:800; color:#0f766e; text-transform:uppercase;">⏱️ Coste Jornada / Turno</div>
-              <div style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:800; color:#0f172a;" id="statCostePorDia">0,00 €</div>
-              <div style="font-size:0.7rem; color:#64748b;" id="statCosteDiaDetalle">Consumo neto de 1 jornada</div>
-            </div>
-            <div style="background:#ffffff; border:1px solid #cbd5e1; border-left:4px solid #059669; border-radius:8px; padding:0.6rem 0.85rem;">
-              <div style="font-size:0.71rem; font-weight:800; color:#047857; text-transform:uppercase;">🟢 Coste SERGAS (LOGAS)</div>
-              <div style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:800; color:#059669;" id="statCosteSergas">0,00 €</div>
-              <div style="font-size:0.7rem; color:#64748b;">Total período seleccionado</div>
-            </div>
-            <div style="background:#ffffff; border:1px solid #cbd5e1; border-left:4px solid #007eb4; border-radius:8px; padding:0.6rem 0.85rem;">
-              <div style="font-size:0.71rem; font-weight:800; color:#004868; text-transform:uppercase;">🔵 Coste GALARIA</div>
-              <div style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:800; color:#007eb4;" id="statCosteGalaria">0,00 €</div>
-              <div style="font-size:0.7rem; color:#64748b;" id="statCosteTotalGlobal">Total conjunto: 0,00 €</div>
-            </div>
-          </div>
-
           <div class="table-responsive">
             <table class="nurse-table">
               <thead>
                 <tr>
                   <th>Material Fungible</th>
                   <th>Uds / Prueba (Editable)</th>
-                  <th>Coste / Ud (€)</th>
                   <th id="thCalcConsumoBase">Consumo 1 Día</th>
                   <th id="thCalcTotalDias">Total 5 Días (+10%)</th>
-                  <th>Coste Total (€)</th>
                   <th>Canal de Pedido</th>
                 </tr>
               </thead>
@@ -990,7 +964,7 @@
 
   <!-- Semilla oficial de peticiones y lógica de supervisión -->
   <script src="../pet_ct_triage/web_app/peticiones_seed.js"></script>
-  <script src="app.js?v=20261123_PEDIDOS_07"></script>
+  <script src="app.js?v=20261123_PEDIDOS_08"></script>
 </body>
 
 </html>
