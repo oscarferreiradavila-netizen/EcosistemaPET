@@ -397,15 +397,15 @@
           </div>
         </div>
 
-        <!-- CALCULADORA EXACTA DE FUNGIBLES POR PRUEBA Y DÍA -->
+        <!-- CALCULADORA Y MENÚ DE FUNGIBLES POR TIPO DE PRUEBA (POR PACIENTE / POR TURNO) -->
         <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:1rem 1.15rem; margin-bottom:1.25rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.85rem;">
             <div>
               <h3 style="font-family:'Outfit',sans-serif; font-size:1rem; color:#004868; margin:0;">
-                🧮 Calculadora de Fungibles por Prueba y Día
+                🧮 Menú de Fungibles por Tipo de Prueba (Por Paciente o Por Turno)
               </h3>
               <p style="font-size:0.77rem; color:#475569; margin:2px 0 0 0;">
-                Ajusta el número diario de pruebas para calcular el consumo exacto de 1 día y generar el pedido para los días seleccionados.
+                Elige el tipo de prueba, configura qué material usa (ej: <strong>Equipo Intego por turno</strong>, <strong>PAS por paciente</strong>) y calcula el pedido exacto.
               </p>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;" class="no-print">
@@ -420,52 +420,70 @@
             </div>
           </div>
 
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(155px, 1fr)); gap:0.75rem; margin-bottom:0.9rem;">
-            <div>
-              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">Modo de Cálculo:</label>
-              <select id="calcModoCalculo" class="period-select" style="width:100%; background:#fff;"
-                onchange="window.supervisionApp.onCambioModoCalculo(this.value)">
-                <option value="dia">📅 Por Día / N Días</option>
-                <option value="turno">⏱️ Por Turno (Mañana/Tarde)</option>
-                <option value="paciente">👤 Por 1 Paciente / Prueba</option>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(165px, 1fr)); gap:0.75rem; margin-bottom:0.9rem;">
+            <div style="grid-column: span 2;">
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">🧪 Tipo de Prueba:</label>
+              <select id="selectTipoPruebaFungible" class="period-select" style="width:100%; background:#fff; font-weight:700;"
+                onchange="window.supervisionApp.onCambioTipoPruebaFungible(this.value)">
+                <option value="fdg">18F-FDG (Oncológico / Neuro / Vasculitis)</option>
+                <option value="fdg_contraste">18F-FDG + Contraste IV</option>
+                <option value="fdg_endocarditis">18F-FDG Endocarditis (HEP)</option>
+                <option value="psma">68Ga-PSMA / 18F-PSMA</option>
+                <option value="colina">18F-Fluorcolina (Próstata / Paratiroides)</option>
+                <option value="dotatoc">68Ga-DOTATOC (Neuroendocrinos)</option>
+                <option value="mn_conv">Medicina Nuclear Convencional (Gammagrafía / SPECT)</option>
               </select>
             </div>
             <div>
-              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;" id="lblCalcPet">Pruebas PET-CT / día:</label>
-              <input type="number" id="calcPruebasPet" class="period-select" style="width:100%; background:#fff;" value="24" min="0"
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">👤 Pacientes / día:</label>
+              <input type="number" id="calcPacientesDia" class="period-select" style="width:100%; background:#fff;" value="20" min="0"
                 oninput="window.supervisionApp.recalcularFungibles()">
             </div>
             <div>
-              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;" id="lblCalcContraste">Con Contraste IV / día:</label>
-              <input type="number" id="calcPruebasContraste" class="period-select" style="width:100%; background:#fff;" value="10" min="0"
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">⏱️ Turnos / día:</label>
+              <input type="number" id="calcTurnosDia" class="period-select" style="width:100%; background:#fff;" value="2" min="0"
                 oninput="window.supervisionApp.recalcularFungibles()">
             </div>
             <div>
-              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;" id="lblCalcMN">Pruebas Med. Nuclear / día:</label>
-              <input type="number" id="calcPruebasMN" class="period-select" style="width:100%; background:#fff;" value="18" min="0"
-                oninput="window.supervisionApp.recalcularFungibles()">
-            </div>
-            <div>
-              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;" id="lblCalcDias">Días / Turnos a cubrir:</label>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">📅 Días a cubrir:</label>
               <input type="number" id="calcDiasPedido" class="period-select" style="width:100%; background:#fff;" value="5" min="1"
                 oninput="window.supervisionApp.recalcularFungibles()">
             </div>
             <div>
-              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">Margen seguridad (%):</label>
+              <label style="font-size:0.74rem; font-weight:800; color:#004868; display:block; margin-bottom:3px;">🛡️ Margen (%):</label>
               <input type="number" id="calcMargenPct" class="period-select" style="width:100%; background:#fff;" value="10" min="0" max="50"
                 oninput="window.supervisionApp.recalcularFungibles()">
             </div>
+          </div>
+
+          <!-- Añadir nuevo fungible a esta prueba -->
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem; padding:0.65rem 0.85rem; background:#ffffff; border:1px dashed #94a3b8; border-radius:10px; margin-bottom:0.9rem;" class="no-print">
+            <span style="font-size:0.78rem; font-weight:800; color:#004868;">➕ Añadir material a esta prueba:</span>
+            <input type="text" id="inputNuevoFungibleNombre" class="period-select" style="min-width:210px; background:#fff;" placeholder="Ej: Equipo Intego, PAS, Aguja...">
+            <select id="selectNuevoFungibleAlcance" class="period-select" style="background:#fff;">
+              <option value="paciente">👤 Por Paciente</option>
+              <option value="turno">⏱️ Por Turno</option>
+            </select>
+            <input type="number" id="inputNuevoFungibleRatio" class="period-select" style="width:75px; background:#fff;" value="1" step="0.5" min="0.5" title="Cantidad">
+            <select id="selectNuevoFungibleCanal" class="period-select" style="background:#fff;">
+              <option value="GALARIA">🔵 GALARIA</option>
+              <option value="SERGAS">🟢 SERGAS (LOGAS)</option>
+            </select>
+            <button type="button" class="btn-nurse btn-nurse-primary" style="font-size:0.78rem; padding:0.45rem 0.85rem;"
+              onclick="window.supervisionApp.agregarFungibleAPrueba()">+ Añadir</button>
           </div>
 
           <div class="table-responsive">
             <table class="nurse-table">
               <thead>
                 <tr>
-                  <th>Material Fungible</th>
-                  <th>Uds / Prueba (Editable)</th>
-                  <th id="thCalcConsumoBase">Consumo 1 Día</th>
-                  <th id="thCalcTotalDias">Total 5 Días (+10%)</th>
+                  <th>Material / Fungible</th>
+                  <th>Aplicación (Paciente / Turno)</th>
+                  <th>Cantidad</th>
                   <th>Canal de Pedido</th>
+                  <th>Consumo 1 Día</th>
+                  <th id="thCalcTotalDias">Total 5 Días (+10%)</th>
+                  <th class="no-print">Quitar</th>
                 </tr>
               </thead>
               <tbody id="tablaCalculoFungiblesBody"></tbody>
@@ -964,7 +982,7 @@
 
   <!-- Semilla oficial de peticiones y lógica de supervisión -->
   <script src="../pet_ct_triage/web_app/peticiones_seed.js"></script>
-  <script src="app.js?v=20261123_PEDIDOS_08"></script>
+  <script src="app.js?v=20261123_PEDIDOS_09"></script>
 </body>
 
 </html>

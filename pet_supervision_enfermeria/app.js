@@ -674,104 +674,155 @@
     recalcularFungibles();
   }
 
-  const FUNGIBLES_STORAGE_KEY = 'PET_FUNGIBLES_PRECIOS_V1';
-  const DEFAULT_FUNGIBLES_CONFIG = [
-    { id: 'cateter', nombre: 'Catéteres IV periféricos 20G / 22G', base: 'all', ratio: 1.1, precio: 1.45, canal: 'SERGAS' },
-    { id: 'llave3', nombre: 'Llaves de 3 pasos + alargadera corta', base: 'all', ratio: 1.0, precio: 0.85, canal: 'SERGAS' },
-    { id: 'suero', nombre: 'Suero Salino Fisiológico 0.9% (100 mL)', base: 'all', ratio: 1.0, precio: 1.10, canal: 'SERGAS' },
-    { id: 'kitveno', nombre: 'Kit venopunción (gasas, apósito, clorhexidina)', base: 'all', ratio: 1.0, precio: 0.95, canal: 'SERGAS' },
-    { id: 'jeringa', nombre: 'Jeringas 5 mL / 10 mL + agujas carga', base: 'all', ratio: 1.2, precio: 0.35, canal: 'SERGAS' },
-    { id: 'contraste', nombre: 'Sistemas inyector automático + vial contraste IV', base: 'contraste', ratio: 1.0, precio: 18.50, canal: 'GALARIA' },
-    { id: 'plomado', nombre: 'Jeringas plomadas / protectores / material RF', base: 'all', ratio: 1.0, precio: 2.20, canal: 'GALARIA' },
-    { id: 'guantes', nombre: 'Guantes nitrilo / plomados + empapadores', base: 'all', ratio: 1.5, precio: 0.90, canal: 'GALARIA' }
-  ];
+  const FUNGIBLES_BY_TEST_KEY = 'PET_FUNGIBLES_POR_PRUEBA_V1';
+  const TEST_TYPE_LABELS = {
+    fdg: '18F-FDG (Oncológico / Neuro / Vasculitis)',
+    fdg_contraste: '18F-FDG + Contraste IV',
+    fdg_endocarditis: '18F-FDG Endocarditis (HEP)',
+    psma: '68Ga-PSMA / 18F-PSMA',
+    colina: '18F-Fluorcolina (Próstata / Paratiroides)',
+    dotatoc: '68Ga-DOTATOC (Neuroendocrinos)',
+    mn_conv: 'Medicina Nuclear Convencional'
+  };
 
-  function loadFungiblesConfig() {
+  const DEFAULT_FUNGIBLES_BY_TEST = {
+    fdg: [
+      { nombre: 'Equipo Intego (SAS)', scope: 'turno', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'PAS (Kit Paciente Intego)', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Catéter IV periférico 20G / 22G', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Llave de 3 pasos + alargadera', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Suero Salino Fisiológico 0.9% (100 mL)', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Kit venopunción (gasas, apósito, clorhexidina)', scope: 'paciente', ratio: 1, canal: 'SERGAS' }
+    ],
+    fdg_contraste: [
+      { nombre: 'Equipo Intego (SAS)', scope: 'turno', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'PAS (Kit Paciente Intego)', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Sistema inyector automático + vial contraste IV', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Catéter IV periférico 18G / 20G alto flujo', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Suero Salino Fisiológico 0.9% (100 mL)', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Kit venopunción (gasas, apósito, clorhexidina)', scope: 'paciente', ratio: 1, canal: 'SERGAS' }
+    ],
+    fdg_endocarditis: [
+      { nombre: 'Equipo Intego (SAS)', scope: 'turno', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'PAS (Kit Paciente Intego)', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Vial Heparina Sódica IV (50 UI/kg)', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Catéter IV + llave 3 pasos + suero 100 mL', scope: 'paciente', ratio: 1, canal: 'SERGAS' }
+    ],
+    psma: [
+      { nombre: 'Jeringa plomada + protector dosis PSMA', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Catéter IV + llave 3 pasos + suero 100 mL', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Kit venopunción (gasas, apósito, clorhexidina)', scope: 'paciente', ratio: 1, canal: 'SERGAS' }
+    ],
+    colina: [
+      { nombre: 'Jeringa plomada + protector dosis 18F-Colina', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Catéter IV + llave 3 pasos + suero 100 mL', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Kit venopunción (gasas, apósito, clorhexidina)', scope: 'paciente', ratio: 1, canal: 'SERGAS' }
+    ],
+    dotatoc: [
+      { nombre: 'Jeringa plomada + protector dosis 68Ga-DOTATOC', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Catéter IV + llave 3 pasos + suero 100 mL', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Kit venopunción (gasas, apósito, clorhexidina)', scope: 'paciente', ratio: 1, canal: 'SERGAS' }
+    ],
+    mn_conv: [
+      { nombre: 'Jeringa + protector plomado radiofármaco Tc-99m', scope: 'paciente', ratio: 1, canal: 'GALARIA' },
+      { nombre: 'Palomilla / Catéter IV 22G + gasas + apósito', scope: 'paciente', ratio: 1, canal: 'SERGAS' },
+      { nombre: 'Suero Salino 0.9% 10 mL lavado', scope: 'paciente', ratio: 1, canal: 'SERGAS' }
+    ]
+  };
+
+  function loadFungiblesByTest() {
     try {
-      const saved = localStorage.getItem(FUNGIBLES_STORAGE_KEY);
+      const saved = localStorage.getItem(FUNGIBLES_BY_TEST_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length === DEFAULT_FUNGIBLES_CONFIG.length) {
+        if (parsed && typeof parsed === 'object' && Array.isArray(parsed.fdg)) {
           return parsed;
         }
       }
     } catch (_) {}
-    return JSON.parse(JSON.stringify(DEFAULT_FUNGIBLES_CONFIG));
+    return JSON.parse(JSON.stringify(DEFAULT_FUNGIBLES_BY_TEST));
   }
 
-  let fungiblesConfig = loadFungiblesConfig();
+  let fungiblesByTest = loadFungiblesByTest();
+  let activeTestType = 'fdg';
 
-  function saveFungiblesConfig() {
+  function saveFungiblesByTest() {
     try {
-      localStorage.setItem(FUNGIBLES_STORAGE_KEY, JSON.stringify(fungiblesConfig));
+      localStorage.setItem(FUNGIBLES_BY_TEST_KEY, JSON.stringify(fungiblesByTest));
     } catch (_) {}
   }
 
-  function updateFungibleParam(idx, field, value) {
-    if (!fungiblesConfig[idx]) return;
-    const num = Math.max(0, parseFloat(value) || 0);
-    fungiblesConfig[idx][field] = num;
-    saveFungiblesConfig();
-    recalcularFungibles();
-  }
-
-  function onCambioModoCalculo(modo) {
-    const petEl = document.getElementById('calcPruebasPet');
-    const conEl = document.getElementById('calcPruebasContraste');
-    const mnEl = document.getElementById('calcPruebasMN');
-    const diasEl = document.getElementById('calcDiasPedido');
-    const lblPet = document.getElementById('lblCalcPet');
-    const lblCon = document.getElementById('lblCalcContraste');
-    const lblMN = document.getElementById('lblCalcMN');
-    const lblDias = document.getElementById('lblCalcDias');
-
-    if (modo === 'paciente') {
-      if (petEl) petEl.value = 1;
-      if (conEl) conEl.value = 1;
-      if (mnEl) mnEl.value = 0;
-      if (diasEl) diasEl.value = 1;
-      if (lblPet) lblPet.textContent = 'Pruebas PET-CT (paciente):';
-      if (lblCon) lblCon.textContent = 'Contraste IV (0 o 1):';
-      if (lblMN) lblMN.textContent = 'Med. Nuclear (0 o 1):';
-      if (lblDias) lblDias.textContent = 'Nº Pacientes:';
-    } else if (modo === 'turno') {
-      if (petEl) petEl.value = 12;
-      if (conEl) conEl.value = 5;
-      if (mnEl) mnEl.value = 9;
-      if (diasEl) diasEl.value = 1;
-      if (lblPet) lblPet.textContent = 'Pruebas PET-CT / turno:';
-      if (lblCon) lblCon.textContent = 'Con Contraste IV / turno:';
-      if (lblMN) lblMN.textContent = 'Pruebas Med. Nuclear / turno:';
-      if (lblDias) lblDias.textContent = 'Nº Turnos a cubrir:';
-    } else {
-      if (petEl) petEl.value = 24;
-      if (conEl) conEl.value = 10;
-      if (mnEl) mnEl.value = 18;
-      if (diasEl) diasEl.value = 5;
-      if (lblPet) lblPet.textContent = 'Pruebas PET-CT / día:';
-      if (lblCon) lblCon.textContent = 'Con Contraste IV / día:';
-      if (lblMN) lblMN.textContent = 'Pruebas Med. Nuclear / día:';
-      if (lblDias) lblDias.textContent = 'Días a cubrir (Pedido):';
+  function onCambioTipoPruebaFungible(tipo) {
+    activeTestType = tipo || 'fdg';
+    if (!fungiblesByTest[activeTestType]) {
+      fungiblesByTest[activeTestType] = [];
     }
     recalcularFungibles();
   }
 
+  function updateFungibleParam(idx, field, value) {
+    const list = fungiblesByTest[activeTestType];
+    if (!list || !list[idx]) return;
+    if (field === 'ratio') {
+      list[idx].ratio = Math.max(0, parseFloat(value) || 0);
+    } else {
+      list[idx][field] = value;
+    }
+    saveFungiblesByTest();
+    recalcularFungibles();
+  }
+
+  function agregarFungibleAPrueba() {
+    const nombreEl = document.getElementById('inputNuevoFungibleNombre');
+    const scopeEl = document.getElementById('selectNuevoFungibleAlcance');
+    const ratioEl = document.getElementById('inputNuevoFungibleRatio');
+    const canalEl = document.getElementById('selectNuevoFungibleCanal');
+
+    const nombre = (nombreEl?.value || '').trim();
+    if (!nombre) {
+      showToast('⚠️ Escribe el nombre del material antes de añadirlo.');
+      return;
+    }
+
+    if (!fungiblesByTest[activeTestType]) fungiblesByTest[activeTestType] = [];
+    fungiblesByTest[activeTestType].push({
+      nombre,
+      scope: scopeEl?.value || 'paciente',
+      ratio: Math.max(0, parseFloat(ratioEl?.value || '1') || 1),
+      canal: canalEl?.value || 'GALARIA'
+    });
+
+    if (nombreEl) nombreEl.value = '';
+    saveFungiblesByTest();
+    recalcularFungibles();
+    showToast(`➕ "${nombre}" añadido a ${TEST_TYPE_LABELS[activeTestType] || activeTestType}.`);
+  }
+
+  function eliminarFungibleDePrueba(idx) {
+    const list = fungiblesByTest[activeTestType];
+    if (!list || !list[idx]) return;
+    const removed = list.splice(idx, 1);
+    saveFungiblesByTest();
+    recalcularFungibles();
+    if (removed[0]) showToast(`🗑️ "${removed[0].nombre}" quitado de esta prueba.`);
+  }
+
   function computeFungiblesPlan() {
-    const modo = document.getElementById('calcModoCalculo')?.value || 'dia';
-    const pet = Math.max(0, parseInt(document.getElementById('calcPruebasPet')?.value || '24', 10) || 0);
-    const contraste = Math.max(0, parseInt(document.getElementById('calcPruebasContraste')?.value || '10', 10) || 0);
-    const mn = Math.max(0, parseInt(document.getElementById('calcPruebasMN')?.value || '18', 10) || 0);
+    const selTest = document.getElementById('selectTipoPruebaFungible');
+    if (selTest && selTest.value) activeTestType = selTest.value;
+
+    const pacientesDia = Math.max(0, parseInt(document.getElementById('calcPacientesDia')?.value || '20', 10) || 0);
+    const turnosDia = Math.max(0, parseInt(document.getElementById('calcTurnosDia')?.value || '2', 10) || 0);
     const dias = Math.max(1, parseInt(document.getElementById('calcDiasPedido')?.value || '5', 10) || 1);
     const margen = Math.max(0, parseInt(document.getElementById('calcMargenPct')?.value || '10', 10) || 0);
 
-    const totalPruebas = pet + mn;
     const factor = 1 + margen / 100;
+    const list = fungiblesByTest[activeTestType] || [];
 
-    const items = fungiblesConfig.map((cfg, idx) => {
-      const baseCount = cfg.base === 'contraste' ? contraste : totalPruebas;
-      const dia = Math.ceil(baseCount * cfg.ratio);
-      const totalPedido = Math.ceil(baseCount * cfg.ratio * dias * factor);
-
+    const items = list.map((cfg, idx) => {
+      const baseDia = cfg.scope === 'turno' ? turnosDia : pacientesDia;
+      const dia = Math.ceil(baseDia * cfg.ratio);
+      const totalPedido = Math.ceil(baseDia * cfg.ratio * dias * factor);
       return {
         ...cfg,
         idx,
@@ -781,7 +832,12 @@
     });
 
     return {
-      modo, pet, contraste, mn, dias, margen, totalPruebas,
+      testType: activeTestType,
+      testLabel: TEST_TYPE_LABELS[activeTestType] || activeTestType,
+      pacientesDia,
+      turnosDia,
+      dias,
+      margen,
       items
     };
   }
@@ -791,34 +847,43 @@
     if (!tbody) return;
 
     const plan = computeFungiblesPlan();
-    const unitLabel = plan.modo === 'paciente' ? 'Pac.' : (plan.modo === 'turno' ? 'Turno' : 'Día');
-    const unitPlural = plan.modo === 'paciente' ? 'Pac.' : (plan.modo === 'turno' ? 'Turnos' : 'Días');
-
-    const thBase = document.getElementById('thCalcConsumoBase');
-    if (thBase) thBase.textContent = `Consumo 1 ${unitLabel}`;
-
     const thTotal = document.getElementById('thCalcTotalDias');
     if (thTotal) {
-      thTotal.textContent = `Total ${plan.dias} ${plan.dias === 1 ? unitLabel : unitPlural} (+${plan.margen}%)`;
+      thTotal.textContent = `Total ${plan.dias} ${plan.dias === 1 ? 'Día' : 'Días'} (+${plan.margen}%)`;
+    }
+
+    if (plan.items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8; padding:1rem;">No hay materiales configurados para esta prueba. Añade uno arriba.</td></tr>';
+      return;
     }
 
     tbody.innerHTML = plan.items.map(it => `
       <tr>
+        <td><strong>${escapeHTML(it.nombre)}</strong></td>
         <td>
-          <strong>${escapeHTML(it.nombre)}</strong>
-          <div style="font-size:0.7rem; color:#64748b;">${it.base === 'contraste' ? 'Aplica a pruebas con contraste IV' : 'Aplica a pruebas PET-CT + Med. Nuclear'}</div>
+          <select class="period-select" style="padding:4px 8px; font-size:0.78rem; background:#fff;"
+            onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'scope', this.value)">
+            <option value="paciente" ${it.scope === 'paciente' ? 'selected' : ''}>👤 Por Paciente</option>
+            <option value="turno" ${it.scope === 'turno' ? 'selected' : ''}>⏱️ Por Turno</option>
+          </select>
         </td>
         <td>
-          <input type="number" step="0.1" min="0" value="${it.ratio}"
-            style="width:72px; padding:4px 6px; border:1px solid #cbd5e1; border-radius:6px; font-family:'JetBrains Mono',monospace; font-weight:700;"
+          <input type="number" step="0.5" min="0" value="${it.ratio}"
+            style="width:68px; padding:4px 6px; border:1px solid #cbd5e1; border-radius:6px; font-family:'JetBrains Mono',monospace; font-weight:700;"
             onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'ratio', this.value)">
+        </td>
+        <td>
+          <select class="period-select" style="padding:4px 8px; font-size:0.78rem; background:#fff;"
+            onchange="window.supervisionApp.updateFungibleParam(${it.idx}, 'canal', this.value)">
+            <option value="GALARIA" ${it.canal === 'GALARIA' ? 'selected' : ''}>🔵 GALARIA</option>
+            <option value="SERGAS" ${it.canal === 'SERGAS' ? 'selected' : ''}>🟢 SERGAS (LOGAS)</option>
+          </select>
         </td>
         <td style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#004868;">${it.dia} uds</td>
         <td style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#059669;">${it.totalPedido} uds</td>
-        <td>
-          <span class="status-badge ${it.canal === 'GALARIA' ? 'badge-info' : 'badge-ok'}">
-            ${it.canal === 'GALARIA' ? '🔵 GALARIA' : '🟢 SERGAS (LOGAS)'}
-          </span>
+        <td class="no-print">
+          <button type="button" class="btn-nurse btn-nurse-outline" style="padding:2px 8px; font-size:0.72rem; color:#dc2626; border-color:#fecaca;"
+            onclick="window.supervisionApp.eliminarFungibleDePrueba(${it.idx})">🗑️</button>
         </td>
       </tr>
     `).join('');
@@ -827,20 +892,25 @@
   function generarPedidoDesdeCalculadora(canal) {
     const plan = computeFungiblesPlan();
     const filtered = plan.items.filter(it => it.canal === canal);
+    if (filtered.length === 0) {
+      showToast(`⚠️ No hay materiales asignados a ${canal} en esta prueba.`);
+      return;
+    }
+
     const resumenLineas = filtered.map(it => `${it.nombre}: ${it.totalPedido} uds`).join(' · ');
     const numPed = Math.floor(100 + Math.random() * 900);
 
     const nuevo = {
       id: `${canal === 'GALARIA' ? 'GAL' : 'SER'}-2026-${numPed}`,
       canal,
-      categoria: 'Fungible Sanitario (Cálculo Exacto)',
-      descripcion: `Reposición ${plan.dias}d (${plan.pet} PET + ${plan.mn} MN): ${resumenLineas}`,
+      categoria: `Fungibles ${plan.testLabel}`,
+      descripcion: `Pedido ${plan.dias}d (${plan.pacientesDia} pac/día · ${plan.turnosDia} turnos/día): ${resumenLineas}`,
       proveedor: canal === 'GALARIA' ? 'Galaria · Logística PET-CT' : 'Almacén Central SERGAS (LOGAS)',
       cantidad: `${filtered.reduce((acc, x) => acc + x.totalPedido, 0)} uds totales`,
       fecha: new Date().toLocaleDateString('es-ES') + ` (${plan.dias}d)`,
       estado: 'transito',
       supervision: 'Supervisora de Turno (DUE)',
-      observaciones: `Calculado para ${plan.totalPruebas} pruebas (+${plan.margen}% margen).`
+      observaciones: `Prueba: ${plan.testLabel}. Margen +${plan.margen}%.`
     };
 
     state.pedidos.unshift(nuevo);
@@ -849,14 +919,14 @@
     cambiarTab('pedidos');
 
     if (canal === 'SERGAS') {
-      const textoLogas = `PEDIDO LOGAS SERGAS (${plan.dias} días · ${plan.totalPruebas} pruebas):\n` +
+      const textoLogas = `PEDIDO LOGAS SERGAS — ${plan.testLabel} (${plan.dias} días · ${plan.pacientesDia} pac/día · ${plan.turnosDia} turnos/día):\n` +
         filtered.map(it => `- ${it.nombre}: ${it.totalPedido} uds`).join('\n');
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(textoLogas).catch(() => {});
       }
       showToast('🟢 Pedido SERGAS creado y copiado al portapapeles para pegar en LOGAS.');
     } else {
-      showToast('🔵 Pedido GALARIA creado con el cálculo exacto de fungibles.');
+      showToast('🔵 Pedido GALARIA creado con los fungibles de esta prueba.');
     }
   }
 
@@ -2069,7 +2139,9 @@
       marcarPedidoEntregado,
       recalcularFungibles,
       updateFungibleParam,
-      onCambioModoCalculo,
+      onCambioTipoPruebaFungible,
+      agregarFungibleAPrueba,
+      eliminarFungibleDePrueba,
       generarPedidoDesdeCalculadora,
       abrirModalIncidenciaVenopuncion,
       cerrarModalIncidenciaVenopuncion,
