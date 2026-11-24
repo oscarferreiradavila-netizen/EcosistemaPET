@@ -785,6 +785,4 @@ if File.exist?(pdf_path)
   size_kb = (File.size(pdf_path).to_f / 1024).round(2)
   puts "🎉 PRESENTACIÓN PÚBLICA EN PDF GENERADA CON ÉXITO!"
   puts "📄 Archivo: #{pdf_path} (#{size_kb} KB)"
-else
-  puts "⚠️ Error generando el PDF con Chrome."
-end
+e
