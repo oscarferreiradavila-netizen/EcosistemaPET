@@ -332,7 +332,7 @@ html_slides = <<~HTML
 
     <div class="slide-footer">
       <span>Plan Estratégico de Calidad y Eficiencia de la Sanidad Pública</span>
-      <span>Noviembre 2026 · Solución en Producción: ecosistemagalariapet.netlify.app</span>
+      <span>Noviembre 2026 · Solución en Producción: oscarferreiradavila-netizen.github.io/EcosistemaPET</span>
     </div>
   </div>
 
@@ -737,7 +737,7 @@ html_slides = <<~HTML
       <div class="grid-2" style="margin-bottom: 0.35in; gap: 0.5in;">
         <div>
           <ul class="exec-list">
-            <li><strong>Realidad Asistencial, No una Maqueta:</strong> El sistema está completamente desarrollado y operativo en <code>https://ecosistemagalariapet.netlify.app</code>.</li>
+            <li><strong>Realidad Asistencial, No una Maqueta:</strong> El sistema está completamente desarrollado y operativo en <code>https://oscarferreiradavila-netizen.github.io/EcosistemaPET/</code>.</li>
             <li><strong>Impacto Directo en Lista de Espera:</strong> Rescata más de 120 huecos de máquina al año y reduce el absentismo a menos del 1.8%.</li>
             <li><strong>Defensa del Presupuesto Público:</strong> Evita tirar decenas de miles de euros en radiofármacos que decaen por inasistencia.</li>
             <li><strong>Herramienta Directiva para Gerencia:</strong> Cuadros de mando objetivos y memorias oficiales SERGAS generadas con 1 clic.</li>
@@ -763,7 +763,7 @@ html_slides = <<~HTML
 
     <div class="slide-footer">
       <span>Muchas gracias · Demostración práctica en vivo a continuación</span>
-      <span>Enlace Público Operativo: https://ecosistemagalariapet.netlify.app</span>
+      <span>Enlace Público Operativo: https://oscarferreiradavila-netizen.github.io/EcosistemaPET/</span>
     </div>
   </div>
 

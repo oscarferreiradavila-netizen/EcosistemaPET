@@ -10,8 +10,8 @@ def to_base64(path)
 end
 
 xunta_b64 = to_base64("xunta_logo.png")
-sergas_b64 = to_base64("sergas_logo.png")
 galaria_b64 = to_base64("galaria_logo.jpg")
+pet_scanner_b64 = to_base64("pet_scanner_cover.jpg")
 
 html_content = <<~HTML
 <!DOCTYPE html>
@@ -175,6 +175,23 @@ html_content = <<~HTML
       line-height: 1.45;
       max-width: 720px;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    .cover-scanner-box {
+      position: relative;
+      margin: 20px auto 10px auto;
+      max-width: 680px;
+      text-align: center;
+    }
+    .cover-scanner-img {
+      display: block;
+      width: 100%;
+      max-height: 285px;
+      object-fit: cover;
+      object-position: 58% 48%;
+      opacity: 0.78;
+      filter: saturate(0.52) contrast(0.92) brightness(0.86);
+      -webkit-mask-image: radial-gradient(ellipse 72% 68% at 54% 50%, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.55) 58%, rgba(0, 0, 0, 0) 92%);
+      mask-image: radial-gradient(ellipse 72% 68% at 54% 50%, rgba(0, 0, 0, 1) 24%, rgba(0, 0, 0, 0.55) 58%, rgba(0, 0, 0, 0) 92%);
     }
     .cover-meta {
       background: rgba(255, 255, 255, 0.1);
@@ -454,7 +471,6 @@ html_content = <<~HTML
   <header class="screen-header">
     <div class="screen-header-logos">
       <img src="#{xunta_b64}" alt="Xunta de Galicia">
-      <img src="#{sergas_b64}" alt="SERGAS">
       <img src="#{galaria_b64}" alt="Galaria">
     </div>
     <div class="screen-header-actions">
@@ -471,13 +487,16 @@ html_content = <<~HTML
       <div>
         <div class="cover-logos">
           <img src="#{xunta_b64}" alt="Xunta de Galicia">
-          <img src="#{sergas_b64}" alt="SERGAS">
           <img src="#{galaria_b64}" alt="Galaria">
         </div>
 
         <h1 class="cover-title">Libro Maestro de Instrucciones y Manual de Programas</h1>
         <div class="cover-subtitle">
           Guía integral de funcionamiento, operativa clínica y arquitectura del Ecosistema Digital de Gestión Integral PET/CT de Alta Resolución.
+        </div>
+
+        <div class="cover-scanner-box">
+          <img src="#{pet_scanner_b64}" alt="Tomógrafo PET/CT de Alta Resolución" class="cover-scanner-img">
         </div>
       </div>
 
@@ -1009,10 +1028,10 @@ html_content = <<~HTML
             <td>Operativa clínica diaria a pie de tomógrafo y consultas</td>
           </tr>
           <tr>
-            <td><strong>Nube Netlify Cloud</strong></td>
-            <td><code>https://ecosistemagalariapet.netlify.app</code></td>
+            <td><strong>Nube GitHub Pages</strong></td>
+            <td><code>https://oscarferreiradavila-netizen.github.io/EcosistemaPET/</code></td>
             <td>HTTPS · TLS 1.3 · Alta Disponibilidad 24/7</td>
-            <td>Acceso para pacientes (audioguías) y telemedicina</td>
+            <td>Acceso para pacientes (audioguías), telemedicina y repositorio oficial</td>
           </tr>
         </tbody>
       </table>
@@ -1033,13 +1052,4 @@ File.write("MANUAL_ECOSISTEMA_PET_CT.html", html_content, encoding: "UTF-8")
 puts "✅ MANUAL_ECOSISTEMA_PET_CT.html generado (#{File.size('MANUAL_ECOSISTEMA_PET_CT.html')} bytes)"
 
 puts "🖨️ Compilando a PDF con Google Chrome Headless..."
-chrome_cmd = '"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --no-sandbox --user-data-dir=/tmp/chrome_pdf_manual_data --print-to-pdf="MANUAL_ECOSISTEMA_PET_CT.pdf" --no-pdf-header-footer "MANUAL_ECOSISTEMA_PET_CT.html"'
-system(chrome_cmd)
-
-if File.exist?("MANUAL_ECOSISTEMA_PET_CT.pdf")
-  size_kb = (File.size("MANUAL_ECOSISTEMA_PET_CT.pdf").to_f / 1024).round(2)
-  puts "🎉 MANUAL EN PDF GENERADO CON ÉXITO!"
-  puts "📄 Archivo: MANUAL_ECOSISTEMA_PET_CT.pdf (#{size_kb} KB)"
-else
-  puts "⚠️ Error generando el PDF con Chrome."
-end
+chrome_cmd = '"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --no-sandbox --user-data-dir=/tmp/chrome_pdf_manual_data --print-to-pdf="MA

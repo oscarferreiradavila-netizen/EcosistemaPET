@@ -308,7 +308,7 @@ html_content = <<~HTML
         </div>
         <div class="cover-meta-item">
           <strong>Despliegue Web 24/7</strong>
-          https://ecosistemagalariapet.netlify.app
+          https://oscarferreiradavila-netizen.github.io/EcosistemaPET/
         </div>
         <div class="cover-meta-item">
           <strong>Versión de la Suite</strong>
@@ -418,7 +418,7 @@ html_content = <<~HTML
 
     <div class="callout">
       <div class="callout-title">Uso Típico</div>
-      Se recomienda configurar <code>https://ecosistemagalariapet.netlify.app/index.html</code> como página de inicio en todos los navegadores de los puestos de trabajo del Hospital do Meixoeiro.
+      Se recomienda configurar <code>https://oscarferreiradavila-netizen.github.io/EcosistemaPET/index.html</code> como página de inicio en todos los navegadores de los puestos de trabajo del Hospital do Meixoeiro.
     </div>
   </div>
 
@@ -743,8 +743,8 @@ html_content = <<~HTML
 
     <h2>9.1. Infraestructura Cloud y Conectividad</h2>
     <ul>
-      <li><strong>Alojamiento Web Continuo:</strong> Plataforma Netlify Cloud bajo HTTPS seguro con certificado SSL TLS 1.3 activo 24/7 en la dirección:
-        <br><a href="https://ecosistemagalariapet.netlify.app" target="_blank"><strong>https://ecosistemagalariapet.netlify.app</strong></a>
+      <li><strong>Alojamiento Web Continuo:</strong> Plataforma GitHub Pages bajo HTTPS seguro con certificado SSL TLS 1.3 activo 24/7 en la dirección:
+        <br><a href="https://oscarferreiradavila-netizen.github.io/EcosistemaPET/" target="_blank"><strong>https://oscarferreiradavila-netizen.github.io/EcosistemaPET/</strong></a>
       </li>
       <li><strong>Auto-Deploy Watcher en Segundo Plano:</strong> El entorno de desarrollo cuenta con un servicio daemon activo (<code>watch_and_deploy.rb</code>) que monitoriza los archivos del proyecto. Cualquier actualización de código, estilo o directriz clínica se compila y se despliega automáticamente en la web en menos de 5 segundos.</li>
       <li><strong>Compatibilidad Multiplataforma:</strong> Interfaz 100% responsiva optimizada para ordenadores de sobremesa con pantallas médicas de diagnóstico, ordenadores portátiles de consulta y dispositivos móviles (iOS y Android).</li>
