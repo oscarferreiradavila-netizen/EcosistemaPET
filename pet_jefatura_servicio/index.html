@@ -13,7 +13,35 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261121_PLANILLA_01">
+  <link rel="stylesheet" href="styles.css?v=20261124_JEFATURA_ONLY_07">
+  <script>
+    window.jefaturaApp = window.jefaturaApp || {};
+    window.jefaturaApp.cambiarTab = function(tabId) {
+      document.querySelectorAll('.chief-tab-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.tab === tabId);
+      });
+      document.querySelectorAll('.tab-panel').forEach(function(p) {
+        p.classList.toggle('active', p.id === 'tab-' + tabId);
+      });
+      if (tabId === 'dosimetria_trabajadores' && typeof window.jefaturaApp.renderDosimetriaTrabajadoresTab === 'function') {
+        window.jefaturaApp.renderDosimetriaTrabajadoresTab();
+      }
+      if (typeof window !== 'undefined' && window.location) {
+        try { history.replaceState(null, '', '#' + tabId); } catch (_) {}
+      }
+      var target = document.getElementById('tab-' + tabId);
+      if (target && typeof target.scrollIntoView === 'function') {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var hash = window.location.hash ? window.location.hash.replace('#', '') : '';
+      if (hash && document.getElementById('tab-' + hash)) {
+        window.jefaturaApp.cambiarTab(hash);
+      }
+    });
+  </script>
 </head>
 
 <body>
@@ -35,6 +63,7 @@
         <a href="../pet_consola_medica/index.html" class="top-nav-link">👨‍⚕️ 5. Consola Médica</a>
         <a href="../pet_consola_tecnicos/index.html" class="top-nav-link">🔬 6. Técnicos TSID</a>
         <a href="../pet_supervision_enfermeria/index.html" class="top-nav-link" style="color:#a7f3d0; font-weight:700;">🩺 8. Supervisión Enfermería</a>
+        <a href="../pet_enfermera_gestora/index.html" class="top-nav-link" style="color:#c4b5fd; font-weight:700;">📋 9. Gestora Casos</a>
       </div>
     </div>
   </div>
@@ -82,29 +111,6 @@
       </div>
     </div>
   </header>
-
-  <!-- DOS PESTAÑAS MAESTRAS AL ENTRAR EN JEFATURA: JEFE DE SERVICIO Y SUPERVISIÓN DE ENFERMERÍA -->
-  <nav class="jefatura-master-nav">
-    <div class="jefatura-master-nav-inner">
-      <button type="button" class="jefatura-master-tab-btn active" id="btnMasterJefe" onclick="window.jefaturaApp.setMasterTab('jefe')">
-        <span class="master-tab-icon">👑</span>
-        <div class="master-tab-text-block">
-          <span class="master-tab-main">Jefe de Servicio</span>
-          <span class="master-tab-desc">Dirección Médica, Cartera de Radiofármacos, Demoras P1/P2, TAT de Informe y Cuadro de Mando Global</span>
-        </div>
-        <span class="master-tab-badge">Mando Médico & Global</span>
-      </button>
-
-      <button type="button" class="jefatura-master-tab-btn" id="btnMasterEnfermeria" onclick="window.jefaturaApp.setMasterTab('enfermeria')">
-        <span class="master-tab-icon">🩺</span>
-        <div class="master-tab-text-block">
-          <span class="master-tab-main">Supervisión de Enfermería</span>
-          <span class="master-tab-desc">Cuidados en Box, Audioguías, Vías Venosas, Camilla y Absentismo</span>
-        </div>
-        <span class="master-tab-badge badge-enf">Cuidados & Boxes</span>
-      </button>
-    </div>
-  </nav>
 
   <!-- 3. CONTENIDO PRINCIPAL -->
   <main class="main-container">
@@ -361,6 +367,12 @@
         onclick="window.jefaturaApp.cambiarTab('planilla_personal')">
         <span>👥 Planilla de Personal (Turnos)</span>
         <span class="tab-count-badge" id="tabBadgePlanilla" style="background:#0d9488; color:#fff;">4</span>
+      </button>
+
+      <button type="button" class="chief-tab-btn" data-tab="dosimetria_trabajadores" data-jefe-only="true"
+        onclick="window.jefaturaApp.cambiarTab('dosimetria_trabajadores')">
+        <span>☢️ Dosimetría de Trabajadores</span>
+        <span class="tab-count-badge" id="tabBadgeDosimetria" style="background:#0284c7; color:#fff;">Control SPR</span>
       </button>
 
       <a href="../pet_supervision_enfermeria/index.html#pedidos" class="chief-tab-btn" style="text-decoration:none;"
@@ -1581,6 +1593,153 @@
       </div>
     </section>
 
+    <!-- ======================================================================
+         PESTAÑA: CONTROL DOSIMÉTRICO DE LOS TRABAJADORES (PROTECCIÓN RADIOLÓGICA)
+         ====================================================================== -->
+    <section id="tab-dosimetria_trabajadores" class="tab-panel">
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>☢️ Control Dosimétrico Ocupacional de los Trabajadores — Servicio de Protección Radiológica</h2>
+            <p>
+              Monitorización de dosis equivalentes y efectivas (<strong>Hp(10) cuerpo entero, Hp(0.07) extremidades/anillo y Hp(3) cristalino</strong>),
+              vigilancia frente al límite reglamentario del CSN (<strong>20 mSv/año</strong>) y custodia digital de los informes oficiales en PDF remitidos por el Jefe de Protección Radiológica.
+            </p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;" class="no-print">
+            <label for="inputPdfProteccionRadiologica" class="btn-chief btn-chief-primary" style="cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+              <span>📤 Subir Informe PDF (Jefe SPR)</span>
+            </label>
+            <input type="file" id="inputPdfProteccionRadiologica" accept="application/pdf" style="display:none;"
+              onchange="window.jefaturaApp.onSubirPdfDosimetria(event)">
+            <button type="button" class="btn-chief btn-chief-outline" onclick="window.jefaturaApp.abrirModalNuevoRegistroDosis()">
+              ➕ Añadir Lectura Dosimétrica
+            </button>
+            <button type="button" class="btn-chief btn-chief-outline" onclick="window.jefaturaApp.exportarCsvDosimetria()">
+              📊 Exportar Control (CSV)
+            </button>
+          </div>
+        </div>
+
+        <!-- TARJETA DEL INFORME OFICIAL PDF REMITIDO POR EL JEFE DE PROTECCIÓN RADIOLÓGICA -->
+        <div id="contenedorInformePdfSpr" class="spr-pdf-card" style="margin-bottom:1.25rem;">
+          <!-- Renderizado dinámico desde app.js -->
+        </div>
+
+        <!-- TARJETAS RESUMEN KPI DOSIMÉTRICO -->
+        <div class="kpi-nurse-grid" style="margin-bottom:1.25rem;">
+          <article class="kpi-nurse-card" style="--kpi-color:#0284c7; --kpi-bg:#e0f2fe;">
+            <div class="kpi-top-row">
+              <span class="kpi-label">Dosis Máxima Mensual Hp(10)</span>
+              <div class="kpi-icon-badge">☢️</div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-main-num" id="kpiDosisMaxMes">0.42 mSv</span>
+              <span class="kpi-badge badge-ok">Normal (&lt;1.0 mSv)</span>
+            </div>
+            <div class="kpi-subtext">
+              <span id="kpiDosisMaxTrabajador">Marta Souto (DUE Inyección Box)</span>
+            </div>
+          </article>
+
+          <article class="kpi-nurse-card" style="--kpi-color:#0d9488; --kpi-bg:#ccfbf1;">
+            <div class="kpi-top-row">
+              <span class="kpi-label">Dosis Máx. Extremidades Hp(0.07)</span>
+              <div class="kpi-icon-badge">💍</div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-main-num" id="kpiDosisMaxAnillo">2.85 mSv</span>
+              <span class="kpi-badge badge-ok">Límite: 500 mSv/a</span>
+            </div>
+            <div class="kpi-subtext">
+              <span>Anillo TLD · Radiofarmacia (Elución 68Ga/18F)</span>
+            </div>
+          </article>
+
+          <article class="kpi-nurse-card" style="--kpi-color:#059669; --kpi-bg:#d1fae5;">
+            <div class="kpi-top-row">
+              <span class="kpi-label">Dosis Media del Servicio</span>
+              <div class="kpi-icon-badge">📊</div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-main-num" id="kpiDosisMediaServicio">0.19 mSv</span>
+              <span class="kpi-badge badge-ok">Excelente</span>
+            </div>
+            <div class="kpi-subtext">
+              <span>Media mensual ponderada del personal</span>
+            </div>
+          </article>
+
+          <article class="kpi-nurse-card" style="--kpi-color:#7c3aed; --kpi-bg:#ede9fe;">
+            <div class="kpi-top-row">
+              <span class="kpi-label">Cumplimiento Legal CSN</span>
+              <div class="kpi-icon-badge">🛡️</div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-main-num">100% OK</span>
+              <span class="kpi-badge badge-ok">0 Superaciones</span>
+            </div>
+            <div class="kpi-subtext">
+              <span>16 trabajadores Categoría A regulados</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- BARRA DE FILTROS Y BÚSQUEDA -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:0.75rem 1rem; margin-bottom:1.15rem;" class="no-print">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <label style="font-size:0.76rem; font-weight:800; color:#004868;">Estamento Profesional:</label>
+            <select id="selectFiltroEstamentoDosimetria" class="period-select" style="background:#fff; font-weight:700;"
+              onchange="window.jefaturaApp.filtrarDosimetriaTrabajadores()">
+              <option value="todos" selected>👥 Todos los Trabajadores (16)</option>
+              <option value="enfermeria">🩺 Enfermería (DUE)</option>
+              <option value="tecnicos">☢️ Técnicos (TSID)</option>
+              <option value="medicos">👨‍⚕️ Facultativos (FEA MN)</option>
+              <option value="radiofarmacia">🧪 Radiofarmacia / Radiofísica</option>
+              <option value="celadores">🦽 Celadores y TCAE</option>
+            </select>
+
+            <label style="font-size:0.76rem; font-weight:800; color:#004868; margin-left:8px;">Estado Dosimétrico:</label>
+            <select id="selectFiltroEstadoDosimetria" class="period-select" style="background:#fff;"
+              onchange="window.jefaturaApp.filtrarDosimetriaTrabajadores()">
+              <option value="todos" selected>Todos los estados</option>
+              <option value="normal">🟢 Normal (&lt; 1.0 mSv/mes)</option>
+              <option value="registro">🟡 Nivel Registro (1.0 - 1.6 mSv)</option>
+              <option value="investigacion">🔴 Nivel Investigación (&gt; 1.6 mSv)</option>
+            </select>
+          </div>
+
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input type="text" id="inputBuscarTrabajadorDosimetria" class="period-select" style="min-width:210px; background:#fff;"
+              placeholder="🔍 Buscar trabajador o dosímetro..."
+              oninput="window.jefaturaApp.filtrarDosimetriaTrabajadores()">
+          </div>
+        </div>
+
+        <!-- TABLA PRINCIPAL DE DOSIMETRÍA DE LOS TRABAJADORES -->
+        <div class="table-responsive">
+          <table class="chief-table">
+            <thead>
+              <tr>
+                <th>Trabajador / Profesional</th>
+                <th>Puesto / Zona Radiológica</th>
+                <th>Dosímetro &amp; Magnitud</th>
+                <th>Dosis Mes ($mSv$)</th>
+                <th>Dosis Anual Acumulada</th>
+                <th>% Límite Anual (20 mSv)</th>
+                <th>Semáforo SPR</th>
+                <th>Observaciones / Medidas de Protección</th>
+                <th class="no-print">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tablaDosimetriaTrabajadoresBody">
+              <!-- Renderizado dinámico desde app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ========================================================================
@@ -1663,11 +1822,77 @@
     </div>
   </div>
 
+  <!-- MODAL: VISOR DE INFORME PDF DEL JEFE DE PROTECCIÓN RADIOLÓGICA -->
+  <div id="modalVisorPdfDosimetria" class="chief-modal-backdrop">
+    <div class="chief-modal" style="max-width:1050px; width:95%; height:90vh; display:flex; flex-direction:column;">
+      <div class="chief-modal-header" style="background:#0284c7;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.3rem;">📄</span>
+          <div>
+            <h3 id="visorPdfTitulo" style="margin:0; font-size:1.05rem; color:#fff;">Informe Dosimétrico Oficial — Servicio de Protección Radiológica</h3>
+            <span id="visorPdfSubtitulo" style="font-size:0.75rem; color:#e0f2fe;">SERGAS · Galaria · Consejo de Seguridad Nuclear (CSN)</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-chief btn-chief-outline" style="background:#fff; color:#0284c7; padding:4px 10px; font-size:0.76rem;"
+            onclick="window.jefaturaApp.descargarPdfDosimetria()">📥 Descargar PDF</button>
+          <button type="button" onclick="window.jefaturaApp.cerrarVisorPdfDosimetria()"
+            style="background:none; border:none; color:#ffffff; font-size:1.3rem; cursor:pointer;">✕</button>
+        </div>
+      </div>
+      <div class="chief-modal-body" style="flex:1; padding:0; background:#334155; min-height:480px;">
+        <iframe id="iframeVisorPdfDosimetria" style="width:100%; height:100%; min-height:480px; border:none;" title="Visor Informe Dosimétrico PDF"></iframe>
+      </div>
+      <div class="chief-modal-footer" style="padding:0.75rem 1.25rem;">
+        <div style="font-size:0.75rem; color:#64748b;" id="visorPdfFooterInfo">
+          Documento oficial custodiado por Jefatura de Servicio · Control Ocupacional Reglamentario
+        </div>
+        <button type="button" class="btn-chief btn-chief-outline" onclick="window.jefaturaApp.cerrarVisorPdfDosimetria()">Cerrar Visor</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EDITAR / REGISTRAR DOSIS DE UN TRABAJADOR -->
+  <div id="modalEditarDosisTrabajador" class="chief-modal-backdrop">
+    <div class="chief-modal" style="max-width:580px;">
+      <div class="chief-modal-header" style="background:#004868;">
+        <h3>✏️ Actualizar Registro Dosimétrico Ocupacional</h3>
+        <button type="button" onclick="window.jefaturaApp.cerrarModalEditarDosis()"
+          style="background:none; border:none; color:#ffffff; font-size:1.25rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="chief-modal-body">
+        <input type="hidden" id="editDosisTrabajadorId">
+        <div style="display:flex; flex-direction:column; gap:0.9rem;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Trabajador / Profesional:</label>
+            <input type="text" id="editDosisNombre" class="period-select" style="width:100%; font-weight:700;" readonly>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+            <div>
+              <label style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Dosis Mes Actual (mSv):</label>
+              <input type="number" step="0.01" min="0" id="editDosisMes" class="period-select" style="width:100%; font-weight:800; font-family:'JetBrains Mono',monospace;">
+            </div>
+            <div>
+              <label style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Dosis Acumulada Año (mSv):</label>
+              <input type="number" step="0.01" min="0" id="editDosisAnual" class="period-select" style="width:100%; font-weight:800; font-family:'JetBrains Mono',monospace;">
+            </div>
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Observaciones / Medidas de Protección Radiológica:</label>
+            <textarea id="editDosisObservaciones" class="period-select" style="width:100%; height:75px; font-size:0.8rem;"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="chief-modal-footer">
+        <button type="button" class="btn-chief btn-chief-outline" onclick="window.jefaturaApp.cerrarModalEditarDosis()">Cancelar</button>
+        <button type="button" class="btn-chief btn-chief-primary" onclick="window.jefaturaApp.guardarEdicionDosisTrabajador()">💾 Guardar Lectura</button>
+      </div>
+    </div>
+  </div>
+
   <div id="chiefToastContainer" class="chief-toast-container"></div>
 
-  <!-- Semilla oficial de peticiones para disponibilidad 100% instantánea -->
-  <script src="../pet_ct_triage/web_app/peticiones_seed.js"></script>
-  <script src="app.js?v=20261121_PLANILLA_01"></script>
+  <script src="app.js?v=20261124_JEFATURA_ONLY_07"></script>
 </body>
 
 </html>

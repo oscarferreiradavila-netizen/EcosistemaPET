@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enfermería Gestora de Casos & Enlace Asistencial | Galaria · SERGAS</title>
+  <meta name="description"
+    content="Consola de Enfermería Gestora de Casos: Seguimiento de peticiones PET/CT por servicio clínico, sincronización con consultas sucesivas con especialistas, comités de tumores y trazabilidad multi-servicio por NHC.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261124_GESTORA_01">
+</head>
+
+<body>
+
+  <!-- 1. BARRA INSTITUCIONAL SERGAS -->
+  <div class="sergas-top-bar">
+    <div class="sergas-top-inner">
+      <div class="sergas-top-left">
+        <span class="xunta-badge">XUNTA DE GALICIA</span>
+        <span>CONSELLERÍA DE SANIDADE · SERGAS · GALARIA</span>
+        <span style="opacity:0.65;">|</span>
+        <span style="color:#fde047; font-weight:800;">MÓDULO 9 · ENFERMERÍA GESTORA DE CASOS & ENLACE CLÍNICO</span>
+      </div>
+      <div class="sergas-top-links">
+        <a href="../index.html" class="top-nav-link">🏠 Portal Maestro</a>
+        <a href="../pet_peticion_medica/index.html" class="top-nav-link">🩺 1. Petición</a>
+        <a href="../pet_ct_triage/web_app/index.html" class="top-nav-link">📊 2. Triaje</a>
+        <a href="../pet_prep_page/enfermeria.html" class="top-nav-link">🏥 4. Enfermería</a>
+        <a href="../pet_consola_medica/index.html" class="top-nav-link">👨‍⚕️ 5. Consola Médica</a>
+        <a href="../pet_consola_tecnicos/index.html" class="top-nav-link">🔬 6. Técnicos TSID</a>
+        <a href="../pet_jefatura_servicio/index.html" class="top-nav-link">📈 7. Jefatura</a>
+        <a href="../pet_supervision_enfermeria/index.html" class="top-nav-link">🩺 8. Supervisión Enf.</a>
+        <a href="index.html" class="top-nav-link active">📋 9. Enfermera Gestora</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CABECERA EJECUTIVA DE LA GESTORA -->
+  <header class="gestora-header">
+    <div class="gestora-header-inner">
+      <div class="brand-group">
+        <img src="../galaria_logo.jpg" alt="Galaria SERGAS" class="brand-logo" onerror="this.style.display='none'">
+        <div class="brand-titles">
+          <h1>
+            <span>📋 Consola de Enfermería Gestora de Casos & Enlace Clínico</span>
+            <span class="role-pill">Gestora Asistencial</span>
+          </h1>
+          <p>Trazabilidad de Peticiones PET/CT por Servicio, Coordinación de Consultas Sucesivas con Especialistas y Cruce Multi-Servicio por NHC</p>
+        </div>
+      </div>
+
+      <div class="header-actions no-print">
+        <button type="button" class="btn-gestora btn-gestora-outline" onclick="window.gestoraApp.sincronizarDatos()">
+          🔄 Sincronizar en Vivo
+        </button>
+        <button type="button" class="btn-gestora btn-gestora-primary" onclick="window.gestoraApp.abrirModalNuevaConsulta()">
+          ➕ Asignar / Editar Próxima Consulta
+        </button>
+        <button type="button" class="btn-gestora btn-gestora-outline" onclick="window.gestoraApp.exportarCsv()">
+          📊 Exportar Listado (CSV)
+        </button>
+        <button type="button" class="btn-gestora btn-gestora-outline" onclick="window.print()">
+          🖨️ Imprimir Hoja Coordinación
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 3. BARRA DE PUESTO DE LA GESTORA: SERVICIO ACTIVO Y BÚSQUEDA UNIVERSAL POR NHC -->
+  <nav class="service-nav-bar no-print">
+    <div class="service-nav-inner">
+      <div class="service-selector-group">
+        <label for="selectServicioGestora" class="service-select-label">
+          <span>🏥 Servicio Clínico Activo:</span>
+        </label>
+        <select id="selectServicioGestora" class="service-select-dropdown" onchange="window.gestoraApp.cambiarServicioActivo(this.value)">
+          <option value="Oncología Médica" selected>🩺 Oncología Médica</option>
+          <option value="Hematología">🩸 Hematología</option>
+          <option value="Neumología">🫁 Neumología & Cirugía Torácica</option>
+          <option value="Urología">🎗️ Urología</option>
+          <option value="Aparato Digestivo">🍽️ Aparato Digestivo & Cirugía</option>
+          <option value="Neurología">🧠 Neurología & Neurocirugía</option>
+          <option value="Medicina Interna">🩺 Medicina Interna / Infecciosas</option>
+          <option value="todos">🌐 Todos los Servicios (Visión Global)</option>
+        </select>
+        <span class="status-badge badge-purple" id="badgeTotalPacientesServicio" style="font-weight:800;">0 pacientes</span>
+      </div>
+
+      <div class="search-nhc-group">
+        <span class="search-icon-inside">🔍</span>
+        <input type="text" id="inputBuscarUniversal" class="input-search-nhc"
+          placeholder="Buscar por NHC (Historia), Nombre o Diagnóstico..."
+          oninput="window.gestoraApp.onBusquedaUniversal(this.value)">
+      </div>
+    </div>
+  </nav>
+
+  <!-- 4. CONTENEDOR PRINCIPAL -->
+  <main class="main-container">
+
+    <!-- AVISO DE FILTRADO MULTI-SERVICIO SI HAY BÚSQUEDA POR NHC -->
+    <div id="bannerBusquedaNhc" style="display:none; background:#ede9fe; border:1.5px solid #a78bfa; border-radius:10px; padding:0.85rem 1.15rem; color:#4c1d95; font-size:0.85rem;" class="no-print">
+      <!-- Se inyecta dinámicamente si el usuario busca por NHC cruzando servicios -->
+    </div>
+
+    <!-- 4.1. TARJETAS KPI DE COORDINACIÓN ASISTENCIAL -->
+    <section class="kpi-gestora-grid">
+      <!-- KPI 1: Peticiones Activas del Servicio -->
+      <article class="kpi-gestora-card" style="--kpi-color:#7c3aed; --kpi-bg:#ede9fe;" onclick="window.gestoraApp.cambiarSubTab('todas')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Peticiones en Seguimiento</span>
+          <div class="kpi-icon-badge">📋</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-main-num" id="kpiTotalPeticionesServicio">0</span>
+          <span class="kpi-badge badge-purple" id="kpiServicioActivoBadge">Oncología</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiDesglosePrioridades">P1: 0 · P2: 0 · P3: 0</span>
+        </div>
+      </article>
+
+      <!-- KPI 2: Coordinadas con Fecha de Consulta Sucesiva -->
+      <article class="kpi-gestora-card" style="--kpi-color:#059669; --kpi-bg:#d1fae5;" onclick="window.gestoraApp.cambiarSubTab('proximas_consultas')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Con Consulta Sucesiva</span>
+          <div class="kpi-icon-badge">📅</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-main-num" id="kpiConConsultaCount" style="color:#059669;">0</span>
+          <span class="kpi-badge badge-ok" id="kpiPctCoordinadas">0% con fecha</span>
+        </div>
+        <div class="kpi-subtext">
+          <span>Citas agendadas con especialista o comité</span>
+        </div>
+      </article>
+
+      <!-- KPI 3: Descoordinadas / Alerta de Plazos -->
+      <article class="kpi-gestora-card" style="--kpi-color:#dc2626; --kpi-bg:#fee2e2;" onclick="window.gestoraApp.cambiarSubTab('descoordinadas')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Alerta Descoordinación</span>
+          <div class="kpi-icon-badge">⚠️</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-main-num" id="kpiAlertasCount" style="color:#dc2626;">0</span>
+          <span class="kpi-badge badge-danger">Atención Gestora</span>
+        </div>
+        <div class="kpi-subtext">
+          <span id="kpiSubtextAlertas">Consulta próxima sin PET o margen &lt;48h</span>
+        </div>
+      </article>
+
+      <!-- KPI 4: Informes Listos para Consulta -->
+      <article class="kpi-gestora-card" style="--kpi-color:#0284c7; --kpi-bg:#e0f2fe;" onclick="window.gestoraApp.cambiarSubTab('informadas')">
+        <div class="kpi-top-row">
+          <span class="kpi-label">Informes PET Disponibles</span>
+          <div class="kpi-icon-badge">📄</div>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-main-num" id="kpiInformesListosCount" style="color:#0284c7;">0</span>
+          <span class="kpi-badge badge-info">Listos en IANUS</span>
+        </div>
+        <div class="kpi-subtext">
+          <span>Estudio validado para consulta sucesiva</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- 4.2. BARRA DE SUB-PESTAÑAS DE TRABAJO -->
+    <nav class="gestora-tabs-bar no-print">
+      <button type="button" class="gestora-tab-btn active" data-tab="todas" onclick="window.gestoraApp.cambiarSubTab('todas')">
+        <span>📋 Todas las Peticiones del Servicio</span>
+        <span class="tab-count-badge" id="badgeTabTodas">0</span>
+      </button>
+
+      <button type="button" class="gestora-tab-btn" data-tab="proximas_consultas" onclick="window.gestoraApp.cambiarSubTab('proximas_consultas')">
+        <span>📅 Próximas Consultas Sucesivas (&lt;15 días)</span>
+        <span class="tab-count-badge" id="badgeTabProximas">0</span>
+      </button>
+
+      <button type="button" class="gestora-tab-btn" data-tab="descoordinadas" onclick="window.gestoraApp.cambiarSubTab('descoordinadas')">
+        <span>⚠️ Alertas &amp; Descoordinadas</span>
+        <span class="tab-count-badge" id="badgeTabDescoordinadas" style="background:#fee2e2; color:#991b1b;">0</span>
+      </button>
+
+      <button type="button" class="gestora-tab-btn" data-tab="informadas" onclick="window.gestoraApp.cambiarSubTab('informadas')">
+        <span>✅ Informes Listos para Consulta</span>
+        <span class="tab-count-badge" id="badgeTabInformadas" style="background:#d1fae5; color:#065f46;">0</span>
+      </button>
+
+      <button type="button" class="gestora-tab-btn" data-tab="cruce_nhc" onclick="window.gestoraApp.cambiarSubTab('cruce_nhc')">
+        <span>🔍 Ficha Cruzada Multi-Servicio (Por NHC)</span>
+        <span class="tab-count-badge" id="badgeTabNhc">Cruce Global</span>
+      </button>
+    </nav>
+
+    <!-- 4.3. PANEL PRINCIPAL: TABLA DE SEGUIMIENTO Y COORDINACIÓN -->
+    <section class="panel-card" id="panelTablaPrincipal">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <h2 id="tituloPanelPrincipal">Pacientes de Oncología Médica: Situación PET/CT y Consultas Sucesivas</h2>
+          <p id="subtituloPanelPrincipal">Coordinación de agendas entre Servicio de Medicina Nuclear (PET/CT) y Consultas Externas de Especialistas</p>
+        </div>
+
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;" class="no-print">
+          <label style="font-size:0.75rem; font-weight:700; color:#475569;">Filtrar Estado PET:</label>
+          <select id="selectFiltroEstadoPet" class="form-select" style="width:auto; padding:3px 8px; font-size:0.78rem;"
+            onchange="window.gestoraApp.aplicarFiltrosTabla()">
+            <option value="todos" selected>Todos los estados PET</option>
+            <option value="pendiente">🟡 Pendiente Triaje / Aceptación</option>
+            <option value="citado">📅 Citado para Máquina</option>
+            <option value="proceso">🏥 En Preparación / Realizado</option>
+            <option value="informado">✅ Informe Validado</option>
+          </select>
+
+          <label style="font-size:0.75rem; font-weight:700; color:#475569; margin-left:6px;">Semáforo Enlace:</label>
+          <select id="selectFiltroSemaforo" class="form-select" style="width:auto; padding:3px 8px; font-size:0.78rem;"
+            onchange="window.gestoraApp.aplicarFiltrosTabla()">
+            <option value="todos" selected>Todos los semáforos</option>
+            <option value="optimo">🟢 Coordinado (&ge;48h antes)</option>
+            <option value="ajustado">🟡 Margen Ajustado (24-48h)</option>
+            <option value="critico">🔴 Alerta / Descoordinado</option>
+            <option value="pendiente_consulta">⏳ Pendiente Fecha Consulta</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- VISTA EN TABLA -->
+      <div class="table-responsive" id="contenedorTablaPrincipal">
+        <table class="gestora-table">
+          <thead>
+            <tr>
+              <th>Paciente &amp; NHC</th>
+              <th>Servicio &amp; Facultativo</th>
+              <th>Estudio PET &amp; Trazador</th>
+              <th>Prio</th>
+              <th>Situación Petición PET/CT</th>
+              <th>Próxima Consulta Sucesiva</th>
+              <th>Semáforo Coordinación</th>
+              <th>Observaciones Gestora</th>
+              <th class="no-print">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tablaGestoraBody">
+            <!-- Renderizado dinámico desde app.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- VISTA CRUCE MULTI-SERVICIO POR NHC (Oculta por defecto, visible en pestaña 'cruce_nhc') -->
+      <div id="contenedorFichasNhc" style="display:none;">
+        <!-- Renderizado dinámico de tarjetas por paciente cruzando servicios -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL 1: REGISTRAR / EDITAR FECHA DE PRÓXIMA CONSULTA SUCESIVA (ENLAZADO A CLÍNICA)
+       ======================================================================== -->
+  <div id="modalEditarConsulta" class="gestora-modal-backdrop">
+    <div class="gestora-modal" style="max-width:680px;">
+      <div class="gestora-modal-header">
+        <h3 id="modalConsultaTitulo">📅 Asignar Cita & Coordinación con Consulta Médica</h3>
+        <button type="button" onclick="window.gestoraApp.cerrarModalConsulta()"
+          style="background:none; border:none; color:#ffffff; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="gestora-modal-body">
+        <input type="hidden" id="modalInputIdPeticion">
+        <input type="hidden" id="modalInputNhc">
+
+        <!-- Selector de Paciente si se abre directamente sin fila previa -->
+        <div id="modalSelectorPacienteContainer" class="form-group" style="display:none; margin-bottom:0.75rem;">
+          <label class="form-label">👤 Seleccionar Paciente a Citar:</label>
+          <select id="modalSelectPacienteDirecto" class="form-select" onchange="window.gestoraApp.onSelectPacienteDirecto(this.value)">
+            <!-- Poblado dinámicamente -->
+          </select>
+        </div>
+
+        <!-- Info del Paciente, Estudio PET y CLÍNICA ENLAZADA -->
+        <div id="modalInfoPacienteBox" style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:8px; padding:0.85rem 1rem; font-size:0.82rem; color:#4c1d95;">
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-top:0.85rem;">
+          <div class="form-group">
+            <label class="form-label">📅 Fecha de Consulta Sucesiva / Especialista:</label>
+            <input type="date" id="modalFechaConsulta" class="form-input" style="font-weight:700;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">⏰ Hora Prevista:</label>
+            <input type="time" id="modalHoraConsulta" class="form-input" value="10:00">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:0.85rem;">
+          <div class="form-group">
+            <label class="form-label">👨‍⚕️ Médico / Facultativo que Atiende:</label>
+            <input type="text" id="modalMedicoConsulta" class="form-input" placeholder="Ej: Dra. Isabel Calvo / Dr. Gómez">
+          </div>
+          <div class="form-group">
+            <label class="form-label">🏥 Tipo de Encuentro Clínico:</label>
+            <select id="modalTipoConsulta" class="form-select">
+              <option value="Consulta Sucesiva / Revisión">Consulta Sucesiva / Revisión</option>
+              <option value="Comité Multidisciplinar de Tumores">Comité de Tumores</option>
+              <option value="Inicio Tratamiento (Quimio/Inmuno)">Inicio Tratamiento (Quimio/Inmuno)</option>
+              <option value="Primera Visita Post-Estadificación">Primera Visita Post-Estadificación</option>
+              <option value="Consulta Telefónica / No Presencial">Consulta Telefónica</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">📝 Observaciones de la Enfermera Gestora / Enlace:</label>
+          <textarea id="modalNotasGestora" class="form-textarea" style="height:70px;"
+            placeholder="Ej: Paciente avisado de la cita. Comprobar que el informe PET esté validado el día previo. Requiere ambulancia..."></textarea>
+        </div>
+
+        <div id="modalPreviewMargen" style="font-size:0.8rem; font-weight:700; padding:6px 10px; border-radius:6px; background:#f8fafc; border:1px solid #cbd5e1;">
+          Margen estimado con el estudio PET: calculando...
+        </div>
+      </div>
+      <div class="gestora-modal-footer">
+        <button type="button" class="btn-gestora btn-gestora-outline" onclick="window.gestoraApp.cerrarModalConsulta()">Cancelar</button>
+        <button type="button" class="btn-gestora btn-gestora-primary" onclick="window.gestoraApp.guardarConsultaSucesiva()">💾 Guardar y Sincronizar Enlace</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: VISOR DE CLÍNICA, TRAZABILIDAD Y DETALLE DEL PACIENTE
+       ======================================================================== -->
+  <div id="modalDetallePaciente" class="gestora-modal-backdrop">
+    <div class="gestora-modal" style="max-width:740px;">
+      <div class="gestora-modal-header" style="background:#0f172a;">
+        <h3 id="modalDetalleTitulo">👁️ Clínica Asistencial & Trazabilidad del Paciente</h3>
+        <button type="button" onclick="window.gestoraApp.cerrarModalDetalle()"
+          style="background:none; border:none; color:#ffffff; font-size:1.3rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="gestora-modal-body" id="modalDetalleContenido">
+        <!-- Renderizado dinámico -->
+      </div>
+      <div class="gestora-modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+        <button type="button" class="btn-gestora btn-gestora-outline" onclick="window.gestoraApp.cerrarModalDetalle()">✕ Cerrar Ficha</button>
+        <button type="button" class="btn-gestora btn-gestora-primary" id="btnAsignarCitaDesdeFicha" onclick="window.gestoraApp.abrirCitaDesdeDetalle()">
+          📅 Asignar / Coordinar Cita de este Paciente
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gestoraToastContainer" class="gestora-toast-container"></div>
+
+  <script src="app.js?v=20261124_GESTORA_01"></script>
+</body>
+
+</html>

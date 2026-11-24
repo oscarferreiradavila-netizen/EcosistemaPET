@@ -239,135 +239,6 @@ body {
   background: #fef3c7;
 }
 
-/* 2.1. DOS PESTAÑAS MAESTRAS AL ENTRAR EN JEFATURA */
-.jefatura-master-nav {
-  background: #ffffff;
-  border-bottom: 2px solid #cbd5e1;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.jefatura-master-nav-inner {
-  max-width: 1480px;
-  margin: 0 auto;
-  padding: 0.65rem 1.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.15rem;
-}
-
-.jefatura-master-tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
-  padding: 0.9rem 1.4rem;
-  border-radius: 12px;
-  border: 2px solid #e2e8f0;
-  background: #f8fafc;
-  cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: left;
-  position: relative;
-}
-
-.jefatura-master-tab-btn:hover {
-  background: #ffffff;
-  border-color: #94a3b8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-}
-
-.jefatura-master-tab-btn .master-tab-icon {
-  font-size: 2.15rem;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.jefatura-master-tab-btn .master-tab-text-block {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-}
-
-.jefatura-master-tab-btn .master-tab-main {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #1e293b;
-  line-height: 1.2;
-}
-
-.jefatura-master-tab-btn .master-tab-desc {
-  font-size: 0.77rem;
-  color: #64748b;
-  font-weight: 500;
-  line-height: 1.35;
-}
-
-.jefatura-master-tab-btn .master-tab-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 4px 11px;
-  border-radius: 999px;
-  background: #e2e8f0;
-  color: #475569;
-  flex-shrink: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-/* Estado activo para JEFE DE SERVICIO */
-.jefatura-master-tab-btn.active#btnMasterJefe {
-  background: linear-gradient(135deg, #004868 0%, #002b40 100%);
-  border-color: #002030;
-  box-shadow: 0 6px 20px rgba(0, 72, 104, 0.35);
-}
-.jefatura-master-tab-btn.active#btnMasterJefe .master-tab-main {
-  color: #ffffff;
-}
-.jefatura-master-tab-btn.active#btnMasterJefe .master-tab-desc {
-  color: #bae6fd;
-}
-.jefatura-master-tab-btn.active#btnMasterJefe .master-tab-badge {
-  background: #fde047;
-  color: #002b40;
-}
-
-/* Estado activo para SUPERVISIÓN DE ENFERMERÍA */
-.jefatura-master-tab-btn.active#btnMasterEnfermeria {
-  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-  border-color: #115e59;
-  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35);
-}
-.jefatura-master-tab-btn.active#btnMasterEnfermeria .master-tab-main {
-  color: #ffffff;
-}
-.jefatura-master-tab-btn.active#btnMasterEnfermeria .master-tab-desc {
-  color: #ccfbf1;
-}
-.jefatura-master-tab-btn.active#btnMasterEnfermeria .master-tab-badge {
-  background: #ffffff;
-  color: #0f766e;
-}
-
-/* Filtrado de elementos por Pestaña Maestra activa */
-body.mode-jefe [data-area="enfermeria"],
-body.mode-enfermeria [data-area="jefe"] {
-  display: none !important;
-}
-
-/* Acentos en cabecera según pestaña activa */
-body.mode-enfermeria .chief-header {
-  border-bottom: 3px solid #0d9488;
-}
-body.mode-jefe .chief-header {
-  border-bottom: 3px solid #004868;
-}
-
 /* 3. CONTENEDOR PRINCIPAL */
 .main-container {
   max-width: 1480px;
@@ -1523,4 +1394,59 @@ body.mode-jefe .chief-header {
 .worker-del-btn:hover {
   color: #dc2626;
   background: #fef2f2;
+}
+
+/* ==========================================================================
+   TARJETA Y ELEMENTOS DE PROTECCIÓN RADIOLÓGICA Y DOSIMETRÍA
+   ========================================================================== */
+.spr-pdf-card {
+  background: linear-gradient(to right, #f0f9ff, #ffffff);
+  border: 1.5px solid #0284c7;
+  border-radius: 12px;
+  padding: 1.1rem 1.35rem;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.08);
+}
+
+.spr-pdf-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.spr-pdf-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.spr-pdf-icon {
+  font-size: 2.2rem;
+  background: #fee2e2;
+  color: #dc2626;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid #fca5a5;
+}
+
+.dosimetria-progress-bar-wrap {
+  width: 100%;
+  max-width: 120px;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 3px;
+}
+
+.dosimetria-progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
 }

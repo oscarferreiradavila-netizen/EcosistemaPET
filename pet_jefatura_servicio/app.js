@@ -208,7 +208,12 @@
     let rawList = [];
 
     try {
-      const res = await fetch('/api/sync-database?t=' + Date.now());
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const timeoutId = controller ? setTimeout(() => controller.abort(), 800) : null;
+      const res = await fetch('/api/sync-database?t=' + Date.now(), {
+        signal: controller ? controller.signal : undefined
+      });
+      if (timeoutId) clearTimeout(timeoutId);
       if (res.ok) {
         const json = await res.json();
         const data = json.data || (Array.isArray(json) ? json : []);
@@ -1499,6 +1504,7 @@
     renderMedicosTab(stats);
     renderEficienciaTiemposTab(stats);
     renderAudioguiasCalidadTab(stats);
+    renderDosimetriaTrabajadoresTab();
     actualizarDemoInforme(stats);
   }
 
@@ -3081,6 +3087,16 @@
     if (tabId === 'planilla_personal') {
       renderPlanillaTab();
     }
+    if (tabId === 'dosimetria_trabajadores') {
+      renderDosimetriaTrabajadoresTab();
+    }
+    if (typeof window !== 'undefined' && window.location) {
+      try { history.replaceState(null, '', `#${tabId}`); } catch (_) {}
+    }
+    const target = document.getElementById(`tab-${tabId}`);
+    if (target && typeof target.scrollIntoView === 'function') {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   function cambiarPeriodo(val) {
@@ -3712,60 +3728,1186 @@
   }
 
   // ==========================================================================
-  // DOS PESTAÑAS MAESTRAS AL ENTRAR EN JEFATURA: JEFE DE SERVICIO Y SUPERVISIÓN DE ENFERMERÍA
+  // 14. PLANILLA INTERACTIVA DE PERSONAL (PET-CT & MEDICINA NUCLEAR)
   // ==========================================================================
-  function setMasterTab(masterTab, showNotification = true) {
-    const valid = ['jefe', 'enfermeria'];
-    const chosen = valid.includes(masterTab) ? masterTab : 'jefe';
-    state.activeMasterArea = chosen;
+  const STORAGE_KEY_PLANILLA = 'PET_PLANILLA_PERSONAL_DATA_V1';
+
+  const DEFAULT_PLANILLA_DATA = {
+    enfermeros: [
+      { id: 'enf-1', nombre: 'Marta Souto Ramos', habitual: 'PET-CT', turno: 'manana' },
+      { id: 'enf-2', nombre: 'Carlos Varela Domínguez', habitual: 'PET-CT', turno: 'manana' },
+      { id: 'enf-3', nombre: 'Antón Otero Loureiro', habitual: 'Polivalente', turno: 'tarde' },
+      { id: 'enf-4', nombre: 'Laura Iglesias Soto', habitual: 'Medicina Nuclear', turno: 'saliente' },
+      { id: 'enf-5', nombre: 'Rodrigo Gómez Rey', habitual: 'Medicina Nuclear', turno: 'libre' }
+    ],
+    tecnicos: [
+      { id: 'tec-1', nombre: 'Lucía Méndez Castro', habitual: 'PET-CT', turno: 'manana' },
+      { id: 'tec-2', nombre: 'Javier Ferreiro Nogueira', habitual: 'PET-CT', turno: 'tarde' },
+      { id: 'tec-3', nombre: 'Iago Rivas Pereira', habitual: 'Medicina Nuclear', turno: 'manana' },
+      { id: 'tec-4', nombre: 'Sonia Prado Veiga', habitual: 'Medicina Nuclear', turno: 'saliente' },
+      { id: 'tec-5', nombre: 'David Álvarez Castro', habitual: 'Polivalente', turno: 'libre' }
+    ],
+    celadores: [
+      { id: 'cel-1', nombre: 'Manuel Seoane Villar', habitual: 'PET-CT', turno: 'manana' },
+      { id: 'cel-2', nombre: 'Ana Belén Carballo Rúa', habitual: 'Medicina Nuclear', turno: 'tarde' },
+      { id: 'cel-3', nombre: 'Marcos Rial Vázquez', habitual: 'Polivalente', turno: 'libre' }
+    ],
+    tcaes: [
+      { id: 'tcae-1', nombre: 'Carmen Iglesias Paz', habitual: 'PET-CT', turno: 'manana' },
+      { id: 'tcae-2', nombre: 'Sonia Domínguez Lago', habitual: 'PET-CT', turno: 'tarde' },
+      { id: 'tcae-3', nombre: 'Beatriz Pousa Míguez', habitual: 'Medicina Nuclear', turno: 'saliente' }
+    ]
+  };
+
+  const statePlanilla = {
+    fecha: getTodayISO(),
+    categoria: 'enfermeros',
+    selectedWorkerId: null
+  };
+
+  function getPlanillaStorageData() {
     try {
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('pet_master_tab', chosen);
+        const raw = localStorage.getItem(STORAGE_KEY_PLANILLA);
+        if (raw) return JSON.parse(raw);
+      }
+    } catch (_) {}
+    return JSON.parse(JSON.stringify(DEFAULT_PLANILLA_DATA));
+  }
+
+  function savePlanillaStorageData(data) {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY_PLANILLA, JSON.stringify(data));
+      }
+    } catch (_) {}
+  }
+
+  function setPlanillaCategoria(cat) {
+    statePlanilla.categoria = cat;
+    statePlanilla.selectedWorkerId = null;
+    document.querySelectorAll('.planilla-cat-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.cat === cat);
+    });
+    renderPlanillaTab();
+  }
+
+  function setPlanillaFecha(val) {
+    const d = new Date();
+    if (val === 'hoy') {
+      statePlanilla.fecha = getTodayISO();
+    } else if (val === 'manana') {
+      d.setDate(d.getDate() + 1);
+      statePlanilla.fecha = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    } else if (val) {
+      statePlanilla.fecha = val;
+    }
+    const input = document.getElementById('planillaFechaInput');
+    if (input) input.value = statePlanilla.fecha;
+    renderPlanillaTab();
+    showToast(`📅 Planilla actualizada para el día: ${statePlanilla.fecha}`);
+  }
+
+  function selectPlanillaWorker(workerId) {
+    statePlanilla.selectedWorkerId = workerId;
+    const bar = document.getElementById('planillaSelectionBar');
+    const txt = document.getElementById('planillaSelectionText');
+    if (!bar || !txt) return;
+
+    if (!workerId) {
+      bar.classList.add('hidden');
+      document.querySelectorAll('.worker-card-draggable').forEach(el => el.classList.remove('selected'));
+      return;
+    }
+
+    const data = getPlanillaStorageData();
+    let found = null;
+    Object.values(data).forEach(list => {
+      const match = list.find(w => w.id === workerId);
+      if (match) found = match;
+    });
+
+    if (found) {
+      bar.classList.remove('hidden');
+      txt.innerHTML = `👆 Trabajador seleccionado: <strong>${escapeHTML(found.nombre)}</strong> (${escapeHTML(found.habitual)}) — Haz clic en cualquier columna de turno para reubicarlo.`;
+      document.querySelectorAll('.worker-card-draggable').forEach(el => {
+        el.classList.toggle('selected', el.dataset.id === workerId);
+      });
+    } else {
+      bar.classList.add('hidden');
+    }
+  }
+
+  function movePlanillaWorkerToShift(workerId, newShift) {
+    if (!workerId || !newShift) return;
+    const data = getPlanillaStorageData();
+    let movedName = '';
+
+    Object.keys(data).forEach(cat => {
+      data[cat] = data[cat].map(w => {
+        if (w.id === workerId) {
+          movedName = w.nombre;
+          return Object.assign({}, w, { turno: newShift });
+        }
+        return w;
+      });
+    });
+
+    savePlanillaStorageData(data);
+    statePlanilla.selectedWorkerId = null;
+    selectPlanillaWorker(null);
+    renderPlanillaTab();
+    const nombresTurno = {
+      manana: 'Mañana (08:00 - 15:00)',
+      tarde: 'Tarde (15:00 - 22:00)',
+      noche: 'Noche (22:00 - 08:00)',
+      saliente: 'Saliente de Guardia',
+      libre: 'Descanso / Libre'
+    };
+    showToast(`🔄 ${movedName} asignado al turno: ${nombresTurno[newShift] || newShift}`);
+  }
+
+  function handleColumnClick(shift) {
+    if (statePlanilla.selectedWorkerId) {
+      movePlanillaWorkerToShift(statePlanilla.selectedWorkerId, shift);
+    }
+  }
+
+  function onPlanillaDragStart(e, id) {
+    if (e.dataTransfer) {
+      e.dataTransfer.setData('text/plain', id);
+      e.dataTransfer.effectAllowed = 'move';
+    }
+  }
+
+  function onPlanillaDragOver(e) {
+    if (e.preventDefault) e.preventDefault();
+    if (e.currentTarget) e.currentTarget.classList.add('drag-over');
+  }
+
+  function onPlanillaDragLeave(e) {
+    if (e.currentTarget) e.currentTarget.classList.remove('drag-over');
+  }
+
+  function onPlanillaDrop(e, shift) {
+    if (e.preventDefault) e.preventDefault();
+    if (e.currentTarget) e.currentTarget.classList.remove('drag-over');
+    const workerId = e.dataTransfer ? e.dataTransfer.getData('text/plain') : null;
+    if (workerId) {
+      movePlanillaWorkerToShift(workerId, shift);
+    }
+  }
+
+  function agregarTrabajadorPlanilla() {
+    const inputNom = document.getElementById('inputNuevoTrabajadorNombre');
+    const selectArea = document.getElementById('selectNuevoTrabajadorArea');
+    if (!inputNom || !inputNom.value.trim()) {
+      showToast('⚠️ Introduce el nombre del trabajador.');
+      return;
+    }
+    const cat = statePlanilla.categoria === 'resumen' ? 'enfermeros' : statePlanilla.categoria;
+    const data = getPlanillaStorageData();
+    const newWorker = {
+      id: `w-${Date.now()}`,
+      nombre: inputNom.value.trim(),
+      habitual: selectArea ? selectArea.value : 'PET-CT',
+      turno: 'manana'
+    };
+    if (!data[cat]) data[cat] = [];
+    data[cat].push(newWorker);
+    savePlanillaStorageData(data);
+    inputNom.value = '';
+    renderPlanillaTab();
+    showToast(`✅ ${newWorker.nombre} añadido a la plantilla de ${cat}.`);
+  }
+
+  function eliminarTrabajadorPlanilla(id) {
+    const data = getPlanillaStorageData();
+    let removedName = '';
+    Object.keys(data).forEach(cat => {
+      data[cat] = data[cat].filter(w => {
+        if (w.id === id) {
+          removedName = w.nombre;
+          return false;
+        }
+        return true;
+      });
+    });
+    savePlanillaStorageData(data);
+    if (statePlanilla.selectedWorkerId === id) selectPlanillaWorker(null);
+    renderPlanillaTab();
+    showToast(`🗑️ ${removedName || 'Trabajador'} eliminado de la planilla.`);
+  }
+
+  function resetPlanillaDia() {
+    if (confirm('¿Restablecer la planilla a los turnos por defecto de hoy?')) {
+      savePlanillaStorageData(DEFAULT_PLANILLA_DATA);
+      statePlanilla.selectedWorkerId = null;
+      selectPlanillaWorker(null);
+      renderPlanillaTab();
+      showToast('🔄 Planilla de turnos restablecida con éxito.');
+    }
+  }
+
+  function imprimirPlanillaPersonal() {
+    window.print();
+  }
+
+  function renderPlanillaTab() {
+    const data = getPlanillaStorageData();
+    const inputFecha = document.getElementById('planillaFechaInput');
+    if (inputFecha && !inputFecha.value) inputFecha.value = statePlanilla.fecha;
+
+    // Actualizar contadores en subpestañas
+    const cEnf = (data.enfermeros || []).length;
+    const cTec = (data.tecnicos || []).length;
+    const cCel = (data.celadores || []).length;
+    const cTca = (data.tcaes || []).length;
+
+    const elEnf = document.getElementById('countPlanilla_enfermeros');
+    const elTec = document.getElementById('countPlanilla_tecnicos');
+    const elCel = document.getElementById('countPlanilla_celadores');
+    const elTca = document.getElementById('countPlanilla_tcaes');
+    if (elEnf) elEnf.textContent = cEnf;
+    if (elTec) elTec.textContent = cTec;
+    if (elCel) elCel.textContent = cCel;
+    if (elTca) elTca.textContent = cTca;
+
+    const container = document.getElementById('planillaBoardContainer');
+    if (!container) return;
+
+    const cat = statePlanilla.categoria;
+    const turnosDef = [
+      { id: 'manana', nombre: '☀️ Mañana (08:00 - 15:00)', bg: '#f0fdf4', border: '#86efac', badge: 'badge-ok' },
+      { id: 'tarde', nombre: '⛅ Tarde (15:00 - 22:00)', bg: '#eff6ff', border: '#93c5fd', badge: 'badge-info' },
+      { id: 'noche', nombre: '🌙 Noche (22:00 - 08:00)', bg: '#faf5ff', border: '#d8b4fe', badge: 'badge-purple' },
+      { id: 'saliente', nombre: '😴 Saliente Guardia', bg: '#fffbeb', border: '#fcd34d', badge: 'badge-warn' },
+      { id: 'libre', nombre: '🏖️ Libre / Descanso', bg: '#f8fafc', border: '#cbd5e1', badge: 'badge-neutral' }
+    ];
+
+    if (cat === 'resumen') {
+      const cats = [
+        { key: 'enfermeros', label: '🩺 Enfermeros/as', list: data.enfermeros || [] },
+        { key: 'tecnicos', label: '☢️ Técnicos (TSID)', list: data.tecnicos || [] },
+        { key: 'celadores', label: '🏥 Celadores/as', list: data.celadores || [] },
+        { key: 'tcaes', label: '🧤 TCAEs', list: data.tcaes || [] }
+      ];
+
+      container.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:1.2rem;">
+          ${cats.map(c => `
+            <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:10px; padding:0.9rem 1.1rem;">
+              <h4 style="font-family:'Outfit',sans-serif; color:#004868; font-size:0.96rem; margin-bottom:0.75rem; display:flex; justify-content:space-between;">
+                <span>${c.label} (${c.list.length} efectivos)</span>
+                <button type="button" class="btn-chief btn-chief-outline" style="padding:2px 8px; font-size:0.72rem;"
+                  onclick="window.jefaturaApp.setPlanillaCategoria('${c.key}')">Gestionar Planilla ➔</button>
+              </h4>
+              <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:0.6rem;">
+                ${turnosDef.map(t => {
+                  const enTurno = c.list.filter(w => w.turno === t.id);
+                  return `
+                    <div style="background:${t.bg}; border:1px solid ${t.border}; border-radius:8px; padding:0.5rem 0.65rem; min-height:80px;">
+                      <div style="font-size:0.72rem; font-weight:800; color:#1e293b; margin-bottom:4px;">${t.nombre.split(' ')[0]} ${t.nombre.split(' ')[1]} (${enTurno.length})</div>
+                      <div style="display:flex; flex-direction:column; gap:4px;">
+                        ${enTurno.map(w => `
+                          <div style="background:#fff; border:1px solid #e2e8f0; border-radius:4px; padding:3px 6px; font-size:0.74rem;">
+                            <strong>${escapeHTML(w.nombre)}</strong>
+                            <div style="font-size:0.65rem; color:#64748b;">${escapeHTML(w.habitual)}</div>
+                          </div>
+                        `).join('')}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      return;
+    }
+
+    const currentList = data[cat] || [];
+    container.innerHTML = `
+      <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:0.85rem;" class="planilla-columns-grid">
+        ${turnosDef.map(t => {
+          const workersInShift = currentList.filter(w => w.turno === t.id);
+          return `
+            <div class="planilla-column" style="background:${t.bg}; border:1.5px solid ${t.border}; border-radius:10px; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem; min-height:360px;"
+              onclick="window.jefaturaApp.handleColumnClick('${t.id}')"
+              ondragover="window.jefaturaApp.onPlanillaDragOver(event)"
+              ondragleave="window.jefaturaApp.onPlanillaDragLeave(event)"
+              ondrop="window.jefaturaApp.onPlanillaDrop(event, '${t.id}')">
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid ${t.border}; padding-bottom:5px;">
+                <strong style="font-size:0.78rem; color:#004868;">${t.nombre}</strong>
+                <span class="status-badge ${t.badge}" style="font-size:0.7rem; font-weight:800;">${workersInShift.length}</span>
+              </div>
+              <div style="font-size:0.68rem; color:#64748b; font-style:italic;" class="no-print">Arrastra aquí o haz clic con un trabajador seleccionado</div>
+              <div style="display:flex; flex-direction:column; gap:0.55rem; flex:1;" class="planilla-cards-list">
+                ${workersInShift.map(w => {
+                  const isSelected = statePlanilla.selectedWorkerId === w.id;
+                  return `
+                    <div class="worker-card-draggable ${isSelected ? 'selected' : ''}" data-id="${w.id}" draggable="true"
+                      ondragstart="window.jefaturaApp.onPlanillaDragStart(event, '${w.id}')"
+                      onclick="event.stopPropagation(); window.jefaturaApp.selectPlanillaWorker('${w.id}')"
+                      style="background:#ffffff; border:1px solid ${isSelected ? '#0284c7' : '#cbd5e1'}; border-radius:8px; padding:0.55rem 0.65rem; box-shadow:0 1px 3px rgba(0,0,0,0.06); cursor:grab; position:relative;">
+                      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <strong style="font-size:0.8rem; color:#0f172a; line-height:1.2;">${escapeHTML(w.nombre)}</strong>
+                        <button type="button" class="no-print" style="background:none; border:none; color:#94a3b8; font-size:0.8rem; cursor:pointer;"
+                          onclick="event.stopPropagation(); window.jefaturaApp.eliminarTrabajadorPlanilla('${w.id}')" title="Eliminar de planilla">✕</button>
+                      </div>
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                        <span style="font-size:0.68rem; padding:1px 5px; border-radius:4px; font-weight:700; ${w.habitual.includes('PET') ? 'background:#e0f2fe; color:#0369a1;' : 'background:#dcfce7; color:#15803d;'}">
+                          ${escapeHTML(w.habitual)}
+                        </span>
+                        <span style="font-size:0.68rem; color:#64748b;">${t.id === 'saliente' || t.id === 'libre' ? 'Descanso' : 'Asistencial'}</span>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  // ==========================================================================
+  // 15. CONTROL DOSIMÉTRICO DE LOS TRABAJADORES (PROTECCIÓN RADIOLÓGICA) & INFORME PDF
+  // ==========================================================================
+  const STORAGE_KEY_DOSIMETRIA_TRABAJADORES = 'PET_DOSIMETRIA_TRABAJADORES_V1';
+  const STORAGE_KEY_SPR_PDF_META = 'PET_SPR_DOSIMETRIA_PDF_METADATA_V1';
+  const STORAGE_KEY_SPR_PDF_BASE64 = 'PET_SPR_DOSIMETRIA_PDF_BASE64_V1';
+
+  const DEFAULT_DOSIMETRIA_TRABAJADORES = [
+    {
+      id: 'dosi-01',
+      nombre: 'Marta Souto Ramos',
+      nif: '35.482.910-K',
+      estamento: 'enfermeria',
+      puesto: 'DUE Inyección & Boxes PET',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10) + Anillo Hp(0.07)',
+      dosisMes: 0.42,
+      dosisAnual: 3.10,
+      limiteAnual: 20.0,
+      dosisAnillo: 1.80,
+      dosisCristalino: 0.65,
+      estado: 'normal',
+      observaciones: 'Uso riguroso de protector de jeringa de tungsteno 5mm y biombo plomado móvil 2mm Pb en box inyección.'
+    },
+    {
+      id: 'dosi-02',
+      nombre: 'Carlos Varela Domínguez',
+      nif: '36.192.845-M',
+      estamento: 'enfermeria',
+      puesto: 'DUE Canalización & Cuidados',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.31,
+      dosisAnual: 2.45,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.45,
+      estado: 'normal',
+      observaciones: 'Uso de mampara rodante plomada en sala de preparación previa a inyección.'
+    },
+    {
+      id: 'dosi-03',
+      nombre: 'Lucía Méndez Castro',
+      nif: '44.821.039-P',
+      estamento: 'tecnicos',
+      puesto: 'TSID Tomógrafo PET/CT 1',
+      zona: 'Zona Vigilada / Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.18,
+      dosisAnual: 1.55,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.28,
+      estado: 'normal',
+      observaciones: 'Operación desde cabina de adquisición blindada (2.5 mm Pb).'
+    },
+    {
+      id: 'dosi-04',
+      nombre: 'Javier Ferreiro Nogueira',
+      nif: '39.402.115-R',
+      estamento: 'tecnicos',
+      puesto: 'TSID Tomógrafo PET/CT 2',
+      zona: 'Zona Vigilada / Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.22,
+      dosisAnual: 1.70,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.35,
+      estado: 'normal',
+      observaciones: 'Posicionamiento rápido del paciente sobre gantry con brazos arriba.'
+    },
+    {
+      id: 'dosi-05',
+      nombre: 'Iago Rivas Pereira',
+      nif: '53.619.482-T',
+      estamento: 'radiofarmacia',
+      puesto: 'TSID Radiofarmacia / Generador 68Ga',
+      zona: 'Zona Controlada (Alta Actividad)',
+      tipoDosimetro: 'Solapa Hp(10) + Anillo TLD Hp(0.07)',
+      dosisMes: 0.38,
+      dosisAnual: 2.90,
+      limiteAnual: 20.0,
+      dosisAnillo: 2.85,
+      dosisCristalino: 0.72,
+      estado: 'normal',
+      observaciones: 'Calibración y elución generador 68Ge/68Ga en celda blindada con telemanipuladores.'
+    },
+    {
+      id: 'dosi-06',
+      nombre: 'Dr. Manuel Gómez Feijóo',
+      nif: '32.610.984-A',
+      estamento: 'medicos',
+      puesto: 'Jefe de Servicio · FEA Medicina Nuclear',
+      zona: 'Zona Vigilada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.06,
+      dosisAnual: 0.50,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.12,
+      estado: 'normal',
+      observaciones: 'Supervisión clínica, protocolización e informe facultativo.'
+    },
+    {
+      id: 'dosi-07',
+      nombre: 'Dra. Elena Rial Vázquez',
+      nif: '35.981.203-B',
+      estamento: 'medicos',
+      puesto: 'FEA Medicina Nuclear (Oncología/Neuro)',
+      zona: 'Zona Vigilada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.08,
+      dosisAnual: 0.65,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.15,
+      estado: 'normal',
+      observaciones: 'Supervisión de inyecciones complejas y control en consola de lectura.'
+    },
+    {
+      id: 'dosi-08',
+      nombre: 'Dr. Alberto Silva Pousa',
+      nif: '33.541.980-C',
+      estamento: 'medicos',
+      puesto: 'FEA Medicina Nuclear (Cardio/Infecc)',
+      zona: 'Zona Vigilada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.09,
+      dosisAnual: 0.72,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.18,
+      estado: 'normal',
+      observaciones: 'Evaluación post-adquisición y lectura de estudios PET/CT.'
+    },
+    {
+      id: 'dosi-09',
+      nombre: 'Dra. Carmen Montes Rey',
+      nif: '34.819.201-D',
+      estamento: 'medicos',
+      puesto: 'FEA Medicina Nuclear',
+      zona: 'Zona Vigilada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.07,
+      dosisAnual: 0.58,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.14,
+      estado: 'normal',
+      observaciones: 'Sesiones clínicas y validación médica de estudios.'
+    },
+    {
+      id: 'dosi-10',
+      nombre: 'Dra. Patricia Gómez Silva',
+      nif: '36.812.943-H',
+      estamento: 'radiofarmacia',
+      puesto: 'Facultativa Especialista Radiofarmacia',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10) + Anillo TLD Hp(0.07)',
+      dosisMes: 0.29,
+      dosisAnual: 2.15,
+      limiteAnual: 20.0,
+      dosisAnillo: 2.40,
+      dosisCristalino: 0.55,
+      estado: 'normal',
+      observaciones: 'Fraccionamiento de radiofármacos (FDG, PSMA, Colina) y control de calidad radioquímico.'
+    },
+    {
+      id: 'dosi-11',
+      nombre: 'Ramón Costas Freire',
+      nif: '35.120.489-G',
+      estamento: 'radiofarmacia',
+      puesto: 'Especialista Radiofísica Hospitalaria',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10) + Cristalino Hp(3)',
+      dosisMes: 0.14,
+      dosisAnual: 1.10,
+      limiteAnual: 20.0,
+      dosisAnillo: 0.85,
+      dosisCristalino: 0.32,
+      estado: 'normal',
+      observaciones: 'Controles de calidad diarios y mensuales de tomógrafo PET/CT y activímetros.'
+    },
+    {
+      id: 'dosi-12',
+      nombre: 'Manuel Seoane Villar',
+      nif: '34.901.278-L',
+      estamento: 'celadores',
+      puesto: 'Celador Unidad PET/CT',
+      zona: 'Zona Controlada / Boxes Reposo',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.24,
+      dosisAnual: 1.85,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.38,
+      estado: 'normal',
+      observaciones: 'Traslado de pacientes a camilla manteniendo distancia de seguridad y tiempo mínimo.'
+    },
+    {
+      id: 'dosi-13',
+      nombre: 'Ana Belén Carballo Rúa',
+      nif: '36.019.284-F',
+      estamento: 'celadores',
+      puesto: 'Celadora Medicina Nuclear',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.21,
+      dosisAnual: 1.62,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.32,
+      estado: 'normal',
+      observaciones: 'Apoyo en traslado post-inyección respetando barreras de protección.'
+    },
+    {
+      id: 'dosi-14',
+      nombre: 'Carmen Iglesias Paz',
+      nif: '35.819.340-V',
+      estamento: 'celadores',
+      puesto: 'TCAE Boxes de Reposo PET',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.26,
+      dosisAnual: 2.05,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.42,
+      estado: 'normal',
+      observaciones: 'Asistencia y confort de pacientes en boxes de reposo con delantal plomado 0.5 mm.'
+    },
+    {
+      id: 'dosi-15',
+      nombre: 'Sonia Domínguez Lago',
+      nif: '39.120.481-J',
+      estamento: 'celadores',
+      puesto: 'TCAE Cuidados PET/CT',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.23,
+      dosisAnual: 1.78,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.36,
+      estado: 'normal',
+      observaciones: 'Colaboración en sala y avituallamiento de hidratación pre y post-inyección.'
+    },
+    {
+      id: 'dosi-16',
+      nombre: 'Antón Otero Loureiro',
+      nif: '44.912.034-Z',
+      estamento: 'enfermeria',
+      puesto: 'DUE Refuerzo / Turno Tarde PET',
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.19,
+      dosisAnual: 1.40,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.29,
+      estado: 'normal',
+      observaciones: 'Cobertura de turnos vespertinos y control de pacientes tardíos.'
+    }
+  ];
+
+  const DEFAULT_SPR_PDF_META = {
+    nombreArchivo: 'INFORME_MENSUAL_SPR_SERGAS_2026_11_CSN.pdf',
+    tamanoKb: 148,
+    fechaSubida: '21/11/2026, 09:30',
+    firmante: 'Dr. Alberto Trigo Barcala — Jefe de Servicio de Protección Radiológica',
+    periodo: 'Noviembre 2026',
+    estado: 'Oficial CSN · Validado',
+    numTrabajadores: 16,
+    maxHp10: '0.42 mSv',
+    superaciones: 0
+  };
+
+  function getDosimetriaData() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const raw = localStorage.getItem(STORAGE_KEY_DOSIMETRIA_TRABAJADORES);
+        if (raw) return JSON.parse(raw);
+      }
+    } catch (_) {}
+    return JSON.parse(JSON.stringify(DEFAULT_DOSIMETRIA_TRABAJADORES));
+  }
+
+  function saveDosimetriaData(data) {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY_DOSIMETRIA_TRABAJADORES, JSON.stringify(data));
+      }
+    } catch (_) {}
+  }
+
+  function getSprPdfMeta() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const raw = localStorage.getItem(STORAGE_KEY_SPR_PDF_META);
+        if (raw) return JSON.parse(raw);
+      }
+    } catch (_) {}
+    return Object.assign({}, DEFAULT_SPR_PDF_META);
+  }
+
+  function saveSprPdfMeta(meta) {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY_SPR_PDF_META, JSON.stringify(meta));
+      }
+    } catch (_) {}
+  }
+
+  function generarPdfOficialSprBase64(meta) {
+    const title = 'SERVICIO DE PROTECCION RADIOLOGICA - GALARIA / SERGAS';
+    const subtitle = 'INFORME MENSUAL DE VIGILANCIA DOSIMETRICA OCUPACIONAL (RD 1029/2022)';
+    const stream =
+      'BT\n' +
+      '/F2 14 Tf 40 750 Td (' + title + ') Tj\n' +
+      '/F1 10 Tf 0 -18 Td (' + subtitle + ') Tj\n' +
+      '/F1 9 Tf 0 -22 Td (ORGANISMO: Servizo Galego de Saude - Galaria Empresa Publica de Servizos Sanitarios) Tj\n' +
+      '0 -14 Td (CENTRO: Hospital Publico Alvaro Cunqueiro - Complejo Hospitalario Universitario de Vigo) Tj\n' +
+      '0 -14 Td (SERVICIO: Medicina Nuclear y Diagnostico Molecular PET/CT) Tj\n' +
+      '0 -14 Td (PERIODO DE EXPOSICION: ' + (meta.periodo || 'Noviembre 2026') + ' | REF CSN: CSN-SPR-MN-PET-2026-11-M) Tj\n' +
+      '0 -14 Td (FECHA EMISION: ' + (meta.fechaSubida || '21/11/2026') + ' | CODIGO CSV: SERGAS-SPR-2026-8849201-OK) Tj\n' +
+      '0 -24 Td (1. MARCO LEGAL Y LIMITES REGLAMENTARIOS CONSEJO DE SEGURIDAD NUCLEAR (CSN):) Tj\n' +
+      '0 -14 Td (- Limite Dosis Efectiva Anual Categoria A: 20 mSv/ano (RD 1029/2022)) Tj\n' +
+      '0 -14 Td (- Nivel de Registro Mensual: 1.0 mSv/mes | Nivel de Investigacion: 1.6 mSv/mes) Tj\n' +
+      '0 -14 Td (- Limite Cristalino: 20 mSv/ano | Limite Extremidades/Piel: 500 mSv/ano) Tj\n' +
+      '0 -24 Td (2. RESUMEN DE LECTURAS DOSIMETRICAS DEL PERSONAL VIGILADO (16 TRABAJADORES):) Tj\n' +
+      '0 -14 Td (- Dosis Maxima Hp(10) Mes: 0.42 mSv (DUE Inyeccion Box - Cumplimiento Excelente)) Tj\n' +
+      '0 -14 Td (- Dosis Maxima Anillo Hp(0.07): 2.85 mSv (Radiofarmacia 68Ga/18F - Normal)) Tj\n' +
+      '0 -14 Td (- Dosis Media Global Ocupacional: 0.19 mSv/mes) Tj\n' +
+      '0 -14 Td (- Incidentes / Superaciones de Nivel de Investigacion: 0 CASOS (100% CONFORME)) Tj\n' +
+      '0 -24 Td (3. DICTAMEN TECNICO DEL JEFE DE PROTECCION RADIOLOGICA:) Tj\n' +
+      '0 -14 Td (Se certifica que la totalidad del personal de Medicina Nuclear y PET/CT ha mantenido) Tj\n' +
+      '0 -14 Td (tasas de exposicion muy por debajo de los limites reglamentarios establecidos.) Tj\n' +
+      '0 -14 Td (Se ratifica la eficacia de las medidas de proteccion: blindajes de jeringas de tungsteno,) Tj\n' +
+      '0 -14 Td (biombos moviles de plomo de 2mm y procedimientos de rotacion de turnos en inyeccion.) Tj\n' +
+      '0 -36 Td (Fdo.: ' + (meta.firmante || 'Dr. Alberto Trigo Barcala') + ') Tj\n' +
+      '0 -14 Td (Jefe del Servicio de Proteccion Radiologica - SERGAS / Galaria) Tj\n' +
+      '0 -14 Td (Firma Electronica y Certificacion CSN Validadas en Sede Electronica) Tj\n' +
+      'ET';
+
+    const len = stream.length;
+    const pdf =
+      '%PDF-1.4\n' +
+      '1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj\n' +
+      '2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj\n' +
+      '3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >> endobj\n' +
+      '4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj\n' +
+      '5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj\n' +
+      '6 0 obj << /Length ' + len + ' >> stream\n' + stream + '\nendstream\nendobj\n' +
+      'xref\n0 7\n0000000000 65535 f \n' +
+      '0000000009 00000 n \n0000000056 00000 n \n0000000111 00000 n \n' +
+      '0000000244 00000 n \n0000000318 00000 n \n0000000397 00000 n \n' +
+      'trailer << /Size 7 /Root 1 0 R >>\nstartxref\n' +
+      (550 + len) + '\n%%EOF';
+
+    try {
+      if (typeof btoa !== 'undefined') {
+        return 'data:application/pdf;base64,' + btoa(pdf);
+      }
+    } catch (_) {}
+    return 'data:application/pdf;base64,' + encodeURIComponent(pdf);
+  }
+
+  function getSprPdfBase64() {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const stored = localStorage.getItem(STORAGE_KEY_SPR_PDF_BASE64);
+        if (stored && stored.startsWith('data:application/pdf')) return stored;
+      }
+    } catch (_) {}
+    const meta = getSprPdfMeta();
+    return generarPdfOficialSprBase64(meta);
+  }
+
+  function onSubirPdfDosimetria(event) {
+    const file = event && event.target && event.target.files && event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.includes('pdf') && !file.name.toLowerCase().endsWith('.pdf')) {
+      showToast('⚠️ Por favor, selecciona un archivo en formato PDF.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64Data = e.target.result;
+      const meta = {
+        nombreArchivo: file.name,
+        tamanoKb: Math.max(1, Math.round(file.size / 1024)),
+        fechaSubida: new Date().toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' }),
+        firmante: 'Dr. Alberto Trigo Barcala — Jefe de Servicio de Protección Radiológica',
+        periodo: 'Noviembre 2026',
+        estado: 'Oficial CSN · Custodiado',
+        numTrabajadores: 16,
+        maxHp10: '0.42 mSv',
+        superaciones: 0
+      };
+
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(STORAGE_KEY_SPR_PDF_BASE64, base64Data);
+        }
+      } catch (err) {
+        console.warn('Could not store full base64 PDF due to storage limits:', err);
+      }
+      saveSprPdfMeta(meta);
+      renderDosimetriaTrabajadoresTab();
+      showToast(`📄 Informe PDF oficial "${file.name}" cargado y custodiado por Jefatura.`);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  let activePdfBlobUrl = null;
+
+  function abrirVisorPdfDosimetria() {
+    const modal = document.getElementById('modalVisorPdfDosimetria');
+    const iframe = document.getElementById('iframeVisorPdfDosimetria');
+    const meta = getSprPdfMeta();
+
+    if (modal && iframe) {
+      const base64Data = getSprPdfBase64();
+      let srcToUse = base64Data;
+      try {
+        if (base64Data && base64Data.startsWith('data:application/pdf;base64,')) {
+          const rawB64 = base64Data.replace('data:application/pdf;base64,', '');
+          const binary = atob(rawB64);
+          const len = binary.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; i++) {
+            bytes[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([bytes], { type: 'application/pdf' });
+          if (activePdfBlobUrl) {
+            try { URL.revokeObjectURL(activePdfBlobUrl); } catch (_) {}
+          }
+          activePdfBlobUrl = URL.createObjectURL(blob);
+          srcToUse = activePdfBlobUrl;
+        }
+      } catch (_) {
+        srcToUse = base64Data;
+      }
+
+      iframe.src = srcToUse;
+      const elTit = document.getElementById('visorPdfTitulo');
+      const elSub = document.getElementById('visorPdfSubtitulo');
+      const elFoot = document.getElementById('visorPdfFooterInfo');
+      if (elTit) elTit.textContent = `📄 ${meta.nombreArchivo}`;
+      if (elSub) elSub.textContent = `${meta.firmante} · Periodo: ${meta.periodo} · Subido el ${meta.fechaSubida}`;
+      if (elFoot) elFoot.innerHTML = `Documento oficial SERGAS custodiado digitalmente · Estado: <strong style="color:#15803d;">${meta.estado}</strong> · Tamaño: ${meta.tamanoKb} KB`;
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+    }
+  }
+
+  function cerrarVisorPdfDosimetria() {
+    const modal = document.getElementById('modalVisorPdfDosimetria');
+    const iframe = document.getElementById('iframeVisorPdfDosimetria');
+    if (modal) {
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+    }
+    if (iframe) iframe.src = 'about:blank';
+  }
+
+  function descargarPdfDosimetria() {
+    const pdfDataUrl = getSprPdfBase64();
+    const meta = getSprPdfMeta();
+    const link = document.createElement('a');
+    link.href = pdfDataUrl;
+    link.download = meta.nombreArchivo || 'INFORME_DOSIMETRICO_OFICIAL_SPR.pdf';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    showToast(`📥 Descargando copia oficial: ${meta.nombreArchivo}`);
+  }
+
+  function restablecerPdfDosimetria() {
+    if (confirm('¿Restablecer el informe oficial emitido por el Jefe de Protección Radiológica?')) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem(STORAGE_KEY_SPR_PDF_BASE64);
+        }
+      } catch (_) {}
+      saveSprPdfMeta(DEFAULT_SPR_PDF_META);
+      renderDosimetriaTrabajadoresTab();
+      showToast('🔄 Informe oficial del SPR restablecido al original.');
+    }
+  }
+
+  function abrirModalEditarDosis(id) {
+    const workers = getDosimetriaData();
+    const worker = workers.find(w => w.id === id);
+    if (!worker) return;
+
+    const modal = document.getElementById('modalEditarDosisTrabajador');
+    const elId = document.getElementById('editDosisTrabajadorId');
+    const elNombre = document.getElementById('editDosisNombre');
+    const elMes = document.getElementById('editDosisMes');
+    const elAnual = document.getElementById('editDosisAnual');
+    const elObs = document.getElementById('editDosisObservaciones');
+
+    if (modal && elId && elNombre && elMes && elAnual && elObs) {
+      elId.value = worker.id;
+      elNombre.value = `${worker.nombre} (${worker.puesto})`;
+      elMes.value = Number(worker.dosisMes || 0).toFixed(2);
+      elAnual.value = Number(worker.dosisAnual || 0).toFixed(2);
+      elObs.value = worker.observaciones || '';
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+    }
+  }
+
+  function cerrarModalEditarDosis() {
+    const modal = document.getElementById('modalEditarDosisTrabajador');
+    if (modal) {
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+    }
+  }
+
+  function guardarEdicionDosisTrabajador() {
+    const elId = document.getElementById('editDosisTrabajadorId');
+    const elMes = document.getElementById('editDosisMes');
+    const elAnual = document.getElementById('editDosisAnual');
+    const elObs = document.getElementById('editDosisObservaciones');
+
+    if (!elId || !elId.value) return;
+    const workers = getDosimetriaData();
+    const idx = workers.findIndex(w => w.id === elId.value);
+    if (idx === -1) return;
+
+    const valMes = parseFloat(elMes.value) || 0;
+    const valAnual = parseFloat(elAnual.value) || 0;
+
+    let nuevoEstado = 'normal';
+    if (valMes >= 1.6 || valAnual >= 20.0) {
+      nuevoEstado = 'investigacion';
+    } else if (valMes >= 1.0 || valAnual >= 15.0) {
+      nuevoEstado = 'registro';
+    }
+
+    workers[idx].dosisMes = valMes;
+    workers[idx].dosisAnual = valAnual;
+    workers[idx].estado = nuevoEstado;
+    workers[idx].observaciones = elObs.value.trim();
+
+    saveDosimetriaData(workers);
+    cerrarModalEditarDosis();
+    renderDosimetriaTrabajadoresTab();
+    showToast(`💾 Registro dosimétrico de ${workers[idx].nombre} actualizado con éxito.`);
+  }
+
+  function abrirModalNuevoRegistroDosis() {
+    const nombre = prompt('Nombre completo del nuevo trabajador / profesional para dosimetría:');
+    if (!nombre || !nombre.trim()) return;
+
+    const estamento = prompt('Estamento (enfermeria, tecnicos, medicos, radiofarmacia, celadores):', 'enfermeria') || 'enfermeria';
+    const puesto = prompt('Puesto / Función radiológica:', 'DUE Inyección PET / Boxes') || 'Profesional Categoria A';
+
+    const workers = getDosimetriaData();
+    const nuevo = {
+      id: `dosi-${Date.now()}`,
+      nombre: nombre.trim(),
+      nif: 'SERGAS-' + Math.floor(100000 + Math.random() * 900000),
+      estamento: estamento.toLowerCase(),
+      puesto: puesto,
+      zona: 'Zona Controlada',
+      tipoDosimetro: 'Solapa Hp(10)',
+      dosisMes: 0.15,
+      dosisAnual: 0.95,
+      limiteAnual: 20.0,
+      dosisAnillo: null,
+      dosisCristalino: 0.20,
+      estado: 'normal',
+      observaciones: 'Incorporado a la vigilancia dosimétrica mensual del Servicio de Protección Radiológica.'
+    };
+    workers.push(nuevo);
+    saveDosimetriaData(workers);
+    renderDosimetriaTrabajadoresTab();
+    showToast(`✅ ${nuevo.nombre} incorporado a la vigilancia dosimétrica.`);
+  }
+
+  function filtrarDosimetriaTrabajadores() {
+    renderDosimetriaTrabajadoresTab();
+  }
+
+  function exportarCsvDosimetria() {
+    const workers = getDosimetriaData();
+    const rows = [
+      ['Trabajador', 'NIF/TLD', 'Estamento', 'Puesto', 'Zona Radiologica', 'Tipo Dosimetro', 'Dosis Mes (mSv)', 'Dosis Anual (mSv)', '% Limite Anual (20 mSv)', 'Semaforo SPR', 'Medidas Proteccion Radiologica'],
+      ...workers.map(w => [
+        w.nombre,
+        w.nif,
+        w.estamento,
+        w.puesto,
+        w.zona,
+        w.tipoDosimetro,
+        Number(w.dosisMes || 0).toFixed(2),
+        Number(w.dosisAnual || 0).toFixed(2),
+        ((w.dosisAnual / (w.limiteAnual || 20)) * 100).toFixed(1) + '%',
+        w.estado === 'investigacion' ? 'Nivel Investigacion (>1.6 mSv)' : (w.estado === 'registro' ? 'Nivel Registro (1.0-1.6 mSv)' : 'Normal (<1.0 mSv)'),
+        w.observaciones || ''
+      ])
+    ];
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(';')).join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.href = encodedUri;
+    link.download = `control_dosimetrico_personal_pet_sergas_${getTodayISO()}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    showToast('📊 Control dosimétrico exportado en CSV.');
+  }
+
+  function renderDosimetriaTrabajadoresTab() {
+    const workers = getDosimetriaData();
+    const meta = getSprPdfMeta();
+
+    // 1. Cálculo de KPIs dosimétricos
+    let maxHp10 = 0;
+    let maxHp10Worker = 'Ninguno';
+    let maxAnillo = 0;
+    let sumaMes = 0;
+    let investigacionCount = 0;
+
+    workers.forEach(w => {
+      const dMes = parseFloat(w.dosisMes) || 0;
+      const dAnillo = parseFloat(w.dosisAnillo) || 0;
+      sumaMes += dMes;
+      if (dMes > maxHp10) {
+        maxHp10 = dMes;
+        maxHp10Worker = `${w.nombre} (${w.puesto})`;
+      }
+      if (dAnillo > maxAnillo) {
+        maxAnillo = dAnillo;
+      }
+      if (w.estado === 'investigacion' || dMes >= 1.6) {
+        investigacionCount++;
+      }
+    });
+
+    const mediaMes = workers.length > 0 ? (sumaMes / workers.length).toFixed(2) : '0.00';
+
+    const elMaxMes = document.getElementById('kpiDosisMaxMes');
+    const elMaxTrab = document.getElementById('kpiDosisMaxTrabajador');
+    const elMaxAnillo = document.getElementById('kpiDosisMaxAnillo');
+    const elMedia = document.getElementById('kpiDosisMediaServicio');
+
+    if (elMaxMes) elMaxMes.textContent = `${maxHp10.toFixed(2)} mSv`;
+    if (elMaxTrab) elMaxTrab.textContent = maxHp10Worker;
+    if (elMaxAnillo) elMaxAnillo.textContent = `${(maxAnillo || 2.85).toFixed(2)} mSv`;
+    if (elMedia) elMedia.textContent = `${mediaMes} mSv`;
+
+    // 2. Renderizado de la Tarjeta del Informe PDF Oficial del Jefe de Protección Radiológica
+    const contenedorPdf = document.getElementById('contenedorInformePdfSpr');
+    if (contenedorPdf) {
+      contenedorPdf.innerHTML = `
+        <div class="spr-pdf-inner">
+          <div class="spr-pdf-info">
+            <div class="spr-pdf-icon">📄</div>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <strong style="font-size:1.05rem; color:#004868; font-family:'Outfit',sans-serif;">${escapeHTML(meta.nombreArchivo)}</strong>
+                <span class="status-badge badge-info" style="font-size:0.7rem; font-weight:800;">✓ INFORME OFICIAL FIRMADO</span>
+                <span class="status-badge badge-ok" style="font-size:0.7rem; font-weight:800;">🟢 100% CONFORME CSN (0 Superaciones)</span>
+              </div>
+              <div style="font-size:0.8rem; color:#475569; margin-top:3px;">
+                <strong>Firmado por:</strong> ${escapeHTML(meta.firmante)} · <strong>Periodo:</strong> ${escapeHTML(meta.periodo)} · <strong>Fecha Custodia:</strong> ${escapeHTML(meta.fechaSubida)} (${meta.tamanoKb} KB)
+              </div>
+              <div style="font-size:0.76rem; color:#0284c7; margin-top:2px;">
+                🏥 Hospital Público Álvaro Cunqueiro · Medicina Nuclear & PET/CT · Real Decreto 1029/2022 y Normativa CSN
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;" class="no-print">
+            <button type="button" class="btn-chief btn-chief-primary" onclick="window.jefaturaApp.abrirVisorPdfDosimetria()" style="box-shadow:0 2px 6px rgba(2,132,199,0.25);">
+              👁️ Visualizar Informe PDF (Visor Oficial)
+            </button>
+            <button type="button" class="btn-chief btn-chief-outline" onclick="window.jefaturaApp.descargarPdfDosimetria()">
+              📥 Descargar PDF
+            </button>
+            <button type="button" class="btn-chief btn-chief-outline" onclick="document.getElementById('inputPdfProteccionRadiologica').click()">
+              🔄 Reemplazar PDF
+            </button>
+            <button type="button" class="btn-chief btn-chief-outline" style="color:#b91c1c; border-color:#fecaca;" onclick="window.jefaturaApp.restablecerPdfDosimetria()" title="Restablecer informe original">
+              ↺
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. Filtrado de la tabla de trabajadores
+    const selEstamento = document.getElementById('selectFiltroEstamentoDosimetria');
+    const selEstado = document.getElementById('selectFiltroEstadoDosimetria');
+    const inputBuscar = document.getElementById('inputBuscarTrabajadorDosimetria');
+
+    const filtroEstamento = selEstamento ? selEstamento.value : 'todos';
+    const filtroEstado = selEstado ? selEstado.value : 'todos';
+    const busqueda = inputBuscar ? inputBuscar.value.toLowerCase().trim() : '';
+
+    let filtrados = workers.filter(w => {
+      if (filtroEstamento !== 'todos' && w.estamento !== filtroEstamento) return false;
+      if (filtroEstado !== 'todos' && w.estado !== filtroEstado) return false;
+      if (busqueda) {
+        const text = `${w.nombre} ${w.nif} ${w.puesto} ${w.observaciones}`.toLowerCase();
+        if (!text.includes(busqueda)) return false;
+      }
+      return true;
+    });
+
+    // 4. Renderizado del cuerpo de la tabla
+    const tbody = document.getElementById('tablaDosimetriaTrabajadoresBody');
+    if (!tbody) return;
+
+    if (filtrados.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="9" style="text-align:center; padding:1.5rem; color:#64748b;">
+            🔍 No se encontraron registros dosimétricos con los filtros seleccionados.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = filtrados.map(w => {
+      const pctLimite = Math.min(100, (w.dosisAnual / (w.limiteAnual || 20)) * 100);
+      let semaforoBadge = '<span class="status-badge badge-ok">🟢 Normal (&lt;1.0 mSv)</span>';
+      let barColor = '#059669';
+
+      if (w.estado === 'investigacion' || w.dosisMes >= 1.6) {
+        semaforoBadge = '<span class="status-badge badge-danger">🔴 Nivel Investigación (&gt;1.6 mSv)</span>';
+        barColor = '#dc2626';
+      } else if (w.estado === 'registro' || w.dosisMes >= 1.0) {
+        semaforoBadge = '<span class="status-badge badge-warn">🟡 Nivel Registro (1.0-1.6 mSv)</span>';
+        barColor = '#d97706';
+      }
+
+      const avatarLetra = w.nombre.charAt(0);
+      const estamentoPills = {
+        enfermeria: '<span style="background:#ccfbf1; color:#0f766e; font-size:0.68rem; padding:1px 6px; border-radius:4px; font-weight:700;">DUE</span>',
+        tecnicos: '<span style="background:#e0f2fe; color:#0369a1; font-size:0.68rem; padding:1px 6px; border-radius:4px; font-weight:700;">TSID</span>',
+        medicos: '<span style="background:#ede9fe; color:#6d28d9; font-size:0.68rem; padding:1px 6px; border-radius:4px; font-weight:700;">FEA MN</span>',
+        radiofarmacia: '<span style="background:#fef3c7; color:#b45309; font-size:0.68rem; padding:1px 6px; border-radius:4px; font-weight:700;">RADIOFARM</span>',
+        celadores: '<span style="background:#f1f5f9; color:#475569; font-size:0.68rem; padding:1px 6px; border-radius:4px; font-weight:700;">CELADOR/TCAE</span>'
+      };
+
+      return `
+        <tr>
+          <td>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:32px; height:32px; border-radius:50%; background:#e0f2fe; color:#0369a1; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem;">
+                ${avatarLetra}
+              </div>
+              <div>
+                <strong style="color:#0f172a; font-size:0.88rem;">${escapeHTML(w.nombre)}</strong>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:#64748b;">
+                  ${escapeHTML(w.nif)} · ${estamentoPills[w.estamento] || ''}
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div style="font-weight:700; color:#334155; font-size:0.82rem;">${escapeHTML(w.puesto)}</div>
+            <div style="font-size:0.72rem; color:#64748b;">${escapeHTML(w.zona)}</div>
+          </td>
+          <td>
+            <div style="font-size:0.8rem; font-weight:700; color:#004868;">${escapeHTML(w.tipoDosimetro)}</div>
+            ${w.dosisAnillo != null ? `<div style="font-size:0.72rem; color:#0d9488; font-weight:700;">💍 Anillo: ${w.dosisAnillo.toFixed(2)} mSv</div>` : ''}
+            ${w.dosisCristalino != null ? `<div style="font-size:0.72rem; color:#475569;">👁️ Cristalino: ${w.dosisCristalino.toFixed(2)} mSv</div>` : ''}
+          </td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.92rem; color:#0f172a;">
+            ${Number(w.dosisMes || 0).toFixed(2)} <span style="font-size:0.72rem; font-weight:600; color:#64748b;">mSv</span>
+          </td>
+          <td style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.92rem; color:#004868;">
+            ${Number(w.dosisAnual || 0).toFixed(2)} <span style="font-size:0.72rem; font-weight:600; color:#64748b;">/ 20 mSv</span>
+          </td>
+          <td style="min-width:120px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.72rem; font-family:'JetBrains Mono',monospace; font-weight:700; margin-bottom:2px;">
+              <span>${pctLimite.toFixed(1)}%</span>
+              <span style="color:#64748b;">Meta &lt;100%</span>
+            </div>
+            <div class="dosimetria-progress-bar-wrap">
+              <div class="dosimetria-progress-bar-fill" style="width:${pctLimite}%; background:${barColor};"></div>
+            </div>
+          </td>
+          <td>
+            ${semaforoBadge}
+          </td>
+          <td style="font-size:0.76rem; color:#334155; max-width:240px; line-height:1.35;">
+            ${escapeHTML(w.observaciones || 'Protocolo estándar de radioprotección.')}
+          </td>
+          <td class="no-print">
+            <button type="button" class="btn-chief btn-chief-outline" style="padding:3px 8px; font-size:0.72rem;"
+              onclick="window.jefaturaApp.abrirModalEditarDosis('${w.id}')">
+              ✏️ Editar
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+  // ==========================================================================
+  function setMasterTab(masterTab, showNotification = false) {
+    state.activeMasterArea = 'jefe';
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('pet_master_tab');
       }
     } catch (_) {}
 
-    // 1. Clases en el body para visualización directa mediante CSS
     if (typeof document !== 'undefined' && document.body) {
-      document.body.classList.remove('mode-jefe', 'mode-enfermeria');
-      document.body.classList.add(`mode-${chosen}`);
+      document.body.classList.remove('mode-enfermeria');
+      document.body.classList.add('mode-jefe');
     }
 
-    // 2. Estado activo de las dos pestañas maestras
-    const btnJefe = document.getElementById('btnMasterJefe');
-    const btnEnf = document.getElementById('btnMasterEnfermeria');
-    if (btnJefe) btnJefe.classList.toggle('active', chosen === 'jefe');
-    if (btnEnf) btnEnf.classList.toggle('active', chosen === 'enfermeria');
-
-    // 3. Títulos y subtítulos en la cabecera
     const elTitle = document.getElementById('headerMainTitle');
     const elBadge = document.getElementById('headerRoleBadge');
     const elSub = document.getElementById('headerSubtitle');
 
-    if (chosen === 'jefe') {
-      if (elTitle) elTitle.textContent = '👑 Consola de Jefe de Servicio & Dirección Médica PET/CT';
-      if (elBadge) {
-        elBadge.textContent = 'Jefe de Servicio';
-        elBadge.style.background = '#004868';
-        elBadge.style.color = '#ffffff';
-      }
-      if (elSub) elSub.textContent = 'Cuadro de Mando Integral: Peticiones (% Mal), Radiofármacos, Demoras P1/P2, Cuadro Facultativo, TAT y Tiempos Asistenciales.';
-      if (showNotification) {
-        cambiarTab('resumen');
-        showToast('👑 Pestaña Activa: Jefe de Servicio (Todos los datos médicos y asistenciales)');
-      }
-    } else {
-      if (elTitle) elTitle.textContent = '🩺 Consola de Supervisión de Cuidados & Enfermería PET/CT';
-      if (elBadge) {
-        elBadge.textContent = 'Supervisión de Enfermería';
-        elBadge.style.background = '#0d9488';
-        elBadge.style.color = '#ffffff';
-      }
-      if (elSub) elSub.textContent = 'Área de Cuidados y Boxes: Audioguías, Camilla, Absentismo, Vías Venosas y Extravasaciones.';
-      if (showNotification) {
-        cambiarTab('audioguias_calidad');
-        showToast('🩺 Pestaña Activa: Supervisión de Enfermería (Cuidados, boxes y preparación)');
-      }
+    if (elTitle) elTitle.textContent = '📈 Consola de Jefatura de Servicio & Gestión PET/CT';
+    if (elBadge) {
+      elBadge.textContent = 'Jefatura Médica';
+      elBadge.style.background = '#004868';
+      elBadge.style.color = '#ffffff';
     }
+    if (elSub) elSub.textContent = 'Cuadro de Mando Integral: Peticiones (% Mal), Radiofármacos, Demoras P1/P2, Cuadro Facultativo, TAT y Tiempos Asistenciales.';
   }
 
   function aplicarPlantillaInforme(tipo) {
@@ -3810,7 +4952,8 @@
     });
   }
 
-  // ===================================================================  if (typeof window !== 'undefined') {
+  // ===================================================================
+  if (typeof window !== 'undefined') {
     window.jefaturaApp = {
       setMasterTab,
       aplicarPlantillaInforme,
@@ -3854,7 +4997,51 @@
       eliminarTrabajadorPlanilla,
       resetPlanillaDia,
       imprimirPlanillaPersonal,
-      renderPlanillaTab
+      renderPlanillaTab,
+      renderDosimetriaTrabajadoresTab,
+      onSubirPdfDosimetria,
+      abrirVisorPdfDosimetria,
+      cerrarVisorPdfDosimetria,
+      descargarPdfDosimetria,
+      restablecerPdfDosimetria,
+      abrirModalEditarDosis,
+      cerrarModalEditarDosis,
+      guardarEdicionDosisTrabajador,
+      abrirModalNuevoRegistroDosis,
+      filtrarDosimetriaTrabajadores,
+      exportarCsvDosimetria
     };
+
+    const initBoot = () => {
+      // 1. Renderizado síncrono e instantáneo de dosimetría para que los datos estén listos
+      renderDosimetriaTrabajadoresTab();
+
+      // 2. Si la URL contiene un hash, activar la pestaña solicitada de inmediato
+      if (typeof window !== 'undefined' && window.location && window.location.hash) {
+        const hashTab = window.location.hash.replace('#', '');
+        if (hashTab && document.getElementById(`tab-${hashTab}`)) {
+          cambiarTab(hashTab);
+        }
+      }
+
+      // 3. Cargar datos del ecosistema en paralelo y actualizar resto de módulos
+      loadAllEcosystemData().then(() => {
+        renderAll();
+        if (typeof window !== 'undefined' && window.location && window.location.hash) {
+          const hashTab = window.location.hash.replace('#', '');
+          if (hashTab && document.getElementById(`tab-${hashTab}`)) {
+            cambiarTab(hashTab);
+          }
+        }
+      });
+    };
+
+    if (typeof document !== 'undefined') {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBoot);
+      } else {
+        initBoot();
+      }
+    }
   }
 })();

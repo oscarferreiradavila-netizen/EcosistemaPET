@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecosistema Integral PET/CT · Gestión Pública Sanitaria de Alta Resolución | Galaria · SERGAS</title>
+  <meta name="description"
+    content="Presentación Ejecutiva Luminous & High-Resolution del Ecosistema Digital PET/CT. Innovación, interoperabilidad y sostenibilidad en el Servizo Galego de Saúde (SERGAS / Galaria).">
+
+  <!-- Tipografía Oficial Galaria / SERGAS & Display Premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       SISTEMA DE DISEÑO LUMINOUS CRYSTAL · IDENTIDAD GALARIA / SERGAS
+       ========================================================================== */
+    :root {
+      /* Azules Institucionales Brillantes y Saturados */
+      --sergas-navy: #002b40;
+      --sergas-dark-blue: #004868;
+      --sergas-blue: #007eb4;
+      --sergas-vivid-blue: #0099e6;
+      --sergas-cyan: #00d2ff;
+      --sergas-soft-blue: #e8f5fc;
+      --sergas-ice-blue: #f0f9ff;
+
+      /* Acentos Ligeros y Vivos */
+      --gold-xunta: #facc15;
+      --gold-glow: rgba(250, 204, 21, 0.45);
+      --purple-accent: #7c3aed;
+      --purple-soft: #f5f3ff;
+      --teal-accent: #0d9488;
+      --teal-soft: #f0fdfa;
+      --emerald-accent: #059669;
+      --emerald-soft: #ecfdf5;
+      --amber-accent: #d97706;
+      --amber-soft: #fffbeb;
+
+      /* Fondos y Superficies de Cristal Brillante */
+      --bg-page: #f4f8fb;
+      --bg-card: #ffffff;
+      --text-main: #0a1b2a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+
+      /* Sombras Ligeras con Resplandor Azul */
+      --crystal-border: rgba(0, 126, 180, 0.16);
+      --crystal-glow: 0 12px 36px -8px rgba(0, 126, 180, 0.16), 0 0 0 1px rgba(0, 126, 180, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      --crystal-hover: 0 20px 48px -10px rgba(0, 126, 180, 0.28), 0 0 0 1.5px rgba(0, 210, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      background-image:
+        radial-gradient(circle at 10% 8%, rgba(0, 210, 255, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 12%, rgba(124, 58, 237, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(0, 126, 180, 0.05) 0%, transparent 60%),
+        radial-gradient(circle at 80% 90%, rgba(5, 150, 105, 0.07) 0%, transparent 50%),
+        linear-gradient(rgba(0, 126, 180, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 126, 180, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      color: var(--text-main);
+      font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* CABECERA INSTITUCIONAL EN TONO CLARO CON LOGOS */
+    .institutional-light-header {
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+      box-shadow: 0 4px 18px rgba(0, 72, 104, 0.06);
+      padding: 0.85rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner-wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .galaria-img-logo {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    .header-divider-v {
+      width: 1.5px;
+      height: 36px;
+      background: #cbd5e1;
+    }
+
+    @media (max-width: 768px) {
+      .header-divider-v {
+        display: none;
+      }
+      .header-inner-wrap {
+        gap: 1.25rem;
+        justify-content: center;
+      }
+    }
+
+    /* HERO BANNER BRILLANTE */
+    .luminous-hero {
+      position: relative;
+      background: linear-gradient(135deg, #002b40 0%, #004868 35%, #007eb4 75%, #00a8e8 100%);
+      color: #ffffff;
+      padding: 3.5rem 1.5rem 3rem 1.5rem;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 16px 40px -10px rgba(0, 72, 104, 0.4);
+    }
+
+    .luminous-hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: 10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(0, 210, 255, 0.25) 0%, transparent 65%);
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+    }
+
+    .luminous-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: 10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(250, 204, 21, 0.18) 0%, transparent 65%);
+      border-radius: 50%;
+      filter: blur(45px);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 15px rgba(255, 255, 255, 0.25);
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.9rem;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 24px rgba(0, 31, 48, 0.4);
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #ffffff 40%, #e0f7ff 70%, #fde047 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.1rem;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      max-width: 860px;
+      margin: 0 auto 2rem auto;
+      font-weight: 400;
+      color: #e2f4ff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    /* TELEMETRÍA BRILLANTE (KPI CARDS EN HERO) */
+    .hero-kpis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto 2.25rem auto;
+    }
+
+    .hero-kpi-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 14px;
+      padding: 1.15rem 1.25rem;
+      text-align: left;
+      box-shadow: 0 8px 24px rgba(0, 31, 48, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      transition: all 0.25s ease;
+    }
+
+    .hero-kpi-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 12px 32px rgba(0, 210, 255, 0.35);
+    }
+
+    .hero-kpi-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #e0f7ff;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-kpi-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.1;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .hero-kpi-sub {
+      font-size: 0.74rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--gold-xunta);
+    }
+
+    /* BOTONES HERO */
+    .hero-actions-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-luminous-gold {
+      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      color: #002b40;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(250, 204, 21, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: all 0.2s;
+    }
+
+    .btn-luminous-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(250, 204, 21, 0.7);
+    }
+
+    .btn-luminous-glass {
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(12px);
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-luminous-glass:hover {
+      background: #ffffff;
+      color: var(--sergas-dark-blue);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.35);
+      transform: translateY(-2px);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .main-wrap {
+      max-width: 1220px;
+      margin: 2.5rem auto 4rem auto;
+      padding: 0 1.25rem;
+    }
+
+    /* SELECTOR DE PESTAÑAS VIBRANTE */
+    .crystal-nav-tabs {
+      display: flex;
+      background: #ffffff;
+      border: 1.5px solid var(--crystal-border);
+      border-radius: 14px;
+      padding: 8px;
+      gap: 6px;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--crystal-glow);
+      overflow-x: auto;
+    }
+
+    .crystal-tab-btn {
+      flex: 1;
+      min-width: 180px;
+      background: transparent;
+      border: none;
+      color: #475569;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      padding: 12px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .crystal-tab-btn:hover {
+      color: var(--sergas-blue);
+      background: var(--sergas-soft-blue);
+    }
+
+    .crystal-tab-btn.active {
+      background: linear-gradient(135deg, #004868 0%, #007eb4 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(0, 126, 180, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    /* SECCIONES TAB */
+    .tab-pane {
+      display: none;
+      animation: tabFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes tabFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* TARJETAS DE MÓDULOS CRISTALINAS Y BRILLANTES */
+    .crystal-module-card {
+      background: #ffffff;
+      border: 1.5px solid var(--card-border, #bae6fd);
+      border-radius: 16px;
+      padding: 1.85rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--crystal-glow);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .crystal-module-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--card-color, var(--sergas-blue));
+      box-shadow: 0 0 12px var(--card-color, var(--sergas-blue));
+    }
+
+    .crystal-module-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--crystal-hover);
+    }
+
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .mod-ident-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mod-crystal-num {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(135deg, var(--card-soft, #e0f2fe), #ffffff);
+      border: 1.5px solid var(--card-color, var(--sergas-blue));
+      border-radius: 12px;
+      color: var(--card-color, var(--sergas-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(0, 126, 180, 0.15);
+    }
+
+    .mod-titles h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--sergas-navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mod-titles p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .mod-badge-role {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      background: var(--card-soft, #f8fafc);
+      border: 1px solid var(--card-border, #cbd5e1);
+      color: var(--card-color, #0f172a);
+      padding: 5px 12px;
+      border-radius: 8px;
+    }
+
+    .btn-launch-crystal {
+      background: linear-gradient(135deg, #007eb4, #00a8e8);
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0, 126, 180, 0.25);
+      transition: all 0.2s;
+    }
+
+    .btn-launch-crystal:hover {
+      background: #004868;
+      box-shadow: 0 6px 16px rgba(0, 72, 104, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* CONTENEDOR 2 COLUMNAS POR MÓDULO */
+    .mod-grid-cols {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 860px) {
+      .mod-grid-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .crystal-sub-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .sub-box-blue {
+      background: linear-gradient(180deg, #f0f9ff 0%, #f8fafc 100%);
+      border-color: #bae6fd;
+    }
+
+    .sub-box-green {
+      background: linear-gradient(180deg, #ecfdf5 0%, #f8fafc 100%);
+      border-color: #a7f3d0;
+    }
+
+    .sub-box-header {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sub-box-blue .sub-box-header {
+      color: #0284c7;
+    }
+
+    .sub-box-green .sub-box-header {
+      color: var(--emerald-accent);
+    }
+
+    .crystal-list {
+      list-style: none;
+      font-size: 0.88rem;
+      color: #1e293b;
+    }
+
+    .crystal-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 7px;
+      line-height: 1.45;
+    }
+
+    .crystal-list li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      color: var(--sergas-blue);
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    .sub-box-green .crystal-list li::before {
+      color: var(--emerald-accent);
+    }
+
+    /* RED ASISTENCIAL (FLUJO INTEROPERABILIDAD) */
+    .network-container {
+      background: #ffffff;
+      border: 1.5px solid var(--crystal-border);
+      border-radius: 16px;
+      padding: 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--crystal-glow);
+    }
+
+    .stream-node-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.35rem;
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      margin-bottom: 1.15rem;
+      box-shadow: 0 4px 12px rgba(0, 72, 104, 0.04);
+      transition: all 0.25s ease;
+    }
+
+    .stream-node-box:hover {
+      border-color: var(--sergas-cyan);
+      box-shadow: 0 8px 24px rgba(0, 126, 180, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .stream-hud-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #004868, #007eb4);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 14px rgba(0, 126, 180, 0.35);
+      flex-shrink: 0;
+    }
+
+    .stream-node-text h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--sergas-navy);
+      margin-bottom: 4px;
+    }
+
+    .stream-node-text p {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .stream-tag-event {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #6d28d9;
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-top: 6px;
+    }
+
+    /* PILARES GESTIÓN PÚBLICA 4.0 */
+    .pillars-crystal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.35rem;
+    }
+
+    .pillar-crystal-card {
+      background: #ffffff;
+      border: 1.5px solid var(--crystal-border);
+      border-radius: 14px;
+      padding: 1.6rem;
+      box-shadow: var(--crystal-glow);
+      transition: all 0.25s;
+    }
+
+    .pillar-crystal-card:hover {
+      border-color: var(--sergas-blue);
+      box-shadow: var(--crystal-hover);
+      transform: translateY(-2px);
+    }
+
+    .pillar-crystal-card h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--sergas-navy);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pillar-crystal-card p {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    /* FOOTER OFICIAL */
+    .luminous-footer {
+      background: linear-gradient(90deg, #001f30 0%, #003650 50%, #002235 100%);
+      border-top: 3px solid var(--sergas-blue);
+      padding: 2.25rem 1.5rem;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+
+    .luminous-footer a {
+      color: var(--gold-xunta);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+      }
+
+      .top-bar,
+      .crystal-nav-tabs,
+      .hero-actions-row,
+      .no-print {
+        display: none !important;
+      }
+
+      .tab-pane {
+        display: block !important;
+        page-break-after: always;
+      }
+
+      .crystal-module-card,
+      .stream-node-box,
+      .pillar-crystal-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 1. CABECERA INSTITUCIONAL EN TONO CLARO CON LOGOS OFICIALES -->
+  <header class="institutional-light-header">
+    <div class="header-inner-wrap">
+
+      <!-- LOGO 1: XUNTA DE GALICIA -->
+      <div class="logo-box">
+        <img src="xunta_logo.png" alt="Xunta de Galicia" style="height: 48px; width: auto; object-fit: contain;">
+      </div>
+
+      <div class="header-divider-v"></div>
+
+      <!-- LOGO 2: SERGAS -->
+      <div class="logo-box">
+        <img src="sergas_logo.png" alt="Servizo Galego de Saúde · SERGAS" style="height: 52px; width: auto; object-fit: contain;">
+      </div>
+
+      <div class="header-divider-v"></div>
+
+      <!-- LOGO 3: GALARIA -->
+      <div class="logo-box">
+        <img src="galaria_logo.jpg" alt="Galaria" class="galaria-img-logo" style="height: 48px; width: auto; object-fit: contain;" onerror="this.style.display='none'">
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 2. HERO PRINCIPAL LUMINOUS -->
+  <section class="luminous-hero">
+    <div class="hero-inner">
+      <div class="hero-pill-badge">
+        <span>⭐</span> DOSSIER EJECUTIVO · ALTA RESOLUCIÓN ASISTENCIAL
+      </div>
+      <h1 class="hero-title">
+        Ecosistema Digital de Gestión Integral <span>PET/CT</span>
+      </h1>
+      <p class="hero-subtitle">
+        Optimización asistencial y clínica de alta precisión: aprovechamiento biofísico de radiofármacos por
+        decaimiento, equidad en tiempos de espera y gestión pública de excelencia en el Servizo Galego de Saúde (SERGAS
+        / Galaria).
+      </p>
+
+      <!-- KPI CARDS ENCABEZADO BRILLANTE -->
+      <div class="hero-kpis-grid">
+        <div class="hero-kpi-card">
+          <div class="hero-kpi-label">🌐 Arquitectura Conectada</div>
+          <div class="hero-kpi-value">9 / 9 <span class="hero-kpi-sub">Módulos</span></div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hero-kpi-label">⚡ Eficiencia de Viales</div>
+          <div class="hero-kpi-value">100% <span class="hero-kpi-sub">F-18 / Ga-68</span></div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hero-kpi-label">👥 Reducción Absentismo</div>
+          <div class="hero-kpi-value">&gt;85% <span class="hero-kpi-sub">Audioguías</span></div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hero-kpi-label">⏱️ Coordinación Consultas</div>
+          <div class="hero-kpi-value">&lt;24h <span class="hero-kpi-sub">Informe Listo</span></div>
+        </div>
+      </div>
+
+      <div class="hero-actions-row no-print">
+        <button class="btn-luminous-gold" onclick="window.print()">
+          <span>🖨️</span> Descargar / Imprimir Informe Ejecutivo (PDF)
+        </button>
+        <a href="index.html" class="btn-luminous-glass">
+          <span>🚀</span> Abrir Portal Maestro Operativo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. CONTENIDO PRINCIPAL -->
+  <main class="main-wrap">
+
+    <!-- SELECTOR DE PESTAÑAS BRILLANTE -->
+    <nav class="crystal-nav-tabs no-print">
+      <button class="crystal-tab-btn active" onclick="setCrystalTab('modulos', this)">
+        <span>📑</span> 1. LOS 9 MÓDULOS Y FUNCIONES
+      </button>
+      <button class="crystal-tab-btn" onclick="setCrystalTab('red_asistencial', this)">
+        <span>🔗</span> 2. INTEROPERABILIDAD Y ENLACES
+      </button>
+      <button class="crystal-tab-btn" onclick="setCrystalTab('gestion_publica', this)">
+        <span>🏛️</span> 3. GESTIÓN PÚBLICA SANITARIA
+      </button>
+      <button class="crystal-tab-btn" onclick="setCrystalTab('cualidades_disruptivas', this)">
+        <span>⭐</span> 4. CUALIDADES DISRUPTIVAS
+      </button>
+    </nav>
+
+    <!-- ========================================================================
+         PESTAÑA 1: LOS 9 MÓDULOS DE ALTA RESOLUCIÓN
+         ======================================================================== -->
+    <section id="pane-modulos" class="tab-pane active">
+
+      <!-- MÓDULO 1 -->
+      <article class="crystal-module-card" style="--card-color: #007eb4; --card-border: #bae6fd; --card-soft: #f0f9ff;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">01</div>
+            <div class="mod-titles">
+              <h3>Petición Médica Electrónica Especializada <span>🩺</span></h3>
+              <p>Prescripción protocolizada, cribado de idoneidad y justificación oncológica TNM</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">👨‍⚕️ Facultativos Especialistas</span>
+            <a href="pet_peticion_medica/index.html" class="btn-launch-crystal no-print" target="_blank">Abrir Módulo 1
+              ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>Formulario clínico guiado y adaptado a sospecha y estadio tumoral (TNM).</li>
+              <li>Cribado instantáneo de contraindicaciones (claustrofobia, ayuno, movilidad, embarazo).</li>
+              <li>Pauta facultativa de premedicación y especificaciones del radiofármaco.</li>
+              <li>Emisión de volante clínico normalizado SERGAS con NHC y firma digital.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>0% de solicitudes devueltas:</strong> Erradicación total de peticiones incompletas.</li>
+              <li><strong>Prescripción justificada:</strong> Máxima adecuación a las guías clínicas oficiales.</li>
+              <li><strong>Previsión de recursos:</strong> Alerta inmediata si el paciente necesita ayuda para la prueba,
+                la preparación y colocación.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 2 -->
+      <article class="crystal-module-card" style="--card-color: #0284c7; --card-border: #93c5fd; --card-soft: #eff6ff;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">02</div>
+            <div class="mod-titles">
+              <h3>Triaje Clínico & Motor de Citación Inteligente <span>📊</span></h3>
+              <p>Optimización biofísica por vida media radiactiva y algoritmo de prioridad asistencial</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">🔬 Coordinador Médico / Citador</span>
+            <a href="pet_ct_triage/web_app/index.html" class="btn-launch-crystal no-print" target="_blank">Abrir Módulo
+              2 ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>Estratificación algorítmica de prioridad clínica P1 (urgente), P2 (preferente), P3 (revisión).</li>
+              <li>Parrilla de citación dinámica que sincroniza con el decaimiento radiactivo (110 min 18F / 68 min
+                68Ga).</li>
+              <li>Regla de blindaje asistencial: pacientes en camilla/ingresados son citados al final del turno.</li>
+              <li>Previsualización clínica instantánea de diagnóstico y antecedentes al agendar huecos manuales.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Aprovechamiento íntegro de viales:</strong> Máxima rentabilidad diagnóstica por dosis de
+                ciclotrón.</li>
+              <li><strong>Garantía de tiempos de espera:</strong> Cumplimiento de plazos legales de demora en oncología.
+              </li>
+              <li><strong>Sustitución ágil de cancelaciones:</strong> Relleno de huecos libres en 1 clic con lista de
+                espera.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 3 -->
+      <article class="crystal-module-card" style="--card-color: #0d9488; --card-border: #99f6e4; --card-soft: #f0fdfa;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">03</div>
+            <div class="mod-titles">
+              <h3>Preparación Interactiva & Audioguías Clínicas <span>🎧</span></h3>
+              <p>Humanización digital, educación sanitaria previa y reducción drástica del no-show</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">👥 Pacientes & Familias</span>
+            <a href="pet_prep_page/index.html" class="btn-launch-crystal no-print" target="_blank">Abrir Módulo 3 ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>Audioguías locutadas específicas por radiofármaco: FDG, Colina, PSMA, Galio-68 y cardíaco.</li>
+              <li>Calculadora interactiva de horas de ayuno y pauta de dieta específica para cada prueba.</li>
+              <li>Protocolo especial para pacientes diabéticos (manejo de insulina y antidiabéticos orales).</li>
+              <li>Acceso móvil directo por enlace mediante SMS.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Desplome del absentismo (>85%):</strong> Erradicación de estudios cancelados por ayuno roto.
+              </li>
+              <li><strong>Humanización y bienestar:</strong> Menor ansiedad del paciente al conocer todo el proceso de
+                antemano.</li>
+              <li><strong>Calidad de imagen óptima:</strong> Supresión de captaciones miocárdicas o musculares anómalas.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 4 -->
+      <article class="crystal-module-card" style="--card-color: #059669; --card-border: #a7f3d0; --card-soft: #ecfdf5;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">04</div>
+            <div class="mod-titles">
+              <h3>Consola Asistencial de Box de Inyección <span>💉</span></h3>
+              <p>Seguridad del paciente, control glucémico riguroso y cronómetro de captación biológica</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">🏥 Enfermería de Medicina Nuclear</span>
+            <a href="pet_prep_page/enfermeria.html" class="btn-launch-crystal no-print" target="_blank">Abrir Módulo 4
+              ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>Control de glucemia capilar previa.</li>
+              <li>Registro de vía venosa periférica, hora de inyección y dosis administrada en mCi.</li>
+              <li>Cronómetro dinámico sincronizado de 60 minutos de captación en box individual plomado.</li>
+              <li>Señal automática en tiempo real hacia la consola de técnicos al completarse el reposo.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Rotación fluida de boxes:</strong> Coordinación exacta entre la captación y la mesa del
+                tomógrafo.</li>
+              <li><strong>Trazabilidad legal radiológica:</strong> Registro histórico e inmutable de la actividad
+                inyectada.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 5 -->
+      <article class="crystal-module-card" style="--card-color: #4f46e5; --card-border: #c7d2fe; --card-soft: #eef2ff;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">05</div>
+            <div class="mod-titles">
+              <h3>Consola Médica Facultativa de Informes <span>👨‍⚕️</span></h3>
+              <p>Post-proceso diagnóstico, comparativa evolutiva cuantitativa y firma digital</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">👨‍⚕️ Médicos Nucleares & Radiólogos</span>
+            <a href="pet_consola_medica/index.html" class="btn-launch-crystal no-print" target="_blank">Abrir Módulo 5
+              ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>Bandeja de trabajo priorizada según criticidad clínica y fecha de consulta sucesiva.</li>
+              <li>Cotejo instantáneo con estudios basales y PET previos del paciente.</li>
+              <li>Estructuración normalizada de conclusiones diagnósticas para comités multidisciplinares.</li>
+              <li>Validación médica que propaga de inmediato el informe a toda la red hospitalaria.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Tiempo de respuesta récord:</strong> Informes de pacientes urgentes disponibles en menos de 24
+                horas.</li>
+              <li><strong>Estandarización diagnóstica:</strong> Supresión de ambigüedades en la respuesta terapéutica.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 6 -->
+      <article class="crystal-module-card" style="--card-color: #0891b2; --card-border: #a5f3fc; --card-soft: #ecfeff;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">06</div>
+            <div class="mod-titles">
+              <h3>Consola Operativa de Técnicos TSID en Tomógrafo <span>🔬</span></h3>
+              <p>Control de adquisición técnica, modulación de dosis CT y telemetría del equipo</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">🔬 Técnicos TSID</span>
+            <a href="pet_consola_tecnicos/index.html" class="btn-launch-crystal no-print" target="_blank">Abrir Módulo 6
+              ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>Recepción en tiempo real del paciente preparado desde el Box de Enfermería.</li>
+              <li>Checklist de seguridad antes del escaneo (artefactos metálicos, contraste oral, confort).</li>
+              <li>Registro de parámetros dosimétricos: kV, mAs modulado y DLP (Dose Length Product).</li>
+              <li>Notificación y resolución inmediata de incidencias técnicas en tomógrafo.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Cadencia continua sin vacíos en el gantry:</strong> Maximización de horas de funcionamiento
+                del escáner.</li>
+              <li><strong>Calidad técnica reproducible:</strong> Cero repeticiones innecesarias de exploraciones.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 7 -->
+      <article class="crystal-module-card" style="--card-color: #d97706; --card-border: #fde68a; --card-soft: #fffbeb;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">07</div>
+            <div class="mod-titles">
+              <h3>Cuadro de Mando de Jefatura & Dosimetría de Trabajadores <span>📈</span></h3>
+              <p>Gobierno clínico, auditoría de actividad y vigilancia radiológica laboral (SPR)</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">📈 Jefatura de Servicio & Dirección</span>
+            <a href="pet_jefatura_servicio/index.html" class="btn-launch-crystal no-print" target="_blank">Abrir Módulo
+              7 ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>KPIs ejecutivos en tiempo real: ocupación, tiempos de demora, volumen de estudios y peonadas.</li>
+              <li><strong>Módulo de Dosimetría de Trabajadores (SPR):</strong> Registro trimestral de dosis (mSv) del
+                personal expuesto de Categoría A con subida de informes oficiales.</li>
+              <li>Alertas inteligentes de aproximación a límites legales anuales del Consejo de Seguridad Nuclear (CSN).
+              </li>
+              <li>Generación instantánea de memorias asistenciales para la Gerencia del hospital y SERGAS.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Gestión pública basada en datos transparentes:</strong> Dimensionamiento exacto de recursos y
+                turnos.</li>
+              <li><strong>Salud laboral y seguridad blindada:</strong> Cero incidentes dosimétricos en el personal
+                sanitario.</li>
+              <li><strong>Rendición de cuentas continua:</strong> Trazabilidad integral ante inspecciones sanitarias y
+                del CSN.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 8 -->
+      <article class="crystal-module-card" style="--card-color: #059669; --card-border: #a7f3d0; --card-soft: #ecfdf5;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">08</div>
+            <div class="mod-titles">
+              <h3>Supervisión de Enfermería & Gestión Automatizada de Fungibles <span>📦</span></h3>
+              <p>Logística quirúrgica basada en actividad real y control farmacológico pautado</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role">🩺 Supervisión de Enfermería & Farmacia</span>
+            <a href="pet_supervision_enfermeria/index.html" class="btn-launch-crystal no-print" target="_blank">Abrir
+              Módulo 8 ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li><strong>Cálculo diario automático de fungibles:</strong> Conteo automático según pacientes reales
+                finalizados.</li>
+              <li>Integración de fármacos pautados en protocolización médica (furosemida, contraste oral/IV,
+                hidratación).</li>
+              <li>Control de stock de seguridad y alertas automáticas de reposición a compras hospitalarias.</li>
+              <li>Eliminación de la antigua doble supervisión: interfaz 100% enfocada en eficiencia material.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Cero roturas de material en boxes:</strong> Disponibilidad garantizada de fungibles.</li>
+              <li><strong>Ahorro masivo de tiempo administrativo:</strong> Se eliminan los recuentos manuales al final
+                del turno.</li>
+              <li><strong>Compras públicas racionales:</strong> Ajuste milimétrico a la demanda clínica asistencial.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- MÓDULO 9 -->
+      <article class="crystal-module-card" style="--card-color: #7c3aed; --card-border: #ddd6fe; --card-soft: #f5f3ff;">
+        <div class="card-top-row">
+          <div class="mod-ident-group">
+            <div class="mod-crystal-num">09</div>
+            <div class="mod-titles">
+              <h3>Consola de Enfermería Gestora de Casos & Enlace Asistencial <span>📋</span></h3>
+              <p>Sincronización con consultas sucesivas, comités de tumores y cruce multi-servicio por NHC</p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="mod-badge-role" style="border-color:#ddd6fe; color:#6d28d9;">📋 Gestora Asistencial</span>
+            <a href="pet_enfermera_gestora/index.html" class="btn-launch-crystal no-print" target="_blank"
+              style="background:linear-gradient(135deg, #7c3aed, #9333ea);">Abrir Módulo 9 ↗</a>
+          </div>
+        </div>
+        <div class="mod-grid-cols">
+          <div class="crystal-sub-box sub-box-blue">
+            <div class="sub-box-header">⚙️ Capacidades y Funciones Operativas</div>
+            <ul class="crystal-list">
+              <li>Filtrado asistencial por servicio clínico activo (Oncología, Hematología, Neumología, Urología, etc.).
+              </li>
+              <li><strong>Semáforo de Coordinación Asistencial:</strong> Cálculo automático de margen entre el PET y la
+                cita sucesiva.</li>
+              <li><strong>Buscador Universal por NHC Multi-Servicio:</strong> Detección de peticiones cruzadas en
+                diferentes especialidades.</li>
+              <li><strong>Enlace bidireccional entre Asignar Cita y Clínica del Paciente:</strong> Acceso
+                instantáneo al diagnóstico y antecedentes al programar consultas.</li>
+            </ul>
+          </div>
+          <div class="crystal-sub-box sub-box-green">
+            <div class="sub-box-header">🌱 Impacto Asistencial y Retorno en Salud</div>
+            <ul class="crystal-list">
+              <li><strong>Erradicación de consultas médicas fallidas:</strong> Garantiza el informe validado antes de la
+                visita con el oncólogo.</li>
+              <li><strong>Continuidad de cuidados sin fisuras:</strong> La gestora dispone de toda la trayectoria del
+                paciente en 1 clic.</li>
+              <li><strong>Comités de tumores ágiles:</strong> Pacientes discutidos en sesión clínica con el PET validado
+                en tiempo y forma.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ========================================================================
+         PESTAÑA 2: RED NEURONAL ASISTENCIAL (INTEROPERABILIDAD Y ENLACES)
+         ======================================================================== -->
+    <section id="pane-red_asistencial" class="tab-pane">
+
+      <div class="network-container">
+        <h3
+          style="font-family:'Outfit',sans-serif; font-size:1.6rem; color:var(--sergas-navy); margin-bottom:0.5rem; display:flex; align-items:center; gap:10px;">
+          <span>⚡</span> Interoperabilidad Reactiva en Tiempo Real
+        </h3>
+        <p style="font-size:0.95rem; color:#475569; margin-bottom:2rem; line-height:1.5;">
+        </p>
+
+        <div class="stream-node-box">
+          <div class="stream-hud-badge">01</div>
+          <div class="stream-node-text">
+            <h4>Prescripción Oncológica ➔ Triaje Inmediato</h4>
+            <p>El médico especialista firma la petición en el <strong>Módulo 1</strong>. La solicitud ingresa
+              automáticamente en el <strong>Módulo 2 (Triaje)</strong> con la prioridad clínica calculada según el
+              decreto de garantías SERGAS.</p>
+            <span class="stream-tag-event">EVENTO: PET_NUEVA_PETICION_REGISTRADA</span>
+          </div>
+        </div>
+
+        <div class="stream-node-box">
+          <div class="stream-hud-badge">02</div>
+          <div class="stream-node-text">
+            <h4>Citación en Tomógrafo ➔ Paciente & Gestora de Casos</h4>
+            <p>Al asignar hueco en el <strong>Módulo 2</strong>, el <strong>Módulo 3 (Audioguía)</strong> emite la pauta
+              de preparación al móvil del paciente, mientras el <strong>Módulo 9 (Gestora)</strong> recalcula el
+              semáforo con su próxima consulta médica.</p>
+            <span class="stream-tag-event">EVENTO: PET_CITA_ASIGNADA_PARRILLA</span>
+          </div>
+        </div>
+
+        <div class="stream-node-box">
+          <div class="stream-hud-badge">03</div>
+          <div class="stream-node-text">
+            <h4>Box de Inyección ➔ Telemetría de Tomógrafo TSID</h4>
+            <p>La enfermera del <strong>Módulo 4</strong> inyecta el radiofármaco e inicia los 60 minutos de captación.
+              En el minuto exacto, la consola del <strong>Módulo 6 (Técnicos)</strong> se ilumina en verde:
+              <em>"Paciente en Box listo para tomógrafo"</em>.
+            </p>
+            <span class="stream-tag-event">EVENTO: PET_CAPTACION_FINALIZADA_BOX</span>
+          </div>
+        </div>
+
+        <div class="stream-node-box">
+          <div class="stream-hud-badge">04</div>
+          <div class="stream-node-text">
+            <h4>Tomógrafo ➔ Consola Médica & Supervisión de Fungibles</h4>
+            <p>El técnico del <strong>Módulo 6</strong> finaliza el escaneo. La imagen pasa a la bandeja del
+              <strong>Módulo 5 (Consola Médica)</strong> y el <strong>Módulo 8 (Supervisión)</strong> añade
+              automáticamente los fungibles usados al conteo del día.
+            </p>
+            <span class="stream-tag-event">EVENTO: PET_ADQUISICION_TECNICA_FINALIZADA</span>
+          </div>
+        </div>
+
+        <div class="stream-node-box">
+          <div class="stream-hud-badge">05</div>
+          <div class="stream-node-text">
+            <h4>Validación del Informe ➔ Gestora & Dirección Asistencial</h4>
+            <p>El facultativo valida el informe en el <strong>Módulo 5</strong>. El <strong>Módulo 9</strong> cambia el
+              estado a <em>"Informe Validado (Listo para Consulta)"</em> y el <strong>Módulo 7 (Jefatura)</strong>
+              computa los tiempos de respuesta hospitalarios.</p>
+            <span class="stream-tag-event">EVENTO: PET_INFORME_VALIDADO_COMPLETO</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================
+         PESTAÑA 3: GESTIÓN PÚBLICA SANITARIA (SERGAS / GALARIA)
+         ======================================================================== -->
+    <section id="pane-gestion_publica" class="tab-pane">
+
+      <div class="network-container">
+        <h3
+          style="font-family:'Outfit',sans-serif; font-size:1.6rem; color:var(--sergas-navy); margin-bottom:0.5rem; display:flex; align-items:center; gap:10px;">
+          <span>🏛️</span> Principios de Gestión Pública Sanitaria de Alta Resolución
+        </h3>
+        <p style="font-size:0.95rem; color:#475569; margin-bottom:2rem; line-height:1.5;">
+          El Ecosistema PET/CT alinea la práctica clínica diaria con los objetivos estratégicos de la sanidad pública
+          gallega: equidad de acceso, sostenibilidad de recursos de alto impacto, protección radiológica integral y
+          humanización asistencial.
+        </p>
+
+        <div class="pillars-crystal-grid">
+          <div class="pillar-crystal-card">
+            <h4><span>⚖️</span> Equidad y Prioridad Clínica</h4>
+            <p>
+              El triaje clínico automatizado P1/P2/P3 garantiza que el orden de citación responde exclusivamente a la
+              necesidad médica y no a criterios burocráticos, velando por el cumplimiento de los <strong>Decretos de
+                Garantías de Tiempos de Espera</strong> del SERGAS en oncología.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card">
+            <h4><span>🧪</span> Eficiencia en Radiofármacos</h4>
+            <p>
+              Los radiofármacos PET poseen vidas medias de minutos. El motor inteligente sincroniza la cadencia de
+              pacientes para exprimir al máximo la actividad radiactiva recibida de la unidad de radiofarmacia,
+              erradicando el desperdicio de dosis de alto impacto.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card">
+            <h4><span>🤝</span> Continuidad Asistencial Integral</h4>
+            <p>
+              La figura de la Enfermera Gestora de Casos (Módulo 9) garantiza que ningún paciente se extravíe entre
+              consultas. Se erradican las visitas sucesivas fallidas y se reducen la ansiedad y el desconcierto en el
+              paciente oncológico.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card">
+            <h4><span>☢️</span> Seguridad Radiológica (ALARA)</h4>
+            <p>
+              Vigilancia dosimétrica total: optimización de dosis CT al paciente y seguimiento trimestral con el
+              Servicio de Protección Radiológica (SPR) de la dosimetría personal de enfermeros y técnicos (Módulo 7),
+              cumpliendo los estándares del Consejo de Seguridad Nuclear.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card">
+            <h4><span>📦</span> Logística Basada en Actividad Real</h4>
+            <p>
+              La supervisión de enfermería (Módulo 8) calcula el consumo de fungibles y medicamentos directamente de los
+              pacientes atendidos cada jornada, permitiendo una gestión de compras públicas racional, sin
+              sobre-almacenamiento y sin roturas de stock.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card">
+            <h4><span>❤️</span> Humanización y Empatía Digital</h4>
+            <p>
+              Las audioguías interactivas (Módulo 3) empoderan al paciente en su propio idioma, explicándole con
+              cercanía y rigor cada etapa del procedimiento. Menos incertidumbre se traduce en mayor colaboración y
+              mejores exploraciones diagnósticas.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================================
+         PESTAÑA 4: CUALIDADES DISRUPTIVAS DEL SISTEMA
+         ======================================================================== -->
+    <section id="pane-cualidades_disruptivas" class="tab-pane">
+
+      <div class="network-container">
+        <h3
+          style="font-family:'Outfit',sans-serif; font-size:1.6rem; color:var(--sergas-navy); margin-bottom:1.5rem; display:flex; align-items:center; gap:10px;">
+          <span>⭐</span> Matriz de Cualidades Diferenciales y Disruptivas
+        </h3>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.35rem;">
+          <div class="pillar-crystal-card" style="border-left: 5px solid #007eb4;">
+            <h4 style="color:#007eb4;">01. Especialización por Rol</h4>
+            <p>
+              Cada profesional (médico peticionario, enfermera de box, técnico de tomógrafo, médico nuclear,
+              supervisora, jefatura y gestora) dispone de una interfaz optimizada para sus decisiones clave, eliminando
+              el ruido y la sobrecarga cognitiva.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card" style="border-left: 5px solid #059669;">
+            <h4 style="color:#059669;">02. Reactividad en Milisegundos</h4>
+            <p>
+              Sin esperas de refresco manual. Cualquier cambio en un box, un retraso o la firma de un informe se propaga
+              al instante por toda la red del hospital gracias al canal en vivo de comunicación interna.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card" style="border-left: 5px solid #7c3aed;">
+            <h4 style="color:#7c3aed;">03. Cruce Multi-Servicio por NHC</h4>
+            <p>
+              Identificación inequívoca del paciente oncológico complejo. Capacidad de consolidar solicitudes
+              simultáneas de diferentes departamentos (ej. Oncología y Cirugía Torácica) en una única vista
+              longitudinal.
+            </p>
+          </div>
+
+          <div class="pillar-crystal-card" style="border-left: 5px solid #d97706;">
+            <h4 style="color:#d97706;">04. Enlace Bidireccional Cita y Clínica del Paciente</h4>
+            <p>
+              Nunca se gestiona una cita a ciegas. La gestora y el citador disponen del diagnóstico oncológico, el
+              radiofármaco y las alertas clínicas del paciente en el mismo acto en que coordinan la fecha de la prueba.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- 4. PIE DE PÁGINA -->
+  <footer class="luminous-footer">
+    <div
+      style="max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+      <div>
+        <strong style="color:#ffffff; font-size:0.9rem;">ECOSISTEMA DIGITAL INTEGRAL PET/CT</strong><br>
+        <span>Galaria · SERGAS · Servizo Galego de Saúde</span>
+      </div>
+      <div>
+        <a href="index.html">Portal Maestro</a> ·
+        <a href="pet_enfermera_gestora/index.html">Módulo Gestora</a> ·
+        <a href="pet_ct_triage/web_app/index.html">Módulo Triaje</a> ·
+        <a href="pet_jefatura_servicio/index.html">Jefatura de Servicio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function setCrystalTab(tabId, btn) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.crystal-tab-btn').forEach(el => el.classList.remove('active'));
+
+      const target = document.getElementById('pane-' + tabId);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+  </script>
+
+</body>
+
+</html>

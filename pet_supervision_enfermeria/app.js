@@ -373,7 +373,7 @@
         Object.assign(state, parsed);
         return;
       }
-    } catch (_) {}
+    } catch (_) { }
     Object.assign(state, getDefaultData());
     saveNurseData();
   }
@@ -381,7 +381,7 @@
   function saveNurseData() {
     try {
       localStorage.setItem(STORAGE_KEY_NURSE, JSON.stringify(state));
-    } catch (_) {}
+    } catch (_) { }
   }
 
   // ==========================================================================
@@ -717,7 +717,7 @@
           return parsed;
         }
       }
-    } catch (_) {}
+    } catch (_) { }
     return JSON.parse(JSON.stringify(DEFAULT_FUNGIBLES_BY_TEST));
   }
 
@@ -739,7 +739,7 @@
   function saveFungiblesByTest() {
     try {
       localStorage.setItem(FUNGIBLES_BY_TEST_KEY, JSON.stringify(fungiblesByTest));
-    } catch (_) {}
+    } catch (_) { }
   }
 
   function onCambioTipoPruebaFungible(tipo) {
@@ -847,7 +847,7 @@
           if (isDone) finalizadosReales.push(p);
         });
       }
-    } catch (_) {}
+    } catch (_) { }
 
     // Leer diccionarios compartidos de altas autorizadas
     try {
@@ -857,7 +857,7 @@
           finalizadosReales.push(d);
         }
       });
-    } catch (_) {}
+    } catch (_) { }
 
     // Si hay datos en vivo en el tomógrafo, actualizar la jornada actual
     if (finalizadosReales.length > 0) {
@@ -1003,13 +1003,13 @@
     let storedProtocols = {};
     try {
       storedProtocols = JSON.parse(localStorage.getItem('PET_MEDICAL_PROTOCOLS_V1') || '{}');
-    } catch (_) {}
+    } catch (_) { }
 
     // Fuente 2: PET_DATABASE_MASTER_V4
     let masterList = [];
     try {
       masterList = JSON.parse(localStorage.getItem('PET_DATABASE_MASTER_V4') || '[]');
-    } catch (_) {}
+    } catch (_) { }
 
     const todosProtocolos = Object.assign({}, storedProtocols);
     if (Array.isArray(masterList)) {
@@ -1518,7 +1518,7 @@
       const textoLogas = `PEDIDO SEMANAL SERGAS LOGAS & FARMACIA (${fechaHoy}):\n` +
         items.map(it => `- ${it.nombre}: ${it.totalPedido} uds`).join('\n');
       if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(textoLogas).catch(() => {});
+        navigator.clipboard.writeText(textoLogas).catch(() => { });
       }
       showToast('🟢 Pedido Semanal SERGAS generado (incluyendo medicación pautada por médicos). Copiado para LOGAS.');
     } else {
@@ -1959,51 +1959,69 @@
   // Franjas agrupadas por Turno (Mañana / Tarde / Noche) con cupos objetivo reales
   const PLANILLA_BANDS_BY_CAT = {
     enfermeros: [
-      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 3, cols: [
-        { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-        { id: 'manana_tm', title: '☀️ Mañana · Terapia Metabólica', sub: '08:00 – 15:00 h', headerBg: '#ffedd5' },
-        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
-      ]},
-      { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 2, cols: [
-        { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-        { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
-        { id: 'tarde_tm', title: '🌆 Tarde · Terapia Metabólica', sub: '15:00 – 22:00 h', headerBg: '#ffedd5' }
-      ]},
-      { bandId: 'noche', label: '🌙 TURNO NOCHE (22:00 – 08:00 h)', bandClass: 'planilla-band-noche', target: 1, cols: [
-        { id: 'noche', title: '🌙 Noche · Unidad', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' },
-        { id: 'noche_tm', title: '🌙 Noche · Terapia Metabólica', sub: '22:00 – 08:00 h', headerBg: '#ffedd5' }
-      ]}
+      {
+        bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 3, cols: [
+          { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+          { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+          { id: 'manana_tm', title: '☀️ Mañana · Terapia Metabólica', sub: '08:00 – 15:00 h', headerBg: '#ffedd5' },
+          { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
+        ]
+      },
+      {
+        bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 2, cols: [
+          { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
+          { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' },
+          { id: 'tarde_tm', title: '🌆 Tarde · Terapia Metabólica', sub: '15:00 – 22:00 h', headerBg: '#ffedd5' }
+        ]
+      },
+      {
+        bandId: 'noche', label: '🌙 TURNO NOCHE (22:00 – 08:00 h)', bandClass: 'planilla-band-noche', target: 1, cols: [
+          { id: 'noche', title: '🌙 Noche · Unidad', sub: '22:00 – 08:00 h', headerBg: '#dbeafe' },
+          { id: 'noche_tm', title: '🌙 Noche · Terapia Metabólica', sub: '22:00 – 08:00 h', headerBg: '#ffedd5' }
+        ]
+      }
     ],
     tecnicos: [
-      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
-        { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
-      ]},
-      { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 3, cols: [
-        { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
-        { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' }
-      ]}
+      {
+        bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
+          { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+          { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+          { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
+        ]
+      },
+      {
+        bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 3, cols: [
+          { id: 'tarde_pet', title: '🌆 Tarde · PET-CT', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' },
+          { id: 'tarde_mn', title: '🌆 Tarde · Med. Nuclear', sub: '15:00 – 22:00 h', headerBg: '#ede9fe' }
+        ]
+      }
     ],
     celadores: [
-      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
-        { id: 'manana_pet', title: '☀️ Mañana · Unidad MN/PET', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
-      ]},
-      { bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
-        { id: 'tarde_pet', title: '🌆 Tarde · Unidad MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
-      ]}
+      {
+        bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 1, cols: [
+          { id: 'manana_pet', title: '☀️ Mañana · Unidad MN/PET', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+          { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
+        ]
+      },
+      {
+        bandId: 'tarde', label: '🌆 TURNO TARDE (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
+          { id: 'tarde_pet', title: '🌆 Tarde · Unidad MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
+        ]
+      }
     ],
     tcaes: [
-      { bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 2, cols: [
-        { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
-        { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
-        { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
-      ]},
-      { bandId: 'tarde', label: '🌆 TURNO TARDE — Algunas tardes (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
-        { id: 'tarde_apoyo', title: '🌆 Tarde · Refuerzo MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
-      ]}
+      {
+        bandId: 'manana', label: '☀️ TURNO MAÑANA (08:00 – 15:00 h)', bandClass: 'planilla-band-manana', target: 2, cols: [
+          { id: 'manana_pet', title: '☀️ Mañana · PET-CT', sub: '08:00 – 15:00 h', headerBg: '#e0f2fe' },
+          { id: 'manana_mn', title: '☀️ Mañana · Med. Nuclear', sub: '08:00 – 15:00 h', headerBg: '#dcfce7' },
+          { id: 'manana_orense', title: '☀️ Mañana · Orense', sub: '08:00 – 15:00 h', headerBg: '#fce7f3' }
+        ]
+      },
+      {
+        bandId: 'tarde', label: '🌆 TURNO TARDE — Algunas tardes (15:00 – 22:00 h)', bandClass: 'planilla-band-tarde', target: 1, cols: [
+          { id: 'tarde_apoyo', title: '🌆 Tarde · Refuerzo MN/PET', sub: '15:00 – 22:00 h', headerBg: '#fef3c7' }
+        ]
+      }
     ]
   };
 
@@ -2108,7 +2126,7 @@
       localStorage.setItem(PLANILLA_STORAGE_SHIFTS, JSON.stringify(planillaState.shiftsByDate));
       localStorage.setItem(PLANILLA_STORAGE_EXTRAS, JSON.stringify(planillaState.extraShiftsByDate));
       localStorage.setItem(PLANILLA_STORAGE_CALENDAR, JSON.stringify(planillaState.confirmedCalendar));
-    } catch (_) {}
+    } catch (_) { }
   }
 
   function getExtrasForDate(dateStr) {
@@ -2450,11 +2468,11 @@
         </div>
         <div class="planilla-col-body">
           ${workersInShift.length === 0
-            ? `<div class="planilla-empty-col">${hasSelected ? '👆 Haz clic aquí para colocar' : 'Arrastra o selecciona un trabajador'}</div>`
-            : workersInShift.map(w => {
-                const isSel = planillaState.selectedWorkerId === w.id;
-                const isExtra = Boolean(w.isExtra);
-                return `
+        ? `<div class="planilla-empty-col">${hasSelected ? '👆 Haz clic aquí para colocar' : 'Arrastra o selecciona un trabajador'}</div>`
+        : workersInShift.map(w => {
+          const isSel = planillaState.selectedWorkerId === w.id;
+          const isExtra = Boolean(w.isExtra);
+          return `
                   <div class="worker-card ${isSel ? 'selected' : ''} ${isExtra ? 'is-extra' : ''}"
                     draggable="true"
                     ondragstart="window.supervisionApp.onPlanillaDragStart(event, '${w.id}')"
@@ -2474,8 +2492,8 @@
                     </div>
                   </div>
                 `;
-              }).join('')
-          }
+        }).join('')
+      }
         </div>
       </div>
     `;
@@ -2667,9 +2685,9 @@
       container.innerHTML = `
         <div style="display:flex; flex-direction:column; gap:1.1rem;">
           ${PLANILLA_CATEGORIES.map(cat => {
-            const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
-            const bands = PLANILLA_BANDS_BY_CAT[cat.id] || [];
-            return `
+        const catWorkers = planillaState.staff.filter(w => w.category === cat.id);
+        const bands = PLANILLA_BANDS_BY_CAT[cat.id] || [];
+        return `
               <div style="border:1.5px solid #cbd5e1; border-radius:12px; overflow:hidden; background:#ffffff;">
                 <div style="background:#004868; color:#ffffff; padding:0.65rem 1rem; display:flex; justify-content:space-between; align-items:center;">
                   <strong style="font-family:'Outfit',sans-serif; font-size:0.95rem;">${escapeHTML(cat.label)}</strong>
@@ -2677,26 +2695,26 @@
                 </div>
                 <div style="padding:0.8rem; display:flex; flex-direction:column; gap:0.65rem;">
                   ${bands.map(b => {
-                    const colIds = b.cols.map(c => c.id);
-                    const assigned = catWorkers.filter(w => colIds.includes(getWorkerShiftForDate(w, planillaState.fecha)));
-                    return `
+          const colIds = b.cols.map(c => c.id);
+          const assigned = catWorkers.filter(w => colIds.includes(getWorkerShiftForDate(w, planillaState.fecha)));
+          return `
                       <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.55rem 0.75rem;">
                         <div style="font-size:0.77rem; font-weight:800; color:#0f172a; margin-bottom:0.3rem;">
                           ${escapeHTML(b.label)} — ${assigned.length} / ${b.target} asignados
                         </div>
                         <div style="display:flex; flex-wrap:wrap; gap:6px;">
                           ${assigned.length === 0
-                            ? '<span style="font-size:0.72rem; color:#94a3b8;">Sin asignar</span>'
-                            : assigned.map(w => `<span style="font-size:0.77rem; font-weight:700; color:#1e293b; padding:0.2rem 0.55rem; background:#ffffff; border:1px solid #cbd5e1; border-radius:6px;">${escapeHTML(w.name)}</span>`).join('')
-                          }
+              ? '<span style="font-size:0.72rem; color:#94a3b8;">Sin asignar</span>'
+              : assigned.map(w => `<span style="font-size:0.77rem; font-weight:700; color:#1e293b; padding:0.2rem 0.55rem; background:#ffffff; border:1px solid #cbd5e1; border-radius:6px;">${escapeHTML(w.name)}</span>`).join('')
+            }
                         </div>
                       </div>
                     `;
-                  }).join('')}
+        }).join('')}
                 </div>
               </div>
             `;
-          }).join('')}
+      }).join('')}
         </div>
       `;
       renderPlanillaCalendar();
@@ -2723,7 +2741,7 @@
     const bandsHtml = bands.map((band, idx) => {
       const bandColIds = band.cols.map(c => c.id);
       const countInBand = catWorkers.filter(w => bandColIds.includes(getWorkerShiftForDate(w, planillaState.fecha))).length +
-                          catExtras.filter(x => bandColIds.includes(x.shift)).length;
+        catExtras.filter(x => bandColIds.includes(x.shift)).length;
       const quotaOk = countInBand >= band.target;
       return `
         ${idx > 0 ? '<hr class="planilla-band-divider">' : ''}
@@ -2758,7 +2776,7 @@
         if (tabParam) {
           cambiarTab(tabParam);
         }
-      } catch (_) {}
+      } catch (_) { }
     });
 
     if (typeof window !== 'undefined') {
@@ -2766,7 +2784,7 @@
         try {
           const hash = window.location.hash.replace('#', '');
           if (hash) cambiarTab(hash);
-        } catch (_) {}
+        } catch (_) { }
       });
     }
   }

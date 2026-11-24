@@ -584,7 +584,11 @@
             <select id="modal-select-replacement" class="select-full">
               <option value="">-- Seleccionar paciente de la lista de propuestas --</option>
             </select>
-            <button class="btn btn-primary btn-block" id="btn-swap-patient">
+            <!-- Preview Clínico del Paciente a Asignar -->
+            <div id="replacement-clinical-preview" class="hidden" style="margin-top:0.5rem; padding:0.65rem; background:#f0fdf4; border:1px solid #86efac; border-radius:6px; font-size:0.78rem;">
+              <div id="replacement-clinical-text"></div>
+            </div>
+            <button class="btn btn-primary btn-block" id="btn-swap-patient" style="margin-top:0.5rem;">
               🔄 Intercambiar / Asignar en este Hueco
             </button>
           </div>
@@ -661,6 +665,17 @@
           <select id="select-manual-waiting-patient" class="select-full" style="margin-top: 0.3rem;">
             <option value="">-- Seleccionar paciente pendiente --</option>
           </select>
+          <!-- Vista previa clínica del paciente a asignar -->
+          <div id="manual-patient-clinical-preview" class="hidden" style="margin-top: 0.6rem; padding: 0.75rem; background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #166534; display: flex; justify-content: space-between; align-items: center;">
+              <span>🩺 Clínica del Paciente a Asignar:</span>
+              <span id="manual-preview-prio-badge" class="badge"></span>
+            </div>
+            <div id="manual-preview-details" style="font-size: 0.76rem; color: #1e293b; margin-top: 4px; line-height: 1.35;"></div>
+            <button type="button" id="btn-manual-preview-pdf" class="btn btn-outline btn-block" style="margin-top: 0.5rem; font-size: 0.74rem; padding: 4px 8px; border-color: #86efac; background: white; color: #166534; font-weight: 700;">
+              📄 Ver Volante y Clínica Completa del Paciente
+            </button>
+          </div>
           <button id="btn-confirm-manual-waiting" class="btn btn-primary" style="margin-top: 0.5rem; width: 100%;">
             📌 Asignar Paciente Seleccionado a este Hueco
           </button>

@@ -1,0 +1,846 @@
+/* ==========================================================================
+   CONSOLA DE ENFERMERÍA GESTORA DE CASOS & ENLACE ASISTENCIAL — GALARIA · SERGAS
+   Módulo 9 del Ecosistema Digital PET/CT
+   ========================================================================== */
+
+:root {
+  --sergas-blue: #007eb4;
+  --sergas-blue-hover: #00638e;
+  --sergas-navy: #004868;
+  --sergas-dark: #002b40;
+  --sergas-soft-blue: #e6f4fa;
+  --sergas-border: #cbd5e1;
+
+  --gestora-purple: #7c3aed;
+  --gestora-purple-dark: #6d28d9;
+  --gestora-purple-light: #f5f3ff;
+  --gestora-purple-border: #ddd6fe;
+
+  --nurse-teal: #0d9488;
+  --nurse-teal-dark: #0f766e;
+  --nurse-teal-light: #ccfbf1;
+
+  --bg-page: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-subtle: #f8fafc;
+
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --green-main: #059669;
+  --green-bg: #ecfdf5;
+  --green-border: #6ee7b7;
+
+  --amber-main: #d97706;
+  --amber-bg: #fffbeb;
+  --amber-border: #fcd34d;
+
+  --red-main: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fca5a5;
+
+  --blue-main: #0284c7;
+  --blue-bg: #f0f9ff;
+  --blue-border: #bae6fd;
+
+  --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 14px 34px rgba(15, 23, 42, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* 1. BARRA INSTITUCIONAL SERGAS */
+.sergas-top-bar {
+  background: linear-gradient(90deg, #1e1b4b 0%, #312e81 50%, #004868 100%);
+  color: #ffffff;
+  font-size: 0.78rem;
+  padding: 0.45rem 1.5rem;
+  border-bottom: 2px solid var(--gestora-purple);
+}
+
+.sergas-top-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.sergas-top-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 600;
+}
+
+.xunta-badge {
+  background: var(--sergas-blue);
+  color: #ffffff;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.sergas-top-links {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.top-nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  opacity: 0.9;
+}
+
+.top-nav-link:hover {
+  background: rgba(255, 255, 255, 0.18);
+  opacity: 1;
+}
+
+.top-nav-link.active {
+  background: var(--gestora-purple);
+  color: #ffffff;
+  opacity: 1;
+}
+
+/* 2. CABECERA EJECUTIVA DE LA GESTORA */
+.gestora-header {
+  background: #ffffff;
+  border-bottom: 3px solid var(--gestora-purple);
+  padding: 1.15rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.gestora-header-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.brand-logo {
+  height: 48px;
+  width: auto;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.brand-titles h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--gestora-purple-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  letter-spacing: -0.01em;
+}
+
+.role-pill {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--gestora-purple);
+  color: #ffffff;
+}
+
+.brand-titles p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.btn-gestora {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.btn-gestora-primary {
+  background: var(--gestora-purple);
+  color: #ffffff;
+  border-color: var(--gestora-purple-dark);
+}
+
+.btn-gestora-primary:hover {
+  background: var(--gestora-purple-dark);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.btn-gestora-outline {
+  background: #ffffff;
+  color: var(--gestora-purple);
+  border-color: var(--gestora-purple-border);
+}
+
+.btn-gestora-outline:hover {
+  background: var(--gestora-purple-light);
+  border-color: var(--gestora-purple);
+}
+
+.btn-gestora-success {
+  background: var(--green-main);
+  color: #ffffff;
+}
+
+.btn-gestora-success:hover {
+  background: #047857;
+}
+
+/* 3. BARRA DE FILTRADO POR SERVICIO Y BÚSQUEDA UNIVERSAL NHC */
+.service-nav-bar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--sergas-border);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.service-nav-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.service-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.service-select-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--gestora-purple-dark);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.service-select-dropdown {
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--gestora-purple);
+  background: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gestora-purple-dark);
+  cursor: pointer;
+  min-width: 280px;
+}
+
+.search-nhc-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  max-width: 480px;
+  position: relative;
+}
+
+.input-search-nhc {
+  width: 100%;
+  padding: 0.55rem 1rem 0.55rem 2.4rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--sergas-border);
+  background: #ffffff;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  transition: all 0.2s;
+}
+
+.input-search-nhc:focus {
+  outline: none;
+  border-color: var(--gestora-purple);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+.search-icon-inside {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+/* 4. CONTENEDOR PRINCIPAL */
+.main-container {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 1.4rem 1.5rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+/* 5. TARJETAS KPI DE LA GESTORA */
+.kpi-gestora-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.kpi-gestora-card {
+  background: var(--bg-card);
+  border: 1px solid var(--sergas-border);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-left: 4px solid var(--kpi-color, var(--gestora-purple));
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.kpi-gestora-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.kpi-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kpi-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.kpi-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--kpi-bg, var(--gestora-purple-light));
+  color: var(--kpi-color, var(--gestora-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+}
+
+.kpi-main-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.kpi-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.kpi-subtext {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+/* 6. BARRA DE PESTAÑAS SUB-VISTAS */
+.gestora-tabs-bar {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--sergas-border);
+  padding-bottom: 2px;
+  overflow-x: auto;
+}
+
+.gestora-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.65rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  margin-bottom: -2px;
+}
+
+.gestora-tab-btn:hover {
+  color: var(--gestora-purple);
+}
+
+.gestora-tab-btn.active {
+  color: var(--gestora-purple);
+  border-bottom-color: var(--gestora-purple);
+  font-weight: 800;
+}
+
+.tab-count-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: var(--text-main);
+}
+
+.gestora-tab-btn.active .tab-count-badge {
+  background: var(--gestora-purple);
+  color: #ffffff;
+}
+
+/* 7. PANELES Y TABLA PRINCIPAL */
+.panel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--sergas-border);
+  border-radius: 12px;
+  padding: 1.25rem 1.45rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.15rem;
+}
+
+.panel-title-group h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--gestora-purple-dark);
+}
+
+.panel-title-group p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.gestora-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.gestora-table thead th {
+  background: #f8fafc;
+  color: var(--gestora-purple-dark);
+  font-weight: 800;
+  padding: 0.75rem 0.9rem;
+  border-bottom: 2px solid var(--sergas-border);
+  white-space: nowrap;
+}
+
+.gestora-table tbody td {
+  padding: 0.8rem 0.9rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.gestora-table tbody tr:hover {
+  background: #f8faff;
+}
+
+/* BADGES Y SEMÁFOROS */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-ok {
+  background: var(--green-bg);
+  color: #065f46;
+  border: 1px solid var(--green-border);
+}
+
+.badge-warn {
+  background: var(--amber-bg);
+  color: #92400e;
+  border: 1px solid var(--amber-border);
+}
+
+.badge-danger {
+  background: var(--red-bg);
+  color: #991b1b;
+  border: 1px solid var(--red-border);
+}
+
+.badge-info {
+  background: var(--blue-bg);
+  color: #0369a1;
+  border: 1px solid var(--blue-border);
+}
+
+.badge-purple {
+  background: var(--gestora-purple-light);
+  color: var(--gestora-purple-dark);
+  border: 1px solid var(--gestora-purple-border);
+}
+
+.badge-neutral {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+/* PASO A PASO ESTADO PET */
+.pet-progress-stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.step-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.step-done {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.step-active {
+  background: var(--gestora-purple);
+  color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.25);
+}
+
+.step-pending {
+  background: #e2e8f0;
+  color: #64748b;
+}
+
+/* FICHA MULTI-SERVICIO DE PACIENTE CRUZADO POR NHC */
+.nhc-patient-card {
+  background: #ffffff;
+  border: 1.5px solid var(--gestora-purple-border);
+  border-radius: 12px;
+  padding: 1.15rem 1.35rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.nhc-patient-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.nhc-patient-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nhc-patient-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gestora-purple-light);
+  color: var(--gestora-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.nhc-petitions-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nhc-petition-row {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* MODAL STYLES */
+.gestora-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.gestora-modal-backdrop.active {
+  display: flex;
+}
+
+.gestora-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 650px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid #cbd5e1;
+  overflow: hidden;
+}
+
+.gestora-modal-header {
+  background: var(--gestora-purple);
+  color: #ffffff;
+  padding: 1rem 1.35rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gestora-modal-header h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.gestora-modal-body {
+  padding: 1.25rem 1.45rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gestora-modal-footer {
+  padding: 0.9rem 1.45rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--gestora-purple-dark);
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--sergas-border);
+  background: #ffffff;
+  font-size: 0.84rem;
+  color: var(--text-main);
+  transition: all 0.2s;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--gestora-purple);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+/* TOAST */
+.gestora-toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gestora-toast {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.8rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  box-shadow: var(--shadow-lg);
+  border-left: 4px solid var(--gestora-purple);
+  animation: slideIn 0.25s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@media print {
+  .sergas-top-bar, .service-nav-bar, .header-actions, .gestora-tabs-bar, .no-print {
+    display: none !important;
+  }
+  .main-container {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+  .panel-card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ==========================================================================
+   ENLACE DIRECTO: ASIGNAR CITA <-> CLÍNICA DEL PACIENTE
+   ========================================================================== */
+.clinical-highlight-box {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.85rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.85rem;
+}
+
+.clinical-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.btn-open-clinical {
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(2, 132, 199, 0.25);
+}
+
+.btn-open-clinical:hover {
+  background: #0369a1;
+  transform: translateY(-1px);
+}
+

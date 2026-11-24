@@ -3530,6 +3530,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Populate replacement dropdown with waiting unassigned patients
     selectReplacement.innerHTML = '<option value="">-- Seleccionar paciente de la lista de propuestas --</option>';
 
+    const repPreview = document.getElementById('replacement-clinical-preview');
+    const repText = document.getElementById('replacement-clinical-text');
+    if (repPreview) repPreview.classList.add('hidden');
+    if (selectReplacement) {
+      selectReplacement.onchange = function() {
+        const val = selectReplacement.value;
+        const repPatient = state.submissions.find(s => s.id === val);
+        if (repPatient && repPreview && repText) {
+          repPreview.classList.remove('hidden');
+          repText.innerHTML = `<strong>🩺 Clínica del Paciente Sustituto:</strong> ${escapeHTML(repPatient.motivo || 'Estudio PET/CT')} · <strong>Radiofármaco:</strong> ${repPatient.radiofarmaco} · <strong>Prioridad:</strong> ${repPatient.prioridad}`;
+        } else if (repPreview) {
+          repPreview.classList.add('hidden');
+        }
+      };
+    }
+
     const waitingList = state.submissions.filter(s => s.requiresProposal);
     if (waitingList.length === 0) {
       const opt = document.createElement('option');
@@ -5805,6 +5821,40 @@ document.addEventListener('DOMContentLoaded', () => {
         opt.textContent = `${w.prioridad} - ${w.nombre} (${w.radiofarmaco})${mobTag}`;
         selectManualWaitingPatient.appendChild(opt);
       });
+    }
+
+    // Configurar enlace con la clínica del paciente a asignar
+    const manPreview = document.getElementById('manual-patient-clinical-preview');
+    const manDetails = document.getElementById('manual-preview-details');
+    const manBadge = document.getElementById('manual-preview-prio-badge');
+    const btnManPdf = document.getElementById('btn-manual-preview-pdf');
+    if (manPreview) manPreview.classList.add('hidden');
+
+    if (selectManualWaitingPatient) {
+      selectManualWaitingPatient.onchange = function () {
+        const val = selectManualWaitingPatient.value;
+        const pat = (state.submissions || []).find(s => s.id === val);
+        if (pat && manPreview && manDetails) {
+          manPreview.classList.remove('hidden');
+          if (manBadge) {
+            manBadge.textContent = pat.prioridad;
+            manBadge.className = 'badge ' + (pat.prioridad.includes('P1') ? 'badge-p1' : pat.prioridad.includes('P2') ? 'badge-p2' : 'badge-p3');
+          }
+          const mobInfo = getPatientMobilityHospitalizationInfo(pat);
+          manDetails.innerHTML = `
+            <div><strong>🩺 Diagnóstico / Motivo Clínico:</strong> <span style="color:#0f4c81; font-weight:700;">${escapeHTML(pat.motivo || 'Estudio PET/CT')}</span></div>
+            <div><strong>Radiofármaco Solicitado:</strong> ${escapeHTML(pat.radiofarmaco)}</div>
+            <div><strong>Condición Asistencial:</strong> ${mobInfo.isLateShift ? `<span style="color:#dc2626; font-weight:700;">⚠️ ${mobInfo.label}</span>` : '<span style="color:#16a34a; font-weight:700;">🟢 Autónomo / Ambulatorio</span>'}</div>
+          `;
+          if (btnManPdf) {
+            btnManPdf.onclick = function () {
+              openPatientPdfModal(pat.id);
+            };
+          }
+        } else if (manPreview) {
+          manPreview.classList.add('hidden');
+        }
+      };
     }
 
     manualSlotModal.classList.remove('hidden');
