@@ -1879,4 +1879,70 @@
         </div>
         <div class="chief-modal-footer" style="padding:0.75rem 1.25rem;">
           <div style="font-size:0.75rem; color:#64748b;" id="visorPdfFooterInfo">
-            Documento oficial custodiado por Jefatura de Servicio · Control Ocupacional
+            Documento oficial custodiado por Jefatura de Servicio · Control Ocupacional Reglamentario
+          </div>
+          <button type="button" class="btn-chief btn-chief-outline"
+            onclick="window.jefaturaApp.cerrarVisorPdfDosimetria()">Cerrar Visor</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: EDITAR / REGISTRAR DOSIS DE UN TRABAJADOR -->
+    <div id="modalEditarDosisTrabajador" class="chief-modal-backdrop">
+      <div class="chief-modal" style="max-width:580px;">
+        <div class="chief-modal-header" style="background:#004868;">
+          <h3>✏️ Actualizar Registro Dosimétrico Ocupacional</h3>
+          <button type="button" onclick="window.jefaturaApp.cerrarModalEditarDosis()"
+            style="background:none; border:none; color:#ffffff; font-size:1.25rem; cursor:pointer;">✕</button>
+        </div>
+        <div class="chief-modal-body">
+          <input type="hidden" id="editDosisTrabajadorId">
+          <div style="display:flex; flex-direction:column; gap:0.9rem;">
+            <div>
+              <label
+                style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Trabajador
+                /
+                Profesional:</label>
+              <input type="text" id="editDosisNombre" class="period-select" style="width:100%; font-weight:700;"
+                readonly>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+              <div>
+                <label
+                  style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Dosis
+                  Mes Actual (mSv):</label>
+                <input type="number" step="0.01" min="0" id="editDosisMes" class="period-select"
+                  style="width:100%; font-weight:800; font-family:'JetBrains Mono',monospace;">
+              </div>
+              <div>
+                <label
+                  style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Dosis
+                  Acumulada Año (mSv):</label>
+                <input type="number" step="0.01" min="0" id="editDosisAnual" class="period-select"
+                  style="width:100%; font-weight:800; font-family:'JetBrains Mono',monospace;">
+              </div>
+            </div>
+            <div>
+              <label
+                style="font-size:0.78rem; font-weight:700; color:#004868; display:block; margin-bottom:4px;">Observaciones
+                / Medidas de Protección Radiológica:</label>
+              <textarea id="editDosisObservaciones" class="period-select"
+                style="width:100%; height:75px; font-size:0.8rem;"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="chief-modal-footer">
+          <button type="button" class="btn-chief btn-chief-outline"
+            onclick="window.jefaturaApp.cerrarModalEditarDosis()">Cancelar</button>
+          <button type="button" class="btn-chief btn-chief-primary"
+            onclick="window.jefaturaApp.guardarEdicionDosisTrabajador()">💾 Guardar Lectura</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="chiefToastContainer" class="chief-toast-container"></div>
+
+    <script src="app.js?v=20261124_JEFATURA_ONLY_07"></script>
+</body>
+
+</html>

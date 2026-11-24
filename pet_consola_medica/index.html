@@ -1718,4 +1718,52 @@
         <div>
           <button type="button" class="btn-cancel-tardia-order" id="btnCancelTardiaOrder"
             onclick="window.consolaApp.anularPautaTardia()"
-            style="display:none; background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; padding:7px 14px; border-radius:6px; font-weight:700; font-size:0.82rem; cursor:
+            style="display:none; background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; padding:7px 14px; border-radius:6px; font-weight:700; font-size:0.82rem; cursor:pointer;">
+            ❌ Anular Pauta de Tardía
+          </button>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-secondary" onclick="window.consolaApp.closeModalPedirTardia()"
+            style="padding:7px 14px; font-size:0.82rem;">Cerrar</button>
+          <button type="button" class="btn-primary" id="btnConfirmSendTardiaOrder"
+            onclick="window.consolaApp.guardarPautaTardia()"
+            style="background:#d97706; border-color:#b45309; padding:7px 16px; font-size:0.84rem; font-weight:800;">
+            📢 Enviar Pauta y Caja de Tardía a Técnicos (con Alarma)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+     CONTENEDOR DE TOASTS Y NOTIFICACIONES
+
+       ========================================================================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       PIE DE PÁGINA INSTITUCIONAL
+       ========================================================================== -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div>
+        <strong>Galaria · Empresa Pública de Servizos Sanitarios</strong> | Servizo Galego de Saúde (SERGAS)
+        <br>
+        <span style="font-size: 0.76rem; color: var(--text-muted);">Unidades de Medicina Nuclear e Radiofarmacia de
+          Vigo, Santiago e A Coruña</span>
+      </div>
+      <div class="footer-nav">
+        <a href="../index.html">Portal Maestro</a>
+        <a href="../pet_peticion_medica/index.html">Módulo 1: Prescrición</a>
+        <a href="../pet_ct_triage/web_app/index.html">Módulo 2: Triaxe</a>
+        <a href="../pet_prep_page/enfermeria.html">Módulo 4: Enfermaría</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../pet_demo_reset.js"></script>
+  <script src="../pet_peticion_medica/database/peticiones_data.js"></script>
+  <script src="app.js?v=20261114_VASC_02"></script>
+</body>
+
+</html>
