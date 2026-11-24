@@ -1052,4 +1052,13 @@ File.write("MANUAL_ECOSISTEMA_PET_CT.html", html_content, encoding: "UTF-8")
 puts "✅ MANUAL_ECOSISTEMA_PET_CT.html generado (#{File.size('MANUAL_ECOSISTEMA_PET_CT.html')} bytes)"
 
 puts "🖨️ Compilando a PDF con Google Chrome Headless..."
-chrome_cmd = '"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --no-sandbox --user-data-dir=/tmp/chrome_pdf_manual_data --print-to-pdf="MA
+chrome_cmd = '"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --no-sandbox --user-data-dir=/tmp/chrome_pdf_manual_data --print-to-pdf="MANUAL_ECOSISTEMA_PET_CT.pdf" --no-pdf-header-footer "MANUAL_ECOSISTEMA_PET_CT.html"'
+system(chrome_cmd)
+
+if File.exist?("MANUAL_ECOSISTEMA_PET_CT.pdf")
+  size_kb = (File.size("MANUAL_ECOSISTEMA_PET_CT.pdf").to_f / 1024).round(2)
+  puts "🎉 MANUAL EN PDF GENERADO CON ÉXITO!"
+  puts "📄 Archivo: MANUAL_ECOSISTEMA_PET_CT.pdf (#{size_kb} KB)"
+else
+  puts "⚠️ Error generando el PDF con Chrome."
+end
