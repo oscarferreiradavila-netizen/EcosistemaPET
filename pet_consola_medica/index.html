@@ -23,47 +23,48 @@
   <!-- 1. BARRA SUPERIOR INSTITUCIONAL XUNTA / SERGAS -->
   <header class="sergas-top-bar">
     <div class="sergas-top-container">
-      <div class="sergas-gov-text">
-        <span class="xunta-pill">XUNTA DE GALICIA</span>
-        <span class="sergas-sub">CONSELLERÍA DE SANIDADE · SERGAS</span>
+      <div class="sergas-gov-text" style="display: flex; align-items: center; gap: 10px;">
+        <img src="xunta_logo.png" alt="Xunta de Galicia" style="height: 26px; width: auto; background: #ffffff; padding: 2px 7px; border-radius: 4px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
       </div>
-      <div class="sergas-portal-id">
-        <span>Galaria · Empresa Pública de Servizos Sanitarios</span>
-        <a href="../index.html">← Portal Maestro</a>
-        <a href="../pet_consola_tecnicos/index.html">🔬 Consola TSID</a>
-      </div>
-    </div>
   </header>
 
   <!-- 2. CABECERA PRINCIPAL Y PERFIL DEL FACULTATIVO -->
   <header class="main-header">
     <div class="header-container">
-      <div class="brand-section">
-        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="galaria-logo">
-        <div class="header-titles">
-          <h1>
-            Consola Médica & Protocolización PET/CT
-            <span class="badge-mod">Módulo 5</span>
-          </h1>
-          <p>Servizo de Medicina Nuclear · Axenda de Pacientes Citados e Instrucións de Adquisición</p>
+      <div class="brand-section" style="display: flex; align-items: center; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+          <img src="xunta_logo.png" alt="Xunta de Galicia" style="height: 38px; width: auto; object-fit: contain;">
+          <img src="sergas_logo.png" alt="SERGAS" style="height: 42px; width: auto; object-fit: contain;">
+          <img src="galaria_logo.jpg" alt="Galaria" class="galaria-logo"
+            style="height: 38px; width: auto; object-fit: contain;">
         </div>
-      </div>
+        <div class="brand-section">
+          <img src="galaria_logo.jpg" alt="Galaria" class="galaria-logo"
+            style="height: 44px; width: auto; object-fit: contain;">
+          <div class="header-titles">
+            <h1>
+              Consola Médica & Protocolización PET/CT
+              <span class="badge-mod">Módulo 5</span>
+            </h1>
+            <p>Servizo de Medicina Nuclear · Axenda de Pacientes Citados e Instrucións de Adquisición</p>
+          </div>
+        </div>
 
-      <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
-        <button type="button" onclick="window.petResetDemo()" class="btn-demo-reset-top"
-          style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; border:1px solid #93c5fd; color:#1d4ed8; font-size:0.8rem; font-weight:700; padding:8px 14px; border-radius:10px; cursor:pointer; transition:all 0.2s ease; box-shadow:0 2px 4px rgba(0,0,0,0.04);"
-          title="Reinicio automático cada 24h ou baixo demanda: citas actualizadas a hoxe e mañá, altas limpas e peticións non triables no seu cartafol">
-          🔄 Reiniciar Demo (24h)
-        </button>
-        <div class="doctor-profile-card">
-          <div class="doctor-avatar">👨‍⚕️</div>
-          <div class="doctor-info">
-            <span class="doctor-name" id="currentDoctorDisplay">Dr. Manuel Gómez Feijóo</span>
-            <span class="doctor-role">FEA Medicina Nuclear & PET/CT · Col. 36/08421</span>
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <button type="button" onclick="window.petResetDemo()" class="btn-demo-reset-top"
+            style="display:inline-flex; align-items:center; gap:6px; background:#eff6ff; border:1px solid #93c5fd; color:#1d4ed8; font-size:0.8rem; font-weight:700; padding:8px 14px; border-radius:10px; cursor:pointer; transition:all 0.2s ease; box-shadow:0 2px 4px rgba(0,0,0,0.04);"
+            title="Reinicio automático cada 24h ou baixo demanda: citas actualizadas a hoxe e mañá, altas limpas e peticións non triables no seu cartafol">
+            🔄 Reiniciar Demo (24h)
+          </button>
+          <div class="doctor-profile-card">
+            <div class="doctor-avatar">👨‍⚕️</div>
+            <div class="doctor-info">
+              <span class="doctor-name" id="currentDoctorDisplay">Dr. Manuel Gómez Feijóo</span>
+              <span class="doctor-role">FEA Medicina Nuclear & PET/CT · Col. 36/08421</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </header>
 
   <!-- 3. CONTENEDOR CENTRAL -->
@@ -460,7 +461,8 @@
               <span>🧍‍♂️</span>
               1. Planificador Full Body (¿Desde dónde a dónde hacer la prueba?) y Posición de Brazos
             </h4>
-            <span class="section-box-sub">Elija Brazos Arriba, Abajo o en Almohada e indique en el Full Body desde dónde hasta dónde adquirir</span>
+            <span class="section-box-sub">Elija Brazos Arriba, Abajo o en Almohada e indique en el Full Body desde dónde
+              hasta dónde adquirir</span>
           </div>
 
           <div style="font-size: 0.84rem; font-weight: 800; color: var(--sergas-navy); margin-bottom: 0.45rem;">
@@ -472,7 +474,8 @@
               <input type="radio" name="radioArms" value="arriba" checked>
               <div class="option-icon">🙆‍♂️</div>
               <div class="option-title">Brazos Arriba (Arms Up)</div>
-              <div class="option-desc">Elevados sobre soporte cefálico. Estándar para tórax, abdomen y pelvis; elimina artefactos de endurecimiento óseo.</div>
+              <div class="option-desc">Elevados sobre soporte cefálico. Estándar para tórax, abdomen y pelvis; elimina
+                artefactos de endurecimiento óseo.</div>
               <span class="option-pill-badge">Estándar Tronco</span>
             </label>
 
@@ -481,7 +484,8 @@
               <input type="radio" name="radioArms" value="abajo">
               <div class="option-icon">🙇‍♂️</div>
               <div class="option-title">Brazos Abajo (Arms Down)</div>
-              <div class="option-desc">Pegados a lo largo del cuerpo. OBLIGATORIO en tumores de cabeza y cuello, ORL, melanoma facial o hombro doloroso.</div>
+              <div class="option-desc">Pegados a lo largo del cuerpo. OBLIGATORIO en tumores de cabeza y cuello, ORL,
+                melanoma facial o hombro doloroso.</div>
               <span class="option-pill-badge">Cabeza / Cuello / Dolor</span>
             </label>
 
@@ -490,14 +494,17 @@
               <input type="radio" name="radioArms" value="almohada">
               <div class="option-icon">🛏️</div>
               <div class="option-title">Brazos en Almohada</div>
-              <div class="option-desc">Apoyados sobre almohada acolchada toraco-abdominal con cincha de confort. Pacientes con dolor articular, cifosis o encamados.</div>
+              <div class="option-desc">Apoyados sobre almohada acolchada toraco-abdominal con cincha de confort.
+                Pacientes con dolor articular, cifosis o encamados.</div>
               <span class="option-pill-badge">Soporte en Almohada</span>
             </label>
           </div>
 
-          <div style="font-size: 0.84rem; font-weight: 800; color: var(--sergas-navy); margin-top: 1.05rem; margin-bottom: 0.45rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <div
+            style="font-size: 0.84rem; font-weight: 800; color: var(--sergas-navy); margin-top: 1.05rem; margin-bottom: 0.45rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
             <span>B) Fase Vascular para Realizar la Prueba (Adquisición Precoz / Angiográfica):</span>
-            <span style="font-size:0.74rem; font-weight:700; color:#b91c1c; background:#fef2f2; border:1px solid #fecaca; padding:2px 9px; border-radius:99px;">
+            <span
+              style="font-size:0.74rem; font-weight:700; color:#b91c1c; background:#fef2f2; border:1px solid #fecaca; padding:2px 9px; border-radius:99px;">
               🩸 Indicar SÍ o NO para el equipo técnico TSID y Enfermería
             </span>
           </div>
@@ -507,7 +514,8 @@
               <input type="radio" name="radioVascular" value="no" checked>
               <div class="option-icon">❌</div>
               <div class="option-title">NO — Sin Fase Vascular (Estándar)</div>
-              <div class="option-desc">Inyección en box de reposo y adquisición PET/CT estándar tras cumplir el tiempo de captación.</div>
+              <div class="option-desc">Inyección en box de reposo y adquisición PET/CT estándar tras cumplir el tiempo
+                de captación.</div>
               <span class="option-pill-badge">Estándar Habitual</span>
             </label>
 
@@ -516,135 +524,188 @@
               <input type="radio" name="radioVascular" value="si">
               <div class="option-icon">🩸</div>
               <div class="option-title">SÍ — Realizar Fase Vascular</div>
-              <div class="option-desc">Realizar adquisición en fase vascular precoz / angiográfica (vasculitis, infección protésica vascular, endocarditis o estudio dinámico).</div>
+              <div class="option-desc">Realizar adquisición en fase vascular precoz / angiográfica (vasculitis,
+                infección protésica vascular, endocarditis o estudio dinámico).</div>
               <span class="option-pill-badge" style="background:#dc2626; color:#ffffff;">🩸 Fase Vascular Activa</span>
             </label>
           </div>
 
-          <div style="font-size: 0.84rem; font-weight: 800; color: var(--sergas-navy); margin-top: 1.15rem; margin-bottom: 0.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <div
+            style="font-size: 0.84rem; font-weight: 800; color: var(--sergas-navy); margin-top: 1.15rem; margin-bottom: 0.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
             <span>C) Planificador Full Body — ¿Desde dónde hasta dónde hacer la prueba?:</span>
-            <span id="protoFullBodySummaryBadge" style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc; padding:3px 10px; border-radius:99px; font-size:0.76rem; font-weight:800;">
+            <span id="protoFullBodySummaryBadge"
+              style="background:#e0f2fe; color:#0369a1; border:1px solid #7dd3fc; padding:3px 10px; border-radius:99px; font-size:0.76rem; font-weight:800;">
               📐 Desde Base de Cráneo hasta Tercio Medio de Muslos (6 Camas · Brazos Arriba)
             </span>
           </div>
 
           <!-- CONTENEDOR INTERACTIVO FULL BODY + CONTROLES DESDE/HASTA Y PRESETS -->
-          <div style="display:grid; grid-template-columns: 330px 1fr; gap: 16px; align-items: start; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:14px;">
-            
+          <div
+            style="display:grid; grid-template-columns: 330px 1fr; gap: 16px; align-items: start; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:14px;">
+
             <!-- COLUMNA IZQUIERDA: TOPOGRAMA FULL BODY INTERACTIVO -->
-            <div style="background:#0f172a; border-radius:10px; padding:10px; border:2px solid #0284c7; box-shadow:0 8px 20px rgba(15,23,42,0.22);">
+            <div
+              style="background:#0f172a; border-radius:10px; padding:10px; border:2px solid #0284c7; box-shadow:0 8px 20px rgba(15,23,42,0.22);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; gap:6px;">
-                <span style="color:#f8fafc; font-size:0.78rem; font-weight:800; font-family:'Outfit',sans-serif;">🧍‍♂️ FULL BODY PET/CT</span>
-                <span id="protoFullBodyArmsBadge" style="background:#dbeafe; color:#1e40af; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:99px;">🙆‍♂️ Brazos Arriba</span>
+                <span style="color:#f8fafc; font-size:0.78rem; font-weight:800; font-family:'Outfit',sans-serif;">🧍‍♂️
+                  FULL BODY PET/CT</span>
+                <span id="protoFullBodyArmsBadge"
+                  style="background:#dbeafe; color:#1e40af; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:99px;">🙆‍♂️
+                  Brazos Arriba</span>
               </div>
 
-              <svg id="protoFullBodySvg" viewBox="0 0 360 610" width="100%" height="445" xmlns="http://www.w3.org/2000/svg" style="display:block; user-select:none; -webkit-user-select:none; touch-action:none; background:#090d16; border-radius:8px;">
+              <svg id="protoFullBodySvg" viewBox="0 0 360 610" width="100%" height="445"
+                xmlns="http://www.w3.org/2000/svg"
+                style="display:block; user-select:none; -webkit-user-select:none; touch-action:none; background:#090d16; border-radius:8px;">
                 <defs>
                   <linearGradient id="protoBodyGrad" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stop-color="#bae6fd"/>
-                    <stop offset="50%" stop-color="#e0f2fe"/>
-                    <stop offset="100%" stop-color="#93c5fd"/>
+                    <stop offset="0%" stop-color="#bae6fd" />
+                    <stop offset="50%" stop-color="#e0f2fe" />
+                    <stop offset="100%" stop-color="#93c5fd" />
                   </linearGradient>
                   <linearGradient id="protoFovGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(14, 165, 233, 0.34)"/>
-                    <stop offset="50%" stop-color="rgba(2, 132, 199, 0.20)"/>
-                    <stop offset="100%" stop-color="rgba(14, 165, 233, 0.34)"/>
+                    <stop offset="0%" stop-color="rgba(14, 165, 233, 0.34)" />
+                    <stop offset="50%" stop-color="rgba(2, 132, 199, 0.20)" />
+                    <stop offset="100%" stop-color="rgba(14, 165, 233, 0.34)" />
                   </linearGradient>
                 </defs>
 
                 <!-- Cuadrícula tomográfica de fondo -->
                 <g stroke="#1e293b" stroke-width="1">
-                  <line x1="50" y1="20" x2="50" y2="595"/>
-                  <line x1="185" y1="20" x2="185" y2="595" stroke-dasharray="3,3" stroke="#334155"/>
-                  <line x1="320" y1="20" x2="320" y2="595"/>
-                  <line x1="45" y1="90" x2="330" y2="90"/>
-                  <line x1="45" y1="190" x2="330" y2="190"/>
-                  <line x1="45" y1="290" x2="330" y2="290"/>
-                  <line x1="45" y1="390" x2="330" y2="390"/>
-                  <line x1="45" y1="490" x2="330" y2="490"/>
+                  <line x1="50" y1="20" x2="50" y2="595" />
+                  <line x1="185" y1="20" x2="185" y2="595" stroke-dasharray="3,3" stroke="#334155" />
+                  <line x1="320" y1="20" x2="320" y2="595" />
+                  <line x1="45" y1="90" x2="330" y2="90" />
+                  <line x1="45" y1="190" x2="330" y2="190" />
+                  <line x1="45" y1="290" x2="330" y2="290" />
+                  <line x1="45" y1="390" x2="330" y2="390" />
+                  <line x1="45" y1="490" x2="330" y2="490" />
                 </g>
 
                 <!-- Regla Milimétrica Eje Z (0 a 180 cm) -->
                 <g font-family="'JetBrains Mono',monospace" font-size="8" fill="#94a3b8" text-anchor="end">
                   <text x="38" y="20" font-family="'Outfit',sans-serif" font-weight="800" fill="#38bdf8">Z(cm)</text>
-                  <line x1="38" y1="45" x2="45" y2="45" stroke="#64748b" stroke-width="1.5"/><text x="35" y="48">0</text>
-                  <line x1="38" y1="100" x2="45" y2="100" stroke="#64748b" stroke-width="1.5"/><text x="35" y="103">20</text>
-                  <line x1="38" y1="155" x2="45" y2="155" stroke="#64748b" stroke-width="1.5"/><text x="35" y="158">40</text>
-                  <line x1="38" y1="210" x2="45" y2="210" stroke="#64748b" stroke-width="1.5"/><text x="35" y="213">60</text>
-                  <line x1="38" y1="265" x2="45" y2="265" stroke="#64748b" stroke-width="1.5"/><text x="35" y="268">80</text>
-                  <line x1="38" y1="320" x2="45" y2="320" stroke="#64748b" stroke-width="1.5"/><text x="35" y="323">100</text>
-                  <line x1="38" y1="375" x2="45" y2="375" stroke="#64748b" stroke-width="1.5"/><text x="35" y="378">120</text>
-                  <line x1="38" y1="430" x2="45" y2="430" stroke="#64748b" stroke-width="1.5"/><text x="35" y="433">140</text>
-                  <line x1="38" y1="485" x2="45" y2="485" stroke="#64748b" stroke-width="1.5"/><text x="35" y="488">160</text>
-                  <line x1="38" y1="540" x2="45" y2="540" stroke="#64748b" stroke-width="1.5"/><text x="35" y="543">180</text>
+                  <line x1="38" y1="45" x2="45" y2="45" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="48">0</text>
+                  <line x1="38" y1="100" x2="45" y2="100" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="103">20</text>
+                  <line x1="38" y1="155" x2="45" y2="155" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="158">40</text>
+                  <line x1="38" y1="210" x2="45" y2="210" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="213">60</text>
+                  <line x1="38" y1="265" x2="45" y2="265" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="268">80</text>
+                  <line x1="38" y1="320" x2="45" y2="320" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="323">100</text>
+                  <line x1="38" y1="375" x2="45" y2="375" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="378">120</text>
+                  <line x1="38" y1="430" x2="45" y2="430" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="433">140</text>
+                  <line x1="38" y1="485" x2="45" y2="485" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="488">160</text>
+                  <line x1="38" y1="540" x2="45" y2="540" stroke="#64748b" stroke-width="1.5" /><text x="35"
+                    y="543">180</text>
                 </g>
 
                 <!-- Camilla Tomográfica PET/CT -->
-                <rect x="105" y="22" width="160" height="572" rx="18" fill="#1e293b" stroke="#334155" stroke-width="2" opacity="0.88"/>
+                <rect x="105" y="22" width="160" height="572" rx="18" fill="#1e293b" stroke="#334155" stroke-width="2"
+                  opacity="0.88" />
 
                 <!-- SILUETA ANATÓMICA FULL BODY -->
                 <g id="protoFullBodySilhouette">
                   <!-- GRUPO DINÁMICO 1: BRAZOS ARRIBA (ARMS UP) -->
                   <g id="protoSvgArmsArriba">
-                    <path d="M 135 28 Q 185 12 235 28" fill="none" stroke="#64748b" stroke-width="5" stroke-linecap="round"/>
-                    <path d="M 142 145 C 120 130, 116 70, 145 34 C 150 28, 158 32, 154 42 C 135 74, 138 120, 156 142 Z" fill="#93c5fd" stroke="#0284c7" stroke-width="2"/>
-                    <path d="M 228 145 C 250 130, 254 70, 225 34 C 220 28, 212 32, 216 42 C 235 74, 232 120, 214 142 Z" fill="#93c5fd" stroke="#0284c7" stroke-width="2"/>
+                    <path d="M 135 28 Q 185 12 235 28" fill="none" stroke="#64748b" stroke-width="5"
+                      stroke-linecap="round" />
+                    <path d="M 142 145 C 120 130, 116 70, 145 34 C 150 28, 158 32, 154 42 C 135 74, 138 120, 156 142 Z"
+                      fill="#93c5fd" stroke="#0284c7" stroke-width="2" />
+                    <path d="M 228 145 C 250 130, 254 70, 225 34 C 220 28, 212 32, 216 42 C 235 74, 232 120, 214 142 Z"
+                      fill="#93c5fd" stroke="#0284c7" stroke-width="2" />
                   </g>
 
                   <!-- GRUPO DINÁMICO 2: BRAZOS ABAJO (ARMS DOWN) -->
                   <g id="protoSvgArmsAbajo" style="display:none;">
-                    <rect x="118" y="142" width="18" height="152" rx="9" fill="#e9d5ff" stroke="#9333ea" stroke-width="2"/>
-                    <rect x="234" y="142" width="18" height="152" rx="9" fill="#e9d5ff" stroke="#9333ea" stroke-width="2"/>
-                    <rect x="114" y="205" width="142" height="18" rx="4" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5" opacity="0.9"/>
-                    <text x="185" y="217" font-family="'Outfit',sans-serif" font-size="7.5" font-weight="800" fill="#854d0e" text-anchor="middle">🔒 CINCHA BRAZOS ABAJO</text>
+                    <rect x="118" y="142" width="18" height="152" rx="9" fill="#e9d5ff" stroke="#9333ea"
+                      stroke-width="2" />
+                    <rect x="234" y="142" width="18" height="152" rx="9" fill="#e9d5ff" stroke="#9333ea"
+                      stroke-width="2" />
+                    <rect x="114" y="205" width="142" height="18" rx="4" fill="#fef08a" stroke="#ca8a04"
+                      stroke-width="1.5" opacity="0.9" />
+                    <text x="185" y="217" font-family="'Outfit',sans-serif" font-size="7.5" font-weight="800"
+                      fill="#854d0e" text-anchor="middle">🔒 CINCHA BRAZOS ABAJO</text>
                   </g>
 
                   <!-- Cabeza y Encéfalo -->
-                  <ellipse cx="185" cy="72" rx="28" ry="34" fill="url(#protoBodyGrad)" stroke="#38bdf8" stroke-width="2"/>
-                  <ellipse cx="185" cy="64" rx="21" ry="20" fill="#7dd3fc" stroke="#0284c7" stroke-width="1.2" opacity="0.85"/>
-                  <path d="M 185 45 L 185 83 M 168 64 Q 185 58 202 64" stroke="#0369a1" stroke-width="1" opacity="0.5" fill="none"/>
+                  <ellipse cx="185" cy="72" rx="28" ry="34" fill="url(#protoBodyGrad)" stroke="#38bdf8"
+                    stroke-width="2" />
+                  <ellipse cx="185" cy="64" rx="21" ry="20" fill="#7dd3fc" stroke="#0284c7" stroke-width="1.2"
+                    opacity="0.85" />
+                  <path d="M 185 45 L 185 83 M 168 64 Q 185 58 202 64" stroke="#0369a1" stroke-width="1" opacity="0.5"
+                    fill="none" />
 
                   <!-- Cuello y Tiroides -->
-                  <rect x="176" y="104" width="18" height="26" rx="4" fill="url(#protoBodyGrad)" stroke="#38bdf8" stroke-width="2"/>
-                  <path d="M 180 114 Q 185 120 190 114 Q 192 123 188 125 Q 185 121 182 125 Q 178 123 180 114 Z" fill="#f472b6" opacity="0.75"/>
+                  <rect x="176" y="104" width="18" height="26" rx="4" fill="url(#protoBodyGrad)" stroke="#38bdf8"
+                    stroke-width="2" />
+                  <path d="M 180 114 Q 185 120 190 114 Q 192 123 188 125 Q 185 121 182 125 Q 178 123 180 114 Z"
+                    fill="#f472b6" opacity="0.75" />
 
                   <!-- Tronco (Tórax, Abdomen, Pelvis) -->
-                  <path d="M 142 135 L 228 135 Q 235 190 226 240 Q 234 285 222 340 L 148 340 Q 136 285 144 240 Q 135 190 142 135 Z" fill="url(#protoBodyGrad)" stroke="#38bdf8" stroke-width="2"/>
+                  <path
+                    d="M 142 135 L 228 135 Q 235 190 226 240 Q 234 285 222 340 L 148 340 Q 136 285 144 240 Q 135 190 142 135 Z"
+                    fill="url(#protoBodyGrad)" stroke="#38bdf8" stroke-width="2" />
 
                   <!-- Pulmones y Corazón -->
-                  <path d="M 178 144 C 160 144, 150 165, 150 195 C 150 202, 168 200, 178 194 Z" fill="#93c5fd" stroke="#0284c7" stroke-width="1.2" opacity="0.8"/>
-                  <path d="M 192 144 C 210 144, 220 165, 220 195 C 220 202, 202 200, 192 194 Z" fill="#93c5fd" stroke="#0284c7" stroke-width="1.2" opacity="0.8"/>
-                  <path d="M 183 166 C 178 162, 172 170, 176 182 C 180 190, 192 192, 195 184 C 198 175, 190 165, 183 166 Z" fill="#ef4444" opacity="0.78"/>
+                  <path d="M 178 144 C 160 144, 150 165, 150 195 C 150 202, 168 200, 178 194 Z" fill="#93c5fd"
+                    stroke="#0284c7" stroke-width="1.2" opacity="0.8" />
+                  <path d="M 192 144 C 210 144, 220 165, 220 195 C 220 202, 202 200, 192 194 Z" fill="#93c5fd"
+                    stroke="#0284c7" stroke-width="1.2" opacity="0.8" />
+                  <path
+                    d="M 183 166 C 178 162, 172 170, 176 182 C 180 190, 192 192, 195 184 C 198 175, 190 165, 183 166 Z"
+                    fill="#ef4444" opacity="0.78" />
 
                   <!-- Hígado, Estómago y Riñones -->
-                  <path d="M 148 205 C 165 202, 192 208, 198 218 C 190 228, 165 242, 150 245 Z" fill="#b45309" opacity="0.65" stroke="#78350f" stroke-width="1"/>
-                  <path d="M 195 212 C 208 210, 218 220, 214 236 C 208 242, 196 235, 195 224 Z" fill="#fb923c" opacity="0.55"/>
-                  <ellipse cx="166" cy="262" rx="7" ry="12" fill="#a855f7" opacity="0.6"/>
-                  <ellipse cx="204" cy="264" rx="7" ry="12" fill="#a855f7" opacity="0.6"/>
+                  <path d="M 148 205 C 165 202, 192 208, 198 218 C 190 228, 165 242, 150 245 Z" fill="#b45309"
+                    opacity="0.65" stroke="#78350f" stroke-width="1" />
+                  <path d="M 195 212 C 208 210, 218 220, 214 236 C 208 242, 196 235, 195 224 Z" fill="#fb923c"
+                    opacity="0.55" />
+                  <ellipse cx="166" cy="262" rx="7" ry="12" fill="#a855f7" opacity="0.6" />
+                  <ellipse cx="204" cy="264" rx="7" ry="12" fill="#a855f7" opacity="0.6" />
 
                   <!-- Pelvis y Vejiga -->
-                  <path d="M 148 295 Q 160 288 172 308 L 172 332 Q 155 328 148 308 Z" fill="#cbd5e1" opacity="0.7"/>
-                  <path d="M 222 295 Q 210 288 198 308 L 198 332 Q 215 328 222 308 Z" fill="#cbd5e1" opacity="0.7"/>
-                  <ellipse cx="185" cy="322" rx="13" ry="11" fill="#eab308" stroke="#ca8a04" stroke-width="1.5" opacity="0.9"/>
+                  <path d="M 148 295 Q 160 288 172 308 L 172 332 Q 155 328 148 308 Z" fill="#cbd5e1" opacity="0.7" />
+                  <path d="M 222 295 Q 210 288 198 308 L 198 332 Q 215 328 222 308 Z" fill="#cbd5e1" opacity="0.7" />
+                  <ellipse cx="185" cy="322" rx="13" ry="11" fill="#eab308" stroke="#ca8a04" stroke-width="1.5"
+                    opacity="0.9" />
 
                   <!-- GRUPO DINÁMICO 3: BRAZOS EN ALMOHADA (PILLOW SUPPORT) -->
                   <g id="protoSvgArmsAlmohada" style="display:none;">
                     <!-- Almohada acolchada sobre tórax/abdomen -->
-                    <rect x="134" y="188" width="102" height="50" rx="14" fill="#f0fdf4" stroke="#10b981" stroke-width="2.2" opacity="0.96"/>
-                    <path d="M 146 200 Q 185 208 224 200 M 146 226 Q 185 218 224 226" stroke="#86efac" stroke-width="1.5" fill="none"/>
+                    <rect x="134" y="188" width="102" height="50" rx="14" fill="#f0fdf4" stroke="#10b981"
+                      stroke-width="2.2" opacity="0.96" />
+                    <path d="M 146 200 Q 185 208 224 200 M 146 226 Q 185 218 224 226" stroke="#86efac"
+                      stroke-width="1.5" fill="none" />
                     <!-- Brazos doblados descansando sobre la almohada -->
-                    <path d="M 142 145 C 122 165, 122 205, 145 216 L 192 216 L 192 202 L 154 202 C 140 192, 140 165, 152 145 Z" fill="#6ee7b7" stroke="#059669" stroke-width="2"/>
-                    <path d="M 228 145 C 248 165, 248 205, 225 224 L 178 224 L 178 210 L 216 210 C 230 192, 230 165, 218 145 Z" fill="#6ee7b7" stroke="#059669" stroke-width="2"/>
-                    <text x="185" y="233" font-family="'Outfit',sans-serif" font-size="7.5" font-weight="800" fill="#065f46" text-anchor="middle">🛏️ ALMOHADA DE SOPORTE</text>
+                    <path
+                      d="M 142 145 C 122 165, 122 205, 145 216 L 192 216 L 192 202 L 154 202 C 140 192, 140 165, 152 145 Z"
+                      fill="#6ee7b7" stroke="#059669" stroke-width="2" />
+                    <path
+                      d="M 228 145 C 248 165, 248 205, 225 224 L 178 224 L 178 210 L 216 210 C 230 192, 230 165, 218 145 Z"
+                      fill="#6ee7b7" stroke="#059669" stroke-width="2" />
+                    <text x="185" y="233" font-family="'Outfit',sans-serif" font-size="7.5" font-weight="800"
+                      fill="#065f46" text-anchor="middle">🛏️ ALMOHADA DE SOPORTE</text>
                   </g>
 
                   <!-- Piernas (Muslos, Rodillas, Piernas y Pies) -->
-                  <path d="M 150 340 L 180 340 L 176 470 L 172 580 L 150 580 L 154 470 Z" fill="url(#protoBodyGrad)" stroke="#38bdf8" stroke-width="2"/>
-                  <path d="M 190 340 L 220 340 L 216 470 L 220 580 L 198 580 L 194 470 Z" fill="url(#protoBodyGrad)" stroke="#38bdf8" stroke-width="2"/>
-                  <line x1="165" y1="348" x2="163" y2="462" stroke="#e2e8f0" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-                  <line x1="205" y1="348" x2="205" y2="462" stroke="#e2e8f0" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-                  <ellipse cx="160" cy="585" rx="14" ry="7" fill="#93c5fd" stroke="#38bdf8" stroke-width="1.5"/>
-                  <ellipse cx="210" cy="585" rx="14" ry="7" fill="#93c5fd" stroke="#38bdf8" stroke-width="1.5"/>
+                  <path d="M 150 340 L 180 340 L 176 470 L 172 580 L 150 580 L 154 470 Z" fill="url(#protoBodyGrad)"
+                    stroke="#38bdf8" stroke-width="2" />
+                  <path d="M 190 340 L 220 340 L 216 470 L 220 580 L 198 580 L 194 470 Z" fill="url(#protoBodyGrad)"
+                    stroke="#38bdf8" stroke-width="2" />
+                  <line x1="165" y1="348" x2="163" y2="462" stroke="#e2e8f0" stroke-width="4" stroke-linecap="round"
+                    opacity="0.7" />
+                  <line x1="205" y1="348" x2="205" y2="462" stroke="#e2e8f0" stroke-width="4" stroke-linecap="round"
+                    opacity="0.7" />
+                  <ellipse cx="160" cy="585" rx="14" ry="7" fill="#93c5fd" stroke="#38bdf8" stroke-width="1.5" />
+                  <ellipse cx="210" cy="585" rx="14" ry="7" fill="#93c5fd" stroke="#38bdf8" stroke-width="1.5" />
                 </g>
 
                 <!-- Referencias Anatómicas Derecha -->
@@ -663,73 +724,99 @@
                 <!-- CAJA DE ADQUISICIÓN FULL BODY ARRASTRABLE (DESDE -> HASTA) -->
                 <g id="protoFullBodyBoxGroup" style="cursor:grab;">
                   <rect id="protoFullBodyBoxRect" x="52" y="84" width="256" height="296" rx="8"
-                        fill="url(#protoFovGrad)" stroke="#38bdf8" stroke-width="2.6" stroke-dasharray="8,4"/>
+                    fill="url(#protoFovGrad)" stroke="#38bdf8" stroke-width="2.6" stroke-dasharray="8,4" />
 
                   <!-- Divisiones dinámicas de camas -->
                   <g id="protoFullBodyBedsGroup"></g>
 
                   <!-- Tirador Superior: DESDE (Límite Craneal) -->
                   <g id="protoFullBodyHandleTop" style="cursor:ns-resize;">
-                    <rect id="protoHandleTopBg" x="52" y="72" width="256" height="18" rx="5" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5"/>
-                    <text id="protoHandleTopText" x="180" y="84" font-family="'Outfit',sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">
+                    <rect id="protoHandleTopBg" x="52" y="72" width="256" height="18" rx="5" fill="#0284c7"
+                      stroke="#e0f2fe" stroke-width="1.5" />
+                    <text id="protoHandleTopText" x="180" y="84" font-family="'Outfit',sans-serif" font-size="8.5"
+                      font-weight="800" fill="#ffffff" text-anchor="middle">
                       🔼 DESDE: BASE DE CRÁNEO (14 cm)
                     </text>
                   </g>
 
                   <!-- Tirador Inferior: HASTA (Límite Caudal) -->
                   <g id="protoFullBodyHandleBottom" style="cursor:ns-resize;">
-                    <rect id="protoHandleBottomBg" x="52" y="374" width="256" height="18" rx="5" fill="#0369a1" stroke="#e0f2fe" stroke-width="1.5"/>
-                    <text id="protoHandleBottomText" x="180" y="386" font-family="'Outfit',sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">
+                    <rect id="protoHandleBottomBg" x="52" y="374" width="256" height="18" rx="5" fill="#0369a1"
+                      stroke="#e0f2fe" stroke-width="1.5" />
+                    <text id="protoHandleBottomText" x="180" y="386" font-family="'Outfit',sans-serif" font-size="8.5"
+                      font-weight="800" fill="#ffffff" text-anchor="middle">
                       🔽 HASTA: 1/3 MEDIO DE MUSLOS (118 cm)
                     </text>
                   </g>
                 </g>
               </svg>
 
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:7px; padding:5px 8px; background:#1e293b; border-radius:6px; color:#e2e8f0; font-size:0.73rem;">
-                <span>📏 <strong id="protoFullBodyReadoutCm">14 cm – 118 cm</strong> (<strong id="protoFullBodyReadoutBeds" style="color:#38bdf8;">6 Camas</strong>)</span>
+              <div
+                style="display:flex; justify-content:space-between; align-items:center; margin-top:7px; padding:5px 8px; background:#1e293b; border-radius:6px; color:#e2e8f0; font-size:0.73rem;">
+                <span>📏 <strong id="protoFullBodyReadoutCm">14 cm – 118 cm</strong> (<strong
+                    id="protoFullBodyReadoutBeds" style="color:#38bdf8;">6 Camas</strong>)</span>
                 <span style="color:#94a3b8; font-size:0.69rem;">🖱️ Arrastre bordes 🔼/🔽</span>
               </div>
             </div>
 
             <!-- COLUMNA DERECHA: SELECTORES EXACTO "DESDE -> HASTA" Y TARJETAS DE RANGO -->
             <div style="display:flex; flex-direction:column; gap:12px;">
-              
+
               <!-- Panel directo Desde dónde / Hasta dónde -->
-              <div style="background:#ffffff; border:1.5px solid #bae6fd; border-radius:10px; padding:12px; box-shadow:0 2px 8px rgba(2,132,199,0.06);">
-                <div style="font-size:0.8rem; font-weight:800; color:#0369a1; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+              <div
+                style="background:#ffffff; border:1.5px solid #bae6fd; border-radius:10px; padding:12px; box-shadow:0 2px 8px rgba(2,132,199,0.06);">
+                <div
+                  style="font-size:0.8rem; font-weight:800; color:#0369a1; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
                   <span>🎯</span>
                   <span>Definir Límites Anatómicos Exactos de la Prueba (Desde ➔ Hasta):</span>
                 </div>
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                   <div>
-                    <label for="selectProtoFrom" style="display:block; font-size:0.74rem; font-weight:800; color:#0f172a; margin-bottom:4px;">
+                    <label for="selectProtoFrom"
+                      style="display:block; font-size:0.74rem; font-weight:800; color:#0f172a; margin-bottom:4px;">
                       🔼 DESDE (Inicio Craneal / Superior):
                     </label>
-                    <select id="selectProtoFrom" style="width:100%; padding:7px 9px; border-radius:7px; border:1.5px solid #0284c7; background:#f0f9ff; color:#0f172a; font-size:0.8rem; font-weight:700; cursor:pointer;">
-                      <option value="vertice_craneal" data-y="44" data-cm="0">Vértice Craneal / Coronilla (0 cm)</option>
+                    <select id="selectProtoFrom"
+                      style="width:100%; padding:7px 9px; border-radius:7px; border:1.5px solid #0284c7; background:#f0f9ff; color:#0f172a; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                      <option value="vertice_craneal" data-y="44" data-cm="0">Vértice Craneal / Coronilla (0 cm)
+                      </option>
                       <option value="orbitomeatal" data-y="68" data-cm="9">Línea Órbito-Meatal / Ojos (9 cm)</option>
-                      <option value="base_craneo" data-y="84" data-cm="14" selected>Base de Cráneo / CAE (14 cm)</option>
-                      <option value="cuello_claviculas" data-y="124" data-cm="28">Cuello Bajo / Clavículas (28 cm)</option>
-                      <option value="torax_superior" data-y="148" data-cm="37">Opérculo Torácico / Tórax (37 cm)</option>
-                      <option value="diafragma_higado" data-y="198" data-cm="55">Cúpula Diafragmática / Hígado (55 cm)</option>
-                      <option value="crestas_iliacas" data-y="286" data-cm="87">Crestas Ilíacas / Pelvis (87 cm)</option>
-                      <option value="muslos_proximales" data-y="338" data-cm="106">Raíz de Muslos / Cadera (106 cm)</option>
+                      <option value="base_craneo" data-y="84" data-cm="14" selected>Base de Cráneo / CAE (14 cm)
+                      </option>
+                      <option value="cuello_claviculas" data-y="124" data-cm="28">Cuello Bajo / Clavículas (28 cm)
+                      </option>
+                      <option value="torax_superior" data-y="148" data-cm="37">Opérculo Torácico / Tórax (37 cm)
+                      </option>
+                      <option value="diafragma_higado" data-y="198" data-cm="55">Cúpula Diafragmática / Hígado (55 cm)
+                      </option>
+                      <option value="crestas_iliacas" data-y="286" data-cm="87">Crestas Ilíacas / Pelvis (87 cm)
+                      </option>
+                      <option value="muslos_proximales" data-y="338" data-cm="106">Raíz de Muslos / Cadera (106 cm)
+                      </option>
                     </select>
                   </div>
                   <div>
-                    <label for="selectProtoTo" style="display:block; font-size:0.74rem; font-weight:800; color:#0f172a; margin-bottom:4px;">
+                    <label for="selectProtoTo"
+                      style="display:block; font-size:0.74rem; font-weight:800; color:#0f172a; margin-bottom:4px;">
                       🔽 HASTA (Fin Caudal / Inferior):
                     </label>
-                    <select id="selectProtoTo" style="width:100%; padding:7px 9px; border-radius:7px; border:1.5px solid #0284c7; background:#f0f9ff; color:#0f172a; font-size:0.8rem; font-weight:700; cursor:pointer;">
-                      <option value="base_craneo_fin" data-y="112" data-cm="24">Base de Cráneo / Cuello Alto (24 cm)</option>
-                      <option value="diafragma_fin" data-y="214" data-cm="61">Bases Pulmonares / Diafragma (61 cm)</option>
-                      <option value="abdomen_inferior" data-y="292" data-cm="89">Abdomen Inferior / Crestas (89 cm)</option>
-                      <option value="pelvis_sinfisis" data-y="342" data-cm="107">Sínfisis Púbica / Suelo Pélvico (107 cm)</option>
-                      <option value="tercio_medio_muslos" data-y="380" data-cm="118" selected>Tercio Medio de Muslos (118 cm)</option>
+                    <select id="selectProtoTo"
+                      style="width:100%; padding:7px 9px; border-radius:7px; border:1.5px solid #0284c7; background:#f0f9ff; color:#0f172a; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                      <option value="base_craneo_fin" data-y="112" data-cm="24">Base de Cráneo / Cuello Alto (24 cm)
+                      </option>
+                      <option value="diafragma_fin" data-y="214" data-cm="61">Bases Pulmonares / Diafragma (61 cm)
+                      </option>
+                      <option value="abdomen_inferior" data-y="292" data-cm="89">Abdomen Inferior / Crestas (89 cm)
+                      </option>
+                      <option value="pelvis_sinfisis" data-y="342" data-cm="107">Sínfisis Púbica / Suelo Pélvico (107
+                        cm)</option>
+                      <option value="tercio_medio_muslos" data-y="380" data-cm="118" selected>Tercio Medio de Muslos
+                        (118 cm)</option>
                       <option value="rodillas" data-y="456" data-cm="148">Rodillas / Hueco Poplíteo (148 cm)</option>
-                      <option value="tercio_medio_piernas" data-y="520" data-cm="171">Tercio Medio de Piernas / Tibias (171 cm)</option>
-                      <option value="tobillos_pies" data-y="588" data-cm="185">Plantas de los Pies / Dedos (185 cm)</option>
+                      <option value="tercio_medio_piernas" data-y="520" data-cm="171">Tercio Medio de Piernas / Tibias
+                        (171 cm)</option>
+                      <option value="tobillos_pies" data-y="588" data-cm="185">Plantas de los Pies / Dedos (185 cm)
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -745,7 +832,8 @@
                   <input type="radio" name="radioRange" value="base_craneo_muslos" checked>
                   <div class="option-icon">📐</div>
                   <div class="option-title">Base de Cráneo a Muslos</div>
-                  <div class="option-desc">Desde base craneal (14 cm) hasta 1/3 medio de muslos (118 cm). Estándar oncológico.</div>
+                  <div class="option-desc">Desde base craneal (14 cm) hasta 1/3 medio de muslos (118 cm). Estándar
+                    oncológico.</div>
                   <span class="option-pill-badge">Estándar (6 Camas)</span>
                 </label>
 
@@ -754,7 +842,8 @@
                   <input type="radio" name="radioRange" value="cuerpo_total">
                   <div class="option-icon">🦶</div>
                   <div class="option-title">Full Body (Vértice a Pies)</div>
-                  <div class="option-desc">Cuerpo total completo desde coronilla (0 cm) hasta plantas de los pies (185 cm).</div>
+                  <div class="option-desc">Cuerpo total completo desde coronilla (0 cm) hasta plantas de los pies (185
+                    cm).</div>
                   <span class="option-pill-badge">Cuerpo Total (9 Camas)</span>
                 </label>
 
@@ -763,7 +852,8 @@
                   <input type="radio" name="radioRange" value="cabeza_cuello_cuerpo">
                   <div class="option-icon">🔄</div>
                   <div class="option-title">Cabeza-Cuello + Cuerpo Entero</div>
-                  <div class="option-desc">Desde Vértice Craneal (0 cm) hasta 1/3 medio de muslos (118 cm) en 2 fases.</div>
+                  <div class="option-desc">Desde Vértice Craneal (0 cm) hasta 1/3 medio de muslos (118 cm) en 2 fases.
+                  </div>
                   <span class="option-pill-badge">Combinado ORL (7 Camas)</span>
                 </label>
 
@@ -772,7 +862,8 @@
                   <input type="radio" name="radioRange" value="mmii">
                   <div class="option-icon">🦵</div>
                   <div class="option-title">MMII (Pelvis / Muslos a Pies)</div>
-                  <div class="option-desc">Desde Crestas Ilíacas / Cadera (87 cm) hasta Plantas de los Pies (185 cm).</div>
+                  <div class="option-desc">Desde Crestas Ilíacas / Cadera (87 cm) hasta Plantas de los Pies (185 cm).
+                  </div>
                   <span class="option-pill-badge">Extremidades MMII</span>
                 </label>
 
@@ -790,14 +881,18 @@
                   <input type="radio" name="radioRange" value="otro_rango">
                   <div class="option-icon">✍️</div>
                   <div class="option-title">Rango Personalizado</div>
-                  <div class="option-desc">Ajustado libremente con el ratón en el Full Body o mediante selectores Desde/Hasta.</div>
+                  <div class="option-desc">Ajustado libremente con el ratón en el Full Body o mediante selectores
+                    Desde/Hasta.</div>
                   <span class="option-pill-badge">Medida Exacta</span>
                 </label>
               </div>
 
               <div class="custom-input-row" id="wrapCustomRange" style="display: flex; margin-top: 0.2rem;">
-                <span style="font-size:0.78rem; font-weight:800; color:var(--sergas-navy);">Resumen de Cobertura pautado:</span>
-                <input type="text" id="inputCustomRange" placeholder="Ej: Desde Base de Cráneo hasta Tercio Medio de Muslos..." style="flex:1; font-weight:700; color:#0369a1;">
+                <span style="font-size:0.78rem; font-weight:800; color:var(--sergas-navy);">Resumen de Cobertura
+                  pautado:</span>
+                <input type="text" id="inputCustomRange"
+                  placeholder="Ej: Desde Base de Cráneo hasta Tercio Medio de Muslos..."
+                  style="flex:1; font-weight:700; color:#0369a1;">
               </div>
             </div>
           </div>
@@ -1009,7 +1104,8 @@
             </div>
 
             <!-- C) OTRAS MEDICACIONES PAUTADAS POR EL MÉDICO (FARMACIA SERGAS / SUPERVISIÓN) -->
-            <div class="med-subgroup" style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:0.85rem 1rem;">
+            <div class="med-subgroup"
+              style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:0.85rem 1rem;">
               <div class="med-subgroup-title">
                 <span style="display:flex; align-items:center; gap:6px;">
                   <span>💊</span>
@@ -1017,25 +1113,38 @@
                 </span>
                 <span style="font-size:0.75rem; color:#0f766e; font-weight:700;">Farmacia Hospitalaria SERGAS</span>
               </div>
-              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.65rem; margin-top:0.4rem;">
+              <div
+                style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.65rem; margin-top:0.4rem;">
                 <div>
-                  <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:3px;">Fármaco Predefinido:</label>
-                  <select id="selectMedicacionPautada" class="period-select" style="width:100%; background:#fff; font-size:0.8rem;"
+                  <label
+                    style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:3px;">Fármaco
+                    Predefinido:</label>
+                  <select id="selectMedicacionPautada" class="period-select"
+                    style="width:100%; background:#fff; font-size:0.8rem;"
                     onchange="if (this.value !== 'otra' && this.value !== '') document.getElementById('inputMedicacionPautadaCustom').value = this.value;">
                     <option value="">-- Ninguna medicación adicional --</option>
-                    <option value="Diazepam 5 mg oral (Inhibir grasa parda)">Diazepam 5 mg oral (Inhibir grasa parda)</option>
-                    <option value="Dexclorfeniramina (Polaramine) 5 mg IV (Profilaxis alérgica)">Dexclorfeniramina (Polaramine) 5 mg IV (Profilaxis)</option>
-                    <option value="Metilprednisolona (Urbason) 40 mg IV (Profilaxis alérgica)">Metilprednisolona (Urbason) 40 mg IV (Profilaxis)</option>
-                    <option value="Insulina Rápida 2-4 UI SC (Rescate glucemia)">Insulina Rápida 2-4 UI SC (Rescate glucémico)</option>
-                    <option value="Suero Glucosado 5% 250 mL (Rescate hipoglucemia)">Suero Glucosado 5% 250 mL (Rescate hipoglucemia)</option>
-                    <option value="Atropina 0.5 mg IV (Bradicardia / Síncope)">Atropina 0.5 mg IV (Bradicardia / Síncope)</option>
+                    <option value="Diazepam 5 mg oral (Inhibir grasa parda)">Diazepam 5 mg oral (Inhibir grasa parda)
+                    </option>
+                    <option value="Dexclorfeniramina (Polaramine) 5 mg IV (Profilaxis alérgica)">Dexclorfeniramina
+                      (Polaramine) 5 mg IV (Profilaxis)</option>
+                    <option value="Metilprednisolona (Urbason) 40 mg IV (Profilaxis alérgica)">Metilprednisolona
+                      (Urbason) 40 mg IV (Profilaxis)</option>
+                    <option value="Insulina Rápida 2-4 UI SC (Rescate glucemia)">Insulina Rápida 2-4 UI SC (Rescate
+                      glucémico)</option>
+                    <option value="Suero Glucosado 5% 250 mL (Rescate hipoglucemia)">Suero Glucosado 5% 250 mL (Rescate
+                      hipoglucemia)</option>
+                    <option value="Atropina 0.5 mg IV (Bradicardia / Síncope)">Atropina 0.5 mg IV (Bradicardia /
+                      Síncope)</option>
                     <option value="Paracetamol 1g IV (Analgesia)">Paracetamol 1g IV (Analgesia)</option>
                     <option value="otra">Otra medicación (escribir a la derecha)...</option>
                   </select>
                 </div>
                 <div>
-                  <label style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:3px;">Detalle / Dosis / Vía:</label>
-                  <input type="text" id="inputMedicacionPautadaCustom" class="period-select" style="width:100%; background:#fff; font-size:0.8rem;"
+                  <label
+                    style="font-size:0.75rem; font-weight:700; color:#334155; display:block; margin-bottom:3px;">Detalle
+                    / Dosis / Vía:</label>
+                  <input type="text" id="inputMedicacionPautadaCustom" class="period-select"
+                    style="width:100%; background:#fff; font-size:0.8rem;"
                     placeholder="Ej: Diazepam 5 mg VO 30m antes de inyección...">
                 </div>
               </div>
@@ -1609,52 +1718,4 @@
         <div>
           <button type="button" class="btn-cancel-tardia-order" id="btnCancelTardiaOrder"
             onclick="window.consolaApp.anularPautaTardia()"
-            style="display:none; background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; padding:7px 14px; border-radius:6px; font-weight:700; font-size:0.82rem; cursor:pointer;">
-            ❌ Anular Pauta de Tardía
-          </button>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-secondary" onclick="window.consolaApp.closeModalPedirTardia()"
-            style="padding:7px 14px; font-size:0.82rem;">Cerrar</button>
-          <button type="button" class="btn-primary" id="btnConfirmSendTardiaOrder"
-            onclick="window.consolaApp.guardarPautaTardia()"
-            style="background:#d97706; border-color:#b45309; padding:7px 16px; font-size:0.84rem; font-weight:800;">
-            📢 Enviar Pauta y Caja de Tardía a Técnicos (con Alarma)
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================================================
-     CONTENEDOR DE TOASTS Y NOTIFICACIONES
-
-       ========================================================================== -->
-  <div class="toast-container" id="toastContainer"></div>
-
-  <!-- ==========================================================================
-       PIE DE PÁGINA INSTITUCIONAL
-       ========================================================================== -->
-  <footer class="main-footer">
-    <div class="footer-container">
-      <div>
-        <strong>Galaria · Empresa Pública de Servizos Sanitarios</strong> | Servizo Galego de Saúde (SERGAS)
-        <br>
-        <span style="font-size: 0.76rem; color: var(--text-muted);">Unidades de Medicina Nuclear e Radiofarmacia de
-          Vigo, Santiago e A Coruña</span>
-      </div>
-      <div class="footer-nav">
-        <a href="../index.html">Portal Maestro</a>
-        <a href="../pet_peticion_medica/index.html">Módulo 1: Prescrición</a>
-        <a href="../pet_ct_triage/web_app/index.html">Módulo 2: Triaxe</a>
-        <a href="../pet_prep_page/enfermeria.html">Módulo 4: Enfermaría</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../pet_demo_reset.js"></script>
-  <script src="../pet_peticion_medica/database/peticiones_data.js"></script>
-  <script src="app.js?v=20261114_VASC_02"></script>
-</body>
-
-</html>
+            style="display:none; background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; padding:7px 14px; border-radius:6px; font-weight:700; font-size:0.82rem; cursor:

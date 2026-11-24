@@ -28,9 +28,8 @@
   <!-- BARRA SUPERIOR INSTITUCIONAL XUNTA / SERGAS -->
   <div class="sergas-top-bar">
     <div class="sergas-top-container">
-      <div class="sergas-gov-text">
-        <span class="xunta-pill">XUNTA DE GALICIA</span>
-        <span class="sergas-sub">CONSELLERÍA DE SANIDADE · SERGAS</span>
+      <div class="sergas-gov-text" style="display: flex; align-items: center; gap: 10px;">
+        <img src="xunta_logo.png" alt="Xunta de Galicia" style="height: 26px; width: auto; background: #ffffff; padding: 2px 7px; border-radius: 4px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
       </div>
       <div class="sergas-portal-id">
         <span>Galaria · Suite de Triaxe e Agendamento PET/CT</span>
@@ -46,7 +45,8 @@
     aria-labelledby="loginTitle">
     <div class="login-card">
       <div class="login-header">
-        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="login-galaria-logo">
+        <img src="galaria_logo.jpg" alt="Galaria" class="login-galaria-logo"
+          style="height: 48px; width: auto; object-fit: contain; margin-bottom: 0.5rem;">
         <h1 class="login-title" id="loginTitle">Suite de Triaxe e Agendamento PET</h1>
         <p class="login-subtitle">Galaria · Unidade de Medicina Nuclear (SERGAS)</p>
       </div>
@@ -103,7 +103,8 @@
     <!-- Header -->
     <header class="app-header">
       <div class="header-brand">
-        <img src="galaria_logo.jpg" alt="Galaria - Empresa Pública de Servizos Sanitarios" class="galaria-brand-logo">
+        <img src="galaria_logo.jpg" alt="Galaria" class="galaria-brand-logo"
+          style="height: 44px; width: auto; object-fit: contain;">
         <div>
           <h1
             style="font-size: 1.35rem; font-weight: 800; color: var(--sergas-navy); margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.6rem;">
@@ -112,7 +113,7 @@
               · SERGAS</span>
           </h1>
           <p class="subtitle" style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">
-            Galaria - Empresa Pública de Servizos Sanitarios, S.A. · Unidade de Medicina Nuclear e Diagnóstico Molecular
+            Galaria · Unidade de Medicina Nuclear e Diagnóstico Molecular · SERGAS
           </p>
         </div>
       </div>
@@ -585,7 +586,8 @@
               <option value="">-- Seleccionar paciente de la lista de propuestas --</option>
             </select>
             <!-- Preview Clínico del Paciente a Asignar -->
-            <div id="replacement-clinical-preview" class="hidden" style="margin-top:0.5rem; padding:0.65rem; background:#f0fdf4; border:1px solid #86efac; border-radius:6px; font-size:0.78rem;">
+            <div id="replacement-clinical-preview" class="hidden"
+              style="margin-top:0.5rem; padding:0.65rem; background:#f0fdf4; border:1px solid #86efac; border-radius:6px; font-size:0.78rem;">
               <div id="replacement-clinical-text"></div>
             </div>
             <button class="btn btn-primary btn-block" id="btn-swap-patient" style="margin-top:0.5rem;">
@@ -666,13 +668,17 @@
             <option value="">-- Seleccionar paciente pendiente --</option>
           </select>
           <!-- Vista previa clínica del paciente a asignar -->
-          <div id="manual-patient-clinical-preview" class="hidden" style="margin-top: 0.6rem; padding: 0.75rem; background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px;">
-            <div style="font-size: 0.8rem; font-weight: 700; color: #166534; display: flex; justify-content: space-between; align-items: center;">
+          <div id="manual-patient-clinical-preview" class="hidden"
+            style="margin-top: 0.6rem; padding: 0.75rem; background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px;">
+            <div
+              style="font-size: 0.8rem; font-weight: 700; color: #166534; display: flex; justify-content: space-between; align-items: center;">
               <span>🩺 Clínica del Paciente a Asignar:</span>
               <span id="manual-preview-prio-badge" class="badge"></span>
             </div>
-            <div id="manual-preview-details" style="font-size: 0.76rem; color: #1e293b; margin-top: 4px; line-height: 1.35;"></div>
-            <button type="button" id="btn-manual-preview-pdf" class="btn btn-outline btn-block" style="margin-top: 0.5rem; font-size: 0.74rem; padding: 4px 8px; border-color: #86efac; background: white; color: #166534; font-weight: 700;">
+            <div id="manual-preview-details"
+              style="font-size: 0.76rem; color: #1e293b; margin-top: 4px; line-height: 1.35;"></div>
+            <button type="button" id="btn-manual-preview-pdf" class="btn btn-outline btn-block"
+              style="margin-top: 0.5rem; font-size: 0.74rem; padding: 4px 8px; border-color: #86efac; background: white; color: #166534; font-weight: 700;">
               📄 Ver Volante y Clínica Completa del Paciente
             </button>
           </div>
@@ -1884,4 +1890,4 @@
   <script src="app.js?v=20261116_SYNC_FIX_01"></script>
 </body>
 
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                              
