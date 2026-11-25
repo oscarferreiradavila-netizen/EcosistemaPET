@@ -7,7 +7,7 @@ require 'tmpdir'
 $stdout.sync = true
 
 CONFIG_FILE = File.expand_path('.netlify_config.json', __dir__)
-SITE_ID = '3c76e424-4871-4ab2-af16-2d5653504b66'
+SITE_ID = '3b2e6075-33bf-4058-915a-f9aa15d849b4'
 
 unless File.exist?(CONFIG_FILE)
   puts "❌ Error: No se encuentra .netlify_config.json"
@@ -30,9 +30,17 @@ WEB_TARGETS = [
   "Video_Completo_PET_CT_1_al_16.mp4",
   "pet_chat_human_stream.js",
   "pet_demo_reset.js",
+  "xunta_logo.png",
+  "sergas_logo.png",
+  "galaria_logo.jpg",
+  "pet_scanner_cover.jpg",
+  "pet_scanner_cover.png",
   "MANUAL_ECOSISTEMA_PET_CT.html",
   "MANUAL_ECOSISTEMA_PET_CT.pdf",
   "PRESENTACION_GERENCIA_ECOSISTEMA_PET_CT.html",
+  "PRESENTACION_GESTION_PUBLICA_ECOSISTEMA_PET.html",
+  "PRESENTACION_PROGRAMA_GESTION_PET_CT.html",
+  "DEMO_IMPRESION_INFORME_ENFERMERIA_DIA.html",
   "DOCUMENTO_EXPLICATIVO_GERENCIA_JEFATURA_PET_CT.html",
   "DOCUMENTO_EXPLICATIVO_GERENCIA_JEFATURA_PET_CT.pdf",
   "pet_consola_medica",
@@ -67,6 +75,7 @@ puts "🚀 Subiendo a Netlify (ecosistemagalariapet)..."
 uri = URI("https://api.netlify.com/api/v1/sites/#{SITE_ID}/deploys")
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 http.read_timeout = 240
 http.open_timeout = 30
 
@@ -81,11 +90,4 @@ FileUtils.rm_f(zip_path)
 if res.code.to_i.between?(200, 204)
   deploy_data = JSON.parse(res.body) rescue {}
   deploy_url = deploy_data['ssl_url'] || deploy_data['url'] || 'https://ecosistemagalariapet.netlify.app'
-  state = deploy_data['state'] || 'ready'
-  puts "🎉 DESPLIEGUE COMPLETADO CON ÉXITO!"
-  puts "🌐 URL activa en producción: #{deploy_url}"
-  puts "📊 Estado: #{state}"
-else
-  puts "⚠️ Error en la API de Netlify (HTTP #{res.code}): #{res.body[0..300]}"
-  exit 1
-end
+  state = d

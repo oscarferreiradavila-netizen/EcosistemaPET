@@ -1028,10 +1028,10 @@ html_content = <<~HTML
             <td>Operativa clínica diaria a pie de tomógrafo y consultas</td>
           </tr>
           <tr>
-            <td><strong>Nube GitHub Pages</strong></td>
-            <td><code>https://oscarferreiradavila-netizen.github.io/EcosistemaPET/</code></td>
+            <td><strong>Nube Vercel Cloud</strong></td>
+            <td><code>https://ecosistemagalariapet1.vercel.app</code></td>
             <td>HTTPS · TLS 1.3 · Alta Disponibilidad 24/7</td>
-            <td>Acceso para pacientes (audioguías), telemedicina y repositorio oficial</td>
+            <td>Acceso corporativo SERGAS, pacientes (audioguías) y telemedicina</td>
           </tr>
         </tbody>
       </table>
