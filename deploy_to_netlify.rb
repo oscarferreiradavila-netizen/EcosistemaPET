@@ -90,4 +90,11 @@ FileUtils.rm_f(zip_path)
 if res.code.to_i.between?(200, 204)
   deploy_data = JSON.parse(res.body) rescue {}
   deploy_url = deploy_data['ssl_url'] || deploy_data['url'] || 'https://ecosistemagalariapet.netlify.app'
-  state = d
+  state = deploy_data['state'] || 'ready'
+  puts "🎉 DESPLIEGUE COMPLETADO CON ÉXITO!"
+  puts "🌐 URL activa en producción: #{deploy_url}"
+  puts "📊 Estado: #{state}"
+else
+  puts "⚠️ Error en la API de Netlify (HTTP #{res.code}): #{res.body[0..300]}"
+  exit 1
+end
