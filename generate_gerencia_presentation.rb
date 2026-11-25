@@ -788,4 +788,3 @@ if File.exist?(pdf_path)
 else
   puts "⚠️ Error generando el PDF con Chrome."
 end
-                                                           

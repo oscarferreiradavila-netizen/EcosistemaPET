@@ -1062,4 +1062,3 @@ if File.exist?("MANUAL_ECOSISTEMA_PET_CT.pdf")
 else
   puts "⚠️ Error generando el PDF con Chrome."
 end
-                          
